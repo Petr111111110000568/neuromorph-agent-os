@@ -29,15 +29,16 @@
     "META_LLM_MODEL": false
   },
   "github": {
-    "status": "connected_read_write_bootstrap_verified",
+    "status": "published_verified",
     "checked_at": "2026-09-24",
     "repository": "Petr111111110000568/neuromorph-agent-os",
     "visibility": "public",
-    "reported_repository_size_kib": 0,
+    "reported_repository_size_kib": null,
     "permission_reports_push": true,
-    "publication": "bootstrap_readme_created_full_source_prepared",
-    "git_worktree_synced": false,
-    "verification_scope": "actual_create_file_commit_9d0bebdf34de15b3a88075cdb5aa0d4a21e73be7"
+    "publication": "full_source_and_workflows_published",
+    "git_worktree_synced": true,
+    "verification_scope": "222_remote_blob_hashes_equal_local_source",
+    "release_commit": "c2ebead7bf3ab0f75496c03cdbf792cbe9343170"
   },
   "runtime": {
     "profile": "distributed_stdlib",
@@ -102,8 +103,12 @@
     "model_requests_verified": 0,
     "external_agents_enrolled": 0,
     "schedule_definition": "GitHub Actions daily 06:23 UTC plus manual trigger",
-    "remote_schedule_verified": false,
+    "remote_schedule_verified": true,
     "github_models": "retired_2026-07-30",
-    "proof_scope": "local_prepublication_snapshot"
+    "proof_scope": "local_tests_and_actual_GitHub_runs",
+    "remote_first_cycle": "success_discovery_12_model_requests_0",
+    "remote_run_url": "https://github.com/Petr111111110000568/neuromorph-agent-os/actions/runs/36043712202",
+    "chatgpt_maintainer": "enabled_daily_first_run_requested_not_completed",
+    "copilot_assignment": "403_forbidden_not_connected"
   }
 }
