@@ -1,0 +1,107 @@
+[
+  {
+    "id": "harness-unreal",
+    "name": "Unreal Agent",
+    "organization": "Unreal Labs",
+    "entity_type": "agent_harness",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Локальная установка и отдельная авторизация модели; контракт /api/harnesses показывает текущий статус.",
+    "license": "MIT",
+    "source_url": "https://github.com/unreallabsai/unreal-agent",
+    "docs_url": "https://github.com/unreallabsai/unreal-agent",
+    "provenance_urls": [
+      "https://github.com/unreallabsai/unreal-agent"
+    ],
+    "capabilities": [
+      "software_research",
+      "async_execution",
+      "workflow"
+    ],
+    "strengths": [
+      "Асинхронный журнал операций и отдельный Go runner."
+    ],
+    "weaknesses": [
+      "Эффективность в Meta-Harness не измерена; tools-disabled профиль не проверяет преимущество параллельных инструментов."
+    ],
+    "evidence_level": "documentation",
+    "evidence_summary": "Первичные исходники и документация. Тест протокола и реальный вызов модели фиксируются отдельно.",
+    "integration_status": "adapter_available_optional_runtime",
+    "copy_strategy": "Закрепить исходную версию, сохранить LICENSE; не копировать чужие учётные записи, модели или закрытые данные.",
+    "checked_at": "2026-09-24",
+    "runtime_status_endpoint": "/api/harnesses"
+  },
+  {
+    "id": "harness-pi",
+    "name": "Pi Coding Agent",
+    "organization": "earendil-works",
+    "entity_type": "agent_harness",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Локальная установка и отдельная авторизация модели; контракт /api/harnesses показывает текущий статус.",
+    "license": "MIT",
+    "source_url": "https://github.com/earendil-works/pi",
+    "docs_url": "https://github.com/earendil-works/pi",
+    "provenance_urls": [
+      "https://github.com/earendil-works/pi"
+    ],
+    "capabilities": [
+      "software_research",
+      "jsonl",
+      "workflow"
+    ],
+    "strengths": [
+      "JSONL/RPC и сменные провайдеры."
+    ],
+    "weaknesses": [
+      "Сам процесс не ограничивает файловую систему; необходимы закрепление Node и полного дерева зависимостей."
+    ],
+    "evidence_level": "documentation",
+    "evidence_summary": "Первичные исходники и документация. Тест протокола и реальный вызов модели фиксируются отдельно.",
+    "integration_status": "adapter_available_optional_runtime",
+    "copy_strategy": "Закрепить исходную версию, сохранить LICENSE; не копировать чужие учётные записи, модели или закрытые данные.",
+    "checked_at": "2026-09-24",
+    "runtime_status_endpoint": "/api/harnesses"
+  },
+  {
+    "id": "harness-openhands",
+    "name": "OpenHands Software Agent SDK",
+    "organization": "OpenHands",
+    "entity_type": "agent_harness",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Локальная установка и отдельная авторизация модели; контракт /api/harnesses показывает текущий статус.",
+    "license": "MIT",
+    "source_url": "https://github.com/OpenHands/software-agent-sdk",
+    "docs_url": "https://github.com/OpenHands/software-agent-sdk",
+    "provenance_urls": [
+      "https://github.com/OpenHands/software-agent-sdk"
+    ],
+    "capabilities": [
+      "software_research",
+      "remote_workspace",
+      "workflow"
+    ],
+    "strengths": [
+      "Модульные Python API, callbacks, удалённый workspace."
+    ],
+    "weaknesses": [
+      "SDK и container runtime в поставке не установлены; запись в реестре не означает живое подключение."
+    ],
+    "evidence_level": "documentation",
+    "evidence_summary": "Первичные исходники и документация. Тест протокола и реальный вызов модели фиксируются отдельно.",
+    "integration_status": "documented_not_connected",
+    "copy_strategy": "Закрепить исходную версию, сохранить LICENSE; не копировать чужие учётные записи, модели или закрытые данные.",
+    "checked_at": "2026-09-24",
+    "runtime_status_endpoint": "/api/harnesses"
+  }
+]

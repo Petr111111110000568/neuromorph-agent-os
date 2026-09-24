@@ -100,6 +100,24 @@ DESCRIPTIONS.update({
 })
 
 
+SCHEMAS.update({
+    'harness_status': {'type': 'object', 'properties': {}, 'additionalProperties': False},
+    'harness_runs': {'type': 'object', 'properties': {}, 'additionalProperties': False},
+    'run_harness_task': {'type': 'object', 'properties': {
+        'harness_id': {'type': 'string', 'enum': ['unreal', 'pi']},
+        'prompt': {'type': 'string', 'minLength': 1, 'maxLength': 12000},
+        'provider': {'type': 'string', 'enum': ['openai']},
+        'model': {'type': 'string', 'minLength': 1, 'maxLength': 100},
+        'timeout_seconds': {'type': 'integer', 'minimum': 1, 'maximum': 60}},
+        'required': ['harness_id', 'prompt'], 'additionalProperties': False},
+})
+DESCRIPTIONS.update({
+    'harness_status': 'Inspect installed external harness adapters and integrity pins. Does not call models.',
+    'harness_runs': 'Read locally saved harness results and provenance. May contain supplied task text echoed by a model.',
+    'run_harness_task': 'Send only the supplied public text to a configured LLM using Unreal or Pi, with OS tools disabled. Requires server AUTONOMY_ALLOW_MODEL_CALLS=true and credentials. May incur provider charges; timeout is not a token or cost budget. Returns an unverified model answer, not a scientific validation.',
+})
+
+
 def serve_stdio(service, reader=None, writer=None):
     reader, writer = reader or sys.stdin, writer or sys.stdout
     initialized = False
@@ -165,6 +183,9 @@ def serve_stdio(service, reader=None, writer=None):
                       "cancel_campaign": lambda: service.network_call("cancel_campaign", args),
                       "discover_resources": lambda: service.network_call("discover", args)}
                     operations.update({
+                      'harness_status': service.harnesses_status,
+                      'harness_runs': service.harnesses_runs,
+                      'run_harness_task': lambda: service.harnesses_run(args),
                       'brain_status': lambda: service.brain_call('status'),
                       'start_brain_session': lambda: service.brain_call('start', args),
                       'get_brain_session': lambda: service.brain_call('session', args),

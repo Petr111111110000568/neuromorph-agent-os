@@ -169,7 +169,7 @@ class HTTPTests(unittest.TestCase):
             make_server(self.service, host="0.0.0.0", port=0)
         status, headers, body = self.request("GET", "/api/status")
         self.assertEqual(status, 200)
-        self.assertEqual(json.loads(body)["version"], "0.9.0")
+        self.assertEqual(json.loads(body)["version"], "0.10.0")
         self.assertEqual(headers["X-Content-Type-Options"], "nosniff")
         self.assertIn("frame-ancestors 'none'", headers["Content-Security-Policy"])
 

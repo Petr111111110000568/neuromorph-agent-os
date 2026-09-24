@@ -1,0 +1,42 @@
+name: Optional Unreal protocol verification
+
+# Optional upstream compilation is separate from ordinary stdlib-only CI.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/harness-protocol.yml'
+      - 'scripts/bootstrap_unreal.py'
+      - 'scripts/smoke_unreal.py'
+      - 'workbench/harnesses/**'
+      - 'config/harnesses.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: optional-unreal-protocol-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Build pinned upstream and test its runner packages
+        run: python3 scripts/bootstrap_unreal.py --install --pin-registry
+      - name: Test real binary with local deterministic provider fixture
+        run: python3 scripts/smoke_unreal.py --output runtime/harnesses/unreal-protocol.json
+      - name: Preserve public protocol evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: unreal-protocol-${{ github.run_id }}-${{ github.run_attempt }}
+          path: runtime/harnesses/unreal-protocol.json
+          if-no-files-found: warn
+          retention-days: 14

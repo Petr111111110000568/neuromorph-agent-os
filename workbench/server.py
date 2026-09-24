@@ -20,7 +20,7 @@ def make_server(service, host="127.0.0.1", port=8765):
         raise ValueError("Port must be in 0..65535")
 
     class Handler(BaseHTTPRequestHandler):
-        server_version = "MetaHarness/0.9"
+        server_version = "MetaHarness/0.10"
         sys_version = ""
 
         def setup(self):
@@ -91,6 +91,10 @@ def make_server(service, host="127.0.0.1", port=8765):
             return parse_json(data.decode("utf-8"))
 
         def dispatch_get(self, path, query):
+            if path == '/api/harnesses':
+                return self.response(service.harnesses_status())
+            if path == '/api/harnesses/runs':
+                return self.response(service.harnesses_runs())
             brain_routes = {'/api/brain': 'status', '/api/brain/sessions': 'sessions',
                             '/api/brain/session': 'session', '/api/brain/export': 'export'}
             if path in brain_routes:
@@ -156,6 +160,8 @@ def make_server(service, host="127.0.0.1", port=8765):
                     raise ServiceError("Method not supported", "method_not_allowed", 405)
                 if not post:
                     return self.dispatch_get(path, query)
+                if path == '/api/harnesses/run':
+                    return self.response(service.harnesses_run(self.body()))
                 routes = {"/api/sources": service.add_source, "/api/run": service.run,
                           "/api/council": service.council, "/api/workflow": service.workflow}
                 brain_routes = {'/api/brain/' + name: name for name in ('start', 'tick', 'cancel')}

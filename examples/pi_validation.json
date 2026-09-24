@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-09-24T19:11:38.442777+00:00",
+  "status": "installed_cli_verified",
+  "package": "@earendil-works/pi-coding-agent",
+  "version": "0.87.1",
+  "source_revision": "f07218c4d4bbc12bef056a7058c3dd49dfe41abe",
+  "npm_integrity": "sha512-m8ArJUtVcQMSe1lLE/Ei7vX/JV7O39sWmWBsXV2NOU70F0qCp8GubA24pT3LnwTmM6LL2xV80/h6sQg85n69ew==",
+  "package_lock_sha256": "b237e58946348dbbe15dac27f3d9ceff794c834c2868141aa4e59df1ddc76f0f",
+  "binary": {
+    "path": "runtime/harnesses/pi/node_modules/@earendil-works/pi-coding-agent/dist/bundle/cli.js",
+    "sha256": "e79626f2dd6f94aa45d30f3fa63cd84319a6eefcd150b353cfaf274366926774"
+  },
+  "interpreter": {
+    "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "sha256": "bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12",
+    "version": "v24.19.0"
+  },
+  "runtime_tree": {
+    "path": "runtime/harnesses/pi",
+    "sha256": "b528b5c371739ee859bf372060aefd0f0b47d65b3ad1a835d2f1291fdb90f7d1"
+  },
+  "npm_version": "11.9.0",
+  "lifecycle_scripts_executed": false,
+  "version_check": {
+    "exit_code": 0,
+    "stdout": "0.87.1"
+  },
+  "help_check": {
+    "exit_code": 0,
+    "required_flags_present": [
+      "--mode",
+      "--no-session",
+      "--no-tools",
+      "--no-extensions",
+      "--no-skills",
+      "--no-prompt-templates",
+      "--no-themes",
+      "--no-context-files",
+      "--no-approve",
+      "--offline"
+    ],
+    "stdout_sha256": "5668cff3cf34fd6f0dbcb7b0d10667761219ca47879ba09d11c137507245824c"
+  },
+  "live_authenticated": false,
+  "model_calls_performed": false,
+  "oauth_performed": false,
+  "protocol_tested": false,
+  "notes": [
+    "CLI execution verified; model inference and scientific validity are separate checks.",
+    "Pi process has host permissions; tool disabling is not an OS sandbox."
+  ],
+  "capture_checks": {
+    "status": "passed",
+    "runner": "workbench.harnesses.runner.capture",
+    "address_space_bytes": 17179869184,
+    "node_max_old_space_size_mb": 256,
+    "cpu_seconds": 30,
+    "wall_timeout_seconds": 30,
+    "environment": "minimal_fresh_pi_directory_no_provider_credentials",
+    "checks": [
+      {
+        "flag": "--version",
+        "status": "exited",
+        "exit_code": 0,
+        "stdout_bytes": 7,
+        "stdout_sha256": "b20398f4b75b83e58b0d5acdac2554a73d9103b4f2c5825f30ff052a509b0780",
+        "stderr_bytes": 0,
+        "stdout": "0.87.1"
+      },
+      {
+        "flag": "--help",
+        "status": "exited",
+        "exit_code": 0,
+        "stdout_bytes": 10176,
+        "stdout_sha256": "5668cff3cf34fd6f0dbcb7b0d10667761219ca47879ba09d11c137507245824c",
+        "stderr_bytes": 0
+      }
+    ]
+  },
+  "evidence_scope": "actual_package_installation_cli_and_limited_process_launch_only",
+  "dependency_review": {
+    "lock_entries": 145,
+    "registry": "https://registry.npmjs.org/",
+    "all_resolved_registry_only": true,
+    "all_locked_packages_have_integrity": true,
+    "upstream_missing_integrities_filled_from_registry": 5,
+    "skipped_lifecycle_hooks": [
+      "@google/genai",
+      "esbuild",
+      "protobufjs"
+    ],
+    "upstream_package_license": "MIT",
+    "tarball_contains_license_file": false,
+    "upstream_license_url": "https://github.com/earendil-works/pi/blob/main/LICENSE"
+  },
+  "pin_registry_check": {
+    "command": "python scripts/bootstrap_pi.py --verify --pin-registry",
+    "exit_code": 0,
+    "registry_updated": true,
+    "non_pi_entries_unchanged": true
+  }
+}

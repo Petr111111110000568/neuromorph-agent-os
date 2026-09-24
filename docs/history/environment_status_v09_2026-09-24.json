@@ -38,12 +38,11 @@
     "publication": "full_source_and_workflows_published",
     "git_worktree_synced": true,
     "verification_scope": "222_remote_blob_hashes_equal_local_source",
-    "release_commit": "c2ebead7bf3ab0f75496c03cdbf792cbe9343170",
-    "last_verified_release": "0.9.0"
+    "release_commit": "c2ebead7bf3ab0f75496c03cdbf792cbe9343170"
   },
   "runtime": {
     "profile": "distributed_stdlib",
-    "version": "0.10.0",
+    "version": "0.9.0",
     "llm_configured": false,
     "qpu_configured": false,
     "untrusted_execution_enabled": false,
@@ -54,9 +53,9 @@
     "human_biology_validation": false,
     "local_worker_processes_verified": 2,
     "builtins_verified": 7,
-    "release_tests_passed": 280,
+    "release_tests_passed": 253,
     "brain_regions": 11,
-    "mcp_tools": 32
+    "mcp_tools": 29
   },
   "online_discovery": {
     "providers_verified": [
@@ -86,7 +85,7 @@
     "user_desktop_access_verified": false
   },
   "browser_render_test": "not_performed_chromium_unavailable",
-  "prior_status_file": "docs/history/environment_status_v09_2026-09-24.json",
+  "prior_status_file": "docs/history/environment_status_v07_2026-09-24.json",
   "optional_packages": {
     "pykan": "reviewed_not_installed",
     "FastKAN": "reviewed_not_installed",
@@ -111,40 +110,5 @@
     "remote_run_url": "https://github.com/Petr111111110000568/neuromorph-agent-os/actions/runs/36043712202",
     "chatgpt_maintainer": "enabled_daily_first_run_requested_not_completed",
     "copilot_assignment": "403_forbidden_not_connected"
-  },
-  "harnesses": {
-    "unreal": {
-      "status": "built_and_protocol_tested",
-      "version": "v0.2.0",
-      "revision": "1b9f778453f411c029b39b85102aaefb95e7e48d",
-      "proof": "data/unreal_validation.json",
-      "live_authenticated": false,
-      "external_model_requests": 0
-    },
-    "pi": {
-      "status": "installed_cli_verified",
-      "version": "0.87.1",
-      "proof": "examples/pi_validation.json",
-      "protocol_tested": false,
-      "live_authenticated": false
-    },
-    "openhands": {
-      "status": "reviewed_not_installed"
-    },
-    "core_dependencies": "stdlib_only",
-    "optional_runtime_scope": "Linux/WSL POSIX; binary/hash checks are repeated at use",
-    "tools_enabled": false,
-    "source_count": 136,
-    "web_ui": "/harnesses.html",
-    "http_methods": [
-      "GET /api/harnesses",
-      "GET /api/harnesses/runs",
-      "POST /api/harnesses/run"
-    ],
-    "mcp_tools_added": [
-      "harness_status",
-      "harness_runs",
-      "run_harness_task"
-    ]
   }
 }

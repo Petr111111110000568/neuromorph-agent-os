@@ -78,6 +78,26 @@ python -m unittest discover -s tests -p 'test_publish_autonomy.py' -v
 
 ## Закреплённые действия и источники
 
+### Необязательная проверка настоящего Unreal Agent
+
+Отдельный workflow **Optional Unreal protocol verification** запускается вручную либо при изменении его файлов, адаптеров или реестра в `main`. Он не добавляет стороннюю сборку в обычный `Core checks`. Задание имеет только `contents: read`, не получает ключи AI-провайдеров, собирает закреплённый Unreal Agent и проверяет протокол через локальный HTTP fixture. Срок выполнения ограничен 15 минутами.
+
+Локальные команды для Linux AMD64:
+
+```sh
+python3 scripts/bootstrap_unreal.py
+python3 scripts/bootstrap_unreal.py --install --pin-registry
+python3 scripts/smoke_unreal.py
+```
+
+Первая команда показывает план без установки. Вторая явно собирает исходники `unreallabsai/unreal-agent` на commit `1b9f778453f411c029b39b85102aaefb95e7e48d`, проверяет зависимости и две группы upstream-тестов, затем закрепляет хеш полученного исполняемого файла только в локальном `config/harnesses.json`. Она не публикует изменения конфигурации на GitHub. Обычные запуски приложения не устанавливают этот harness автоматически.
+
+Используется отдельный Go 1.27.1 вне дерева проекта. Прямой официальный tar-адрес при проверке вернул HTTP 404, поэтому основной проверенный способ — официальный [Go toolchain module ZIP](https://proxy.golang.org/golang.org/toolchain/@v/v0.0.1-go1.27.1.linux-amd64.zip). Его содержимое сверяется по закреплённому `h1:MeqkXdYlyiVdqJXENOTyX7xd8QjDM/mxR52RKOFBS0M=` из [официальной checksum database](https://sum.golang.org/lookup/golang.org/toolchain@v0.0.1-go1.27.1.linux-amd64). Проверка реализует [документированный алгоритм Hash1](https://github.com/golang/mod/blob/master/sumdb/dirhash/hash.go). `GOWORK=off` исключает влияние постороннего `go.work`; `go mod verify` проверяет кэш зависимостей. При несовпадении пина установка останавливается.
+
+Исполняемый файл находится в `runtime/harnesses/unreal-agent-runner`, а доказательства сборки — в `runtime/harnesses/unreal-build.json`. Бинарник не включается в Git. Smoke проверяет настоящий процесс через тот же `HarnessRegistry.run`, который использует приложение: один локальный запрос Responses, отсутствие доступных инструментов, `store:false`, SSE и завершённое JSONL-событие ответа. Это проверка совместимости протокола с синтетическим ответом, не работа настоящей модели. Статус `live_authenticated` остаётся `false`.
+
+В GitHub smoke пишет новый `runtime/harnesses/unreal-protocol.json`; загружается только этот artifact. Поэтому ошибочная удалённая сборка не выдаёт сохранённый в исходниках старый отчёт за результат текущего запуска. Отчёт локальной проверки находится в `data/unreal_validation.json`.
+
 SHA ниже получены реальным анонимным GET к официальному GitHub API 24 сентября 2026 года; `object.type` был `commit`. Указаны проверенные состояния тегов на эту дату. Workflow использует SHA, а не изменяемые теги.
 
 | Action | Проверенный tag | Commit | API источника |

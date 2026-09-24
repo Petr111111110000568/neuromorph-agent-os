@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "harness_id": "unreal",
+  "checked_at": "2026-09-24T19:11:10.081652+00:00",
+  "status": "protocol_tested",
+  "protocol_tested": true,
+  "live_authenticated": false,
+  "external_model_requests": 0,
+  "fixture_http_requests": 1,
+  "tools_advertised": 0,
+  "generated_code_executed": false,
+  "upstream_build": {
+    "schema_version": 1,
+    "status": "built",
+    "source_url": "https://github.com/unreallabsai/unreal-agent.git",
+    "source_commit": "1b9f778453f411c029b39b85102aaefb95e7e48d",
+    "source_clean": true,
+    "license": "MIT",
+    "toolchain_format": "module",
+    "toolchain_url": "https://proxy.golang.org/golang.org/toolchain/@v/v0.0.1-go1.27.1.linux-amd64.zip",
+    "toolchain_sha256": "b477e877a104211f3010911c61b501c0c015533d80290ddfa9f3dd43c5b4120e",
+    "toolchain_module_h1": "h1:MeqkXdYlyiVdqJXENOTyX7xd8QjDM/mxR52RKOFBS0M=",
+    "toolchain_bytes": 75704807,
+    "go_version": "go version go1.27.1 linux/amd64",
+    "binary_path": "runtime/harnesses/unreal-agent-runner",
+    "binary_sha256": "7f1bc026c0594484e5da77f1e6999fe5fa294dd799826dbb148d766299862ea2",
+    "binary_bytes": 12784607,
+    "modules": {
+      "command": [
+        "/workspace/scratch/fad48ae0f97b/meta-harness-toolchains/verified-go-wfmg3lhz/go/bin/go",
+        "mod",
+        "download"
+      ],
+      "exit_code": 0,
+      "seconds": 0.009,
+      "stdout": "",
+      "stderr": ""
+    },
+    "module_integrity": {
+      "command": [
+        "/workspace/scratch/fad48ae0f97b/meta-harness-toolchains/verified-go-wfmg3lhz/go/bin/go",
+        "mod",
+        "verify"
+      ],
+      "exit_code": 0,
+      "seconds": 0.129,
+      "stdout": "all modules verified\n",
+      "stderr": ""
+    },
+    "network_proxy_environment_names": [
+      "HTTPS_PROXY",
+      "HTTP_PROXY",
+      "NO_PROXY",
+      "https_proxy",
+      "http_proxy",
+      "no_proxy"
+    ],
+    "build": {
+      "command": [
+        "/workspace/scratch/fad48ae0f97b/meta-harness-toolchains/verified-go-wfmg3lhz/go/bin/go",
+        "build",
+        "-mod=readonly",
+        "-trimpath",
+        "-buildvcs=false",
+        "-o",
+        "/workspace/scratch/fad48ae0f97b/meta-harness-github/runtime/harnesses/unreal-build-0065n7my/unreal-agent-runner",
+        "./cmd/unreal-agent-runner"
+      ],
+      "exit_code": 0,
+      "seconds": 0.436,
+      "stdout": "",
+      "stderr": ""
+    },
+    "upstream_tests": {
+      "command": [
+        "/workspace/scratch/fad48ae0f97b/meta-harness-toolchains/verified-go-wfmg3lhz/go/bin/go",
+        "test",
+        "-mod=readonly",
+        "./cmd/unreal-agent-runner",
+        "./cmd/internal/agentrunner"
+      ],
+      "exit_code": 0,
+      "seconds": 3.127,
+      "stdout": "ok  \tgithub.com/unreallabsai/unreal-agent/cmd/unreal-agent-runner\t0.003s\nok  \tgithub.com/unreallabsai/unreal-agent/cmd/internal/agentrunner\t2.681s\n",
+      "stderr": ""
+    },
+    "model_requests": 0,
+    "protocol_tested": false
+  },
+  "adapter_result": {
+    "schema_version": 1,
+    "harness_id": "unreal",
+    "status": "completed",
+    "output_text": "META_HARNESS_UNREAL_PROTOCOL_OK",
+    "evidence": {
+      "revision": "1b9f778453f411c029b39b85102aaefb95e7e48d",
+      "executable_sha256": "7f1bc026c0594484e5da77f1e6999fe5fa294dd799826dbb148d766299862ea2",
+      "mode": "protocol_test"
+    },
+    "exit_code": 0,
+    "provider": "openai",
+    "model": "mock-model",
+    "mode": "protocol_test",
+    "counts": {
+      "events": 5,
+      "model_responses": 1
+    },
+    "execution": {
+      "tools_enabled": false,
+      "generated_code_executed": false,
+      "isolation": "process_limits_not_sandbox",
+      "wall_timeout_seconds": 30,
+      "max_output_bytes": 262144,
+      "api_request_cap": null,
+      "api_token_cap": null
+    },
+    "stdout_bytes": 1314,
+    "stderr_bytes": 0,
+    "event_types": {
+      "input": 3,
+      "turn": 1,
+      "model_response": 1
+    }
+  },
+  "requests": [
+    {
+      "method": "POST",
+      "path": "/v1/responses",
+      "body": {
+        "include": [
+          "reasoning.encrypted_content"
+        ],
+        "input": [
+          {
+            "content": "You run on Unreal Agent Harness built by Unreal Labs.\n\nYou work in turns. A turn is one reading of the conversation and one reply: text, tool calls, or both. Each turn re-sends the whole conversation, so prefer to go wider with tool calls — they are cheap — rather than chaining them across a longer sequence of turns. When the next commands do not depend on each other's output (inspecting several files, running the build and the tests, probing two hypotheses), issue them as separate tool calls in the same turn instead of one at a time.\n\nTool calls are asynchronous: each starts the moment you issue it and runs in the background, so issuing one never blocks you and many run at once. As each finishes, its result is appended and wakes a new turn; results that land together arrive in the same turn, and a call still running shows a placeholder until its own result comes.\n\nYou never have to babysit a running call: harness does it for you. As a backup, if calls are active and nothing has happened for ten minutes, a heartbeat wakes you, and this is an opportunity to check that all is well.\n\nEnding a turn with no tool calls while calls are running means you sleep until one finishes; ending a turn with nothing running ends the session, so do that only when the task is complete.\n\nTreat the prompt as a goal and keep working until it is met. I believe in you!\n\nYou are a software research assistant invoked by Meta-Harness. All tools are disabled. Use only the supplied public prompt. Return a concise textual proposal with limits; do not claim file access, test execution, deployment or biological validation. Do not emit tool calls or operating-system commands for execution. This process has resource limits but is not a security sandbox. Do not provide biological intervention protocols. Your output remains untrusted text.",
+            "role": "system"
+          },
+          {
+            "content": "Return the protocol fixture answer.",
+            "role": "user"
+          }
+        ],
+        "model": "mock-model",
+        "prompt_cache_key": "1e64188d81aac5a811176c34603e93e938a77d188333a6067801c01385cd72aa",
+        "reasoning": {
+          "effort": "low",
+          "summary": "auto"
+        },
+        "store": false,
+        "stream": true
+      },
+      "synthetic_credential_verified": true
+    }
+  ],
+  "event_types": {
+    "input": 3,
+    "turn": 1,
+    "model_response": 1
+  },
+  "observed_process": {
+    "stdout_sha256": "a1611a2a260724ffc72a2042956462b6193d3c21df6dc3cb66156ff97cc36392",
+    "stderr_bytes": 0,
+    "raw_events": [
+      {
+        "Sequence": 1,
+        "RecordedAt": "2026-09-24T19:11:09.577303117Z",
+        "Kind": "input",
+        "Data": {
+          "ID": "ff3ecc32-915c-4ef6-9136-069b5394f175",
+          "Kind": "control",
+          "Payload": {
+            "Mode": "settings",
+            "Reason": "",
+            "Parameters": {
+              "ReasoningEffort": "low"
+            }
+          }
+        }
+      },
+      {
+        "Sequence": 2,
+        "RecordedAt": "2026-09-24T19:11:09.57858635Z",
+        "Kind": "input",
+        "Data": {
+          "ID": "440215fe-6555-428d-b552-5c66e3b72791",
+          "Kind": "external",
+          "Payload": "Return the protocol fixture answer."
+        }
+      },
+      {
+        "Sequence": 3,
+        "RecordedAt": "2026-09-24T19:11:09.578681344Z",
+        "Kind": "input",
+        "Data": {
+          "ID": "09459b60-ee70-4f8c-9074-f8293c811925",
+          "Kind": "control",
+          "Payload": {
+            "Mode": "when_idle",
+            "Reason": ""
+          }
+        }
+      },
+      {
+        "Sequence": 4,
+        "RecordedAt": "2026-09-24T19:11:09.579815652Z",
+        "Kind": "turn",
+        "Data": {
+          "ID": "2832096f-1c57-4c68-90af-0d72c003ef7b",
+          "PreviousTurnID": "",
+          "Type": "regular"
+        }
+      },
+      {
+        "Sequence": 5,
+        "RecordedAt": "2026-09-24T19:11:09.581261917Z",
+        "Kind": "model_response",
+        "Data": {
+          "TurnID": "2832096f-1c57-4c68-90af-0d72c003ef7b",
+          "Response": {
+            "ID": "resp-meta-harness-fixture",
+            "Stop": "complete",
+            "Output": [
+              {
+                "ProviderID": "msg-meta-harness-fixture",
+                "Type": "message",
+                "Data": {
+                  "Role": "assistant",
+                  "Text": "META_HARNESS_UNREAL_PROTOCOL_OK",
+                  "Phase": "final_answer"
+                }
+              }
+            ],
+            "Usage": {
+              "InputTokens": 12,
+              "CachedInputTokens": 0,
+              "CacheWriteInputTokens": 0,
+              "OutputTokens": 8,
+              "ReasoningTokens": 0,
+              "Raw": {
+                "input_tokens": 12,
+                "output_tokens": 8
+              }
+            },
+            "Failure": null
+          }
+        }
+      }
+    ]
+  },
+  "fixture_errors": [],
+  "limits": [
+    "Local deterministic fixture; no live model inference or account authentication.",
+    "Process limits are not an operating-system security sandbox.",
+    "Successful protocol exchange does not validate scientific claims."
+  ]
+}

@@ -305,6 +305,72 @@
         "retrieved_at": "2026-09-24",
         "source_id": "project_implementation_v0.8"
       }
+    },
+    {
+      "id": "harness-unreal",
+      "title": "Unreal Agent",
+      "url": "https://github.com/unreallabsai/unreal-agent",
+      "description": "Асинхронный журнал операций и отдельный Go runner. Текущий статус: /api/harnesses.",
+      "capabilities": [
+        "software_research",
+        "async_execution",
+        "workflow"
+      ],
+      "kind": "agent_harness",
+      "access": "operator_configured_runtime",
+      "status": "documented_optional_adapter",
+      "limitations": [
+        "Эффективность в Meta-Harness не измерена; tools-disabled профиль не проверяет преимущество параллельных инструментов.",
+        "Карточка ресурса не является согласием внешнего агента участвовать."
+      ],
+      "provenance": {
+        "retrieved_at": "2026-09-24",
+        "source_id": "harness-h14"
+      }
+    },
+    {
+      "id": "harness-pi",
+      "title": "Pi Coding Agent",
+      "url": "https://github.com/earendil-works/pi",
+      "description": "JSONL/RPC и сменные провайдеры. Текущий статус: /api/harnesses.",
+      "capabilities": [
+        "software_research",
+        "jsonl",
+        "workflow"
+      ],
+      "kind": "agent_harness",
+      "access": "operator_configured_runtime",
+      "status": "documented_optional_adapter",
+      "limitations": [
+        "Сам процесс не ограничивает файловую систему; необходимы закрепление Node и полного дерева зависимостей.",
+        "Карточка ресурса не является согласием внешнего агента участвовать."
+      ],
+      "provenance": {
+        "retrieved_at": "2026-09-24",
+        "source_id": "harness-h01"
+      }
+    },
+    {
+      "id": "harness-openhands",
+      "title": "OpenHands Software Agent SDK",
+      "url": "https://github.com/OpenHands/software-agent-sdk",
+      "description": "Модульные Python API, callbacks, удалённый workspace. Текущий статус: /api/harnesses.",
+      "capabilities": [
+        "software_research",
+        "remote_workspace",
+        "workflow"
+      ],
+      "kind": "agent_harness",
+      "access": "operator_configured_runtime",
+      "status": "documented_optional_adapter",
+      "limitations": [
+        "SDK и container runtime в поставке не установлены; запись в реестре не означает живое подключение.",
+        "Карточка ресурса не является согласием внешнего агента участвовать."
+      ],
+      "provenance": {
+        "retrieved_at": "2026-09-24",
+        "source_id": "harness-h11"
+      }
     }
   ]
 }

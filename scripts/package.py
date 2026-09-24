@@ -5,7 +5,7 @@ import zipfile
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 destination=root.parent/'dist';destination.mkdir(exist_ok=True)
-output=destination/'Meta-Harness-v0.9.zip'
+output=destination/'Meta-Harness-v0.10.zip'
 excluded={'.venv','__pycache__','.git','state','runtime','node_modules'}
 files=[]
 for p in sorted(root.rglob('*')):
@@ -18,7 +18,7 @@ manifest={p.relative_to(root).as_posix():hashlib.sha256(p.read_bytes()).hexdiges
 if root/'BUILD_MANIFEST.json' not in files:files.append(root/'BUILD_MANIFEST.json')
 with zipfile.ZipFile(output,'w',zipfile.ZIP_DEFLATED) as z:
  for p in sorted(files):
-  info=zipfile.ZipInfo('Meta-Harness-v0.9/'+p.relative_to(root).as_posix(),(2026,9,24,0,0,0))
+  info=zipfile.ZipInfo('Meta-Harness-v0.10/'+p.relative_to(root).as_posix(),(2026,9,24,0,0,0))
   info.compress_type=zipfile.ZIP_DEFLATED
   info.external_attr=(0o755 if p.suffix=='.sh' else 0o644)<<16
   z.writestr(info,p.read_bytes())

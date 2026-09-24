@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "harnesses": [
+    {
+      "id": "unreal",
+      "name": "Unreal Agent",
+      "upstream_url": "https://github.com/unreallabsai/unreal-agent",
+      "revision": "1b9f778453f411c029b39b85102aaefb95e7e48d",
+      "adapter": "unreal_jsonl",
+      "binary": {
+        "path": "runtime/harnesses/unreal-agent-runner",
+        "sha256": "7f1bc026c0594484e5da77f1e6999fe5fa294dd799826dbb148d766299862ea2"
+      },
+      "default_model": "gpt-5-mini",
+      "providers": [
+        "openai"
+      ],
+      "installation_status": "pinned_source_build_available"
+    },
+    {
+      "id": "pi",
+      "name": "Pi Coding Agent",
+      "upstream_url": "https://github.com/earendil-works/pi",
+      "revision": "f07218c4d4bbc12bef056a7058c3dd49dfe41abe",
+      "adapter": "pi_jsonl",
+      "binary": {
+        "path": "runtime/harnesses/pi/node_modules/@earendil-works/pi-coding-agent/dist/bundle/cli.js",
+        "sha256": "e79626f2dd6f94aa45d30f3fa63cd84319a6eefcd150b353cfaf274366926774"
+      },
+      "interpreter": {
+        "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "sha256": "bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12"
+      },
+      "runtime_tree": {
+        "path": "runtime/harnesses/pi",
+        "sha256": "b528b5c371739ee859bf372060aefd0f0b47d65b3ad1a835d2f1291fdb90f7d1"
+      },
+      "default_model": "gpt-4.1-mini",
+      "providers": [
+        "openai",
+        "anthropic"
+      ],
+      "installation_status": "npm_0.87.1_installed_lifecycle_scripts_disabled"
+    },
+    {
+      "id": "openhands",
+      "name": "OpenHands",
+      "upstream_url": "https://github.com/OpenHands/software-agent-sdk",
+      "revision": "not_pinned_not_installed",
+      "adapter": "external_worker_required",
+      "binary": null,
+      "default_model": null,
+      "providers": [],
+      "installation_status": "sdk_not_installed_external_worker_required"
+    }
+  ]
+}

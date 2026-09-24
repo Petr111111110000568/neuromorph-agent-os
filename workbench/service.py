@@ -114,6 +114,43 @@ class Service:
         self._federation_lock = threading.Lock()
         self._brain = None
         self._brain_lock = threading.Lock()
+        self._harness_slot = threading.BoundedSemaphore(1)
+
+    def harnesses_status(self):
+        from .harnesses import HarnessRegistry
+        result = HarnessRegistry(self.root).status()
+        result['model_calls_enabled'] = os.environ.get('AUTONOMY_ALLOW_MODEL_CALLS', '').lower() == 'true'
+        return result
+
+    def harnesses_run(self, body):
+        """Only a text task: callers cannot choose executables, environments or URLs."""
+        from .harnesses import HarnessRegistry
+        body = object_field(body)
+        allowed = {'harness_id', 'prompt', 'provider', 'model', 'timeout_seconds'}
+        if set(body) - allowed:
+            raise ServiceError('Unknown harness request field')
+        harness_id = text_field(body.get('harness_id'), 'harness_id', 40)
+        prompt = text_field(body.get('prompt'), 'prompt', 12000)
+        provider = text_field(body.get('provider', 'openai'), 'provider', 40)
+        model = text_field(body.get('model'), 'model', 100, optional=True) or None
+        timeout = body.get('timeout_seconds', 30)
+        if isinstance(timeout, bool) or not isinstance(timeout, int) or not 1 <= timeout <= 60:
+            raise ServiceError('timeout_seconds must be an integer in 1..60')
+        if not self._harness_slot.acquire(blocking=False):
+            raise ServiceError('A harness task is already running', 'busy', 429)
+        try:
+            result = HarnessRegistry(self.root).run(harness_id, prompt, provider=provider, model=model,
+                timeout_seconds=timeout,
+                allow_model_calls=os.environ.get('AUTONOMY_ALLOW_MODEL_CALLS', '').lower() == 'true')
+            return self.store.record('harness_run', dict(result, id=str(uuid.uuid4()), created_at=now(),
+                prompt_sha256=hashlib.sha256(prompt.encode()).hexdigest()))
+        except ValueError as exc:
+            raise ServiceError(str(exc)) from exc
+        finally:
+            self._harness_slot.release()
+
+    def harnesses_runs(self):
+        return {'items': self.store.list('harness_run')}
 
     @property
     def brain(self):
