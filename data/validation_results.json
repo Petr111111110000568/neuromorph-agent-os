@@ -77,9 +77,9 @@
             "permission_reports_push": true,
             "publication": "full_source_and_workflows_published",
             "git_worktree_synced": true,
-            "verification_scope": "222_remote_blob_hashes_equal_local_source",
-            "release_commit": "c2ebead7bf3ab0f75496c03cdbf792cbe9343170",
-            "last_verified_release": "0.9.0"
+            "verification_scope": "248_remote_blob_hashes_equal_local_source",
+            "release_commit": "bf6dc4b9fee75f998f0fc6212bcbc62760735306",
+            "last_verified_release": "0.10.0"
           },
           "runtime": {
             "profile": "distributed_stdlib",
@@ -185,7 +185,14 @@
               "harness_status",
               "harness_runs",
               "run_harness_task"
-            ]
+            ],
+            "remote_verification": {
+              "status": "success",
+              "core_ci": "https://github.com/Petr111111110000568/neuromorph-agent-os/actions/runs/36047040189",
+              "unreal_protocol_ci": "https://github.com/Petr111111110000568/neuromorph-agent-os/actions/runs/36047040188",
+              "binary_sha256_matches_local": true,
+              "live_authenticated": false
+            }
           }
         },
         "audit": {
@@ -208,5 +215,15 @@
     "Pi model protocol not live tested.",
     "No scientific or clinical validation.",
     "Visual browser rendering not performed."
-  ]
+  ],
+  "github_verification": {
+    "source_commit": "bf6dc4b9fee75f998f0fc6212bcbc62760735306",
+    "verified_blobs": 248,
+    "core_ci_run": 36047040189,
+    "unreal_protocol_ci_run": 36047040188,
+    "conclusions": [
+      "success",
+      "success"
+    ]
+  }
 }

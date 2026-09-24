@@ -54,6 +54,8 @@ flowchart TD
 
 ## Протокол верификации
 
+**280 тестов прошли локально.** Публикация исходников `bf6dc4b9fee75f998f0fc6212bcbc62760735306` проверена в GitHub: [Core checks — success](https://github.com/Petr111111110000568/neuromorph-agent-os/actions/runs/36047040189), [сборка и протокол Unreal — success](https://github.com/Petr111111110000568/neuromorph-agent-os/actions/runs/36047040188). Удалённая сборка дала тот же SHA256, что и две локальные сборки. Совпадение относится к проверенной Linux/amd64-конфигурации, а не ко всем платформам.
+
 Итоговый результат проверок ядра находится в [data/validation_results.json](../data/validation_results.json), фактический снимок окружения — в [data/environment_status.json](../data/environment_status.json). Снимки содержат дату и область проверки; после клонирования используйте `python -m workbench.harnesses status` для проверки текущей установки.
 
 Инструкция запуска: [HARNESS_INTEGRATION_RU.md](HARNESS_INTEGRATION_RU.md). Сравнение Unreal, Pi, OpenHands, Codex и Claude: [HARNESS_COMPARISON_RU.md](HARNESS_COMPARISON_RU.md).
