@@ -1,0 +1,120 @@
+{
+  "checked_at": "2026-09-18",
+  "scope": "Публичные первичные документы OSINT/CTI, Tor и пример контролируемого научного ресурса; closed/onion resources not accessed",
+  "provider": "Exa",
+  "queries": [
+    {
+      "query": "Official Bitsight announcement acquiring Cybersixgill and product documentation on dark web intelligence AI API",
+      "numResults": 5
+    },
+    {
+      "query": "Official Mastercard announcement completed Recorded Future acquisition AI intelligence deep dark web API documentation",
+      "numResults": 5
+    },
+    {
+      "query": "Official Flashpoint DarkOwl KELA intelligence platforms AI agents dark web API product documentation",
+      "numResults": 8
+    },
+    {
+      "query": "Official Maltego SpiderFoot automated OSINT open source license API documentation ownership",
+      "numResults": 6
+    },
+    {
+      "query": "Official Tor Project documentation onion services privacy limitations authenticated deep web research data",
+      "numResults": 5
+    },
+    {
+      "query": "Research paper indirect prompt injection attacks autonomous web agents retrieved documents poisoned scientific research agents",
+      "numResults": 6
+    }
+  ],
+  "search_result_slots": 35,
+  "searches_completed": 6,
+  "pages_requested": [
+    "https://www.bitsight.com/press-releases/bitsight-completes-acquisition-cyber-threat-intelligence-leader-cybersixgill",
+    "https://www.bitsight.com/products/cyber-threat-intelligence",
+    "https://investor.mastercard.com/investor-news/investor-news-details/2024/Mastercard-Finalizes-Acquisition-of-Recorded-Future/default.aspx",
+    "https://www.recordedfuture.com/products/recorded-future-ai",
+    "https://www.darkowl.com/api-resources/",
+    "https://www.darkowl.com/ai-dark-web-intelligence/",
+    "https://flashpoint.io/",
+    "https://www.kelacyber.com/",
+    "https://github.com/smicallef/spiderfoot",
+    "https://www.maltego.com/about/",
+    "https://support.maltego.com/en/support/solutions/articles/15000062349-maltego-transforms-sdk-overview",
+    "https://support.torproject.org/tor-browser/features/onion-services/",
+    "https://www.usenix.org/system/files/usenixsecurity26-chang-hongyan.pdf",
+    "https://aclanthology.org/2025.emnlp-demos.55/",
+    "https://osf.io/kjswy",
+    "https://www.recordedfuture.com/",
+    "https://www.maltego.com/company/",
+    "https://github.com/smicallef/spiderfoot/blob/master/LICENSE",
+    "https://www.kelacyber.com/platform/",
+    "https://www.ncbi.nlm.nih.gov/gap/",
+    "https://www.recordedfuture.com/integrations",
+    "https://www.maltego.com/license-agreement/",
+    "https://flashpoint.io/wp-content/uploads/Flashpoint_Intelligence-Platform.pdf",
+    "https://www.darkowl.com/products/search-api/",
+    "https://www.kelacyber.com/integrations/",
+    "https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/GetPdf.cgi?document_name=GeneralAAInstructions.pdf"
+  ],
+  "pages_fetched": [
+    "https://www.bitsight.com/press-releases/bitsight-completes-acquisition-cyber-threat-intelligence-leader-cybersixgill",
+    "https://www.bitsight.com/products/cyber-threat-intelligence",
+    "https://investor.mastercard.com/investor-news/investor-news-details/2024/Mastercard-Finalizes-Acquisition-of-Recorded-Future/default.aspx",
+    "https://www.darkowl.com/api-resources/",
+    "https://www.darkowl.com/ai-dark-web-intelligence/",
+    "https://flashpoint.io/",
+    "https://www.kelacyber.com/",
+    "https://github.com/smicallef/spiderfoot",
+    "https://support.maltego.com/en/support/solutions/articles/15000062349-maltego-transforms-sdk-overview",
+    "https://support.torproject.org/tor-browser/features/onion-services/",
+    "https://www.usenix.org/system/files/usenixsecurity26-chang-hongyan.pdf",
+    "https://aclanthology.org/2025.emnlp-demos.55/",
+    "https://osf.io/kjswy",
+    "https://www.recordedfuture.com/",
+    "https://github.com/smicallef/spiderfoot/blob/master/LICENSE",
+    "https://www.kelacyber.com/platform/",
+    "https://www.ncbi.nlm.nih.gov/gap/",
+    "https://www.recordedfuture.com/integrations",
+    "https://www.maltego.com/license-agreement/",
+    "https://flashpoint.io/wp-content/uploads/Flashpoint_Intelligence-Platform.pdf",
+    "https://www.darkowl.com/products/search-api/"
+  ],
+  "fetch_failures": [
+    {
+      "url": "https://www.recordedfuture.com/products/recorded-future-ai",
+      "error": "CRAWL_NOT_FOUND"
+    },
+    {
+      "url": "https://www.maltego.com/about/",
+      "error": "CRAWL_NOT_FOUND"
+    },
+    {
+      "url": "https://www.maltego.com/company/",
+      "error": "CRAWL_NOT_FOUND"
+    },
+    {
+      "url": "https://www.kelacyber.com/integrations/",
+      "error": "CRAWL_NOT_FOUND"
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/GetPdf.cgi?document_name=GeneralAAInstructions.pdf",
+      "error": "CRAWL_LIVECRAWL_TIMEOUT"
+    }
+  ],
+  "primary_source_policy": "Предпочтены страницы операторов, LICENSE, научные публикации; vendor claims размечены как product_claim, не scientific validation.",
+  "coverage_limits": [
+    "6 поисковых запросов не исчерпывают все непубличные системы",
+    "Нет внешней аутентификации, закупок, регистрации или проверки commercial API",
+    "Нет посещения onion и скачивания darknet-коллекций",
+    "Репозиторий SpiderFoot не устанавливался",
+    "Владение подтверждено для Bitsight/Cybersixgill и Mastercard/Recorded Future; не делается вывод о заказчиках отдельных агентов"
+  ],
+  "unresolved": [
+    "Отдельный актуальный публичный API-контракт KELA",
+    "Лицензии коммерческих конкретных data collections, AI-use и retention",
+    "Корпоративный владелец SpiderFoot HX не устанавливался"
+  ],
+  "quality_notes": "Сильная атрибуция оператора не является доказательством полноты данных или результативности его AI. Источники проверены на наличие подходящей информации, а не на предоставление доступа."
+}

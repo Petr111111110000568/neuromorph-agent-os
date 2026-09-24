@@ -1,0 +1,11 @@
+# Первичные источники KAN, проверка 2026-09-24
+
+1. Liu et al., **KAN: Kolmogorov-Arnold Networks**, arXiv:2404.19756, ICLR 2025. https://arxiv.org/abs/2404.19756 . Проверены аннотация, история версий и авторы. Основа: функции на рёбрах вместо фиксированных узловых активаций. Web ref: turn53view1.
+2. Liu et al., **KAN 2.0: Kolmogorov-Arnold Networks Meet Science**, arXiv:2408.10205. https://arxiv.org/abs/2408.10205 . Аннотация выделяет MultKAN, kanpiler и преобразование сети в дерево; эти возможности не реализованы в нашем малом core. Ref: turn53view2/turn54view2.
+3. **pykan**, официальный репозиторий. https://github.com/KindXiaoming/pykan . README, `kan/KANLayer.py`, LICENSE просмотрены. Автор предупреждает о необходимости настройки и невозможности автоматически переносить выводы малых научных задач на ML вообще. KANLayer содержит адаптацию сетки и SiLU-базовую ветвь. MIT. Refs: turn53view0, turn64view2, turn65view2, turn65view3.
+4. Ziyao Li, **FastKAN**. https://github.com/ZiyaoLi/fast-kan . README, `fastkan/fastkan.py`, LICENSE просмотрены. Gaussian RBF, LayerNorm, опциональная базовая ветвь; заявленные автором ускорения относятся к его benchmark, не нашему коду. Apache-2.0. Refs: turn53view3, turn54view0, turn64view1, turn65view1, turn65view4.
+5. Ziyao Li, **Kolmogorov-Arnold Networks are Radial Basis Function Networks**. https://arxiv.org/abs/2405.06721 . Аннотация первичной работы и связь с авторским репозиторием. Ref: turn54view4.
+6. Zavareh Bozorgasl, Hao Chen, **Wav-KAN: Wavelet Kolmogorov-Arnold Networks**. https://arxiv.org/abs/2405.12832 . Аннотация и официальная связь с кодом. Ref: turn54view3.
+7. **Wav-KAN**, официальный репозиторий. https://github.com/zavareh1/Wav-KAN . README, `KAN.py`, `wavKAN.py`, LICENSE просмотрены. Код учит scale/translation, имеет BatchNorm; MNIST-сценарий выполняется на верхнем уровне. MIT. Refs: turn53view4, turn54view1, turn64view0, turn65view0, turn66view0, turn66view2.
+
+Оригинальные реализации имеют статус reviewed_not_installed, не были исполнены и не заявлены воспроизведёнными. Содержимое ранее загруженных пользователем ZIP в этой сессии недоступно: user_archives_unavailable_this_turn. Независимая реализация `workbench/kan.py` использует общие математические определения, не копирует сторонний код; хранится и тестируется в core проекта.

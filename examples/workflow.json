@@ -1,0 +1,1 @@
+{"question":"Как воспроизводимо сравнить линейную модель и RBF на отложенных данных, сохранив ограничения переноса в геномику?","plugin_id":"regression_benchmark","parameters":{"samples":180,"basis_count":12,"noise":0.08,"ridge":0.01,"seed":42}}

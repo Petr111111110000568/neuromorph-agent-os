@@ -1,0 +1,227 @@
+{
+  "checked_at": "2026-09-24",
+  "items": [
+    {
+      "id": "savelyev-s1",
+      "url": "https://brainmicroscopy.com/saveliev/",
+      "ref": "turn32view2",
+      "type": "primary_institution_biography",
+      "scope": "Author identity and research background",
+      "read_status": "page_read",
+      "citation_id": "S1",
+      "title": "С.В.Савельев — биографическая страница лаборатории",
+      "category": "structural_plasticity_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "status": "page_read",
+      "limitations": [
+        "Статус чтения и область применимости указаны отдельно; источник не делает программный прототип биологически валидированным."
+      ]
+    },
+    {
+      "id": "savelyev-s2",
+      "url": "https://www.vedimed.ru/",
+      "ref": "turn30view0",
+      "type": "primary_publisher",
+      "scope": "Official representation, books and publisher video channel",
+      "read_status": "page_read",
+      "citation_id": "S2",
+      "title": "ВЕДИ — страница издателя",
+      "category": "structural_plasticity_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "status": "page_read",
+      "limitations": [
+        "Статус чтения и область применимости указаны отдельно; источник не делает программный прототип биологически валидированным."
+      ]
+    },
+    {
+      "id": "savelyev-s3",
+      "url": "https://www.vedimed.ru/books/MSoznanie_1-4.html",
+      "ref": "turn32view1",
+      "type": "primary_publisher_catalog",
+      "scope": "Volume 1 bibliography, annotation and table of contents",
+      "read_status": "metadata_only",
+      "isbn": "978-5-94624-074-1",
+      "year": 2024,
+      "citation_id": "S3",
+      "title": "Морфология сознания, том 1 — аннотация и оглавление",
+      "category": "structural_plasticity_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "status": "metadata_only",
+      "limitations": [
+        "Статус чтения и область применимости указаны отдельно; источник не делает программный прототип биологически валидированным."
+      ]
+    },
+    {
+      "id": "savelyev-s4",
+      "url": "https://www.vedimed.ru/books/MSoznanie_2-3.html",
+      "ref": "turn32view0",
+      "type": "primary_publisher_catalog",
+      "scope": "Volume 2 bibliography, annotation and table of contents",
+      "read_status": "metadata_only",
+      "isbn": "978-5-94624-078-9",
+      "year": 2025,
+      "citation_id": "S4",
+      "title": "Морфология сознания, том 2 — аннотация и оглавление",
+      "category": "structural_plasticity_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "status": "metadata_only",
+      "limitations": [
+        "Статус чтения и область применимости указаны отдельно; источник не делает программный прототип биологически валидированным."
+      ]
+    },
+    {
+      "id": "savelyev-s5",
+      "url": "https://zavtra.ru/books/s_v_savel_ev_sozrevanie_pamyati",
+      "ref": "turn35view0",
+      "type": "primary_author_book_excerpt",
+      "title": "Созревание памяти",
+      "published": "2020-01-30",
+      "scope": "Qualitative author position on memory, energy and formation/elimination of connections",
+      "read_status": "published_excerpt_read",
+      "is_ai_algorithm_specification": false,
+      "citation_id": "S5",
+      "category": "structural_plasticity_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "status": "published_excerpt_read",
+      "limitations": [
+        "Статус чтения и область применимости указаны отдельно; источник не делает программный прототип биологически валидированным."
+      ]
+    },
+    {
+      "id": "savelyev-s6",
+      "url": "https://mediametrics.ru/articles/view.html?id=63690",
+      "ref": "turn33view1",
+      "type": "primary_interview_transcript",
+      "published": "2019-09-06",
+      "scope": "Author criticism of then-current AI and emphasis on evolution",
+      "read_status": "transcript_read",
+      "is_ai_algorithm_specification": false,
+      "citation_id": "S6",
+      "title": "Искусственный интеллект — есть ли он? Интервью 06.09.2019",
+      "category": "structural_plasticity_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "status": "transcript_read",
+      "limitations": [
+        "Статус чтения и область применимости указаны отдельно; источник не делает программный прототип биологически валидированным."
+      ]
+    },
+    {
+      "id": "savelyev-s7",
+      "url": "https://www.nature.com/articles/nature01273",
+      "ref": "turn36search0",
+      "type": "independent_primary_empirical_paper",
+      "title": "Long-term in vivo imaging of experience-dependent synaptic plasticity in adult cortex",
+      "doi": "10.1038/nature01273",
+      "year": 2002,
+      "scope": "Structural synaptic changes in adult mouse cortex, not AI or the whole author theory",
+      "read_status": "public_abstract_read",
+      "citation_id": "S7",
+      "category": "structural_plasticity_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "status": "public_abstract_read",
+      "limitations": [
+        "Статус чтения и область применимости указаны отдельно; источник не делает программный прототип биологически валидированным."
+      ]
+    },
+    {
+      "id": "savelyev-v1",
+      "url": "https://www.youtube.com/watch?v=gfLG-3wwTec",
+      "ref": "turn32search0",
+      "type": "publisher_original_video_locator",
+      "title": "С.В. Савельев - Искусственный интеллект мозга",
+      "read_status": "metadata_identified_original_audio_not_accessed",
+      "auxiliary_transcript_url": "https://lilys.ai/ru/notes/physical-ai-20260114/saveliev-brain-artificial-intelligence",
+      "auxiliary_transcript_ref": "turn31view6",
+      "auxiliary_transcript_is_primary": false,
+      "term_timestamp": "35:00",
+      "date_status": "Not established from ambiguous auxiliary date string",
+      "citation_id": "V1",
+      "category": "structural_plasticity_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "status": "metadata_identified_original_audio_not_accessed",
+      "limitations": [
+        "Статус чтения и область применимости указаны отдельно; источник не делает программный прототип биологически валидированным."
+      ]
+    },
+    {
+      "id": "savelyev-c1",
+      "url": "https://proceedings.mlr.press/v119/evci20a.html",
+      "ref": "turn39view0",
+      "type": "primary_computational_paper",
+      "title": "Rigging the Lottery: Making All Tickets Winners",
+      "authors": [
+        "Utku Evci",
+        "Trevor Gale",
+        "Jacob Menick",
+        "Pablo Samuel Castro",
+        "Erich Elsen"
+      ],
+      "year": 2020,
+      "read_status": "conference_abstract_and_metadata_read",
+      "full_pdf_analyzed": false,
+      "role": "Dynamic sparse training comparator; not Saveliev's method",
+      "citation_id": "C1",
+      "category": "structural_plasticity_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "status": "conference_abstract_and_metadata_read",
+      "limitations": [
+        "Статус чтения и область применимости указаны отдельно; источник не делает программный прототип биологически валидированным."
+      ]
+    },
+    {
+      "id": "savelyev-c2",
+      "url": "https://github.com/google-research/rigl",
+      "ref": "turn39view1",
+      "type": "original_research_code_repository",
+      "read_status": "README_and_visible_license_read",
+      "license": "Apache-2.0",
+      "code_executed": false,
+      "commit_pinned": false,
+      "role": "Original implementation reference and random-rewiring baseline source; not an official Google product",
+      "citation_id": "C2",
+      "title": "RigL — оригинальный репозиторий",
+      "category": "structural_plasticity_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "status": "README_and_visible_license_read",
+      "limitations": [
+        "Статус чтения и область применимости указаны отдельно; источник не делает программный прототип биологически валидированным."
+      ]
+    },
+    {
+      "id": "savelyev-c3",
+      "url": "https://distill.pub/2020/growing-ca/",
+      "ref": "turn39view2",
+      "type": "primary_computational_article",
+      "title": "Growing Neural Cellular Automata",
+      "authors": [
+        "Alexander Mordvintsev",
+        "Ettore Randazzo",
+        "Eyvind Niklasson",
+        "Michael Levin"
+      ],
+      "published": "2020-02-11",
+      "doi": "10.23915/distill.00023",
+      "read_status": "model_and_experiment_descriptions_read",
+      "notebook_executed": false,
+      "role": "Distinct local-rule morphogenesis and regeneration pattern benchmark; not adult-human biology and not Saveliev's method",
+      "citation_id": "C3",
+      "category": "structural_plasticity_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "status": "model_and_experiment_descriptions_read",
+      "limitations": [
+        "Статус чтения и область применимости указаны отдельно; источник не делает программный прототип биологически валидированным."
+      ]
+    }
+  ]
+}

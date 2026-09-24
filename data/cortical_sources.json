@@ -1,0 +1,542 @@
+{
+  "checked_at": "2026-09-24",
+  "items": [
+    {
+      "id": "cortex-C01",
+      "url": "https://ocas.ai/tekhnologii",
+      "title": "ОКАС: технологии CORNN",
+      "read_scope": "Индексированный текст официальной страницы; прямое открытие дало 502/404",
+      "status": "reviewed_indexed_excerpt",
+      "evidence": "vendor_claim",
+      "finding": "Слоистые колонки и ассоциативная память заявлены разработчиком; независимое превосходство не установлено",
+      "open_implementation": "Не обнаружена в изученном материале",
+      "license": "Не установлена",
+      "integration_priority": "deferred_vendor_candidate",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C02",
+      "url": "https://ocas.ai/about",
+      "title": "ОКАС: о компании",
+      "read_scope": "Индексированный текст официальной страницы; прямое открытие 502",
+      "status": "reviewed_indexed_excerpt",
+      "evidence": "vendor_self_description",
+      "finding": "Компания приписывает введение термина CORNN Вадиму Анатольевичу Филиппову; независимый приоритет не проверен",
+      "open_implementation": "Не применимо",
+      "license": "Не установлена",
+      "integration_priority": "identity_and_attribution",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C03",
+      "url": "https://arxiv.org/abs/2307.08501",
+      "title": "Corticomorphic Hybrid CNN-SNN Architecture for EEG-based Low-footprint Low-latency Auditory Attention Detection",
+      "authors": [
+        "Richard Gall",
+        "Deniz Kocanaogullari",
+        "Murat Akcakaya",
+        "Deniz Erdogmus",
+        "Rajkumar Kubendran"
+      ],
+      "publication_year": 2023,
+      "read_scope": "Аннотация и библиографическая запись; полный текст не изучен",
+      "status": "reviewed_abstract",
+      "evidence": "author_reported_specialized_computational_experiment",
+      "finding": "Слово corticomorphic используется для конкретной гибридной EEG-архитектуры",
+      "open_implementation": "Не проверена",
+      "license": "Лицензия кода не проверена",
+      "integration_priority": "low_specialized_eeg",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C04",
+      "url": "https://www.frontiersin.org/journals/neural-circuits/articles/10.3389/fncir.2016.00023/full",
+      "doi": "10.3389/fncir.2016.00023",
+      "title": "Why Neurons Have Thousands of Synapses, a Theory of Sequence Memory in Neocortex",
+      "authors": [
+        "Jeff Hawkins",
+        "Subutai Ahmad"
+      ],
+      "publication_year": 2016,
+      "read_scope": "HTML: аннотация, введение, simulation results, discussion/testable predictions, materials and methods",
+      "status": "reviewed_selected_full_text_sections",
+      "evidence": "peer_reviewed_hypothesis_and_theory_with_simulations",
+      "finding": "Контекстные дендритные предсказания, локальное обучение и конкуренция; предполагаемая универсальность для неокортекса остаётся гипотезой",
+      "open_implementation": "Статья ссылается на NuPIC; современный кандидат отдельно C05",
+      "license": "Статья указывает GPLv3 для тогдашнего кода; это не лицензия собственной реализации Meta-Harness",
+      "integration_priority": "high_model_motivation",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C05",
+      "url": "https://github.com/htm-community/htm.core",
+      "title": "htm.core",
+      "read_scope": "README, описание Python/C++/REST, раздел License; установка и аудит полного кода не выполнялись",
+      "status": "reviewed_repository_metadata",
+      "evidence": "official_community_implementation",
+      "finding": "Кандидат для воспроизведения HTM вне ядра платформы",
+      "open_implementation": "https://github.com/htm-community/htm.core",
+      "license": "AGPL-3.0 по README",
+      "integration_priority": "medium_reference_adapter",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C06",
+      "url": "https://github.com/thousandbrainsproject/tbp.monty",
+      "title": "Monty repository",
+      "read_scope": "README: архитектурное назначение, состояние early beta, benchmarks, citations, лицензия",
+      "status": "reviewed_repository_metadata",
+      "evidence": "official_open_implementation_documentation",
+      "finding": "Сенсомоторная система; проект теперь описывает себя как независимую некоммерческую организацию; production readiness не заявлена",
+      "open_implementation": "https://github.com/thousandbrainsproject/tbp.monty",
+      "license": "MIT по README",
+      "integration_priority": "high_external_sensorimotor_adapter",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C07",
+      "url": "https://docs.thousandbrains.org/docs/faq-monty",
+      "title": "FAQ - Monty",
+      "read_scope": "FAQ, включая отсутствие HTM/SDR/grid cells/active dendrites, columns, reference frames и swarm comparison",
+      "status": "reviewed_documentation",
+      "evidence": "official_current_implementation_scope",
+      "finding": "Нельзя отождествлять текущий Monty с HTM; возможности и планы разведены",
+      "open_implementation": "C06",
+      "license": "Лицензия страницы не проверена; код MIT см. C06",
+      "integration_priority": "high_scope_control",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C08",
+      "url": "https://docs.thousandbrains.org/docs/long-term-goals-and-principles",
+      "title": "Long-Term Goals and Principles",
+      "read_scope": "Полный текст короткой страницы",
+      "status": "reviewed_documentation",
+      "evidence": "official_architecture_and_roadmap",
+      "finding": "CMP, системы координат, голосование модулей и сенсомоторный цикл; архитектурные цели не равны реализованным функциям",
+      "open_implementation": "C06",
+      "license": "Лицензия документации не проверена",
+      "integration_priority": "high_interface_inspiration",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C09",
+      "url": "https://thousandbrains.org/about/team/",
+      "title": "Thousand Brains Project team",
+      "read_scope": "Официальная страница команды и её индексированный список",
+      "status": "reviewed_official_profile",
+      "evidence": "organization_self_description",
+      "finding": "Hawkins — founder, Clay — executive director, Leadholm — research manager, согласно странице на дату проверки",
+      "open_implementation": "C06",
+      "license": "Не применимо к профилям",
+      "integration_priority": "identity_and_attribution",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C10",
+      "url": "https://distill.pub/2020/growing-ca/",
+      "doi": "10.23915/distill.00023",
+      "title": "Growing Neural Cellular Automata",
+      "authors": [
+        "Alexander Mordvintsev",
+        "Ettore Randazzo",
+        "Eyvind Niklasson",
+        "Michael Levin"
+      ],
+      "publication_year": 2020,
+      "read_scope": "HTML: авторы, модель клеточного состояния и обновления, описания growing/persistent/regenerating экспериментов; notebook не запускался",
+      "status": "reviewed_selected_full_text_sections",
+      "evidence": "differentiable_computational_model_with_demonstrations",
+      "finding": "Локальная общая функция обновления обучается для глобальной формы; результат относится к цифровому паттерну",
+      "open_implementation": "https://github.com/google-research/self-organising-systems",
+      "license": "Текст/диаграммы CC-BY-4.0 с исключениями для чужих фигур; код отдельно C11",
+      "integration_priority": "high_future_nca_experiment",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C11",
+      "url": "https://github.com/google-research/self-organising-systems",
+      "title": "Self-organising Systems",
+      "read_scope": "README, структура репозитория и отображаемая лицензия; обучение не запускалось",
+      "status": "reviewed_repository_metadata",
+      "evidence": "official_open_implementation",
+      "finding": "Открытый исходный репозиторий методов self-organising systems",
+      "open_implementation": "https://github.com/google-research/self-organising-systems",
+      "license": "Apache-2.0",
+      "integration_priority": "high_future_external_adapter",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C12",
+      "url": "https://znah.net/",
+      "title": "Alexander Mordvintsev - Artificial Life Research",
+      "read_scope": "Авторская страница: краткая биография и текущий список проектов",
+      "status": "reviewed_author_profile",
+      "evidence": "author_self_description",
+      "finding": "Связь автора с NCA и self-organising research подтверждена; недатированные новые проекты не использованы как датированные научные результаты",
+      "open_implementation": "Ссылки на авторские проекты; не аудированы",
+      "license": "Не установлена для страницы",
+      "integration_priority": "identity_and_attribution",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C13",
+      "url": "https://oteret.github.io/",
+      "title": "Ettore Randazzo author blog",
+      "read_scope": "Авторская главная страница / список проектов",
+      "status": "reviewed_author_profile",
+      "evidence": "author_self_description",
+      "finding": "Авторский профиль исследователя self-organising systems; вклад в NCA подтверждён отдельно C10/C27",
+      "open_implementation": "Основной код см. C11",
+      "license": "Не установлена для страницы",
+      "integration_priority": "identity_and_attribution",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C14",
+      "url": "https://drmichaellevin.org/resources/",
+      "title": "Levin Lab Frequently Asked Questions",
+      "read_scope": "Разделы FAQ: definition of anatomical compiler, goals/agency и масштаб объяснения",
+      "status": "reviewed_author_explanation",
+      "evidence": "author_position_and_limitations",
+      "finding": "Anatomical compiler определён самим автором как будущая система; наличие законченного продукта не подтверждено",
+      "open_implementation": "Не подтверждена для anatomical compiler",
+      "license": "Не установлена",
+      "integration_priority": "high_scientific_scope_control",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C15",
+      "url": "https://drmichaellevin.org/",
+      "title": "The Levin Lab",
+      "read_scope": "Индексированный текст официальной страницы исследовательской программы",
+      "status": "reviewed_indexed_excerpt",
+      "evidence": "laboratory_self_description",
+      "finding": "Морфогенез, координация и адаптивный порядок являются заявленными направлениями лаборатории",
+      "open_implementation": "Различные проекты, не единая реализация",
+      "license": "Не установлена",
+      "integration_priority": "research_context",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C16",
+      "url": "https://chakazul.github.io/lenia.html",
+      "title": "Lenia author project page",
+      "read_scope": "Synopsis, code links, papers и collaborations; демонстрации не запускались",
+      "status": "reviewed_author_project_page",
+      "evidence": "artificial_life_model_and_publications",
+      "finding": "Непрерывные клеточные автоматы, разнообразные цифровые формы и окружение поиска; не модель человеческого тела",
+      "open_implementation": "https://github.com/Chakazul/Lenia",
+      "license": "Код см. C17; лицензия страницы не проверена",
+      "integration_priority": "medium_artificial_life_environment",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C17",
+      "url": "https://github.com/Chakazul/Lenia",
+      "title": "Lenia code",
+      "read_scope": "README и отображаемая лицензия; Python/JavaScript не запускались",
+      "status": "reviewed_repository_metadata",
+      "evidence": "author_open_implementation",
+      "finding": "Доступны реализации на нескольких языках, включая Python и JavaScript",
+      "open_implementation": "https://github.com/Chakazul/Lenia",
+      "license": "MIT",
+      "integration_priority": "medium_external_simulator",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C18",
+      "url": "https://chakazul.github.io/",
+      "title": "Bert Chan",
+      "read_scope": "Индексированный текст авторской страницы и описание Lenia",
+      "status": "reviewed_indexed_excerpt",
+      "evidence": "author_self_description",
+      "finding": "Авторство и исследовательские интересы; текущая занятость не нужна для оценки метода",
+      "open_implementation": "C17",
+      "license": "Не установлена для страницы",
+      "integration_priority": "identity_and_attribution",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C19",
+      "url": "https://nn.cs.utexas.edu/downloads/papers/stanley.ec02.pdf",
+      "title": "Evolving Neural Networks through Augmenting Topologies",
+      "authors": [
+        "Kenneth O. Stanley",
+        "Risto Miikkulainen"
+      ],
+      "publication_year": 2002,
+      "read_scope": "Авторская PDF-копия: аннотация, введение, постановка задачи и начало описания методов; все численные эксперименты не воспроизведены",
+      "status": "reviewed_selected_full_text_sections",
+      "evidence": "peer_reviewed_computational_method_with_ablation_claims",
+      "finding": "Эволюционный поиск весов и структуры; не биологическое вмешательство",
+      "open_implementation": "Конкретная библиотека не выбрана",
+      "license": "Права PDF не равны лицензии реализации; не установлена для будущей библиотеки",
+      "integration_priority": "medium_architecture_search",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C20",
+      "url": "https://www.kenstanley.net/",
+      "title": "Kenneth O. Stanley",
+      "read_scope": "Авторский профиль и перечень разработанных методов",
+      "status": "reviewed_author_profile",
+      "evidence": "author_self_description",
+      "finding": "NEAT, HyperNEAT, CPPNs, novelty search и open-endedness перечислены самим автором",
+      "open_implementation": "Зависит от выбранного метода",
+      "license": "Не применимо к профилю",
+      "integration_priority": "identity_and_attribution",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C21",
+      "url": "https://discovery.ucl.ac.uk/id/eprint/10085946/",
+      "doi": "10.1016/j.plrev.2019.06.001",
+      "title": "Morphogenesis as Bayesian inference: A variational approach to pattern formation and control in complex biological systems",
+      "authors": [
+        "Franz Kuchling",
+        "Karl Friston",
+        "Georgi Georgiev",
+        "Michael Levin"
+      ],
+      "publication_year": 2020,
+      "read_scope": "Институциональная запись и аннотация; математические выводы полного PDF не проверены",
+      "status": "reviewed_abstract",
+      "evidence": "theoretical_framework_with_reported_simulations",
+      "finding": "Связывает взаимодействующие клеточные модели с вариационным выводом; область применимости конкретна",
+      "open_implementation": "Не проверена в этом исследовании",
+      "license": "UCL отсылает к условиям издателя",
+      "integration_priority": "medium_formal_model_research",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C22",
+      "url": "https://www.fil.ion.ucl.ac.uk/~karl/",
+      "title": "Karl Friston: selected papers",
+      "read_scope": "Биографический раздел и указатель active inference / theoretical neurobiology; весь список работ не изучался",
+      "status": "reviewed_institutional_profile",
+      "evidence": "institutional_author_profile",
+      "finding": "Теоретическая нейробиология и active inference — подтверждённые направления работ",
+      "open_implementation": "Не применимо к профилю",
+      "license": "Не установлена",
+      "integration_priority": "identity_and_attribution",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C23",
+      "url": "https://proceedings.neurips.cc/paper/2020/hash/33a5435d4f945aa6154b31a73bab3b73-Abstract.html",
+      "title": "Hierarchically Organized Latent Modules for Exploratory Search in Morphogenetic Systems",
+      "authors": [
+        "Mayalen Etcheverry",
+        "Clément Moulin-Frier",
+        "Pierre-Yves Oudeyer"
+      ],
+      "publication_year": 2020,
+      "read_scope": "Официальная аннотация NeurIPS и авторство; полный алгоритм и код не проверены",
+      "status": "reviewed_abstract",
+      "evidence": "peer_reviewed_computational_discovery_method",
+      "finding": "Модульные представления и автоматическое исследование разнообразия с пользовательской обратной связью",
+      "open_implementation": "Ссылки на код найдены на авторских ресурсах; код не аудирован",
+      "license": "Не проверена",
+      "integration_priority": "medium_experiment_selection",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C24",
+      "url": "https://flowers.inria.fr/team/",
+      "title": "Flowers AI & CogSci Lab team",
+      "read_scope": "Страница команды; дата обновления отдельных записей неоднородна",
+      "status": "reviewed_official_profile",
+      "evidence": "laboratory_self_description",
+      "finding": "Подтверждает группу Oudeyer/Moulin-Frier; текущая должность каждого соавтора HOLMES не утверждается",
+      "open_implementation": "Зависит от проекта",
+      "license": "Не применимо к профилям",
+      "integration_priority": "identity_and_attribution",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C25",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/4412347/",
+      "doi": "10.1038/nature12160",
+      "title": "The importance of mixed selectivity in complex cognitive tasks",
+      "publication_year": 2013,
+      "read_scope": "Индексированный полный текст авторской рукописи: abstract, introduction, discussion; исходные нейроданные не анализировались",
+      "status": "reviewed_full_text_excerpt",
+      "evidence": "primary_neurophysiology_experiment_in_monkeys",
+      "finding": "Пример распределённого смешанно-селективного кодирования; не доказывает конкретную архитектуру AI-агентов",
+      "open_implementation": "Не применимо для планируемого workflow",
+      "license": "Не проверена",
+      "integration_priority": "high_metaphor_limitations",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C26",
+      "url": "https://google-research.github.io/self-organising-systems/difflogic-ca/",
+      "title": "Differentiable Logic Cellular Automata",
+      "publication_year": 2025,
+      "read_scope": "Авторская страница: вводная постановка, описание подхода и доступные демонстрации; обучение не выполнялось",
+      "status": "reviewed_author_project_page",
+      "evidence": "computational_method_demonstration",
+      "finding": "Дифференцируемое обучение локальных логических схем с дискретным выполнением",
+      "open_implementation": "Связан с C11; конкретный код требует отдельной проверки",
+      "license": "См. лицензию выбранных файлов в C11",
+      "integration_priority": "medium_future_digital_morphogenesis",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "cortex-C27",
+      "url": "https://arxiv.org/abs/2506.04912",
+      "title": "Differentiable Logic Cellular Automata: From Game of Life to Pattern Generation",
+      "authors": [
+        "Pietro Miotti",
+        "Eyvind Niklasson",
+        "Ettore Randazzo",
+        "Alexander Mordvintsev"
+      ],
+      "publication_year": 2025,
+      "read_scope": "Аннотация и библиография arXiv; полный текст не изучен",
+      "status": "reviewed_abstract",
+      "evidence": "author_reported_computational_experiments",
+      "finding": "Показаны задачи обучения правил и формирования цифровых рисунков; результаты не перенесены на биологические ткани",
+      "open_implementation": "Авторский проект C26",
+      "license": "Лицензия кода уточняется отдельно",
+      "integration_priority": "medium_future_digital_morphogenesis",
+      "category": "cortical_morphogenetic_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    }
+  ]
+}

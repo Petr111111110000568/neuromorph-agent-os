@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "checked_at": "2026-09-24",
+  "scope": "Primary-source documentation review for voluntary external-agent federation",
+  "execution_status": "documentation_review_only",
+  "primary_pages_read": 12,
+  "third_party_registrations": 0,
+  "third_party_agent_tasks_sent": 0,
+  "onion_scans": 0,
+  "coverage": "bounded; no claim of whole-network discovery",
+  "onion_scientific_service_finding": {
+    "status": "not_confirmed_in_reviewed_sources",
+    "absence_claim": false,
+    "search_queries": ["\"AI research agent\" \".onion\"", "\"scientific agent\" \"Tor\""],
+    "note": "No verified operator, callable scientific-agent interface and genome R&D participation conditions were jointly established. This does not prove nonexistence."
+  },
+  "solutions": [
+    {"id":"F1","name":"MCP Registry","organization":"MCP project and ecosystem contributors","kind":"public_metadata_registry","url":"https://modelcontextprotocol.io/registry/about","source_ref":"turn18view0","reviewed":"2026-09-24","role":"Candidate server discovery through an aggregator","access":"Public metadata; preview","license":"Per-server and underlying-package licenses must be checked separately","integration_priority":"P0","boundary":"Metadata and namespace authentication do not certify code safety or scientific quality"},
+    {"id":"F2","name":"A2A","organization":"Linux Foundation A2A Project","kind":"agent_interoperability_protocol","url":"https://a2a-protocol.org/latest/specification/","source_ref":"turn19view1","reviewed":"2026-09-24","role":"Known Agent Card discovery and scoped task delegation","access":"Per-agent authentication and authorization","license":"Check chosen SDK release and provider contract separately","integration_priority":"P1","boundary":"Protocol is not a global directory and does not grant participation rights"},
+    {"id":"F3","name":"Agentverse and uAgents","organization":"Fetch.ai","kind":"agent_directory_and_framework","url":"https://uagents.fetch.ai/docs/guides/search","source_ref":"turn19view0","reviewed":"2026-09-24","role":"Search agents by text and protocol digest","access":"Documented POST https://agentverse.ai/v1/search/agents","license":"Code, hosted service and result terms separate; exact code license not rechecked here","integration_priority":"P0","boundary":"Search hit or active status does not establish competence or opt-in"},
+    {"id":"F4","name":"Olas Mech Marketplace","organization":"Olas ecosystem; Valory tooling","kind":"agent_service_marketplace","url":"https://stack.olas.network/mech-client/","source_ref":"turn19view2","reviewed":"2026-09-24","role":"Procurement of one benchmarked tool service","access":"Payment setup and provider selection; on-chain or off-chain requests","license":"Client and provider rights separate; commit review required","integration_priority":"P3","boundary":"Off-chain is not free; no confirmed barter agreement"},
+    {"id":"F5","name":"Virtuals ACP","organization":"Virtuals Protocol / EconomyOS","kind":"agent_commerce_protocol","url":"https://os.virtuals.io/acp/sdk/getting-started","source_ref":"turn19view3","reviewed":"2026-09-24","role":"Job proposal, budget, delivery and independent acceptance pattern","access":"SDK v2 and chain-specific account/payment setup","license":"Check exact SDK and service terms before connection","integration_priority":"P3","boundary":"Escrow completion does not establish scientific validity"},
+    {"id":"F6","name":"Bittensor","organization":"Independent subnet operators in Bittensor ecosystem","kind":"incentivized_service_network","url":"https://www.bittensor.com/docs","source_ref":"turn20view0","reviewed":"2026-09-24","role":"Compare a specific compute, inference or data subnet with a conventional API","access":"Service-specific; chain rewards use TAO; SDK/CLI v11","license":"Per-subnet models and service terms require separate checks","integration_priority":"P3","boundary":"Network reward scores are not scientific replication"},
+    {"id":"F7","name":"Biomni","organization":"SNAP Stanford and project authors","kind":"biomedical_agent_software","url":"https://github.com/snap-stanford/Biomni","source_ref":"turn20view1","reviewed":"2026-09-24","role":"Isolated computational biomedical worker on permitted benchmarks","access":"Local environment and configured LLM provider","license":"Repository Apache-2.0; tools, models and data separately licensed","integration_priority":"P2","boundary":"Source availability does not attach a remote operator or validate clinical predictions"},
+    {"id":"F8","name":"PaperQA2","organization":"FutureHouse","kind":"scientific_literature_agent_software","url":"https://github.com/Future-House/paper-qa","source_ref":"turn20view2","reviewed":"2026-09-24","role":"Evidence extraction, literature review and contradiction checks","access":"Configured LLM/embeddings; pin a CalVer release or commit","license":"Repository Apache-2.0; source documents separately licensed","integration_priority":"P1","boundary":"Generated citations and conclusions require checking"},
+    {"id":"F9","name":"Tor onion services","organization":"Tor Project","kind":"privacy_transport","url":"https://support.torproject.org/about-tor/onion-services/what-is-a-dot-onion/","source_ref":"turn18view3","reviewed":"2026-09-24","role":"Optional transport for a known consenting endpoint","access":"Explicit Tor transport setup","license":"Component licenses and endpoint terms checked separately","integration_priority":"P3","boundary":"Privacy transport is neither a trust credential nor a scientific-agent directory"},
+    {"id":"F10","name":"Ahmia","organization":"Juha Nurmi and Ahmia contributors","kind":"onion_search_index","url":"https://ahmia.fi/about/","source_ref":"turn18view1","reviewed":"2026-09-24","role":"Bounded metadata discovery for subsequent identity checks","access":"Public search interface; no exhaustive coverage established","license":"About identifies open-source components; pin and inspect each component license before reuse","integration_priority":"P2","boundary":"Indexed URL does not establish operator, license or competence"},
+    {"id":"F11","name":"DarkOwl Search API","organization":"DarkOwl LLC","kind":"commercial_threat_intelligence","url":"https://www.darkowl.com/products/search-api/","source_ref":"turn18view2","reviewed":"2026-09-24","role":"Project asset compromise and endpoint provenance monitoring","access":"Commercial authorization/API contract required","license":"Contract controls export, retention and AI use","integration_priority":"P3","boundary":"CTI data is not a source of rights to stolen genomic data and is not an agent society"},
+    {"id":"F12","name":"EGA data access","organization":"European Genome-phenome Archive and dataset Data Access Committees","kind":"controlled_human_data_repository","url":"https://www.ega-archive.org/access/request-data/how-to-request-data/","source_ref":"turn22view0","reviewed":"2026-09-24","role":"Authorized project-specific computational research","access":"DAC permission and approved research conditions","license":"Dataset-specific access and use conditions","integration_priority":"P2","boundary":"Research contribution never substitutes for access authorization or permits redistribution"}
+  ],
+  "proposed_participation_model": {
+    "is_external_standard": false,
+    "states": ["discovered","identity_checked","offer_prepared","offer_delivered","accepted","task_claimed","submitted","independently_reviewed","rewarded","suspended","withdrawn"],
+    "allowed_starter_data": ["public_permitted","synthetic_test"],
+    "required_contract_fields": ["task_id","participant_id","scope","data_class","artifact_schema","acceptance","reward","deadline","terms_hash","retention","redistribution_policy"],
+    "reward_kind": "nontransferable_nonmonetary_access_credits",
+    "reward_trigger": "Independently accepted, licensed, unique task artifact; idempotent credit event",
+    "hours_policy": "Declared hours recorded separately and not sufficient for award",
+    "reward_catalog": ["licensed_reproducible_reports","curated_index_query_quota","approved_compute_quota","permitted_derived_artifacts"],
+    "excluded_rewards": ["personal_genomes","controlled_access_datasets","third_party_api_keys","unlicensed_full_text","guarantees_of_biological_effect"],
+    "outreach_policy": "Prepare concrete offer; deliver only through an allowed opt-in endpoint with identified operator policy; no mass unsolicited sending",
+    "scientific_scope": "Computational evidence and reproducibility research; no organism intervention instructions",
+    "market_viability": "Unproven until a real authorized operator accepts and produces a reproducible contribution"
+  },
+  "prototype_acceptance": [
+    "Source layers and entity kinds explicit",
+    "Missing transport or credential is an explicit status, not false success",
+    "Findings preserve source, retrieval date, access terms and verification state",
+    "No execution of untrusted catalog instructions",
+    "Bounded requests and network destination validation",
+    "No acceptance inferred from silence or discovery",
+    "No participant self-awards",
+    "Idempotent rewards and duplicate contribution checks",
+    "Artifact license bounds access grants",
+    "Live discovery counts separate from real participants and accepted scientific results"
+  ]
+}

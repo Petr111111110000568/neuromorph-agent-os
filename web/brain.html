@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#112d35">
+  <title>Контур исследовательских ролей — Meta-Harness</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/brain.css">
+  <script src="/brain.js" defer></script>
+</head>
+<body class="brain-app">
+  <a class="skip-link" href="#main">К содержимому</a>
+  <aside class="sidebar">
+    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">M<span>H</span></span><span>Meta-Harness<small>RESEARCH CIRCUIT</small></span></a>
+    <div class="workspace-label"><span class="workspace-dot"></span> Память · План · Проверка</div>
+    <nav class="navigation" aria-label="Разделы платформы">
+      <a class="nav-item active" href="/brain.html" aria-current="page"><span class="nav-symbol" aria-hidden="true">⌘</span>Контур и сети</a>
+      <a class="nav-item" href="/morphogenesis.html"><span class="nav-symbol" aria-hidden="true">∿</span>Структурная пластичность</a>
+      <a class="nav-item" href="/society.html"><span class="nav-symbol" aria-hidden="true">◎</span>Исследовательские миссии</a>
+      <a class="nav-item" href="/federation.html"><span class="nav-symbol" aria-hidden="true">↗</span>Участники и обмен</a>
+      <a class="nav-item" href="/network.html"><span class="nav-symbol" aria-hidden="true">⇄</span>Сеть и исполнители</a>
+      <a class="nav-item nav-return" href="/"><span class="nav-symbol" aria-hidden="true">◫</span>Все модули</a>
+    </nav>
+    <div class="sidebar-footer"><span class="small-label">ПРОГРАММНЫЕ РОЛИ</span><strong>Разделить работу. Сохранить общий контекст.</strong><p>Биологические названия — условная аналогия. Функции мозга распределены и перекрываются.</p><span class="version">Исследовательский прототип · v0.8</span></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><div class="breadcrumb">Meta-Harness <span>/</span><strong>Контур и сети</strong></div><div class="connection"><span id="brain-dot" class="status-dot loading"></span><span id="brain-status" role="status">Подключение…</span><button id="refresh-brain" class="text-button" type="button">Обновить</button></div></header>
+    <main id="main" tabindex="-1">
+      <div class="page-heading"><div><p class="eyebrow">COORDINATION / MEMORY / COMPUTATIONAL MODELS</p><h1>Единый контекст, разные роли</h1><p class="lead">Исследовательский контур распределяет вычисления, сохраняет источники и проверяет происхождение результатов. В лаборатории можно отдельно исследовать KAN и контекстную память последовательностей.</p></div><span class="badge neutral">Программная координация</span></div>
+      <div id="global-error" class="error-panel panel" role="alert" hidden></div>
+      <div class="brain-tabs" role="tablist" aria-label="Режим работы">
+        <button id="tab-circuit" role="tab" aria-selected="true" aria-controls="panel-circuit" tabindex="0" type="button">Исследовательский контур</button>
+        <button id="tab-lab" role="tab" aria-selected="false" aria-controls="panel-lab" tabindex="-1" type="button">Лаборатория сетей</button>
+      </div>
+      <section id="panel-circuit" role="tabpanel" aria-labelledby="tab-circuit">
+        <div class="brain-intro"><span class="brain-intro-mark" aria-hidden="true">01</span><div><h2>Вопрос → план → независимые вычислительные ветви</h2><p>Здесь работают программные правила и процессы workers. Независимые внешние LLM для этих ролей не настроены. Текст вопроса сохраняет контекст, но не меняет синтетические задачи модулей на биологическую модель.</p></div></div>
+        <div class="brain-setup">
+          <article class="panel"><h2>Новая исследовательская сессия</h2>
+            <form id="session-form"><fieldset id="session-fields" class="brain-fieldset" disabled>
+              <label for="session-question">Исследовательский вопрос<textarea id="session-question" rows="3" minlength="1" maxlength="2000" required placeholder="Например: как сравнить изменение связей, функции на рёбрах и контекстную память в воспроизводимых вычислительных задачах?"></textarea></label>
+              <fieldset class="brain-fieldset plugin-choices"><legend>Вычислительные ветви</legend>
+                <label class="checkbox-label"><input type="checkbox" name="brain-plugin" value="kan_benchmark" checked>KAN · функции на рёбрах</label>
+                <label class="checkbox-label"><input type="checkbox" name="brain-plugin" value="cortical_sequence" checked>Кортикальная аналогия · память последовательностей</label>
+                <label class="checkbox-label"><input type="checkbox" name="brain-plugin" value="structural_plasticity" checked>Структурная пластичность · перестройка связей</label>
+              </fieldset>
+              <div class="brain-form-row"><label for="session-seed">Seed<input id="session-seed" type="number" min="0" max="2147483647" step="1" value="42" required></label><label for="session-data-class">Класс локального вопроса<select id="session-data-class"><option value="public">Публичный</option><option value="internal">Внутренний</option></select></label></div>
+              <p class="form-help">Вопрос сохраняется локально и входит в экспорт сессии. У каждой ветви своя контрольная задача и метрики. Общая «точность мозга» не вычисляется.</p>
+              <button id="start-session" class="button primary" type="submit">Создать план и поставить в очередь →</button>
+            </fieldset></form><div id="session-feedback" class="brain-feedback" aria-live="polite"></div>
+          </article>
+          <aside class="panel brain-session-list"><div class="section-heading"><h2>Сохранённые сессии</h2><button id="refresh-sessions" type="button" class="text-button">Обновить</button></div><div id="session-list"><p class="muted">Загрузка…</p></div><p class="form-help">Выбор сессии открывает её события и вычислительные результаты. Для исполнения очереди нужен запущенный координатор и workers.</p></aside>
+        </div>
+        <article class="panel brain-current"><div class="brain-current-head"><div><p class="eyebrow">ОБЩАЯ РАБОЧАЯ ПАМЯТЬ</p><h2 id="current-question">Сессия ещё не выбрана</h2><p id="current-meta" class="form-help">Создайте сессию или выберите сохранённую.</p></div><span id="current-status" class="badge neutral">Ожидание</span></div>
+          <div class="brain-session-controls"><button id="tick-session" class="button secondary" type="button" disabled>Обновить и проверить результаты</button><button id="cancel-session" class="button secondary" type="button" disabled>Отменить сессию</button><button id="export-session" class="text-button" type="button" disabled>Скачать JSON ↓</button><label class="checkbox-label"><input id="auto-poll" type="checkbox" checked>Обновлять автоматически</label></div><p id="poll-note" class="form-help">Опрос запускается только для выбранной незавершённой сессии.</p>
+          <div class="brain-progress"><progress id="session-progress" max="1" value="0" aria-label="Завершённые вычислительные ветви"></progress><span id="session-progress-text">Нет вычислительных ветвей</span></div>
+          <p id="workspace-summary" class="result-summary">Результаты появятся после выполнения задач.</p><div id="session-issues"></div><div id="session-critique"></div>
+        </article>
+        <div class="section-heading"><h2>Функциональная схема ролей</h2><span class="muted">Состояние по событиям выбранной сессии</span></div><p class="form-help">Карточки обозначают обязанности программных компонентов. Счётчик показывает реальные записи журнала, а не электрическую активность или число нейронов.</p>
+        <div id="brain-regions" class="brain-regions"><p class="muted">Описание ролей загружается с сервера…</p></div>
+        <details class="panel brain-details"><summary>Связи между программными ролями</summary><div id="role-connections"></div></details>
+        <div class="section-heading"><h2>Вычислительные ветви</h2><span id="branch-count" class="muted">Нет запущенных задач</span></div><div id="branch-results" class="brain-branches"><p class="brain-empty">Здесь будут статусы jobs, метрики, проверки происхождения и ограничения каждого результата.</p></div>
+        <div class="brain-evidence-grid"><article class="panel"><h2>Источники и память</h2><div id="session-evidence"><p class="muted">Материалы появятся в выбранной сессии.</p></div></article><article class="panel"><h2>Общий журнал</h2><p class="form-help">Вход, выход и происхождение действия доступны в каждой записи.</p><div id="session-events" class="brain-events"><p class="muted">Событий пока нет.</p></div></article></div>
+        <details class="panel brain-details"><summary>Полный JSON выбранной сессии</summary><pre id="session-json">Сессия не выбрана.</pre></details>
+      </section>
+      <section id="panel-lab" role="tabpanel" aria-labelledby="tab-lab" hidden>
+        <div class="brain-intro"><span class="brain-intro-mark" aria-hidden="true">02</span><div><h2>Изучить поведение вычислительной модели</h2><p>Настройте параметры, выполните расчёт и сравните модель с её контролем. Графики строятся по возвращённым данным запуска.</p></div></div>
+        <div class="experiment-layout">
+          <article class="panel experiment-controls"><h2>Параметры модели</h2><form id="lab-form"><fieldset id="lab-fields" class="brain-fieldset" disabled><label for="lab-plugin">Вычислительный модуль<select id="lab-plugin"><option value="">Загрузка модулей…</option></select></label><p id="lab-description" class="form-help"></p><div id="lab-parameters" class="parameter-fields"></div><button id="lab-run" class="button primary full-width" type="submit">Выполнить расчёт →</button></fieldset></form><p class="form-help">Запуск в отдельном процессе. Параметры и результат сохраняются в журнале платформы.</p><a href="/morphogenesis.html" class="text-button">Отдельный стенд структурной пластичности →</a></article>
+          <div class="result-region"><div id="lab-feedback" class="brain-feedback" aria-live="polite"></div><div id="lab-result"><div class="panel empty-state"><span class="empty-symbol" aria-hidden="true">∿</span><h2>Готово к эксперименту</h2><p>Выберите модуль и выполните расчёт. До запуска здесь нет демонстрационных результатов.</p></div></div><button id="download-lab" class="button secondary" type="button" hidden>Скачать результат JSON ↓</button></div>
+        </div>
+      </section>
+      <div class="boundary-note"><span class="note-mark" aria-hidden="true">i</span><p>Схема не воспроизводит человеческий мозг. Синтетические эксперименты не проверяют сознание, морфогенез организма или эффект вмешательства в геном. Совпадение выводов программных ролей не является независимой научной репликацией.</p></div>
+      <footer class="page-footer"><span>Meta-Harness / функции на рёбрах · контекст · структурная пластичность</span><span>Реальное исполнение · Проверяемое происхождение · Сохранённые ограничения</span></footer>
+    </main>
+  </div>
+</body>
+</html>

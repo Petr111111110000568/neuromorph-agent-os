@@ -1,0 +1,438 @@
+[
+  {
+    "id": "agent-virtual-lab",
+    "name": "Virtual Lab",
+    "organization": "Stanford University и Chan Zuckerberg Biohub — San Francisco, группы James Zou и John Pak",
+    "entity_type": "framework",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Открытый Python framework; запуск своей копии; отдельный доступ к LLM и научным зависимостям",
+    "license": "MIT для кода; модели, данные и зависимости имеют отдельные условия",
+    "source_url": "https://www.nature.com/articles/s41586-025-09442-9",
+    "docs_url": "https://github.com/zou-group/virtual-lab",
+    "provenance_urls": [
+      "https://www.nature.com/articles/s41586-025-09442-9",
+      "https://github.com/zou-group/virtual-lab/blob/main/LICENSE",
+      "https://www.biorxiv.org/content/10.1101/2024.11.11.623004v1"
+    ],
+    "capabilities": [
+      "Совет агентов с руководителем",
+      "Обсуждение исследовательских задач",
+      "Организация вычислительных исследований"
+    ],
+    "strengths": [
+      "Простая расширяемая модель ролей",
+      "Опубликован экспериментальный пример"
+    ],
+    "weaknesses": [
+      "Роли не являются независимыми экспертами",
+      "Зависит от выбранной LLM и научных инструментов",
+      "Нет валидированного симулятора целого организма"
+    ],
+    "evidence_level": "published_study",
+    "evidence_summary": "Nature2025: разработан вычислительный процесс, исследованы 92 нанотела; два показали улучшенное связывание в конкретных лабораторных тестах. Это не клиническая эффективность.",
+    "copy_strategy": "Форк MIT-кода с сохранением лицензии; закрепить commit и отдельно лицензировать зависимости; подключать совет как изолированный worker.",
+    "source_quality": "Первичная исследовательская статья и официальный репозиторий; результаты авторов, локальное воспроизведение в этой работе не проводилось.",
+    "integration_status": "documented_not_connected",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "agent-biomni",
+    "name": "Biomni",
+    "organization": "Stanford University, Biomni Team / snap-stanford",
+    "entity_type": "agent",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Открытый код; собственное крупное окружение и ключи провайдеров; возможен локальный LLM",
+    "license": "Apache-2.0 для кода; отдельные условия каждого инструмента, базы и модели",
+    "source_url": "https://www.science.org/doi/10.1126/science.adz4351",
+    "docs_url": "https://github.com/snap-stanford/Biomni",
+    "provenance_urls": [
+      "https://biomni.stanford.edu/",
+      "https://www.science.org/doi/10.1126/science.adz4351",
+      "https://github.com/snap-stanford/Biomni/blob/main/LICENSE"
+    ],
+    "capabilities": [
+      "Поиск подходящих биомедицинских инструментов",
+      "Планирование и выполнение кода",
+      "Анализ мультимодальных исследовательских данных"
+    ],
+    "strengths": [
+      "Широкий биомедицинский набор функций",
+      "Модульное соединение анализа и баз данных"
+    ],
+    "weaknesses": [
+      "Большое сложное окружение",
+      "Генерируемый код требует изоляции",
+      "Модельный анализ не подтверждает причинность или безопасность вмешательства"
+    ],
+    "evidence_level": "published_study",
+    "evidence_summary": "В Science описаны оценки на разных биомедицинских задачах и отдельные случаи анализа данных, белковой стабильности и взаимодействия с лабораторными приборами. Полная независимая репликация не установлена.",
+    "copy_strategy": "Закреплённый fork Apache-2.0; отдельный образ и узкий список разрешённых аналитических инструментов; API-секреты выдаются на задачу.",
+    "source_quality": "Первичный абстракт Science, Stanford-сайт и официальный LICENSE; полное закрытое содержание статьи не прочитано.",
+    "integration_status": "documented_not_connected",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "agent-tooluniverse",
+    "name": "ToolUniverse",
+    "organization": "Harvard Medical School, лаборатория Marinka Zitnik; соавторы Harvard/MIT",
+    "entity_type": "platform",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Python SDK, MCP, HTTP и прямые функции; условия внешних сервисов различаются",
+    "license": "Apache-2.0 для платформы; лицензия не переносится на подключаемые ресурсы",
+    "source_url": "https://arxiv.org/abs/2509.23426",
+    "docs_url": "https://zitniklab.hms.harvard.edu/ToolUniverse/",
+    "provenance_urls": [
+      "https://arxiv.org/abs/2509.23426",
+      "https://github.com/mims-harvard/ToolUniverse",
+      "https://github.com/mims-harvard/ToolUniverse/blob/main/LICENSE"
+    ],
+    "capabilities": [
+      "Каталог научных инструментов",
+      "Поиск и вызов инструментов",
+      "Композиция через унифицированные схемы",
+      "MCP-интеграция"
+    ],
+    "strengths": [
+      "Наиболее прямой путь к расширению каталога Meta-Harness",
+      "Разделение поиска инструмента и его исполнения"
+    ],
+    "weaknesses": [
+      "Тысячи инструментов не означают тысячи одинаково надёжных подключений",
+      "Разнородные лимиты, данные и авторизация",
+      "Нужна проверка контрактов каждого разрешённого вызова"
+    ],
+    "evidence_level": "authors_benchmark",
+    "evidence_summary": "В доступной авторской работе описано свыше 2700 инструментов по состоянию на июль 2026. Это масштаб каталога, не доказательство биологической результативности каждого инструмента.",
+    "copy_strategy": "Подключить закреплённую версию сервера в отдельном окружении; сначала metadata/read-only allowlist; не активировать весь каталог автоматически.",
+    "source_quality": "Первичная авторская работа с явными аффилиациями, рабочий репозиторий и документация; число инструментов приведено авторами.",
+    "integration_status": "documented_not_connected",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "agent-paper2agent",
+    "name": "Paper2Agent",
+    "organization": "Stanford University, лаборатории James Zou и Jonathan Pritchard",
+    "entity_type": "framework",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Открытый framework; Claude Code и зависимости исследуемых репозиториев; генерирует MCP-серверы",
+    "license": "MIT для кода Paper2Agent; права на статью, данные, внешние репозитории и веса проверяются отдельно",
+    "source_url": "https://www.nature.com/articles/s41586-026-11044-y",
+    "docs_url": "https://github.com/jmiao24/Paper2Agent",
+    "provenance_urls": [
+      "https://www.nature.com/articles/s41586-026-11044-y",
+      "https://github.com/jmiao24/Paper2Agent/blob/main/LICENSE"
+    ],
+    "capabilities": [
+      "Преобразование методов статьи в MCP-инструменты",
+      "Создание и проверка тестов",
+      "Воспроизведение вычислительных результатов"
+    ],
+    "strengths": [
+      "Связь инструментов с первичным кодом",
+      "Автоматическая проверка и отбраковка неподходящих инструментов"
+    ],
+    "weaknesses": [
+      "Нет гарантии агентирования произвольной статьи",
+      "Отсутствующие данные и сложные зависимости блокируют сборку",
+      "Тестовое совпадение не доказывает научную истинность метода"
+    ],
+    "evidence_level": "published_study",
+    "evidence_summary": "Nature16.09.2026: успешно агентированы 74 из 100 вычислительно-биологических работ;593 из 599 предложенных инструментов прошли авторскую автоматическую валидацию.",
+    "copy_strategy": "Форк MIT-framework; создавать кандидата в карантине; публиковать в каталоге только после лицензирования, воспроизведения и review; сохранять хэши источников.",
+    "source_quality": "Рецензируемая первичная публикация и официальный код; опубликованный вариант отличается от раннего препринта.",
+    "integration_status": "documented_not_connected",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "agent-ai-scientist-v2",
+    "name": "The AI Scientist-v2",
+    "organization": "Sakana AI; исследовательские соавторы University of Oxford и University of British Columbia",
+    "entity_type": "agent",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Source-available code; Linux/CUDA/PyTorch в заявленном окружении; LLM APIs",
+    "license": "The AI Scientist Source Code License v1.0, December2025; не обозначать текущий main как Apache-2.0",
+    "source_url": "https://www.nature.com/articles/s41586-026-10265-5",
+    "docs_url": "https://github.com/SakanaAI/AI-Scientist-v2",
+    "provenance_urls": [
+      "https://www.nature.com/articles/s41586-026-10265-5",
+      "https://sakana.ai/ai-scientist-nature/",
+      "https://github.com/SakanaAI/AI-Scientist-v2/blob/main/LICENSE"
+    ],
+    "capabilities": [
+      "Генерация ML-гипотез",
+      "Вычислительные эксперименты",
+      "Анализ и подготовка научных рукописей"
+    ],
+    "strengths": [
+      "Полный вычислительный исследовательский цикл",
+      "Поиск по дереву экспериментальных альтернатив"
+    ],
+    "weaknesses": [
+      "Ошибки кода, ссылок и методологии",
+      "Риск самоподтверждения оценками LLM",
+      "Существенные ограничения лицензии и вычислительные затраты"
+    ],
+    "evidence_level": "published_study",
+    "evidence_summary": "Одна сгенерированная работа прошла первый раунд рецензирования workshop ICLR с 70% приёмом и затем была отозвана авторами эксперимента. Это не принятие в основной трек и не доказательство биомедицинской применимости.",
+    "copy_strategy": "Разрешённый лицензией fork после проверки условий; сохранять обязательное раскрытие AI-авторства, исключать неприменимые сценарии; выполнять только внутри контролируемого вычислительного worker.",
+    "source_quality": "Nature, официальный сайт и текущий LICENSE; важное расхождение с более ранними описаниями Apache-лицензии.",
+    "integration_status": "documented_not_connected",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "agent-robin",
+    "name": "Robin",
+    "organization": "FutureHouse — исходный исследовательский проект; компоненты платформы теперь Edison Scientific",
+    "entity_type": "agent",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Открытый orchestrator; LLM API; часть анализа требует Edison account/API и кредитов",
+    "license": "Apache-2.0 для кода Robin; Edison API и модельные провайдеры отдельно",
+    "source_url": "https://pubmed.ncbi.nlm.nih.gov/42156546/",
+    "docs_url": "https://github.com/Future-House/robin",
+    "provenance_urls": [
+      "https://www.futurehouse.org/research/demonstrating-end-to-end-scientific-discovery-with-robin-a-multi-agent-system",
+      "https://advances.edisonscientific.com/research/robin-multi-agent-system/",
+      "https://github.com/Future-House/robin/blob/main/LICENSE"
+    ],
+    "capabilities": [
+      "Связь обзора, гипотез и анализа",
+      "Итеративное обновление гипотез после новых данных"
+    ],
+    "strengths": [
+      "Опубликован биологический цикл с лабораторной проверкой",
+      "Доступен исходный orchestration code"
+    ],
+    "weaknesses": [
+      "Открытый код не включает всю облачную функциональность",
+      "Лабораторные опыты выполняла исследовательская команда",
+      "Результаты культур клеток не равны результатам на людях"
+    ],
+    "evidence_level": "published_study",
+    "evidence_summary": "Nature2026: кандидаты для исследования сухой возрастной макулярной дегенерации проверены in vitro, включая первичные человеческие RPE-клетки. Не показаны лечение людей или управляемое преобразование взрослого организма.",
+    "copy_strategy": "Копировать orchestration code по Apache-2.0; подключать Edison только официальным API с собственным разрешённым профилем; внешние опыты отделены от цифрового планирования.",
+    "source_quality": "Первичный проект, официальный репозиторий и библиографический абстракт; автоматические поля аффилиаций агрегатора не использованы.",
+    "integration_status": "documented_not_connected",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "agent-edison",
+    "name": "Edison Scientific Platform / Kosmos",
+    "organization": "Edison Scientific, коммерческая компания, выделенная из FutureHouse в ноябре 2025",
+    "entity_type": "platform",
+    "network_layers": [
+      "clear_web",
+      "authenticated"
+    ],
+    "access_mode": "Облачная платформа и клиент/API; учётная запись; тарифы и лимиты зависят от договора",
+    "license": "Проприетарный сервис; открытые библиотеки компании имеют самостоятельные лицензии",
+    "source_url": "https://docs.edisonscientific.com/",
+    "docs_url": "https://docs.edisonscientific.com/",
+    "provenance_urls": [
+      "https://www.futurehouse.org/news/announcing-edison-scientific",
+      "https://docs.edisonscientific.com/",
+      "https://platform.edisonscientific.com/"
+    ],
+    "capabilities": [
+      "Обзор литературы",
+      "Анализ данных",
+      "Генерация гипотез",
+      "Отчёты с трассировкой выводов"
+    ],
+    "strengths": [
+      "Единый интерфейс нескольких исследовательских агентов",
+      "Документированный программный доступ"
+    ],
+    "weaknesses": [
+      "Зависимость от сервиса и оплаты",
+      "Условия хранения данных необходимо проверить до передачи",
+      "Маркетинговые эквиваленты времени учёного не являются объективной мерой"
+    ],
+    "evidence_level": "product_claim",
+    "evidence_summary": "Документация описывает Kosmos и специализированные Literature, Analysis, Precedent, Molecules. Заявления об объёме работы за запуск и экономии месяцев — заявления поставщика, не наши измерения.",
+    "copy_strategy": "Реализовать адаптер официального API с лимитами и происхождением данных; закрытую платформу и её агентов не считать копируемыми.",
+    "source_quality": "Документация и официальное объявление операторов; коммерческая заинтересованность; текущая доступность личного аккаунта не проверена.",
+    "integration_status": "documented_not_connected",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "agent-google-co-scientist",
+    "name": "Google Co-Scientist",
+    "organization": "Google Cloud AI Research, Google DeepMind, Google Research; научные партнёры указаны в Nature",
+    "entity_type": "agent",
+    "network_layers": [
+      "clear_web",
+      "authenticated"
+    ],
+    "access_mode": "Исследовательская система Google; общедоступный self-hosted дистрибутив и доступ текущего аккаунта не подтверждены",
+    "license": "Открытая лицензия на полную систему не установлена; публикация архитектуры не предоставляет код/веса",
+    "source_url": "https://www.nature.com/articles/s41586-026-10644-y",
+    "docs_url": "https://research.google/blog/accelerating-scientific-breakthroughs-with-an-ai-co-scientist/",
+    "provenance_urls": [
+      "https://www.nature.com/articles/s41586-026-10644-y",
+      "https://research.google/blog/accelerating-scientific-breakthroughs-with-an-ai-co-scientist/"
+    ],
+    "capabilities": [
+      "Генерация и критика гипотез",
+      "Турнирное сравнение идей",
+      "Итеративное уточнение исследовательских предложений"
+    ],
+    "strengths": [
+      "Опубликованы биомедицинские демонстрации",
+      "Явные роли критика и метарецензента"
+    ],
+    "weaknesses": [
+      "Доступ не гарантирован",
+      "Внутренний Elo не является независимой биологической оценкой",
+      "Зависит от лабораторной проверки людьми"
+    ],
+    "evidence_level": "published_study",
+    "evidence_summary": "Nature2026 описывает три биомедицинских направления проверки; часть лекарственных гипотез для AML проверена in vitro. Автоматические рейтинги качества не основаны на независимой истине.",
+    "copy_strategy": "Использовать опубликованный архитектурный принцип для собственной реализации без названия/имитации сервиса; официальный коннектор только после подтверждения доступа.",
+    "source_quality": "Первичная публикация с аффилиациями и официальный исследовательский блог; коммерческая система не была запущена.",
+    "integration_status": "documented_not_connected",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "agent-coscientist-cmu",
+    "name": "Coscientist",
+    "organization": "Carnegie Mellon University, группа Gabe Gomes",
+    "entity_type": "agent",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Публичная упрощённая реализация; полномасштабный запуск требует настроенной лабораторной инфраструктуры",
+    "license": "Apache-2.0 with Commons Clause; коммерческое использование ограничено",
+    "source_url": "https://www.nature.com/articles/s41586-023-06792-0",
+    "docs_url": "https://github.com/gomesgroup/coscientist",
+    "provenance_urls": [
+      "https://www.nature.com/articles/s41586-023-06792-0",
+      "https://www.cmu.edu/news/stories/archives/2023/december/cmu-designed-artificially-intelligent-coscientist-automates-scientific-discovery",
+      "https://github.com/gomesgroup/coscientist"
+    ],
+    "capabilities": [
+      "Чтение документации инструментов",
+      "Кодовое планирование",
+      "Связь с API автоматизированной лаборатории"
+    ],
+    "strengths": [
+      "Реально выполненные химические демонстрации",
+      "Показывает связь текстового агента с физической аппаратурой"
+    ],
+    "weaknesses": [
+      "Репозиторий содержит simplified implementation",
+      "Химическая демонстрация не переносится автоматически на генетику",
+      "Ограничения лицензии и необходимость аппаратных интеграций"
+    ],
+    "evidence_level": "published_study",
+    "evidence_summary": "Nature2023: шесть типов задач, включая оптимизацию химических реакций с лабораторным исполнением. Это специальная химическая система, не симулятор организма.",
+    "copy_strategy": "Оценить Commons Clause до копирования/распространения; исследовательский reference adapter для чтения результатов, без подключения аппаратуры по умолчанию.",
+    "source_quality": "Рецензируемая статья, CMU-новость о собственной работе и официальный репозиторий; заявленное ограничение лицензии проверено в README.",
+    "integration_status": "documented_not_connected",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "agent-cellvoyager",
+    "name": "CellVoyager",
+    "organization": "Stanford University, лаборатория James Zou",
+    "entity_type": "agent",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Открытый код, Streamlit GUI, Jupyter; собственные .h5ad и LLM ключи",
+    "license": "MIT для кода; исходные наборы данных и модели лицензируются отдельно",
+    "source_url": "https://www.nature.com/articles/s41592-026-03029-6",
+    "docs_url": "https://github.com/zou-group/CellVoyager",
+    "provenance_urls": [
+      "https://www.nature.com/articles/s41592-026-03029-6",
+      "https://www.biorxiv.org/content/10.1101/2025.06.03.657517v1",
+      "https://github.com/zou-group/CellVoyager/blob/main/LICENSE"
+    ],
+    "capabilities": [
+      "Построение и проверка вычислительных гипотез на scRNA-seq",
+      "Учёт предыдущих анализов",
+      "Сохранение исполняемого Jupyter notebook"
+    ],
+    "strengths": [
+      "Узкая полезная область для анализа клеточных состояний",
+      "Интерактивная обратная связь пользователя"
+    ],
+    "weaknesses": [
+      "Нужны корректные данные и статистический контроль",
+      "Множественные поиски могут давать ложные открытия",
+      "Связи в scRNA-seq не доказывают изменение фенотипа"
+    ],
+    "evidence_level": "published_study",
+    "evidence_summary": "Nature Methods2026: CellBench включает 76 исследований; сообщено преимущество до 23% в предсказании анализов авторов; три углублённых случая. Это исследовательская оценка, не проспективная клиническая проверка.",
+    "copy_strategy": "MIT-fork в отдельном аналитическом окружении; начать с публичного тестового набора, заранее заданных метрик и отложенной проверки гипотез.",
+    "source_quality": "Проверен опубликованный вариант; его 76 исследований и 23% отличаются от раннего препринта 50 и 20%.",
+    "integration_status": "documented_not_connected",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "agent-paperqa2",
+    "name": "PaperQA2",
+    "organization": "FutureHouse / репозиторий Future-House; текущая документация Edison Scientific",
+    "entity_type": "agent",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Python-пакет, CLI и локальный индекс документов; модель и embedding backend выбираются отдельно",
+    "license": "Apache-2.0 для кода; права на индексируемые документы и условия моделей отдельно",
+    "source_url": "https://github.com/Future-House/paper-qa",
+    "docs_url": "https://docs.edisonscientific.com/",
+    "provenance_urls": [
+      "https://github.com/Future-House/paper-qa",
+      "https://docs.edisonscientific.com/llms.txt"
+    ],
+    "capabilities": [
+      "Вопросы по научным документам",
+      "Ответы с источниками",
+      "Поиск противоречий и метаданных"
+    ],
+    "strengths": [
+      "Подходит для локального корпуса Meta-Harness",
+      "Есть локально размещаемые backend-настройки"
+    ],
+    "weaknesses": [
+      "RAG может пропустить опровержения",
+      "Наличие цитаты не гарантирует правильный вывод",
+      "Внешняя LLM получает переданные фрагменты"
+    ],
+    "evidence_level": "documentation",
+    "evidence_summary": "Рабочая документация описывает индексирование, поиск и цитирование. Заявления авторов о превосходстве над людьми не использованы как универсальная оценка.",
+    "copy_strategy": "Закрепить Apache-2.0 пакет, отдельный индекс на проект; разрешённые источники; запрет внешней передачи приватного корпуса без политики.",
+    "source_quality": "Официальный репозиторий разработчиков с документацией; качество на материалах пользователя здесь не измерялось.",
+    "integration_status": "documented_not_connected",
+    "checked_at": "2026-09-18"
+  }
+]

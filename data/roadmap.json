@@ -1,0 +1,70 @@
+{
+  "items": [
+    {
+      "id": "federation",
+      "title": "Добровольный обмен исследовательскими результатами",
+      "status": "implemented_local_prototype",
+      "description": "Четыре каталога, черновики предложений, приглашения, отдельный шлюз, задания, проверка и доступ за вклад. Реальные внешние участники пока не привлечены."
+    },
+    {
+      "id": "structural-plasticity",
+      "title": "Вычислительный эксперимент по структурной пластичности",
+      "status": "implemented_synthetic_benchmark",
+      "description": "Плагин structural_plasticity сравнивает fixed/random/guided на синтетических задачах. Собственная инженерная интерпретация мотивов Савельева; не авторский алгоритм, не модель мозга и не подтверждение изменения организма."
+    },
+    {
+      "id": "distributed",
+      "title": "Распределённая сеть и исследовательские кампании",
+      "status": "implemented",
+      "description": "Постоянная очередь, HTTPS hub, независимые workers, bounded discovery, реестр доступа, отмена и восстановление."
+    },
+    {
+      "id": "core",
+      "title": "Локальная исследовательская консоль",
+      "status": "implemented",
+      "description": "Реестр источников, совет правил, вычисления, workflow, SQLite, аудит и экспорт."
+    },
+    {
+      "id": "research-tools",
+      "title": "ToolUniverse и Paper2Agent",
+      "status": "reviewed_not_installed",
+      "description": "Проверить выбранные инструменты в отдельном worker, закрепить окружение и контрольный результат."
+    },
+    {
+      "id": "omics",
+      "title": "Геномика и эпигеномика",
+      "status": "reviewed_not_installed",
+      "description": "Nextflow/nf-core для пайплайнов, scvi-tools для single-cell, AlphaGenome для ограниченных задач регуляторного прогнозирования."
+    },
+    {
+      "id": "agents",
+      "title": "Длительные задания с моделями",
+      "status": "requires_provider_and_host",
+      "description": "Постоянный сервер, отдельная авторизация провайдера, бюджет, очередь, отмена и восстановление."
+    },
+    {
+      "id": "sandbox",
+      "title": "Изоляция недоверенных плагинов",
+      "status": "requires_external_runtime",
+      "description": "Контейнерный worker для проверенных инструментов; отдельная VM/microVM для недоверенного кода. В текущей среде namespaces недоступны."
+    },
+    {
+      "id": "web-hosting",
+      "title": "Развёртывание веб-приложения",
+      "status": "prepared_architecture",
+      "description": "Исследовательская UI-консоль + защищённый backend. Публичная публикация и обработка персональных геномов не настроены."
+    },
+    {
+      "id": "quantum",
+      "title": "Пакеты квантового моделирования",
+      "status": "classical_demo_ready",
+      "description": "Встроенная двухкубитная CPU-демонстрация работает; Qiskit/PennyLane/QuTiP и реальный QPU требуют отдельного подключения."
+    },
+    {
+      "id": "biology",
+      "title": "Биологическая валидация",
+      "status": "not_demonstrated",
+      "description": "Каждая модель требует данных, области применимости и независимой проверки; возможность перестройки взрослого организма не установлена."
+    }
+  ]
+}

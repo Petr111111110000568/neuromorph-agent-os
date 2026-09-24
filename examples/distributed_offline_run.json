@@ -1,0 +1,418 @@
+{
+  "passed": true,
+  "online": false,
+  "independent_workers": 2,
+  "campaign": {
+    "id": "ad370c48-b942-46e8-bf3a-30cb9640bf6a",
+    "question": "Эпигенетика: проверка качества вычислительных моделей",
+    "status": "completed",
+    "iteration": 1,
+    "max_jobs": 2,
+    "events": [
+      {
+        "at": "2026-09-18T19:26:16.877+00:00",
+        "event": "iteration_submitted",
+        "iteration": 0,
+        "job_ids": [
+          "job_4688f6de45cc40d1bc82b345b5305ed3",
+          "job_1d5786fc2dd7458386380d2c8b633bee"
+        ],
+        "query": "genomics computational models epigenetics cell state models"
+      },
+      {
+        "at": "2026-09-18T19:26:18.716+00:00",
+        "event": "iteration_reviewed",
+        "interpretation": "Метаданные и методические тесты; биологическая валидация отсутствует.",
+        "iteration": 0,
+        "new_resource_count": 8,
+        "notes": []
+      }
+    ]
+  },
+  "resources_before": 60,
+  "resources_after": 60,
+  "search": {
+    "errors": [],
+    "items": [
+      {
+        "access": "documentation_public",
+        "adapter": {
+          "available": false,
+          "plugin_id": null
+        },
+        "capabilities": [
+          "single_cell",
+          "epigenomics",
+          "ml_benchmark"
+        ],
+        "computability": {
+          "adapter_available": false,
+          "mode": "metadata_only",
+          "reason": "Исполняемый адаптер в этой сборке отсутствует; документация не является подключением."
+        },
+        "description": "Вероятностные модели scRNA-seq, scATAC-seq, мультимодальных и метилированных данных; контроль качества и ошибок моделей.",
+        "id": "platform-scvi",
+        "kind": "scientific_platform",
+        "limitations": [
+          "Модели обучаются и проверяются для определённых типов данных; результаты не являются прогнозом создания органов или нового фенотипа.",
+          "Адаптер отсутствует, пакет и зависимости не установлены."
+        ],
+        "match_explanation": {
+          "capabilities": [
+            "epigenomics",
+            "genomics"
+          ],
+          "method": "3 × совпавшие слова + 5 × совпавшие тематические группы; без оценки научной истинности",
+          "terms": [
+            "cell",
+            "genomics"
+          ]
+        },
+        "provenance": {
+          "origin": "catalog",
+          "source_url": "https://docs.scvi-tools.org/en/stable/"
+        },
+        "score": 16,
+        "status": "documented_adapter_unavailable",
+        "title": "scvi-tools · анализ одиночных клеток",
+        "url": "https://docs.scvi-tools.org/en/stable/"
+      },
+      {
+        "access": "code_public_weights_separate_terms",
+        "adapter": {
+          "available": false,
+          "plugin_id": null
+        },
+        "capabilities": [
+          "genomics",
+          "epigenomics",
+          "ml_benchmark"
+        ],
+        "computability": {
+          "adapter_available": false,
+          "mode": "metadata_only",
+          "reason": "Исполняемый адаптер в этой сборке отсутствует; документация не является подключением."
+        },
+        "description": "Исследовательский код моделей последовательность → регуляторные измерения; оценка ограничений на контрольных данных.",
+        "id": "platform-alphagenome",
+        "kind": "scientific_platform",
+        "limitations": [
+          "Разные условия для кода и весов; вычислительные ресурсы и доступ требуют проверки.",
+          "Предсказание регуляторного сигнала не является прогнозом признаков целого организма.",
+          "Исполняемый адаптер отсутствует."
+        ],
+        "match_explanation": {
+          "capabilities": [
+            "epigenomics",
+            "genomics"
+          ],
+          "method": "3 × совпавшие слова + 5 × совпавшие тематические группы; без оценки научной истинности",
+          "terms": [
+            "genomics"
+          ]
+        },
+        "provenance": {
+          "origin": "catalog",
+          "source_url": "https://github.com/google-deepmind/alphagenome_research"
+        },
+        "score": 13,
+        "status": "documented_adapter_unavailable",
+        "title": "AlphaGenome Research · модели регуляции генома",
+        "url": "https://github.com/google-deepmind/alphagenome_research"
+      },
+      {
+        "access": "not_verified",
+        "adapter": {
+          "available": false,
+          "plugin_id": null
+        },
+        "capabilities": [
+          "epigenomics",
+          "genomics"
+        ],
+        "computability": {
+          "adapter_available": false,
+          "mode": "metadata_only",
+          "reason": "Исполняемый адаптер в этой сборке отсутствует; документация не является подключением."
+        },
+        "description": "Регистрация выбранных datasets и их accession/происхождения.",
+        "id": "encode-metadata",
+        "kind": "epigenomics-resource",
+        "limitations": [
+          "Страница REST API не загрузилась; live API здесь не проверялся. Лицензия портала не равна условиям всех datasets."
+        ],
+        "match_explanation": {
+          "capabilities": [
+            "epigenomics",
+            "genomics"
+          ],
+          "method": "3 × совпавшие слова + 5 × совпавшие тематические группы; без оценки научной истинности",
+          "terms": [
+            "genomics"
+          ]
+        },
+        "provenance": {
+          "origin": "catalog",
+          "source_url": "https://github.com/ENCODE-DCC/encoded"
+        },
+        "score": 13,
+        "status": "reviewed",
+        "title": "ENCODE metadata database",
+        "url": "https://github.com/ENCODE-DCC/encoded"
+      },
+      {
+        "access": "public_metadata",
+        "adapter": {
+          "available": false,
+          "plugin_id": null
+        },
+        "capabilities": [
+          "literature",
+          "genomics",
+          "epigenomics"
+        ],
+        "computability": {
+          "adapter_available": false,
+          "mode": "metadata_only",
+          "reason": "Исполняемый адаптер в этой сборке отсутствует; документация не является подключением."
+        },
+        "description": "Поиск публичных библиографических метаданных; встроен ограниченный JSON-клиент.",
+        "id": "europepmc-api",
+        "kind": "metadata_provider",
+        "limitations": [
+          "Сеть проверяется при каждом запросе; клиент не загружает полные тексты и не проверяет научную достоверность."
+        ],
+        "match_explanation": {
+          "capabilities": [
+            "epigenomics",
+            "genomics"
+          ],
+          "method": "3 × совпавшие слова + 5 × совпавшие тематические группы; без оценки научной истинности",
+          "terms": [
+            "genomics"
+          ]
+        },
+        "provenance": {
+          "origin": "catalog",
+          "retrieved_at": "2026-09-18",
+          "source_id": "bounded_live_probe",
+          "source_url": "https://europepmc.org/RestfulWebService"
+        },
+        "score": 13,
+        "status": "client_tested_public_metadata",
+        "title": "Europe PMC · индекс научных публикаций",
+        "url": "https://europepmc.org/RestfulWebService"
+      },
+      {
+        "access": "documentation_public",
+        "adapter": {
+          "available": false,
+          "plugin_id": null
+        },
+        "capabilities": [
+          "workflow",
+          "genomics",
+          "epigenomics"
+        ],
+        "computability": {
+          "adapter_available": false,
+          "mode": "metadata_only",
+          "reason": "Исполняемый адаптер в этой сборке отсутствует; документация не является подключением."
+        },
+        "description": "Рецензируемые сообществом конвейеры Nextflow для анализа научных данных и контроля воспроизводимости.",
+        "id": "platform-nfcore",
+        "kind": "scientific_platform",
+        "limitations": [
+          "Платформа не установлена, исполняемый адаптер отсутствует; необходимо отдельное воспроизводимое окружение.",
+          "Применимость к изменению взрослого организма не установлена."
+        ],
+        "match_explanation": {
+          "capabilities": [
+            "epigenomics",
+            "genomics"
+          ],
+          "method": "3 × совпавшие слова + 5 × совпавшие тематические группы; без оценки научной истинности",
+          "terms": [
+            "genomics"
+          ]
+        },
+        "provenance": {
+          "origin": "catalog",
+          "source_url": "https://nf-co.re/"
+        },
+        "score": 13,
+        "status": "documented_adapter_unavailable",
+        "title": "nf-core · воспроизводимые научные конвейеры",
+        "url": "https://nf-co.re/"
+      },
+      {
+        "access": "not_verified",
+        "adapter": {
+          "available": false,
+          "plugin_id": null
+        },
+        "capabilities": [
+          "epigenomics",
+          "genomics",
+          "workflow"
+        ],
+        "computability": {
+          "adapter_available": false,
+          "mode": "metadata_only",
+          "reason": "Исполняемый адаптер в этой сборке отсутствует; документация не является подключением."
+        },
+        "description": "Версионированный pipeline анализа доступности хроматина.",
+        "id": "nf-core-atacseq",
+        "kind": "epigenomics-pipeline",
+        "limitations": [
+          "Нужны корректные reference, samplesheet и реплики; фактический test profile здесь не запускался."
+        ],
+        "match_explanation": {
+          "capabilities": [
+            "epigenomics",
+            "genomics"
+          ],
+          "method": "3 × совпавшие слова + 5 × совпавшие тематические группы; без оценки научной истинности",
+          "terms": [
+            "genomics"
+          ]
+        },
+        "provenance": {
+          "origin": "catalog",
+          "source_url": "https://nf-co.re/atacseq/2.1.2/"
+        },
+        "score": 13,
+        "status": "reviewed",
+        "title": "nf-core/atacseq",
+        "url": "https://nf-co.re/atacseq/2.1.2/"
+      },
+      {
+        "access": "not_verified",
+        "adapter": {
+          "available": false,
+          "plugin_id": null
+        },
+        "capabilities": [
+          "epigenomics",
+          "genomics",
+          "workflow"
+        ],
+        "computability": {
+          "adapter_available": false,
+          "mode": "metadata_only",
+          "reason": "Исполняемый адаптер в этой сборке отсутствует; документация не является подключением."
+        },
+        "description": "Версионированный workflow ChIP-seq.",
+        "id": "nf-core-chipseq",
+        "kind": "epigenomics-pipeline",
+        "limitations": [
+          "Нужны контрольные образцы и правильные метаданные; test profile здесь не запускался."
+        ],
+        "match_explanation": {
+          "capabilities": [
+            "epigenomics",
+            "genomics"
+          ],
+          "method": "3 × совпавшие слова + 5 × совпавшие тематические группы; без оценки научной истинности",
+          "terms": [
+            "genomics"
+          ]
+        },
+        "provenance": {
+          "origin": "catalog",
+          "source_url": "https://nf-co.re/chipseq/2.1.0/"
+        },
+        "score": 13,
+        "status": "reviewed",
+        "title": "nf-core/chipseq",
+        "url": "https://nf-co.re/chipseq/2.1.0/"
+      },
+      {
+        "access": "not_verified",
+        "adapter": {
+          "available": false,
+          "plugin_id": null
+        },
+        "capabilities": [
+          "epigenomics",
+          "genomics",
+          "workflow"
+        ],
+        "computability": {
+          "adapter_available": false,
+          "mode": "metadata_only",
+          "reason": "Исполняемый адаптер в этой сборке отсутствует; документация не является подключением."
+        },
+        "description": "Версионированный pipeline анализа метилирования.",
+        "id": "nf-core-methylseq",
+        "kind": "epigenomics-pipeline",
+        "limitations": [
+          "Результат зависит от типа assay, reference и метаданных; test profile здесь не запускался."
+        ],
+        "match_explanation": {
+          "capabilities": [
+            "epigenomics",
+            "genomics"
+          ],
+          "method": "3 × совпавшие слова + 5 × совпавшие тематические группы; без оценки научной истинности",
+          "terms": [
+            "genomics"
+          ]
+        },
+        "provenance": {
+          "origin": "catalog",
+          "source_url": "https://nf-co.re/methylseq/4.2.0/"
+        },
+        "score": 13,
+        "status": "reviewed",
+        "title": "nf-core/methylseq",
+        "url": "https://nf-co.re/methylseq/4.2.0/"
+      }
+    ],
+    "mode": "offline_catalog",
+    "query": "genomics computational models epigenetics cell state models",
+    "requests": 0
+  },
+  "simulation": {
+    "plugin_id": "regression_benchmark",
+    "provenance": {
+      "builtin_hashes": {
+        "plugin_worker.py": "7d197a62256fc23444c4c8bc639d852504707ca8e05c898654b806a651171b2d",
+        "workbench/__init__.py": "251600a04584da53dc2150682b9a619362a37f5b834e47fbeda46e1d11d065d0",
+        "workbench/plugins.py": "62fb025c3d021b0ec8aae2197c35a074e3dc7c34117576153955fcfaabae5ba4"
+      },
+      "execution": "isolated_python_subprocess",
+      "input_sha256": "d974fe51bbbc4275c6dc492ae85cf1f99b422ecf095a0d2eda9f4005d202bcbe",
+      "isolation": "Отдельный процесс и лимиты ресурсов; не контейнерная песочница.",
+      "output_sha256": "df2037b7bd94b818f5b8b99488ad301c2fa3d16d94f94ffc1d0047ef0f31a06a",
+      "python": "3.12.14",
+      "submitted_parameters": {
+        "seed": 42
+      },
+      "timeout_seconds": 10,
+      "version": "0.5.0"
+    },
+    "metrics": [
+      {
+        "label": "Test MSE · linear",
+        "value": 0.37992396426484565
+      },
+      {
+        "label": "Test MSE · RBF",
+        "value": 0.009788144774764506
+      }
+    ]
+  },
+  "job_workers": [
+    {
+      "kind": "discovery",
+      "worker_id": "local-133-2"
+    },
+    {
+      "kind": "simulation",
+      "worker_id": "local-133-1"
+    }
+  ],
+  "public_api_registration": "no_registration_required",
+  "browser_render_test": "not_performed"
+}

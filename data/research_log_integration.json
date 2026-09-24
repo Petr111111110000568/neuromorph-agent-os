@@ -1,0 +1,173 @@
+{
+  "checked_at": "2026-09-18",
+  "researcher": "science_agents_v6",
+  "scope": "distributed_scientific_resource_integration",
+  "search_engine": "Exa",
+  "search_calls": 4,
+  "search_result_slots": 24,
+  "definition": "Sum of requested numResults; not fully read or independent sources",
+  "queries": [
+    {
+      "query": "Hugging Face Hub official API list search models datasets cardData license public endpoint jobs spaces documentation",
+      "requested_num_results": 6,
+      "returned_urls": [
+        "https://huggingface.co/docs/hub/main/api",
+        "https://huggingface.co/docs/huggingface_hub/package_reference/hf_api",
+        "https://huggingface.co/.well-known/openapi.md",
+        "https://huggingface.co/docs/huggingface_hub/en/guides/search",
+        "https://huggingface.co/docs/huggingface_hub/main/package_reference/cards",
+        "https://huggingface.co/docs/huggingface_hub/main/guides/manage-spaces"
+      ]
+    },
+    {
+      "query": "ScienceAgentBench Agent Laboratory official research Github autonomous science agents benchmark reproducibility",
+      "requested_num_results": 6,
+      "returned_urls": [
+        "https://github.com/OSU-NLP-Group/ScienceAgentBench",
+        "https://arxiv.org/html/2410.05080v2",
+        "https://proceedings.iclr.cc/paper_files/paper/2025/file/f12b4df26344f3be803c06b555252efe-Paper-Conference.pdf",
+        "https://huggingface.co/datasets/osunlp/ScienceAgentBench",
+        "https://openreview.net/",
+        "https://github.com/SamuelSchmidgall/AgentLaboratory"
+      ]
+    },
+    {
+      "query": "BOINC Science United distributed volunteer computing scientific projects official participation validation",
+      "requested_num_results": 6,
+      "returned_urls": [
+        "https://scienceunited.org/doc/pearc_20.pdf",
+        "https://scienceunited.org/intro.php",
+        "https://scienceunited.org/",
+        "https://github.com/BOINC/boinc/wiki/Choosing-and-joining-projects",
+        "https://doi.org/10.3390/fi13090229",
+        "https://scienceunited.org/doc/implementation.pdf"
+      ]
+    },
+    {
+      "query": "Gensyn official decentralized machine learning network RL Swarm testnet research contribution verification",
+      "requested_num_results": 6,
+      "returned_urls": [
+        "https://docs.gensyn.ai/testnet/rl-swarm",
+        "https://github.com/gensyn-ai/rl-swarm?tab=readme-ov-file",
+        "https://www.gensyn.ai/RLSwarm",
+        "https://docs.gensyn.ai/testnet/rl-swarm/how-it-works",
+        "https://docs.gensyn.ai/testnet",
+        "https://blog.gensyn.ai/rl-swarm-a-framework-for-collaborative-rl/"
+      ]
+    }
+  ],
+  "fetched_primary_urls": [
+    "https://huggingface.co/.well-known/openapi.md",
+    "https://huggingface.co/docs/huggingface_hub/en/guides/search",
+    "https://huggingface.co/docs/hub/model-cards",
+    "https://huggingface.co/docs/huggingface_hub/en/guides/jobs",
+    "https://github.com/OSU-NLP-Group/ScienceAgentBench",
+    "https://huggingface.co/datasets/osunlp/ScienceAgentBench",
+    "https://github.com/SamuelSchmidgall/AgentLaboratory",
+    "https://agentrxiv.github.io/",
+    "https://scienceunited.org/",
+    "https://github.com/BOINC/boinc/wiki/Choosing-and-joining-projects",
+    "https://docs.gensyn.ai/testnet",
+    "https://docs.gensyn.ai/testnet/rl-swarm",
+    "https://github.com/gensyn-ai/rl-swarm",
+    "https://huggingface.co/docs/hub/spaces-overview",
+    "https://scienceunited.org/doc/implementation.pdf"
+  ],
+  "fetch_scope": "Available fetched text reviewed; maxCharacters14000 first batch,6500 second,12000 third. No claim to read all linked papers or appendices.",
+  "direct_public_api_probes": [
+    {
+      "method": "GET",
+      "url": "https://huggingface.co/api/models?search=scGPT&limit=3&cardData=true",
+      "http_status": 200,
+      "response_type": "array",
+      "records": 3,
+      "authorization": "none",
+      "scope": "metadata_only"
+    },
+    {
+      "method": "GET",
+      "url": "https://huggingface.co/api/datasets?search=ScienceAgentBench&limit=3&full=true",
+      "http_status": 200,
+      "response_type": "array",
+      "records": 3,
+      "authorization": "none",
+      "scope": "metadata_only"
+    },
+    {
+      "method": "GET",
+      "url": "https://huggingface.co/api/datasets/osunlp/ScienceAgentBench",
+      "http_status": 200,
+      "response_type": "object",
+      "authorization": "none",
+      "scope": "metadata_only",
+      "observed": {
+        "id": "osunlp/ScienceAgentBench",
+        "sha": "9c6e96c9e74572e979b0930ee735041cef528cb7",
+        "private": false,
+        "gated": false,
+        "license_declared": "cc-by-4.0",
+        "split": "verified",
+        "num_examples": 102
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://huggingface.co/api/models/microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext",
+      "http_status": 200,
+      "response_type": "object",
+      "authorization": "none",
+      "scope": "metadata_only",
+      "observed": {
+        "id": "microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext",
+        "sha": "e1354b7a3a09615f6aba48dfad4b7a613eef7062",
+        "private": false,
+        "gated": false,
+        "license_declared": "mit",
+        "pipeline_tag": "fill-mask"
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://huggingface.co/api/spaces?search=Paper2Agent&limit=3",
+      "http_status": 200,
+      "response_type": "array",
+      "records": 3,
+      "authorization": "none",
+      "scope": "metadata_only",
+      "observed_ids": [
+        "Paper2Agent/alphagenome_agent",
+        "Paper2Agent/alphagenome_mcp",
+        "Paper2Agent/tissue_mcp"
+      ]
+    }
+  ],
+  "not_performed": [
+    "No model weights downloaded",
+    "No benchmark executable data downloaded",
+    "No third-party code executed",
+    "No account registration or payment",
+    "No Spaces/MCP invocation",
+    "No swarm joined"
+  ],
+  "source_conflicts": [
+    {
+      "topic": "Gensyn RL Swarm",
+      "resolution": "Top-level overview and explicit README notice say paused; older lower sections still call CodeZero active. Treat official swarm as paused."
+    },
+    {
+      "topic": "HF Spaces cost/access",
+      "resolution": "Current overview qualifies free CPU Basic with paid-plan creation requirement for compute Spaces and separate limited ZeroGPU exception; do not generalize older 'CPU free' wording."
+    },
+    {
+      "topic": "ScienceAgentBench",
+      "resolution": "Use verified split released2026-04-30 and matching artifacts; per-task licenses and restrictions differ from aggregate metadata license."
+    }
+  ],
+  "limits": [
+    "List metadata may omit sha/cardData; detail fetch required.",
+    "Card license is publisher-supplied metadata, not a legal verification.",
+    "A public metadata record does not demonstrate a live working agent.",
+    "AgentRxiv public operational API not verified.",
+    "Attempted AgentLaboratory/tree/main/AgentRxiv fetch produced no usable returned page; no URL is claimed verified for that path."
+  ]
+}

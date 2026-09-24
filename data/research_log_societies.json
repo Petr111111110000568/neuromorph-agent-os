@@ -1,0 +1,178 @@
+{
+  "checked_at": "2026-09-18",
+  "scope": "Seven documented agent societies/ecosystems; public sources only.",
+  "search_provider": "Exa",
+  "search_queries": [
+    {
+      "query": "site.docs.agentverse.ai Almanac API search agents uAgents",
+      "numResults": 7
+    },
+    {
+      "query": "site:docs.olas.network autonomous services registry Pearl agents marketplace",
+      "numResults": 7
+    },
+    {
+      "query": "site:virtuals.io ACP agent commerce protocol developer SDK job evaluator",
+      "numResults": 7
+    },
+    {
+      "query": "site:docs.learnbittensor.org subnets validators miners incentives API",
+      "numResults": 7
+    },
+    {
+      "query": "SingularityNET official developer portal AI marketplace service daemon SDK AGIX ASI FET 2026",
+      "numResults": 7
+    },
+    {
+      "query": "Gensyn official RL swarm decentralised training readme license public testnet",
+      "numResults": 7
+    },
+    {
+      "query": "Moltbook official developer API agents register claim owner social network",
+      "numResults": 7
+    },
+    {
+      "query": "Moltbook acquired Meta official March 2026 Matt Schlicht Ben Parr",
+      "numResults": 5
+    },
+    {
+      "query": "Virtuals Protocol acp-node-v2 github license",
+      "numResults": 5
+    },
+    {
+      "query": "Olas Pearl Valory Mech Marketplace autonomous services official owner",
+      "numResults": 5
+    }
+  ],
+  "search_result_slots": 64,
+  "counting_note": "search_result_slots counts requested search positions including irrelevant/overlapping results; not unique sources read or validated. Fetch outputs were clean-page excerpts, not necessarily full untruncated text.",
+  "fetch_attempts": 42,
+  "fetch_urls": [
+    "https://docs.agentverse.ai/v-1/api-reference/almanac/get-agent",
+    "https://agentverse.ai/docs/api/almanac",
+    "https://innovationlab.fetch.ai/resources/docs/next/agentverse/searching",
+    "https://docs.olas.network/",
+    "https://os.virtuals.io/acp/concepts/",
+    "https://os.virtuals.io/acp/sdk/getting-started",
+    "https://docs.agentverse.ai/v-1/api-reference/search/search-agents",
+    "https://docs.agentverse.ai/v-1/api-reference/almanac/get-recent-agents",
+    "https://uagents-docs.vercel.app/docs/guides/search",
+    "https://docs.agentverse.ai/v-1/api-reference/search/agents.md",
+    "https://docs.agentverse.ai/v-1/api-reference/almanac/get-recently-registered-agents.md",
+    "https://github.com/fetchai/uAgents/blob/main/LICENSE",
+    "https://docs.olas.network/mech-client/",
+    "https://docs.olas.network/open-autonomy/",
+    "https://github.com/valory-xyz/open-autonomy/blob/main/LICENSE",
+    "https://github.com/virtual-protocol/acp-node/blob/main/LICENSE",
+    "https://docs.gensyn.ai/testnet/rl-swarm",
+    "https://github.com/gensyn-ai/rl-swarm/blob/main/README.md",
+    "https://www.moltbook.com/developers",
+    "https://dev.singularitynet.io/docs/products/DecentralizedAIPlatform/SDK/sdk-concept/",
+    "https://dev.singularitynet.io/docs/products/DecentralizedAIPlatform/AGIXToASIMigration/",
+    "https://docs.learnbittensor.org/",
+    "https://www.moltbook.com/privacy",
+    "https://www.moltbook.com/terms",
+    "https://github.com/Virtual-Protocol/acp-node-v2/blob/main/package.json",
+    "https://github.com/opentensor/bittensor/blob/master/LICENSE",
+    "https://github.com/singnet/snet-sdk-python/blob/master/LICENSE",
+    "https://github.com/gensyn-ai/rl-swarm/blob/main/LICENSE",
+    "https://github.com/moltbook/agent-development-kit/blob/main/LICENSE",
+    "https://github.com/moltbook/api/blob/main/LICENSE",
+    "https://github.com/gensyn-ai/rl-swarm",
+    "https://github.com/RaoFoundation/bittensor",
+    "https://github.com/Virtual-Protocol/acp-node-v2",
+    "https://www.moltbook.com/skill.md",
+    "https://stack.olas.network/mech-server/",
+    "https://pearl.you/",
+    "https://www.reuters.com/business/meta-acquires-ai-agent-social-network-moltbook-2026-03-10/",
+    "https://github.com/RaoFoundation/subtensor/tree/main/sdk/python",
+    "https://github.com/RaoFoundation/subtensor/blob/main/LICENSE",
+    "https://github.com/RaoFoundation/subtensor/blob/main/sdk/python/pyproject.toml",
+    "https://github.com/gensyn-ai/rl-swarm/blob/main/LICENSE-MIT",
+    "https://github.com/gensyn-ai/rl-swarm/blob/main/LICENSE.txt"
+  ],
+  "unavailable_urls": [
+    "https://docs.agentverse.ai/v-1/api-reference/search/search-agents",
+    "https://docs.agentverse.ai/v-1/api-reference/almanac/get-recent-agents",
+    "https://github.com/virtual-protocol/acp-node/blob/main/LICENSE",
+    "https://github.com/gensyn-ai/rl-swarm/blob/main/LICENSE",
+    "https://github.com/moltbook/agent-development-kit/blob/main/LICENSE",
+    "https://github.com/RaoFoundation/subtensor/tree/main/sdk/python",
+    "https://github.com/gensyn-ai/rl-swarm/blob/main/LICENSE-MIT",
+    "https://github.com/gensyn-ai/rl-swarm/blob/main/LICENSE.txt"
+  ],
+  "successful_page_or_excerpt_fetches": 34,
+  "live_probes": [
+    {
+      "at": "2026-09-18",
+      "endpoint": "https://agentverse.ai/v1/search/agents",
+      "method": "POST",
+      "purpose": "read-only directory search",
+      "credentials_used": false,
+      "query": "research",
+      "limit": 3,
+      "filters": {
+        "protocol_digest": []
+      },
+      "http_status": 200,
+      "returned_agents": 3,
+      "result_note": "First 3 were inactive catalog records; no agent called.",
+      "full_response_archived": false
+    },
+    {
+      "at": "2026-09-18T20:42:47.253748+00:00",
+      "endpoint": "https://agentverse.ai/v1/search/agents",
+      "method": "POST",
+      "purpose": "read-only directory search",
+      "credentials_used": false,
+      "request": {
+        "search_text": "research",
+        "sort": "relevancy",
+        "direction": "desc",
+        "filters": {
+          "state": [
+            "active"
+          ],
+          "has_readme": true
+        },
+        "offset": 0,
+        "limit": 5
+      },
+      "http_status": 200,
+      "returned_agents": 5,
+      "names": [
+        "Ryanair Research Agent",
+        "Walmart Research Agent",
+        "AKASHA Research Agent",
+        "Scribe Research Agent",
+        "Data Research Agent"
+      ],
+      "result_note": "Active is catalog status; names do not verify organizational affiliation, capability or scientific quality.",
+      "full_response_archived": false
+    }
+  ],
+  "actions_not_performed": [
+    "No external agent messages",
+    "No account registration",
+    "No wallet/key creation",
+    "No financial transaction",
+    "No downloaded code execution"
+  ],
+  "current_source_conflicts": [
+    {
+      "entity": "Agentverse",
+      "issue": "Old API examples contain bearer token; new schema does not. Two direct no-auth searches returned 200.",
+      "resolution": "Read works at checked time, adapter must handle future authorization changes."
+    },
+    {
+      "entity": "Gensyn RL Swarm",
+      "issue": "New header and official docs Paused, old README sections active.",
+      "resolution": "Use explicit Paused status; do not promise official live swarm."
+    },
+    {
+      "entity": "Bittensor",
+      "issue": "Old SDK archived and MIT; new monorepo Python package Apache-2.0 declaration; monorepo root Unlicense.",
+      "resolution": "Pin component and check its terms; no blanket historical MIT claim."
+    }
+  ]
+}

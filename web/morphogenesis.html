@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#112d35">
+  <title>Структурная пластичность — Meta-Harness</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/network.css">
+  <link rel="stylesheet" href="/morphogenesis.css">
+  <script src="/morphogenesis.js" defer></script>
+</head>
+<body class="morphogenesis-app">
+  <a class="skip-link" href="#main">К содержимому</a>
+  <aside class="sidebar">
+    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">M<span>H</span></span><span>Meta-Harness<small>COMPUTATIONAL LAB</small></span></a>
+    <div class="workspace-label"><span class="workspace-dot"></span> Гипотеза · Контроль · Результат</div>
+    <nav class="navigation" aria-label="Разделы эксперимента">
+      <a class="nav-item active" href="#experiment"><span class="nav-symbol" aria-hidden="true">∿</span>Структурная пластичность</a>
+      <a class="nav-item" href="#comparison"><span class="nav-symbol" aria-hidden="true">≡</span>Сравнение условий</a>
+      <a class="nav-item" href="#topology"><span class="nav-symbol" aria-hidden="true">⌘</span>Связи и траектория</a>
+      <a class="nav-item" href="#interpretation"><span class="nav-symbol" aria-hidden="true">▤</span>Метод и ограничения</a>
+      <a class="nav-item nav-return" href="/"><span class="nav-symbol" aria-hidden="true">◫</span>Все вычислительные модули</a>
+      <a class="nav-item" href="/society.html"><span class="nav-symbol" aria-hidden="true">◎</span>Исследовательские миссии</a>
+      <a class="nav-item" href="/federation.html"><span class="nav-symbol" aria-hidden="true">↗</span>Участники и обмен</a>
+      <a class="nav-item" href="/brain.html"><span class="nav-symbol" aria-hidden="true">⌘</span>Контур и сети</a>
+    </nav>
+    <div class="sidebar-footer"><span class="small-label">ИССЛЕДОВАТЕЛЬСКИЙ ВОПРОС</span><strong>Помогает ли перестройка связей при смене задачи?</strong><p>Три условия, общий бюджет связей и отдельная оценка сохранения предыдущего навыка.</p><span class="version">Синтетический эксперимент</span></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><div class="breadcrumb">Вычислительная лаборатория <span>/</span><strong>Структурная пластичность</strong></div><div class="connection"><span id="morph-dot" class="status-dot loading"></span><span id="morph-status" role="status">Загрузка схемы…</span></div></header>
+    <main id="main" tabindex="-1">
+      <section id="experiment" aria-labelledby="experiment-title">
+        <div class="page-heading"><div><p class="eyebrow">STRUCTURAL PLASTICITY / SYNTHETIC BENCHMARK</p><h1 id="experiment-title">Структурная пластичность</h1><p class="lead">Вычислительный эксперимент: сравнить фиксированную, случайно перестраиваемую и направленно перестраиваемую сеть при смене синтетической задачи.</p></div><span class="badge neutral">6 входов → 6 скрытых узлов → 1 выход</span></div>
+        <p class="morph-attribution">По мотивам опубликованных рассуждений С. В. Савельева; алгоритм разработан для платформы.</p>
+        <div id="setup-error" class="panel error-panel" role="alert" hidden></div>
+        <div class="morph-layout">
+          <aside class="panel morph-controls"><p class="eyebrow">ПАРАМЕТРЫ ЗАПУСКА</p><h2>Один опыт, три условия</h2><p id="plugin-description" class="form-help">Параметры загружаются из схемы вычислительного модуля.</p><form id="morph-form"><fieldset id="morph-fields" disabled><legend class="sr-only">Параметры эксперимента</legend><div id="morph-parameters" class="parameter-fields"><p class="muted">Загрузка…</p></div><button id="morph-run" class="button primary full-width" type="submit" disabled>Выполнить сравнение →</button></fieldset></form><p class="form-help">Каждый запуск сохраняет параметры и результат в журнале платформы. До нажатия кнопки расчёт не выполняется.</p><button id="reload-schema" class="text-button" type="button">Перезагрузить схему модуля</button></aside>
+          <div class="morph-experiment-main">
+            <article class="panel morph-question"><p class="eyebrow">ЧТО ПРОВЕРЯЕМ</p><h2>Меняются связи. Число узлов остаётся прежним.</h2><p>Сначала сеть обучается одной зависимости, затем задача меняется. Сравниваются ошибка на новой задаче, сохранение прежнего результата и условный объём вычислений.</p><div class="morph-conditions"><div><span class="condition-dot fixed" aria-hidden="true"></span><h3>Fixed</h3><p>Маска связей постоянна, веса обучаются.</p></div><div><span class="condition-dot random" aria-hidden="true"></span><h3>Random</h3><p>Часть связей меняется по случайному правилу.</p></div><div><span class="condition-dot guided" aria-hidden="true"></span><h3>Guided</h3><p>Перестройка использует сигналы процесса обучения.</p></div></div></article>
+            <div id="run-feedback" class="inline-result" aria-live="polite"></div>
+            <div id="run-empty" class="panel empty-state morph-empty"><span class="empty-symbol" aria-hidden="true">∿</span><h2>Результат появится после расчёта</h2><p>Выберите параметры и выполните сравнение. Визуализация покажет реальные маски связей из результата этого запуска.</p></div>
+            <article id="run-summary" class="panel morph-run-summary" hidden><div class="result-title"><h2>Расчёт сохранён</h2><span id="run-badge" class="badge">Завершено</span></div><p id="run-summary-text" class="result-summary"></p><p id="run-meta" class="result-id"></p><div class="button-group"><button id="download-result" class="button secondary" type="button">Скачать результат JSON ↓</button><a href="/#journal" class="button secondary">Открыть журнал</a></div></article>
+          </div>
+        </div>
+      </section>
+      <section id="comparison" class="morph-result-section" aria-labelledby="comparison-title">
+        <div class="section-heading"><div><p class="eyebrow">СРАВНЕНИЕ ПО ВСЕМ SEED</p><h2 id="comparison-title">Адаптация, забывание и вычислительный бюджет</h2></div><span id="comparison-count" class="muted">Нет выполненного расчёта</span></div>
+        <div id="condition-comparison" class="morph-comparison"><p class="morph-placeholder">Здесь будут средние значения по повторениям каждого условия.</p></div>
+        <p class="form-help">MSE — средняя квадратичная ошибка на синтетической задаче: меньше означает меньшую ошибку. Забывание — изменение ошибки прежней задачи после второй фазы; отрицательное значение означает улучшение. Эти величины не измеряют интеллект или состояние мозга.</p>
+      </section>
+      <section id="topology" class="morph-result-section" aria-labelledby="topology-title">
+        <div class="section-heading"><div><p class="eyebrow">МАСКИ СВЯЗЕЙ И ХОД ОБУЧЕНИЯ</p><h2 id="topology-title">Посмотреть конкретный повтор</h2></div></div>
+        <div class="panel"><div class="morph-selectors"><label for="trial-seed">Seed повторения<select id="trial-seed" disabled><option value="">Сначала выполните расчёт</option></select></label><label for="network-condition">Условие<select id="network-condition" disabled><option value="fixed">Fixed · постоянные связи</option><option value="random">Random · случайная перестройка</option><option value="guided">Guided · направленная перестройка</option></select></label><label for="trajectory-metric">Ошибка на графике<select id="trajectory-metric" disabled><option value="new_test_mse">Новая задача</option><option value="old_test_mse">Прежняя задача</option></select></label></div><div id="trajectory-chart" class="morph-chart-empty"><p class="morph-placeholder">После запуска появятся три траектории для выбранного seed.</p></div><div class="morph-network-grid"><div><h3>Начало обучения</h3><div id="network-initial" class="network-mask-empty"><p class="morph-placeholder">Начальная маска связей</p></div></div><div><h3>После смены задачи</h3><div id="network-final" class="network-mask-empty"><p class="morph-placeholder">Итоговая маска связей</p></div></div></div><div id="network-legend" class="morph-network-legend" hidden><span><i class="edge-positive" aria-hidden="true"></i>Положительный вес</span><span><i class="edge-negative" aria-hidden="true"></i>Отрицательный вес</span><span>Толщина линии ∝ |весу| внутри каждой схемы</span></div><p id="network-description" class="form-help">Отображаются только связи, возвращённые модулем. Шесть входов, шесть скрытых узлов и выход сохраняются во всех условиях.</p><div id="network-events"></div></div>
+      </section>
+      <section id="trials" class="morph-result-section" aria-labelledby="trials-title"><div class="section-heading"><div><p class="eyebrow">ИСХОДНЫЕ ПОКАЗАТЕЛИ</p><h2 id="trials-title">Каждое условие и каждый seed</h2></div></div><div id="trial-table" class="panel compact-panel"><p class="morph-placeholder">Значения появятся после выполнения расчёта.</p></div><p class="form-help">Условная стоимость — число учтённых посещений рёбер при обучении, поиске новых связей и оценке. Это счётчик операций данного алгоритма, а не измеренные джоули, время работы или расход ресурсов организма.</p></section>
+      <section id="interpretation" class="morph-result-section" aria-labelledby="interpretation-title"><div class="section-heading"><div><p class="eyebrow">ПРОИСХОЖДЕНИЕ И ОБЛАСТЬ ПРИМЕНЕНИЯ</p><h2 id="interpretation-title">Как интерпретировать этот опыт</h2></div></div><div class="morph-method-grid"><article class="panel"><h3>Инженерная постановка</h3><p>Модуль проверяет конкретное правило обучения искусственной сети с фиксированным числом узлов. Для сравнения меняется способ выбора активных связей. Успех одного условия на этом наборе задач требует отдельной проверки на других данных и параметрах.</p><p>Это не биологическая модель и не воспроизведение алгоритма С. В. Савельева. Результат не подтверждает возможность изменения человеческого мозга или взрослого организма.</p><a class="source-link" href="https://zavtra.ru/books/s_v_savel_ev_sozrevanie_pamyati" target="_blank" rel="noopener noreferrer">С. В. Савельев · «Созревание памяти» ↗</a></article><article class="panel"><h3>Ограничения вычислительного модуля</h3><ul id="result-limitations" class="network-list"><li>Эксперимент работает с синтетическими данными и искусственными связями.</li><li>Преимущество направленной перестройки не предполагается заранее: оценивайте полученные числа и разброс между повторениями.</li><li>Загрузка человеческих геномов, медицинских данных и операции над организмом в этом модуле не предусмотрены.</li></ul></article></div><details class="panel raw-details morph-provenance"><summary>Параметры, версия и происхождение результата</summary><pre id="result-provenance">Расчёт ещё не выполнялся.</pre></details></section>
+      <footer class="page-footer"><span>Meta-Harness · структурная пластичность</span><span>Синтетический расчёт · исходные показатели · ограничения</span></footer>
+    </main>
+  </div>
+</body>
+</html>

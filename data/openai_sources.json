@@ -1,0 +1,227 @@
+{
+  "checked_at": "2026-09-18",
+  "scope": "Official OpenAI documentation; product claims do not establish account entitlement",
+  "sources": [
+    {
+      "id": "openai-work",
+      "title": "Get started with ChatGPT Work",
+      "url": "https://learn.chatgpt.com/docs/get-started-with-work",
+      "fetched_url": "https://learn.chatgpt.com/docs/get-started-with-work.md",
+      "verified": true,
+      "claim": "Work delegates tasks using files, plugins and approved tools; local and cloud execution differ.",
+      "status": "reviewed",
+      "checked_at": "2026-09-18",
+      "category": "openai-documentation",
+      "maturity": "official_documentation",
+      "integration": "Справочник возможностей; проверенные подключения указаны в снимке окружения.",
+      "limitations": [
+        "Проверка документации не подтверждает доступ конкретного аккаунта ко всем описанным возможностям."
+      ],
+      "summary": "Work delegates tasks using files, plugins and approved tools; local and cloud execution differ."
+    },
+    {
+      "id": "openai-models",
+      "title": "Models",
+      "url": "https://learn.chatgpt.com/docs/models",
+      "fetched_url": "https://learn.chatgpt.com/docs/models.md",
+      "verified": true,
+      "claim": "Model and reasoning availability depend on client and account; model choice is not inferred from assistant prose.",
+      "status": "reviewed",
+      "checked_at": "2026-09-18",
+      "category": "openai-documentation",
+      "maturity": "official_documentation",
+      "integration": "Справочник возможностей; проверенные подключения указаны в снимке окружения.",
+      "limitations": [
+        "Проверка документации не подтверждает доступ конкретного аккаунта ко всем описанным возможностям."
+      ],
+      "summary": "Model and reasoning availability depend on client and account; model choice is not inferred from assistant prose."
+    },
+    {
+      "id": "openai-auth",
+      "title": "Authentication",
+      "url": "https://learn.chatgpt.com/docs/auth",
+      "fetched_url": "https://learn.chatgpt.com/docs/auth.md",
+      "verified": true,
+      "claim": "ChatGPT sign-in and API-key access are distinct; API-key usage follows Platform billing.",
+      "status": "reviewed",
+      "checked_at": "2026-09-18",
+      "category": "openai-documentation",
+      "maturity": "official_documentation",
+      "integration": "Справочник возможностей; проверенные подключения указаны в снимке окружения.",
+      "limitations": [
+        "Проверка документации не подтверждает доступ конкретного аккаунта ко всем описанным возможностям."
+      ],
+      "summary": "ChatGPT sign-in and API-key access are distinct; API-key usage follows Platform billing."
+    },
+    {
+      "id": "openai-skills-plugins",
+      "title": "Skills & Plugins",
+      "url": "https://learn.chatgpt.com/docs/skills-and-plugins",
+      "fetched_url": "https://learn.chatgpt.com/docs/skills-and-plugins.md",
+      "verified": true,
+      "claim": "Skills package workflows; plugins can bundle skills and MCP capabilities.",
+      "status": "reviewed",
+      "checked_at": "2026-09-18",
+      "category": "openai-documentation",
+      "maturity": "official_documentation",
+      "integration": "Справочник возможностей; проверенные подключения указаны в снимке окружения.",
+      "limitations": [
+        "Проверка документации не подтверждает доступ конкретного аккаунта ко всем описанным возможностям."
+      ],
+      "summary": "Skills package workflows; plugins can bundle skills and MCP capabilities."
+    },
+    {
+      "id": "openai-mcp",
+      "title": "Model Context Protocol",
+      "url": "https://learn.chatgpt.com/docs/extend/mcp",
+      "fetched_url": "https://learn.chatgpt.com/docs/extend/mcp?surface=cli",
+      "verified": true,
+      "claim": "Hosted web uses installed plugin tools and does not read local Codex configuration; local clients support STDIO and Streamable HTTP.",
+      "status": "reviewed",
+      "checked_at": "2026-09-18",
+      "category": "openai-documentation",
+      "maturity": "official_documentation",
+      "integration": "Справочник возможностей; проверенные подключения указаны в снимке окружения.",
+      "limitations": [
+        "Проверка документации не подтверждает доступ конкретного аккаунта ко всем описанным возможностям."
+      ],
+      "summary": "Hosted web uses installed plugin tools and does not read local Codex configuration; local clients support STDIO and Streamable HTTP."
+    },
+    {
+      "id": "openai-subagents",
+      "title": "Subagents",
+      "url": "https://learn.chatgpt.com/docs/agent-configuration/subagents",
+      "fetched_url": "https://learn.chatgpt.com/docs/agent-configuration/subagents.md",
+      "verified": true,
+      "claim": "Parallel subagents inherit constraints and use additional resources; independent assignments reduce conflicts.",
+      "status": "reviewed",
+      "checked_at": "2026-09-18",
+      "category": "openai-documentation",
+      "maturity": "official_documentation",
+      "integration": "Справочник возможностей; проверенные подключения указаны в снимке окружения.",
+      "limitations": [
+        "Проверка документации не подтверждает доступ конкретного аккаунта ко всем описанным возможностям."
+      ],
+      "summary": "Parallel subagents inherit constraints and use additional resources; independent assignments reduce conflicts."
+    },
+    {
+      "id": "openai-sites",
+      "title": "Sites",
+      "url": "https://learn.chatgpt.com/docs/sites",
+      "fetched_url": "https://learn.chatgpt.com/docs/sites.md",
+      "verified": true,
+      "claim": "Hosted apps support D1/R2, saved versions and deployments; restrictions include PHI, no residency at launch and unsupported background/network patterns.",
+      "status": "reviewed",
+      "checked_at": "2026-09-18",
+      "category": "openai-documentation",
+      "maturity": "official_documentation",
+      "integration": "Справочник возможностей; проверенные подключения указаны в снимке окружения.",
+      "limitations": [
+        "Проверка документации не подтверждает доступ конкретного аккаунта ко всем описанным возможностям."
+      ],
+      "summary": "Hosted apps support D1/R2, saved versions and deployments; restrictions include PHI, no residency at launch and unsupported background/network patterns."
+    },
+    {
+      "id": "openai-long-work",
+      "title": "Long-running work",
+      "url": "https://learn.chatgpt.com/docs/long-running-work",
+      "fetched_url": "https://learn.chatgpt.com/docs/long-running-work.md",
+      "verified": true,
+      "claim": "Long-running goals need outcome, constraints and verification; goals do not expand permissions.",
+      "status": "reviewed",
+      "checked_at": "2026-09-18",
+      "category": "openai-documentation",
+      "maturity": "official_documentation",
+      "integration": "Справочник возможностей; проверенные подключения указаны в снимке окружения.",
+      "limitations": [
+        "Проверка документации не подтверждает доступ конкретного аккаунта ко всем описанным возможностям."
+      ],
+      "summary": "Long-running goals need outcome, constraints and verification; goals do not expand permissions."
+    },
+    {
+      "id": "openai-automations",
+      "title": "Scheduled tasks",
+      "url": "https://learn.chatgpt.com/docs/automations",
+      "fetched_url": "https://learn.chatgpt.com/docs/automations.md",
+      "verified": true,
+      "claim": "Web scheduled tasks use accessible context/tools but do not retain a local folder/worktree between runs.",
+      "status": "reviewed",
+      "checked_at": "2026-09-18",
+      "category": "openai-documentation",
+      "maturity": "official_documentation",
+      "integration": "Справочник возможностей; проверенные подключения указаны в снимке окружения.",
+      "limitations": [
+        "Проверка документации не подтверждает доступ конкретного аккаунта ко всем описанным возможностям."
+      ],
+      "summary": "Web scheduled tasks use accessible context/tools but do not retain a local folder/worktree between runs."
+    },
+    {
+      "id": "openai-agents-md",
+      "title": "Custom instructions with AGENTS.md",
+      "url": "https://learn.chatgpt.com/docs/agent-configuration/agents-md",
+      "fetched_url": "https://learn.chatgpt.com/docs/agent-configuration/agents-md.md",
+      "verified": true,
+      "claim": "Local Codex discovers layered repository instructions; adding a file does not establish web account changes.",
+      "status": "reviewed",
+      "checked_at": "2026-09-18",
+      "category": "openai-documentation",
+      "maturity": "official_documentation",
+      "integration": "Справочник возможностей; проверенные подключения указаны в снимке окружения.",
+      "limitations": [
+        "Проверка документации не подтверждает доступ конкретного аккаунта ко всем описанным возможностям."
+      ],
+      "summary": "Local Codex discovers layered repository instructions; adding a file does not establish web account changes."
+    },
+    {
+      "id": "openai-agents-sdk",
+      "title": "Agents SDK",
+      "url": "https://developers.openai.com/api/docs/guides/agents-sdk",
+      "fetched_url": "https://developers.openai.com/api/docs/guides/agents-sdk",
+      "verified": true,
+      "claim": "Responses allows application-owned orchestration; Agents SDK adds runner loops, handoffs, sessions, traces and resumable approvals.",
+      "status": "reviewed",
+      "checked_at": "2026-09-18",
+      "category": "openai-documentation",
+      "maturity": "official_documentation",
+      "integration": "Справочник возможностей; проверенные подключения указаны в снимке окружения.",
+      "limitations": [
+        "Проверка документации не подтверждает доступ конкретного аккаунта ко всем описанным возможностям."
+      ],
+      "summary": "Responses allows application-owned orchestration; Agents SDK adds runner loops, handoffs, sessions, traces and resumable approvals."
+    },
+    {
+      "id": "openai-background",
+      "title": "Background mode",
+      "url": "https://developers.openai.com/api/docs/guides/background",
+      "fetched_url": "https://developers.openai.com/api/docs/guides/background",
+      "verified": true,
+      "claim": "API background responses run asynchronously and support polling; a durable research scheduler is an application responsibility.",
+      "status": "reviewed",
+      "checked_at": "2026-09-18",
+      "category": "openai-documentation",
+      "maturity": "official_documentation",
+      "integration": "Справочник возможностей; проверенные подключения указаны в снимке окружения.",
+      "limitations": [
+        "Проверка документации не подтверждает доступ конкретного аккаунта ко всем описанным возможностям."
+      ],
+      "summary": "API background responses run asynchronously and support polling; a durable research scheduler is an application responsibility."
+    },
+    {
+      "id": "openai-remote-mcp",
+      "title": "MCP and Connectors",
+      "url": "https://developers.openai.com/api/docs/guides/tools-remote-mcp",
+      "fetched_url": "https://developers.openai.com/api/docs/guides/tools-remote-mcp",
+      "verified": true,
+      "claim": "Responses API can call remote MCP tools with filtering and approval controls; trust and permissions remain necessary.",
+      "status": "reviewed",
+      "checked_at": "2026-09-18",
+      "category": "openai-documentation",
+      "maturity": "official_documentation",
+      "integration": "Справочник возможностей; проверенные подключения указаны в снимке окружения.",
+      "limitations": [
+        "Проверка документации не подтверждает доступ конкретного аккаунта ко всем описанным возможностям."
+      ],
+      "summary": "Responses API can call remote MCP tools with filtering and approval controls; trust and permissions remain necessary."
+    }
+  ]
+}

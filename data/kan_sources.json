@@ -1,0 +1,123 @@
+{
+  "checked_at": "2026-09-24",
+  "items": [
+    {
+      "id": "kan-kan-paper",
+      "url": "https://arxiv.org/abs/2404.19756",
+      "title": "KAN: Kolmogorov-Arnold Networks",
+      "authors": "Ziming Liu et al.",
+      "ref": "turn53view1",
+      "type": "primary_paper_abstract",
+      "category": "kan_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "status": "reviewed_primary_source",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "kan-kan2-paper",
+      "url": "https://arxiv.org/abs/2408.10205",
+      "title": "KAN 2.0: Kolmogorov-Arnold Networks Meet Science",
+      "authors": "Ziming Liu et al.",
+      "ref": "turn54view2",
+      "type": "primary_paper_abstract",
+      "category": "kan_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "status": "reviewed_primary_source",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "kan-pykan",
+      "url": "https://github.com/KindXiaoming/pykan",
+      "title": "pykan",
+      "ref": "turn53view0",
+      "license": "MIT",
+      "reviewed_files": [
+        "README.md",
+        "kan/KANLayer.py",
+        "LICENSE"
+      ],
+      "category": "kan_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "status": "reviewed_primary_source",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "kan-fastkan",
+      "url": "https://github.com/ZiyaoLi/fast-kan",
+      "title": "FastKAN",
+      "ref": "turn54view0",
+      "license": "Apache-2.0",
+      "reviewed_files": [
+        "README.md",
+        "fastkan/fastkan.py",
+        "LICENSE"
+      ],
+      "category": "kan_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "status": "reviewed_primary_source",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "kan-fastkan-paper",
+      "url": "https://arxiv.org/abs/2405.06721",
+      "title": "Kolmogorov-Arnold Networks are Radial Basis Function Networks",
+      "authors": "Ziyao Li",
+      "ref": "turn54view4",
+      "type": "primary_paper_abstract",
+      "category": "kan_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "status": "reviewed_primary_source",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "kan-wavkan-paper",
+      "url": "https://arxiv.org/abs/2405.12832",
+      "title": "Wav-KAN: Wavelet Kolmogorov-Arnold Networks",
+      "authors": "Zavareh Bozorgasl and Hao Chen",
+      "ref": "turn54view3",
+      "type": "primary_paper_abstract",
+      "category": "kan_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "status": "reviewed_primary_source",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    },
+    {
+      "id": "kan-wavkan",
+      "url": "https://github.com/zavareh1/Wav-KAN",
+      "title": "Wav-KAN",
+      "ref": "turn66view0",
+      "license": "MIT",
+      "reviewed_files": [
+        "README.md",
+        "KAN.py",
+        "wavKAN.py",
+        "LICENSE"
+      ],
+      "category": "kan_research",
+      "maturity": "literature_reference",
+      "integration": "reference_only",
+      "status": "reviewed_primary_source",
+      "limitations": [
+        "Объём чтения указан в записи; обзор не означает установки метода или биологической валидации."
+      ]
+    }
+  ]
+}

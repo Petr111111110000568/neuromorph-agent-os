@@ -1,0 +1,16 @@
+[
+  {
+    "id": "uploaded-video-20260918",
+    "title": "Альтернативное поздравление с Новым Годом. Раскрываем тайны человечества (720p).mp4",
+    "url": "",
+    "category": "uploaded_media",
+    "maturity": "content_not_reviewed",
+    "integration": "Исходный видеоматериал зарегистрирован для последующей расшифровки и проверки тезисов.",
+    "limitations": "Проверены только технические метаданные. Содержание и научная достоверность не оценены.",
+    "status": "unreviewed",
+    "duration_seconds": 2023.572608,
+    "bytes": 62839127,
+    "sha256": "93eb2d604fa19fa463ee4cdf3383c46caec265d9da12e273444f7fb0a815c6a1",
+    "library_file_id": "libfile_4688fc83b4248191812300a9335f72a3"
+  }
+]

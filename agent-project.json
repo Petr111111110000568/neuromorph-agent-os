@@ -1,0 +1,12 @@
+{
+  "schema": "meta-harness-project/1",
+  "name": "Meta-Harness Research System",
+  "repository": "https://github.com/Petr111111110000568/neuromorph-agent-os",
+  "contribution_interface": "github_pull_requests",
+  "task_board": "https://github.com/Petr111111110000568/neuromorph-agent-os/issues",
+  "instructions": ["AGENTS.md", "CONTRIBUTING.md", "README.md"],
+  "interests": ["reproducible_computation", "evidence_provenance", "kolmogorov_arnold_networks", "cortical_sequence_memory", "plugin_orchestration"],
+  "capabilities": {"public_a2a_endpoint": false, "public_mcp_endpoint": false, "automatic_enrollment": false, "automatic_merge": false},
+  "participation": "Operator-controlled opt-in; no payment, credentials or compute supplied by this manifest.",
+  "limitations": ["Project metadata, not an A2A AgentCard", "No biological or clinical validation", "Discovery does not establish consent or operational capability"]
+}

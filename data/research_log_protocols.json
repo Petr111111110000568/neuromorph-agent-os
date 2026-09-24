@@ -1,0 +1,321 @@
+{
+  "checked_at": "2026-09-18",
+  "scope": "protocols,frameworks,source-licensing,authorized-research-data",
+  "search_queries": [
+    {
+      "query": "Official Agent2Agent A2A protocol specification Agent Card task lifecycle authorization Linux Foundation",
+      "numResults": 6,
+      "engine": "exa"
+    },
+    {
+      "query": "Official Model Context Protocol specification latest version authorization security tool access",
+      "numResults": 6,
+      "engine": "exa"
+    },
+    {
+      "query": "Microsoft Agent Framework official AutoGen maintenance mode LangGraph durable execution license",
+      "numResults": 6,
+      "engine": "exa"
+    },
+    {
+      "query": "Anthropic engineering multi agent research system architecture limitations token costs",
+      "numResults": 6,
+      "engine": "exa"
+    },
+    {
+      "query": "NCBI dbGaP controlled access EGA data access committee authorized API downloads official",
+      "numResults": 6,
+      "engine": "exa"
+    },
+    {
+      "query": "OpenAI Agents SDK official GitHub MIT Responses API remote MCP tools",
+      "numResults": 6,
+      "engine": "exa"
+    },
+    {
+      "query": "EGA European Genome phenome Archive official data access committee request datasets pyega3 license",
+      "numResults": 5,
+      "engine": "exa"
+    }
+  ],
+  "search_result_slots": 41,
+  "extra_web_search": {
+    "calls": 1,
+    "query": "Agents SDK Responses remote MCP",
+    "domain_filter": "developers.openai.com",
+    "outcome": "provider returned unrelated domains; all results excluded"
+  },
+  "fetch_attempts": 40,
+  "pages_fetched": 36,
+  "unique_pages_fetched": 35,
+  "pages": [
+    {
+      "url": "https://a2a-protocol.org/v1.0.0/specification/",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://github.com/a2aproject/A2A/blob/main/LICENSE",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://modelcontextprotocol.io/specification/versioning",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/LICENSE",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://docs.langchain.com/oss/python/langgraph/durable-execution",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://github.com/langchain-ai/langgraph/blob/main/LICENSE",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/agent-framework/migration-guide/from-autogen/",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://github.com/microsoft/agent-framework/blob/main/LICENSE",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://sharing.nih.gov/accessing-data/accessing-genomic-data/how-to-request-and-access-datasets-from-dbgap",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://ega-archive.org/access/data-access/",
+      "status": "fetch_failed_or_404",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/guides/agents-sdk",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/guides/tools-remote-mcp",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://a2a-protocol.org/latest/specification/",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://github.com/a2aproject/a2a-python/blob/main/LICENSE",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://github.com/a2aproject/a2a-python",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://github.com/modelcontextprotocol/python-sdk/blob/main/LICENSE",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://github.com/microsoft/autogen",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/agent-framework/overview/",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://ega-archive.org/access/request-data/",
+      "status": "fetch_failed_or_404",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://github.com/EGA-archive/ega-download-client",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://github.com/EGA-archive/ega-download-client/blob/master/LICENSE",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://github.com/openai/openai-agents-python/blob/main/LICENSE",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://modelcontextprotocol.io/about",
+      "status": "fetch_failed_or_404",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://ega-archive.org/access/request-data/how-to-request-data/",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://ega-archive.org/access/download/files/pyega3/",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://github.com/a2aproject/A2A/blob/v1.0.1/docs/specification.md",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://a2a-protocol.org/latest/",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://modelcontextprotocol.io/community/governance",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://www.anthropic.com/research/multiagent-systems",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.txt",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://ega-archive.org/about/introduction/",
+      "status": "fetch_failed_or_404",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://ega-archive.org/",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://github.com/microsoft/autogen/blob/main/LICENSE",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://github.com/microsoft/autogen/blob/main/LICENSE-CODE",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/guides/your-data",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    },
+    {
+      "url": "https://docs.langchain.com/oss/python/langgraph/overview",
+      "status": "primary_content_fetched",
+      "method": "exa",
+      "limitations": "Fetcher returned bounded page excerpts; some search results supplied additional passages. Not every full document was read."
+    }
+  ],
+  "other_verification": [
+    {
+      "method": "GitHub get_repo",
+      "url": "https://github.com/EGA-archive/ega-download-client",
+      "result": "public; size447KB; master; repository read permission"
+    },
+    {
+      "method": "GitHub fetch",
+      "url": "https://api.github.com/repos/EGA-archive/ega-download-client/commits/master",
+      "result": "commit5ec6c4cd37cc67142285051bdbd725c824da1384; date2024-09-20"
+    },
+    {
+      "method": "stdlib HTTPS GitHub API",
+      "url": "https://api.github.com/repos/EGA-archive/ega-download-client",
+      "result": "size447KB; license Apache-2.0"
+    },
+    {
+      "method": "stdlib HTTPS GitHub API",
+      "url": "https://api.github.com/repos/a2aproject/a2a-python",
+      "result": "size6067KB; license Apache-2.0"
+    }
+  ],
+  "limitations": [
+    "Organization attribution uses public primary documentation, not cryptographic proof of each endpoint.",
+    "All external registry entries are documented_not_connected.",
+    "Source inspection candidate is not downloaded or executed by this research subtask.",
+    "Search slot count is requested result capacity, not number of distinct validated resources."
+  ]
+}

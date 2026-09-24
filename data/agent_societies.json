@@ -1,0 +1,372 @@
+[
+  {
+    "id": "society-agentverse",
+    "name": "uAgents / Agentverse / Almanac",
+    "organization": "Fetch.ai; операторы отдельных агентов независимы",
+    "entity_type": "platform",
+    "network_layers": [
+      "clear_web",
+      "authenticated"
+    ],
+    "access_mode": "Публичное чтение каталога проверено; сообщения и hosted-функции требуют соответствующего протокола/настройки.",
+    "license": "uAgents: Apache-2.0; hosted Agentverse и отдельные агенты имеют собственные условия.",
+    "source_url": "https://github.com/fetchai/uAgents",
+    "docs_url": "https://docs.agentverse.ai/v-1/api-reference/search/agents.md",
+    "provenance_urls": [
+      "https://docs.agentverse.ai/v-1/api-reference/search/agents.md",
+      "https://docs.agentverse.ai/v-1/api-reference/almanac/get-agent",
+      "https://github.com/fetchai/uAgents/blob/main/LICENSE"
+    ],
+    "capabilities": [
+      "agent_discovery",
+      "typed_messages",
+      "agent_registration",
+      "protocol_manifests"
+    ],
+    "strengths": [
+      "Документированный живой каталог без ключа",
+      "Сведения о протоколах и активности",
+      "Лицензируемый каркас собственных агентов"
+    ],
+    "weaknesses": [
+      "Карточка не удостоверяет организацию и качество",
+      "Много неактивных и нерелевантных карточек",
+      "Старые и новые документы расходятся по авторизации"
+    ],
+    "evidence_summary": "Два прямых read-only поиска 2026-09-18 дали HTTP200: 3 записи без фильтра, 5 с active/has_readme. Услуги участников не вызывались.",
+    "copy_strategy": "Разворачивать разрешённый uAgents-код на фиксированном commit; чужих агентов подключать по договорённому протоколу, не копировать их API keys/закрытые модели.",
+    "protocol": "uAgents signed envelopes/protocol digests; разные типы каталога требуют своих адаптеров.",
+    "admission": "Собственный ключ/адрес и регистрация; hosted и mailbox имеют условия оператора.",
+    "payment": "По условиям конкретной услуги; чтение каталога в проверке не потребовало оплаты.",
+    "integration_details": {
+      "readonly_endpoint": "https://agentverse.ai/v1/search/agents",
+      "method": "POST",
+      "credentials_required_for_verified_read": false,
+      "request": {
+        "search_text": "research",
+        "sort": "relevancy",
+        "direction": "desc",
+        "filters": {
+          "state": [
+            "active"
+          ],
+          "has_readme": true
+        },
+        "offset": 0,
+        "limit": 5
+      },
+      "live_directory_read_confirmed": true,
+      "individual_agents_connected": false
+    },
+    "evidence_level": "documentation",
+    "integration_status": "documented_not_connected",
+    "source_quality": "Официальные API/SDK документы и исходные репозитории; заявления поставщиков не являются независимой научной валидацией.",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "society-olas",
+    "name": "Olas / Open Autonomy / Pearl / Mech Marketplace",
+    "organization": "Экосистема Olas; Valory — разработчик ключевых компонентов и Pearl",
+    "entity_type": "platform",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Локальные агенты Pearl/Open Autonomy; marketplace jobs через mech-client и контракты.",
+    "license": "Open Autonomy: Apache-2.0; условия каждого Mech, модели и инструмента отдельно.",
+    "source_url": "https://github.com/valory-xyz/open-autonomy",
+    "docs_url": "https://docs.olas.network/mech-client/",
+    "provenance_urls": [
+      "https://docs.olas.network/open-autonomy/",
+      "https://docs.olas.network/mech-client/",
+      "https://stack.olas.network/mech-server/",
+      "https://pearl.you/",
+      "https://github.com/valory-xyz/open-autonomy/blob/main/LICENSE"
+    ],
+    "capabilities": [
+      "agent_services",
+      "task_marketplace",
+      "tool_delegation",
+      "local_agent_runtime"
+    ],
+    "strengths": [
+      "Запросы и доставка услуг оформлены протоколом",
+      "Несколько моделей оплаты",
+      "Открытый каркас собственного сервиса"
+    ],
+    "weaknesses": [
+      "Депозиты и комиссии",
+      "Репутация выполнения не научная валидация",
+      "Готовые финансовые агенты не выполняют биологию без новых инструментов"
+    ],
+    "evidence_summary": "Документация описывает зарегистрированные Mech-сервисы, запросы, оплату, доставку, takeover и Karma. Доступные рыночные инструменты требуют индивидуальной проверки.",
+    "copy_strategy": "Копировать разрешённый Open Autonomy-код; разворачивать собственный сервис; существующие Mech подключать официальным клиентом.",
+    "protocol": "Open Autonomy multi-agent services; Mech Marketplace contracts; on-chain/off-chain request delivery.",
+    "admission": "Оператор создаёт/регистрирует сервис и ключи; клиент выбирает Mech и формирует ограниченный запрос.",
+    "payment": "Native token, ERC20 или документированная модель подписки; off-chain не означает бесплатно.",
+    "integration_details": {
+      "client": "mech-client",
+      "next_step": "Проверить tool schema, качество и смету конкретного Mech на публичном контрольном задании.",
+      "live_calls": false
+    },
+    "evidence_level": "documentation",
+    "integration_status": "documented_not_connected",
+    "source_quality": "Официальные API/SDK документы и исходные репозитории; заявления поставщиков не являются независимой научной валидацией.",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "society-virtuals-acp",
+    "name": "Virtuals Agent Commerce Protocol v2",
+    "organization": "Virtuals Protocol; самостоятельные Provider-операторы",
+    "entity_type": "platform",
+    "network_layers": [
+      "clear_web",
+      "authenticated"
+    ],
+    "access_mode": "Зарегистрированный агент и wallet/signer через @virtuals-protocol/acp-node-v2.",
+    "license": "SDK v2 package.json объявляет ISC; полную лицензию выбранного release и сервисные условия проверять отдельно.",
+    "source_url": "https://github.com/Virtual-Protocol/acp-node-v2",
+    "docs_url": "https://os.virtuals.io/acp/sdk/getting-started",
+    "provenance_urls": [
+      "https://os.virtuals.io/acp/concepts/",
+      "https://os.virtuals.io/acp/sdk/getting-started",
+      "https://github.com/Virtual-Protocol/acp-node-v2",
+      "https://github.com/Virtual-Protocol/acp-node-v2/blob/main/package.json"
+    ],
+    "capabilities": [
+      "agent_marketplace",
+      "offerings",
+      "escrow_jobs",
+      "optional_evaluator",
+      "event_stream"
+    ],
+    "strengths": [
+      "Формальные роли и стадии работы",
+      "Ограниченные job-specific обязанности",
+      "Отдельный evaluator поддерживается"
+    ],
+    "weaknesses": [
+      "Escrow не оценивает научную истинность",
+      "Нужны кошельки/ключи и контроль расходов",
+      "v2 несовместим с примерами v1; SDK adapters меняются"
+    ],
+    "evidence_summary": "Официальная документация описывает offering, USDC escrow и JobSession lifecycle; README v2 подтверждает event-driven интерфейс. Оплаченные задания не выполнялись.",
+    "copy_strategy": "Проверенный лицензированный SDK может быть развёрнут; услуги закрытого Provider приобретаются по контракту.",
+    "protocol": "ACP v2 AcpAgent/JobSession; SSE/event stream; per-job chain and role.",
+    "admission": "Service Registry, wallet/signers, совместимый provider adapter.",
+    "payment": "USDC escrow по предложенному и принятому бюджету; сопутствующие комиссии/условия сети.",
+    "integration_details": {
+      "package": "@virtuals-protocol/acp-node-v2",
+      "methods": [
+        "browseAgents",
+        "createJobByOfferingName"
+      ],
+      "next_step": "Adapter sandbox/testnet, отдельная приёмка, лимиты и журнал; не начинать mainnet оплату без настроенного бюджета.",
+      "live_calls": false
+    },
+    "evidence_level": "documentation",
+    "integration_status": "documented_not_connected",
+    "source_quality": "Официальные API/SDK документы и исходные репозитории; заявления поставщиков не являются независимой научной валидацией.",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "society-bittensor",
+    "name": "Bittensor subnets",
+    "organization": "RaoFoundation и независимые операторы подсетей; исторический SDK Opentensor Foundation",
+    "entity_type": "platform",
+    "network_layers": [
+      "clear_web",
+      "authenticated"
+    ],
+    "access_mode": "Текущий Bittensor SDK/CLI для чтения сети и операций; услуги зависят от subnet.",
+    "license": "Архивированный SDK MIT; текущий sdk/python в subtensor объявляет Apache-2.0; корневой monorepo LICENSE Unlicense. Лицензии компонентов различаются.",
+    "source_url": "https://github.com/RaoFoundation/subtensor",
+    "docs_url": "https://docs.learnbittensor.org/",
+    "provenance_urls": [
+      "https://docs.learnbittensor.org/",
+      "https://github.com/RaoFoundation/bittensor",
+      "https://github.com/RaoFoundation/subtensor/blob/main/sdk/python/pyproject.toml",
+      "https://github.com/RaoFoundation/subtensor/blob/main/LICENSE"
+    ],
+    "capabilities": [
+      "distributed_compute",
+      "inference_services",
+      "validator_scoring",
+      "subnet_incentives"
+    ],
+    "strengths": [
+      "Измеряемые роли miners/validators",
+      "Разнообразие специализированных подсетей",
+      "Машиночитаемые каталоги SDK операций"
+    ],
+    "weaknesses": [
+      "Метрика вознаграждения может расходиться с качеством науки",
+      "Разные API и политика доступа у подсетей",
+      "Риск устаревших примеров SDK и экономических условий"
+    ],
+    "evidence_summary": "Текущие документы описывают разделение miners, validators, subnet creators и stakers. Старый standalone SDK архивирован, развитие перешло в monorepo.",
+    "copy_strategy": "Проверять конкретный commit и лицензии компонентов; отдельный subnet-client использовать вместо предположения об универсальном API науки.",
+    "protocol": "Subtensor chain + subnet-specific service protocols; v11 SDK for network operations.",
+    "admission": "Зависит от роли и subnet: чтение, потребление услуги, miner/validator registration требуют разных прав.",
+    "payment": "Экономика TAO/subnet и цены сервиса изменяемы; здесь не проверялись live quotes и средства не выделялись.",
+    "integration_details": {
+      "current_sdk_path": "sdk/python",
+      "next_step": "Выбрать конкретную услугу, измерить cost per accepted artifact и независимое качество.",
+      "live_calls": false
+    },
+    "evidence_level": "documentation",
+    "integration_status": "documented_not_connected",
+    "source_quality": "Официальные API/SDK документы и исходные репозитории; заявления поставщиков не являются независимой научной валидацией.",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "society-singularitynet",
+    "name": "SingularityNET decentralized AI platform",
+    "organization": "SingularityNET и отдельные организации-поставщики сервиса",
+    "entity_type": "platform",
+    "network_layers": [
+      "clear_web",
+      "authenticated"
+    ],
+    "access_mode": "Registry/service metadata, daemon, ServiceClient и payment channels.",
+    "license": "snet-sdk-python MIT; услуги, модели и данные имеют собственные условия.",
+    "source_url": "https://github.com/singnet/snet-sdk-python",
+    "docs_url": "https://dev.singularitynet.io/docs/products/DecentralizedAIPlatform/SDK/sdk-concept/",
+    "provenance_urls": [
+      "https://dev.singularitynet.io/docs/products/DecentralizedAIPlatform/SDK/sdk-concept/",
+      "https://dev.singularitynet.io/docs/products/DecentralizedAIPlatform/AGIXToASIMigration/",
+      "https://github.com/singnet/snet-sdk-python/blob/master/LICENSE"
+    ],
+    "capabilities": [
+      "ai_service_registry",
+      "model_service_calls",
+      "payment_channels"
+    ],
+    "strengths": [
+      "Реестр организаций/сервисов",
+      "SDK с явными сервисными клиентами",
+      "Возможность публикации собственного инструмента"
+    ],
+    "weaknesses": [
+      "Нужен адаптер схем каждого сервиса",
+      "Закрытые поставщики и квоты",
+      "Legacy AGIX примеры устарели для новых services"
+    ],
+    "evidence_summary": "Текущая документация указывает ASI(FET) по умолчанию; legacy AGIX deprecated. Наличие рынка не означает автоматического согласования исследовательских задач.",
+    "copy_strategy": "Разворачивать MIT SDK; подключать выбранные service ID и protobuf/schema по условиям операторов.",
+    "protocol": "Registry, ServiceClient, daemon, MultiPartyEscrow payment channels.",
+    "admission": "Конфигурация клиента, выбранные org/service IDs; для платёжных операций wallet/RPC.",
+    "payment": "Актуальная ASI(FET) инфраструктура по документации; цены зависят от сервиса.",
+    "integration_details": {
+      "next_step": "Подобрать конкретную научную/ML услугу и проверить её выход на контрольных данных.",
+      "live_calls": false
+    },
+    "evidence_level": "documentation",
+    "integration_status": "documented_not_connected",
+    "source_quality": "Официальные API/SDK документы и исходные репозитории; заявления поставщиков не являются независимой научной валидацией.",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "society-gensyn",
+    "name": "Gensyn RL Swarm / CodeZero",
+    "organization": "Gensyn; возможны независимые community-owned swarms",
+    "entity_type": "framework",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Исходный P2P framework для собственной группы; официальные swarms помечены Paused.",
+    "license": "Репозиторий и авторы указывают MIT; лицензии базовых моделей и зависимостей отдельные.",
+    "source_url": "https://github.com/gensyn-ai/rl-swarm",
+    "docs_url": "https://docs.gensyn.ai/testnet/rl-swarm",
+    "provenance_urls": [
+      "https://github.com/gensyn-ai/rl-swarm",
+      "https://github.com/gensyn-ai/rl-swarm/blob/main/README.md",
+      "https://docs.gensyn.ai/testnet/rl-swarm"
+    ],
+    "capabilities": [
+      "collaborative_rl",
+      "peer_critique",
+      "code_training",
+      "model_evaluation"
+    ],
+    "strengths": [
+      "Реализован каркас совместного обучения",
+      "Можно создать собственную группу с общей задачей",
+      "Разделение ролей решения и оценки"
+    ],
+    "weaknesses": [
+      "Нет активного официального swarm по текущему уведомлению",
+      "Экспериментальный код и требования к вычислениям",
+      "Коллективная оценка не гарантирует независимое качество"
+    ],
+    "evidence_summary": "Документация и шапка README явно сообщают о паузе официальных swarms; нижние исторические разделы README ещё называют CodeZero active.",
+    "copy_strategy": "Разворачивать разрешённый код собственной группы после проверки зависимостей/моделей; не заявлять подключение к работающему official swarm.",
+    "protocol": "P2P communication/gossip and shared RL environment; optional testnet identity.",
+    "admission": "Оператор выделяет узел и модель; собственная группа задаёт правила, testnet identity отдельна.",
+    "payment": "Затраты compute и инфраструктуры; финансовая доходность не установлена.",
+    "integration_details": {
+      "availability": "official_swarms_paused",
+      "next_step": "Отдельный стенд на безопасных задачах кода; независимый holdout против фиксированного baseline.",
+      "live_calls": false
+    },
+    "evidence_level": "documentation",
+    "integration_status": "documented_not_connected",
+    "source_quality": "Официальные API/SDK документы и исходные репозитории; заявления поставщиков не являются независимой научной валидацией.",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "society-moltbook",
+    "name": "Moltbook agent social network",
+    "organization": "Moltbook, LLC по Privacy Policy; приобретение Meta подтверждено сообщением Reuters от 2026-03-10",
+    "entity_type": "platform",
+    "network_layers": [
+      "clear_web",
+      "authenticated"
+    ],
+    "access_mode": "Публичный сайт; agent API после регистрации/human claim; developer identity API early access.",
+    "license": "moltbook/api repository MIT; hosted-сервис регулируют Terms; соответствие опубликованного кода текущему сервису не установлено.",
+    "source_url": "https://github.com/moltbook/api",
+    "docs_url": "https://www.moltbook.com/developers",
+    "provenance_urls": [
+      "https://www.moltbook.com/developers",
+      "https://www.moltbook.com/skill.md",
+      "https://www.moltbook.com/privacy",
+      "https://www.moltbook.com/terms",
+      "https://github.com/moltbook/api/blob/main/LICENSE",
+      "https://www.reuters.com/business/meta-acquires-ai-agent-social-network-moltbook-2026-03-10/"
+    ],
+    "capabilities": [
+      "agent_social_posts",
+      "community_discovery",
+      "external_identity_tokens"
+    ],
+    "strengths": [
+      "Явные профили и внешняя identity verification",
+      "Обнаружение обсуждений и возможных инструментов",
+      "Документированная связь с владельцем"
+    ],
+    "weaknesses": [
+      "Karma и посты не подтверждают научные достижения",
+      "Публичные материалы могут содержать ложные или управляющие инструкции",
+      "Identity API требует app key; самостоятельная юридическая правосубъектность агентов не предоставляется"
+    ],
+    "evidence_summary": "Документация показывает регистрацию и подтверждение владельцем; временные identity tokens; Terms оставляют ответственность за агентом у человека. Технические свойства подтверждены только официальными docs.",
+    "copy_strategy": "Развёртывание разрешённого MIT API-кода возможно после проверки; аккаунты, репутация и доступ hosted-площадки не копируются.",
+    "protocol": "HTTPS API /api/v1; verify-identity with developer app key.",
+    "admission": "Регистрация bot и человеческое подтверждение; developer early-access application для интеграции identity.",
+    "payment": "Developer page заявляет бесплатную identity verification; это не обещание бесплатного выполнения чужих задач.",
+    "integration_details": {
+      "identity_endpoint": "https://www.moltbook.com/api/v1/agents/verify-identity",
+      "credentials_required": true,
+      "next_step": "Пассивный поиск инструментов; внешняя identity — только один сигнал, без автоматического допуска.",
+      "live_calls": false
+    },
+    "evidence_level": "documentation",
+    "integration_status": "documented_not_connected",
+    "source_quality": "Официальные API/SDK документы и исходные репозитории; заявления поставщиков не являются независимой научной валидацией.",
+    "checked_at": "2026-09-18"
+  }
+]

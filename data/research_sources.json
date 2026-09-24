@@ -1,0 +1,500 @@
+[
+  {
+    "id": "rosalind-workbench",
+    "title": "OpenAI Rosalind Workbench",
+    "url": "https://developers.openai.com/blog/rosalind-workbench",
+    "category": "research-workbench",
+    "maturity": "research-preview",
+    "integration": "Интерфейсный ориентир и возможный сервис; доступ аккаунта требует проверки.",
+    "limitations": "Анонс сервиса не подтверждает доступ текущего аккаунта, самостоятельный API или физическую лабораторию.",
+    "publication_date": "2026-08-28",
+    "license": "Сервисные условия; исходный код не проверен.",
+    "dependencies": [
+      "Доступ к Rosalind Workbench в ChatGPT"
+    ],
+    "evidence": "Официальное описание: guided tasks, научные viewers и NGS-анализ.",
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "google-ai-co-scientist",
+    "title": "Google AI co-scientist",
+    "url": "https://research.google/blog/accelerating-scientific-breakthroughs-with-an-ai-co-scientist/",
+    "category": "research-agents",
+    "maturity": "research-demonstration",
+    "integration": "Архитектурный образец генерации, критики и ранжирования гипотез.",
+    "limitations": "Elo — внутренняя оценка; эксперименты выполнялись с экспертами. Доступ по программе не проверен.",
+    "publication_date": "2025-02-19",
+    "license": "Не установлена для кода; страница описывает Trusted Tester.",
+    "dependencies": [
+      "Доступ исследовательской организации"
+    ],
+    "evidence": "Официальный отчёт о multi-agent системе и отдельных лабораторных проверках.",
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "virtual-lab",
+    "title": "Virtual Lab",
+    "url": "https://github.com/zou-group/virtual-lab",
+    "category": "research-agents",
+    "maturity": "published-research-code",
+    "integration": "Изолированный агентный модуль командных и индивидуальных совещаний.",
+    "limitations": "Физическую валидацию в опубликованной работе проводили исследователи.",
+    "publication_date": "2025-07-29",
+    "license": "MIT для кода",
+    "license_url": "https://github.com/zou-group/virtual-lab/blob/main/LICENSE",
+    "dependencies": [
+      "Python",
+      "LLM API key"
+    ],
+    "evidence": "Nature: LLM-руководитель, специалисты и обратная связь человека.",
+    "related_urls": [
+      "https://www.nature.com/articles/s41586-025-09442-9"
+    ],
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "ai-scientist-v2",
+    "title": "Sakana AI Scientist-v2",
+    "url": "https://github.com/SakanaAI/AI-Scientist-v2",
+    "category": "autonomous-ml-research",
+    "maturity": "research-code",
+    "integration": "Изолированный исследователь алгоритмов с исполнением ограниченных вычислительных экспериментов.",
+    "limitations": "Workshop-результат нельзя приравнивать к main-track ICLR. Генерируемый код требует отдельного исполнителя.",
+    "publication_date": "2025-04-07",
+    "license": "The AI Scientist Source Code License; обязательное раскрытие AI-авторства.",
+    "license_url": "https://github.com/SakanaAI/AI-Scientist-v2/blob/main/LICENSE",
+    "dependencies": [
+      "Python",
+      "LLM API",
+      "вычислительные ресурсы",
+      "зависимости эксперимента"
+    ],
+    "evidence": "Древовидный поиск гипотез, вычисления, анализ и рукопись; v1 остаётся полезным для шаблонных задач.",
+    "related_urls": [
+      "https://sakana.ai/ai-scientist-first-publication/",
+      "https://github.com/SakanaAI/AI-Scientist"
+    ],
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "paper2agent",
+    "title": "Paper2Agent",
+    "url": "https://github.com/jmiao24/Paper2Agent",
+    "category": "plugin-factory",
+    "maturity": "published-research-code",
+    "integration": "Преобразование статьи и кода в проверяемый MCP; предпочтительный кандидат фабрики научных адаптеров.",
+    "limitations": "Требуется верификация каждого generated server; корректность кода не равна истинности гипотезы.",
+    "publication_date": "2026-09-16",
+    "license": "MIT для кода",
+    "license_url": "https://github.com/jmiao24/Paper2Agent/blob/main/LICENSE",
+    "dependencies": [
+      "Coding-agent host",
+      "Git",
+      "Python",
+      "зависимости исходного научного проекта"
+    ],
+    "evidence": "Nature 16.09.2026: MCP-адаптация статей, тестирование и примеры геномики/одиночных клеток.",
+    "related_urls": [
+      "https://www.nature.com/articles/s41586-026-11044-y"
+    ],
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "biomni",
+    "title": "Biomni",
+    "url": "https://github.com/snap-stanford/Biomni",
+    "category": "biomedical-agent",
+    "maturity": "research-code",
+    "integration": "Самостоятельный исполнитель биоинформатических задач с отобранными возможностями.",
+    "limitations": "Массивное окружение и конфликты зависимостей; нельзя считать все tools установленными после установки базового пакета.",
+    "publication_date": null,
+    "license": "Apache-2.0 для кода; отдельные third-party условия.",
+    "license_url": "https://github.com/snap-stanford/Biomni/blob/main/LICENSE",
+    "dependencies": [
+      "Python/Conda",
+      "LLM provider",
+      "специализированные пакеты и данные"
+    ],
+    "evidence": "Официальный README описывает retrieval-augmented planning и code execution.",
+    "related_urls": [
+      "https://github.com/snap-stanford/Biomni/blob/main/license_info.md"
+    ],
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "tooluniverse",
+    "title": "ToolUniverse",
+    "url": "https://github.com/mims-harvard/ToolUniverse",
+    "category": "scientific-tools-mcp",
+    "maturity": "maintained-software",
+    "integration": "MCP/CLI-каталог с ограниченным набором научных инструментов и зафиксированной версией.",
+    "limitations": "API, локальные extras, ключи и условия источников проверяются по каждому инструменту.",
+    "publication_date": null,
+    "license": "Apache-2.0 для кода",
+    "license_url": "https://github.com/mims-harvard/ToolUniverse/blob/main/LICENSE",
+    "dependencies": [
+      "Python",
+      "uv или отдельный venv",
+      "сеть для внешних источников",
+      "опциональные ключи"
+    ],
+    "evidence": "README подтверждает native MCP, async operations, CLI и configurable tool selection.",
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "txagent",
+    "title": "TxAgent",
+    "url": "https://github.com/mims-harvard/TxAgent",
+    "category": "therapeutic-reasoning",
+    "maturity": "research-code",
+    "integration": "Кандидат специализированного анализа свидетельств, не основной оркестратор.",
+    "limitations": "Терапевтические benchmark не подтверждают надёжность клинического применения; аппаратно тяжёлый режим.",
+    "publication_date": null,
+    "license": "MIT для кода; условия Llama-весов отдельно.",
+    "license_url": "https://github.com/mims-harvard/TxAgent/blob/main/LICENSE",
+    "dependencies": [
+      "ToolUniverse",
+      "модель TxAgent",
+      "интернет",
+      "README рекомендует H100 >80GB"
+    ],
+    "evidence": "Официальный репозиторий терапевтического reasoning с внешними инструментами.",
+    "related_urls": [
+      "https://arxiv.org/abs/2503.10970"
+    ],
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "coscientist",
+    "title": "Coscientist",
+    "url": "https://github.com/gomesgroup/coscientist",
+    "category": "physical-lab-demonstration",
+    "maturity": "research-demonstration",
+    "integration": "Архитектурный пример связи поиска, кода и оборудования; исполнитель оборудования не включён.",
+    "limitations": "Демонстрация конкретной лаборатории не даёт универсального доступа к физическим экспериментам.",
+    "publication_date": null,
+    "license": "Не проверена; читать лицензию выбранной ревизии.",
+    "dependencies": [
+      "LLM API",
+      "специализированное лабораторное оборудование и его интеграции"
+    ],
+    "evidence": "Первичная работа описывает автономные возможности LLM в химическом исследовании.",
+    "related_urls": [
+      "https://arxiv.org/abs/2304.05332"
+    ],
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "alphagenome-api",
+    "title": "AlphaGenome API and Atlas",
+    "url": "https://github.com/google-deepmind/alphagenome",
+    "category": "regulatory-genomics",
+    "maturity": "published-model-api",
+    "integration": "Адаптер аналитического предсказания эффектов известных вариантов и вывода tracks.",
+    "limitations": "Исследовательские прогнозы, квоты и специальные условия API/выходов. Не клинический инструмент.",
+    "publication_date": null,
+    "license": "Apache-2.0 для клиента; API и результаты — отдельные условия.",
+    "license_url": "https://github.com/google-deepmind/alphagenome/blob/main/LICENSE",
+    "dependencies": [
+      "API key",
+      "Python client",
+      "разрешённая сеть"
+    ],
+    "evidence": "README подтверждает multimodal outputs, Atlas и отдельную коммерческую возможность через Google Cloud.",
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "alphagenome-research",
+    "title": "AlphaGenome Research",
+    "url": "https://github.com/google-deepmind/alphagenome_research",
+    "category": "regulatory-genomics",
+    "maturity": "published-model-code",
+    "integration": "Отдельный локальный JAX-worker при наличии оборудования и прав на веса.",
+    "limitations": "Модель локальных регуляторных эффектов не является моделью организма. Веса требуют принятия условий.",
+    "publication_date": null,
+    "license": "Apache-2.0 для кода; веса — non-commercial model terms; данные имеют собственные условия.",
+    "license_url": "https://github.com/google-deepmind/alphagenome_research/blob/main/LICENSE",
+    "dependencies": [
+      "JAX",
+      "CUDA/cuDNN",
+      "авторы рекомендуют H100",
+      "доступ к весам"
+    ],
+    "evidence": "Репозиторий содержит реализацию модели, загрузчик данных и ссылки на веса.",
+    "related_urls": [
+      "https://deepmind.google.com/science/alphagenome/model-terms"
+    ],
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "evo2",
+    "title": "Evo 2",
+    "url": "https://github.com/ArcInstitute/evo2",
+    "category": "dna-language-model",
+    "maturity": "published-model-code",
+    "integration": "Отдельный GPU-worker для аналитических оценок и embeddings.",
+    "limitations": "Генерация ДНК не гарантирует функциональность, жизнеспособность или управляемый фенотип.",
+    "publication_date": null,
+    "license": "Apache-2.0 для кода; проверять условия выбранных весов и данных.",
+    "license_url": "https://github.com/ArcInstitute/evo2/blob/main/LICENSE",
+    "dependencies": [
+      "Python 3.11/3.12",
+      "CUDA 12.1+",
+      "cuDNN 9.3+",
+      "Vortex",
+      "7B bfloat16 либо Hopper/FP8 для перечисленных README моделей"
+    ],
+    "evidence": "README: long-context DNA model; 40B требует несколько H100. Фактический inference здесь не выполнялся.",
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "scvi-tools",
+    "title": "scvi-tools",
+    "url": "https://github.com/scverse/scvi-tools",
+    "category": "single-cell-omics",
+    "maturity": "established-software",
+    "integration": "Приоритетный worker вероятностного анализа и интеграции AnnData.",
+    "limitations": "Нужны QC, согласованные метаданные и независимая проверка переноса между наборами.",
+    "publication_date": "2022-02-07",
+    "license": "BSD-3-Clause",
+    "license_url": "https://github.com/scverse/scvi-tools/blob/main/LICENSE",
+    "dependencies": [
+      "Python",
+      "PyTorch",
+      "AnnData",
+      "опциональный GPU"
+    ],
+    "evidence": "Официальный README: интеграция, annotation, пространственный анализ, API и save/load.",
+    "related_urls": [
+      "https://doi.org/10.1038/s41587-021-01206-w"
+    ],
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "scgpt",
+    "title": "scGPT",
+    "url": "https://github.com/bowang-lab/scGPT",
+    "category": "single-cell-foundation-model",
+    "maturity": "research-model-code",
+    "integration": "Экспериментальный конкурент baseline/scvi в общем benchmark.",
+    "limitations": "Нужны checkpoints и совместимые версии; README отмечает проблемы старых зависимостей и Poetry.",
+    "publication_date": null,
+    "license": "MIT для кода; условия весов/данных проверяются отдельно.",
+    "license_url": "https://github.com/bowang-lab/scGPT/blob/main/LICENSE",
+    "dependencies": [
+      "Python",
+      "PyTorch",
+      "checkpoints",
+      "R для соответствующих workflow"
+    ],
+    "evidence": "Репозиторий описывает модели представлений клеток и примеры переноса/annotation.",
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "nextflow",
+    "title": "Nextflow",
+    "url": "https://github.com/nextflow-io/nextflow",
+    "category": "workflow-execution",
+    "maturity": "established-software",
+    "integration": "Фоновый исполнитель воспроизводимых pipeline через CLI/job adapter.",
+    "limitations": "Не обеспечивает истинность биологического вывода или изоляцию без конкретного настроенного executor.",
+    "publication_date": null,
+    "license": "Apache-2.0",
+    "license_url": "https://github.com/nextflow-io/nextflow/blob/master/COPYING",
+    "dependencies": [
+      "Java совместимой версии",
+      "executor",
+      "контейнерный runtime или управляемое окружение"
+    ],
+    "evidence": "Официальный README подтверждает local/HPC/cloud execution и управление зависимостями.",
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "nf-core-atacseq",
+    "title": "nf-core/atacseq",
+    "url": "https://nf-co.re/atacseq/2.1.2/",
+    "category": "epigenomics-pipeline",
+    "maturity": "released-workflow",
+    "integration": "Версионированный pipeline анализа доступности хроматина.",
+    "limitations": "Нужны корректные reference, samplesheet и реплики; фактический test profile здесь не запускался.",
+    "publication_date": null,
+    "observed_version": "2.1.2",
+    "license": "MIT для pipeline; сторонние программы отдельно.",
+    "license_url": "https://github.com/nf-core/atacseq/blob/master/LICENSE",
+    "dependencies": [
+      "Nextflow",
+      "контейнеры",
+      "reads",
+      "reference",
+      "samplesheet"
+    ],
+    "evidence": "Официальная страница и репозиторий описывают ATAC-seq QC и обработку.",
+    "related_urls": [
+      "https://github.com/nf-core/atacseq"
+    ],
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "nf-core-methylseq",
+    "title": "nf-core/methylseq",
+    "url": "https://nf-co.re/methylseq/4.2.0/",
+    "category": "epigenomics-pipeline",
+    "maturity": "released-workflow",
+    "integration": "Версионированный pipeline анализа метилирования.",
+    "limitations": "Результат зависит от типа assay, reference и метаданных; test profile здесь не запускался.",
+    "publication_date": null,
+    "observed_version": "4.2.0",
+    "license": "MIT для pipeline; сторонние программы отдельно.",
+    "license_url": "https://github.com/nf-core/methylseq/blob/master/LICENSE",
+    "dependencies": [
+      "Nextflow",
+      "контейнеры",
+      "reads",
+      "reference",
+      "samplesheet"
+    ],
+    "evidence": "Официальная страница описывает обработку methylation sequencing и QC.",
+    "related_urls": [
+      "https://github.com/nf-core/methylseq"
+    ],
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "nf-core-chipseq",
+    "title": "nf-core/chipseq",
+    "url": "https://nf-co.re/chipseq/2.1.0/",
+    "category": "epigenomics-pipeline",
+    "maturity": "released-workflow",
+    "integration": "Версионированный workflow ChIP-seq.",
+    "limitations": "Нужны контрольные образцы и правильные метаданные; test profile здесь не запускался.",
+    "publication_date": null,
+    "observed_version": "2.1.0",
+    "license": "В этом обзоре не проверена; читать LICENSE выбранной ревизии.",
+    "dependencies": [
+      "Nextflow",
+      "контейнеры",
+      "reads",
+      "reference",
+      "samplesheet"
+    ],
+    "evidence": "Официальная страница workflow открыта и проверена.",
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "encode-metadata",
+    "title": "ENCODE metadata database",
+    "url": "https://github.com/ENCODE-DCC/encoded",
+    "category": "epigenomics-resource",
+    "maturity": "established-resource-code",
+    "integration": "Регистрация выбранных datasets и их accession/происхождения.",
+    "limitations": "Страница REST API не загрузилась; live API здесь не проверялся. Лицензия портала не равна условиям всех datasets.",
+    "publication_date": null,
+    "license": "MIT для кода портала",
+    "license_url": "https://github.com/ENCODE-DCC/encoded/blob/dev/LICENSE.txt",
+    "dependencies": [
+      "Сетевой доступ к данным",
+      "метаданные и условия конкретного dataset"
+    ],
+    "evidence": "Официальный репозиторий базы метаданных ENCODE.",
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  },
+  {
+    "id": "physicell",
+    "title": "PhysiCell",
+    "url": "https://github.com/MathCancer/PhysiCell",
+    "category": "multicellular-simulation",
+    "maturity": "established-research-simulator",
+    "integration": "Отдельный C++ simulation-worker с зафиксированными параметрами и начальными условиями.",
+    "limitations": "Требует калибровки под задачу; не является готовым цифровым двойником взрослого человека.",
+    "publication_date": null,
+    "license": "Файл лицензии не удалось прочитать в этом обзоре; проверить до распространения.",
+    "dependencies": [
+      "C++ compiler",
+      "make",
+      "параметры модели",
+      "данные калибровки"
+    ],
+    "evidence": "Официальный README: агентное пространственное моделирование многоклеточных систем.",
+    "status": "reviewed",
+    "checked_at": "2026-09-18",
+    "tested_here": false,
+    "installed_here": false,
+    "source_type": "primary"
+  }
+]

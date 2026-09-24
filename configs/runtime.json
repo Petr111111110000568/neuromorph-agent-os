@@ -1,0 +1,15 @@
+{
+  "profile": "local-research",
+  "bind": "127.0.0.1",
+  "port": 8765,
+  "storage": "sqlite",
+  "default_advisor_mode": "rule_based",
+  "trusted_plugins_only": true,
+  "untrusted_code_enabled": false,
+  "network_in_plugins": "not_used_by_builtin_code",
+  "network_isolation_enforced": false,
+  "qpu_configured": false,
+  "live_llm_configured": false,
+  "deployment_status": "local_only",
+  "note": "Declared deployment profile; the CLI is authoritative for actual defaults. This file does not configure the ChatGPT account."
+}

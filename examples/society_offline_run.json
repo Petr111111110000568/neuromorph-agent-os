@@ -1,0 +1,221 @@
+{
+  "passed": true,
+  "checked_at": "2026-09-18T20:42:20.079899+00:00",
+  "online": false,
+  "launch": "python -m workbench local-network --workers 2",
+  "daemon_advanced_without_browser_or_manual_tick": true,
+  "worker_registrations": 2,
+  "observed_worker_processes": 2,
+  "worker_process_ids": [
+    8,
+    9
+  ],
+  "mission": {
+    "id": "22d672d4-a914-4887-a5cc-edc8a0fb1f04",
+    "question": "single cell epigenetics model validation",
+    "status": "completed",
+    "events": [
+      {
+        "at": "2026-09-18T20:42:18.034+00:00",
+        "event": "mission_created",
+        "role": "coordinator"
+      },
+      {
+        "at": "2026-09-18T20:42:18.035+00:00",
+        "event": "bounded_jobs_submitted",
+        "query": "epigenetics cell state models",
+        "role": "implementer"
+      },
+      {
+        "at": "2026-09-18T20:42:19.873+00:00",
+        "event": "results_checked",
+        "role": "critic",
+        "valid_envelopes": 3,
+        "verdict": "workflow_execution_only_not_scientific_validation"
+      },
+      {
+        "at": "2026-09-18T20:42:19.873+00:00",
+        "event": "mission_stopped",
+        "role": "coordinator",
+        "status": "completed"
+      }
+    ],
+    "limitations": [
+      "Семь ролей выполняются программными правилами; внешние LLM и научные платформы не подключены автоматически.",
+      "Аннотации и метаданные требуют проверки полного исследования; согласие ролей не является независимой репликацией.",
+      "Контрольный расчёт использует синтетические данные и не предсказывает изменения взрослого организма.",
+      "Сетевое выполнение поддерживает одну доверенную группу работников; A2A, Tor и федерация независимых организаций не реализованы."
+    ]
+  },
+  "jobs": [
+    {
+      "id": "job_3292948fea3349d4963577f73a2b6ab8",
+      "kind": "discovery",
+      "worker_id": "local-5-2",
+      "status": "completed",
+      "attempts": 1
+    },
+    {
+      "id": "job_06ef0dbe947544c3a109b54b9029e2e2",
+      "kind": "evidence",
+      "worker_id": "local-5-1",
+      "status": "completed",
+      "attempts": 1
+    },
+    {
+      "id": "job_f53d5fe476c24dc2822d63ade723e70a",
+      "kind": "simulation",
+      "worker_id": "local-5-2",
+      "status": "completed",
+      "attempts": 1
+    }
+  ],
+  "evidence": {
+    "errors": [],
+    "items": [
+      {
+        "abstract_available": false,
+        "abstract_sha256": null,
+        "doi": "",
+        "id": "platform-scvi",
+        "indicator_matches": {},
+        "indicators": [],
+        "limitations": [
+          "Offline: совпадение с локальным каталогом; веб-источник и аннотация не загружались.",
+          "Запись может описывать инструмент или платформу, а не научную публикацию.",
+          "Лексическая релевантность не подтверждает научную применимость."
+        ],
+        "provenance": {
+          "origin": "catalog",
+          "provider": "bundled_catalog",
+          "retrieval_kind": "local_index_only",
+          "retrieved_at": "2026-09-18T20:42:18.938800+00:00"
+        },
+        "title": "scvi-tools · анализ одиночных клеток",
+        "url": "https://docs.scvi-tools.org/en/stable/"
+      },
+      {
+        "abstract_available": false,
+        "abstract_sha256": null,
+        "doi": "",
+        "id": "platform-alphagenome",
+        "indicator_matches": {},
+        "indicators": [],
+        "limitations": [
+          "Offline: совпадение с локальным каталогом; веб-источник и аннотация не загружались.",
+          "Запись может описывать инструмент или платформу, а не научную публикацию.",
+          "Лексическая релевантность не подтверждает научную применимость."
+        ],
+        "provenance": {
+          "origin": "catalog",
+          "provider": "bundled_catalog",
+          "retrieval_kind": "local_index_only",
+          "retrieved_at": "2026-09-18T20:42:18.938800+00:00"
+        },
+        "title": "AlphaGenome Research · модели регуляции генома",
+        "url": "https://github.com/google-deepmind/alphagenome_research"
+      },
+      {
+        "abstract_available": false,
+        "abstract_sha256": null,
+        "doi": "",
+        "id": "encode-metadata",
+        "indicator_matches": {},
+        "indicators": [],
+        "limitations": [
+          "Offline: совпадение с локальным каталогом; веб-источник и аннотация не загружались.",
+          "Запись может описывать инструмент или платформу, а не научную публикацию.",
+          "Лексическая релевантность не подтверждает научную применимость."
+        ],
+        "provenance": {
+          "origin": "catalog",
+          "provider": "bundled_catalog",
+          "retrieval_kind": "local_index_only",
+          "retrieved_at": "2026-09-18T20:42:18.938800+00:00"
+        },
+        "title": "ENCODE metadata database",
+        "url": "https://github.com/ENCODE-DCC/encoded"
+      }
+    ],
+    "mode": "offline_index",
+    "query": "epigenetics cell state models",
+    "requests": 0
+  },
+  "discovery": {
+    "mode": "offline_catalog",
+    "requests": 0,
+    "items": 3,
+    "errors": []
+  },
+  "method_control": {
+    "plugin_id": "regression_benchmark",
+    "parameters": {
+      "basis_count": 12,
+      "noise": 0.08,
+      "ridge": 0.01,
+      "samples": 180,
+      "seed": 42
+    },
+    "provenance": {
+      "builtin_hashes": {
+        "plugin_worker.py": "7d197a62256fc23444c4c8bc639d852504707ca8e05c898654b806a651171b2d",
+        "workbench/__init__.py": "23945d73e96e5f2bb40b86f506241ecc85035fe9763131c563d07b755e88eacb",
+        "workbench/plugins.py": "62fb025c3d021b0ec8aae2197c35a074e3dc7c34117576153955fcfaabae5ba4"
+      },
+      "execution": "isolated_python_subprocess",
+      "input_sha256": "d974fe51bbbc4275c6dc492ae85cf1f99b422ecf095a0d2eda9f4005d202bcbe",
+      "isolation": "Отдельный процесс и лимиты ресурсов; не контейнерная песочница.",
+      "output_sha256": "df2037b7bd94b818f5b8b99488ad301c2fa3d16d94f94ffc1d0047ef0f31a06a",
+      "python": "3.12.14",
+      "submitted_parameters": {
+        "seed": 42
+      },
+      "timeout_seconds": 10,
+      "version": "0.6.0"
+    },
+    "metrics": [
+      {
+        "label": "Test MSE · linear",
+        "value": 0.37992396426484565
+      },
+      {
+        "label": "Test MSE · RBF",
+        "value": 0.009788144774764506
+      }
+    ],
+    "interpretation": "Методический контроль на искусственных данных; не прогноз организма."
+  },
+  "claim": {
+    "id": "da818b56-be15-489e-9e1d-dc6f61f29b8f",
+    "mission_id": "22d672d4-a914-4887-a5cc-edc8a0fb1f04",
+    "text": "Получены источники для последующей проверки содержания",
+    "scope": "Проверка программного пути; без вывода об эффективности вмешательств",
+    "source_ids": [
+      "platform-scvi"
+    ],
+    "assessment": "unreviewed",
+    "rationale": "",
+    "created_at": "2026-09-18T20:42:20.074+00:00",
+    "assessed_by": "local_user_self_reported",
+    "independently_validated": false
+  },
+  "export_without_credentials_verified": true,
+  "static_assets_http": {
+    "/society.html": {
+      "bytes": 18223,
+      "sha256": "6c4ad4a940a600d46b759db6307c83ff662f9aad2400a949481a3510ead59dc2"
+    },
+    "/society.js": {
+      "bytes": 32612,
+      "sha256": "28090c3c8ba396190cb6d5f80293a9c7dd8c9c7f5eae067fd2b386ec71785d45"
+    },
+    "/society.css": {
+      "bytes": 7453,
+      "sha256": "4e8d0d8af2072ae571287cc5e881c00ea31b36b7ca0b145d42afd3e2d071c163"
+    }
+  },
+  "browser_render_test": "not_performed",
+  "physical_multihost_test": "not_performed",
+  "scientific_validation": "not_performed",
+  "process_cleanup": "launcher_and_observed_workers_stopped"
+}

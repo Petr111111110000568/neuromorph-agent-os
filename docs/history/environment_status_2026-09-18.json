@@ -1,0 +1,70 @@
+{
+  "checked_at": "2026-09-18",
+  "python": "3.12.14",
+  "packages": {
+    "numpy": true,
+    "scipy": true,
+    "torch": false,
+    "fastapi": false,
+    "uvicorn": false,
+    "pytest": false,
+    "fitz": true,
+    "pydantic": true
+  },
+  "programs": {
+    "git": "/usr/local/bin/git",
+    "docker": null,
+    "podman": null,
+    "bwrap": "/usr/bin/bwrap",
+    "ffprobe": "/usr/bin/ffprobe",
+    "ffmpeg": "/usr/bin/ffmpeg",
+    "codex": null,
+    "node": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "npm": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/npm"
+  },
+  "namespace_isolation_available": false,
+  "namespace_probe": "bwrap: Creating new namespace failed: Operation not permitted",
+  "credentials_present": {
+    "OPENAI_API_KEY": false,
+    "META_LLM_API_KEY": false,
+    "META_LLM_BASE_URL": false,
+    "META_LLM_MODEL": false
+  },
+  "previous_scratch_project_present": true,
+  "github": {
+    "status": "connected_read_verified",
+    "repositories_seen": 2,
+    "project_repository": "neuromorph-agent-os",
+    "repository_visibility": "public",
+    "publication": "not_performed"
+  },
+  "context7": {
+    "status": "connected_read_verified",
+    "verification": "MCP resolve and documentation query succeeded"
+  },
+  "rosalind": {
+    "status": "availability_not_confirmed",
+    "directory_matches": 0
+  },
+  "runtime": {
+    "profile": "distributed_stdlib",
+    "venv_created": false,
+    "llm_configured": false,
+    "qpu_configured": false,
+    "untrusted_execution_enabled": false,
+    "version": "0.5.0",
+    "persistent_queue": true,
+    "local_worker_processes_verified": 2,
+    "multi_machine_deployment_verified": false,
+    "online_metadata_providers_verified": [
+      "europepmc",
+      "crossref"
+    ],
+    "external_accounts_created": false
+  },
+  "personal_skill": {
+    "name": "meta-harness-research",
+    "status": "installed_verified",
+    "url": "https://chatgpt.com/skills?skill_id=6aad8623cbb88191898d2419ddee18e1"
+  }
+}

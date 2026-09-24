@@ -1,0 +1,129 @@
+{
+  "checked_at": "2026-09-24",
+  "scope": "primary literature abstracts, official README, model source and licenses; not full reproduction of papers",
+  "user_archive_status": "user_archives_unavailable_this_turn",
+  "sources": [
+    {
+      "id": "kan-paper",
+      "url": "https://arxiv.org/abs/2404.19756",
+      "title": "KAN: Kolmogorov-Arnold Networks",
+      "authors": "Ziming Liu et al.",
+      "ref": "turn53view1",
+      "type": "primary_paper_abstract"
+    },
+    {
+      "id": "kan2-paper",
+      "url": "https://arxiv.org/abs/2408.10205",
+      "title": "KAN 2.0: Kolmogorov-Arnold Networks Meet Science",
+      "authors": "Ziming Liu et al.",
+      "ref": "turn54view2",
+      "type": "primary_paper_abstract"
+    },
+    {
+      "id": "pykan",
+      "url": "https://github.com/KindXiaoming/pykan",
+      "title": "pykan",
+      "ref": "turn53view0",
+      "license": "MIT",
+      "reviewed_files": [
+        "README.md",
+        "kan/KANLayer.py",
+        "LICENSE"
+      ]
+    },
+    {
+      "id": "fastkan",
+      "url": "https://github.com/ZiyaoLi/fast-kan",
+      "title": "FastKAN",
+      "ref": "turn54view0",
+      "license": "Apache-2.0",
+      "reviewed_files": [
+        "README.md",
+        "fastkan/fastkan.py",
+        "LICENSE"
+      ]
+    },
+    {
+      "id": "fastkan-paper",
+      "url": "https://arxiv.org/abs/2405.06721",
+      "title": "Kolmogorov-Arnold Networks are Radial Basis Function Networks",
+      "authors": "Ziyao Li",
+      "ref": "turn54view4",
+      "type": "primary_paper_abstract"
+    },
+    {
+      "id": "wavkan-paper",
+      "url": "https://arxiv.org/abs/2405.12832",
+      "title": "Wav-KAN: Wavelet Kolmogorov-Arnold Networks",
+      "authors": "Zavareh Bozorgasl and Hao Chen",
+      "ref": "turn54view3",
+      "type": "primary_paper_abstract"
+    },
+    {
+      "id": "wavkan",
+      "url": "https://github.com/zavareh1/Wav-KAN",
+      "title": "Wav-KAN",
+      "ref": "turn66view0",
+      "license": "MIT",
+      "reviewed_files": [
+        "README.md",
+        "KAN.py",
+        "wavKAN.py",
+        "LICENSE"
+      ]
+    }
+  ],
+  "optional_integrations": [
+    {
+      "id": "original_pykan",
+      "source_id": "pykan",
+      "status": "reviewed_not_installed",
+      "execution_enabled": false,
+      "commit_pin": null,
+      "requirements_before_execution": [
+        "immutable commit",
+        "isolated torch environment",
+        "dependency lock",
+        "adapter contract and regression test"
+      ]
+    },
+    {
+      "id": "original_fastkan",
+      "source_id": "fastkan",
+      "status": "reviewed_not_installed",
+      "execution_enabled": false,
+      "commit_pin": null,
+      "requirements_before_execution": [
+        "immutable commit",
+        "isolated torch environment",
+        "dependency lock",
+        "same data benchmark"
+      ]
+    },
+    {
+      "id": "original_wavkan",
+      "source_id": "wavkan",
+      "status": "reviewed_not_installed",
+      "execution_enabled": false,
+      "commit_pin": null,
+      "requirements_before_execution": [
+        "immutable commit",
+        "isolated torch environment",
+        "dependency lock",
+        "import-safe wrapper without top-level training"
+      ]
+    }
+  ],
+  "implemented_plugin": {
+    "id": "kan_benchmark",
+    "module": "workbench/kan.py",
+    "independent_implementation": true,
+    "third_party_code_copied": false,
+    "variants": [
+      "degree1_spline",
+      "gaussian_rbf_fixed_grid",
+      "mexican_hat_fixed_grid"
+    ],
+    "original_packages_executed": false
+  }
+}

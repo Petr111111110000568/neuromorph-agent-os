@@ -1,0 +1,370 @@
+{
+  "request": {
+    "repository": "EGA-archive/ega-download-client",
+    "commit": "5ec6c4cd37cc67142285051bdbd725c824da1384",
+    "license_spdx": "Apache-2.0"
+  },
+  "result": {
+    "id": "snapshot_d93cc403b56a8c48c24338f5",
+    "repository": "EGA-archive/ega-download-client",
+    "commit": "5ec6c4cd37cc67142285051bdbd725c824da1384",
+    "license_spdx": "Apache-2.0",
+    "status": "source_inspected_not_executed",
+    "created_at": "2026-09-18T20:42:08.789142+00:00",
+    "archive_sha256": "7617768066955c0a854e182649596d5ba3a3c3b6a6c219f5a387ba1e6937e234",
+    "archive_bytes": 73093,
+    "expanded_bytes": 180920,
+    "file_count": 63,
+    "license_path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/LICENSE",
+    "license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "licenses": [
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/LICENSE",
+        "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "detected_spdx": "Apache-2.0"
+      }
+    ],
+    "notices": [],
+    "storage_path": "snapshots/snapshot_d93cc403b56a8c48c24338f5",
+    "manifest": [
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/.editorconfig",
+        "sha256": "733cf531a06aa743d93f30054325c00173308b229df4103a360db7467df4138c",
+        "bytes": 277
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/.github/ISSUE_TEMPLATE/bug_report.md",
+        "sha256": "3a49c9f466ae1b552d9b95344aed20e5eacdd38deb693099df261d0808a2cf4d",
+        "bytes": 2526
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/.gitignore",
+        "sha256": "cff14a8aa781b0a8d3ae606a53ac3aa747072d7eaaa3ad1e49a3fbead11efd54",
+        "bytes": 2121
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/.gitlab-ci.yml",
+        "sha256": "048efd711293f59fc4ba2ecba353c79acf86f3e77ac60df32fba8f87d18f8eeb",
+        "bytes": 2709
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/LICENSE",
+        "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "bytes": 11357
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/MANIFEST.in",
+        "sha256": "b5b899ad11331fedc7f7a6b6ae155a03274f2bd3e21999d1f7824f9b2512642b",
+        "bytes": 121
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/README.md",
+        "sha256": "53a3b2268f9c7d4fa50a37cb037df00edcdb7e6c1ac44055ea0096c50414b1de",
+        "bytes": 13098
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/debian_dependency_install.sh",
+        "sha256": "8fb75a97c9db41d56bc31230877234b35cc275bfc0b4bc1eb6df9bb812309892",
+        "bytes": 261
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/development.md",
+        "sha256": "c51899a7c2006b37f5695bdf002eb948f71f48bf5c9204577359ecc363c79a56",
+        "bytes": 3063
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/go.sh",
+        "sha256": "8b52e4b60a01a7970add3a2d71e72edab212f1af1cbc70f5a6603b60e83bc665",
+        "bytes": 180
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/go1.sh",
+        "sha256": "9afff5ef469584fb896455975a3a68b802985fb5919026096de87ad57a396e27",
+        "bytes": 869
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/osx_dependency_install.sh",
+        "sha256": "d935e25117aaa6e79c841fd1cfd512f33a9ffc6783bad51bd2a8a396e0a7e51c",
+        "bytes": 291
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/pyega3/VERSION",
+        "sha256": "4e001f5f34a8940927b497e5657a1bba9a35094b2c1f992de2fbee40af237d5b",
+        "bytes": 6
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/pyega3/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/pyega3/config/default_credential_file.json",
+        "sha256": "5fa7ab48fbbfa00f3bed6403702fd567afebea090184ba7f87b3dadaf38e1d9a",
+        "bytes": 73
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/pyega3/config/default_server_file.json",
+        "sha256": "98a60814f680b92d76302fa28b846b32995a480ab51e27e6b5cdbb1fd15d9190",
+        "bytes": 439
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/pyega3/libs/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/pyega3/libs/auth_client.py",
+        "sha256": "2fcc1f2faa4bfb0b69fd84b825a060db6469e87975836fc6905b22456b47c485",
+        "bytes": 2560
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/pyega3/libs/commands.py",
+        "sha256": "3ad4c7e0773089ae5ce9a9e5a10a6c9d9a6d6f6461cf1cc3e59b4b491d75f024",
+        "bytes": 3211
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/pyega3/libs/credentials.py",
+        "sha256": "7e6da2b31a225a630b4adf68ea4e2846ad0e8e588ae3aae7aaaaf835538db890",
+        "bytes": 1231
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/pyega3/libs/data_client.py",
+        "sha256": "506df16d2640f5f8e661757c37708a76ec8deef258ef18a4fe5abd50f0f46abd",
+        "bytes": 4419
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/pyega3/libs/data_file.py",
+        "sha256": "bb8e181e0958baeaa45ea49951075eb4151be5caf6e7fb251d0253f1d1abbfef",
+        "bytes": 17190
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/pyega3/libs/data_set.py",
+        "sha256": "1d742f08e950d8c4f864105ce6746dbeaf4afdeef8f34c9de5bbadd5ed8a6e64",
+        "bytes": 3766
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/pyega3/libs/error.py",
+        "sha256": "dcbf999ec643f84664a4870f325d418f1006479a1c81632f06af28cec893014a",
+        "bytes": 550
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/pyega3/libs/file_format.py",
+        "sha256": "71a71fdd688aab25ae25b2aa4122d486bad301f53fcf44f63639e3a677899c22",
+        "bytes": 2060
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/pyega3/libs/pretty_printing.py",
+        "sha256": "c7f68c36e474526e988203a310a34f52018566f7c798e2a0c9d89c168c27f55f",
+        "bytes": 1733
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/pyega3/libs/server_config.py",
+        "sha256": "bcce7851213781541d63deda05e924b1c398069877f6e3dc98ca08963cc86f85",
+        "bytes": 2298
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/pyega3/libs/stats.py",
+        "sha256": "64d4dce52b756a428dd9faf28517c79463bb09dab3237bbd81efbdb9b061e21c",
+        "bytes": 1835
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/pyega3/libs/utils.py",
+        "sha256": "001554414b6830e13ff1916e53b1e3b939569b36a34dde9b45d63de0247ffae7",
+        "bytes": 4149
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/pyega3/pyega3.py",
+        "sha256": "ae722272da3afad691486297cdc3ae5e9347b45b822eb26b803eec0a9a153f5a",
+        "bytes": 7476
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/red_hat_dependency_install.sh",
+        "sha256": "b444796002bb76ba66de2a1b8379a8675a2d1057ff5b9949883a85cb53c69ff3",
+        "bytes": 413
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/requirements.txt",
+        "sha256": "ed1e4af1968f19fab36c91992ed152a6e7904c869ec674fc4ccac9af39ff71e1",
+        "bytes": 159
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/setup.cfg",
+        "sha256": "d157e020d8c40f2fa00738ba6fd9614786a1d1389d5dba5e65b3aa5a0c63335b",
+        "bytes": 62
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/setup.py",
+        "sha256": "ef33ff1939b4960ed0955667e409201e0631656c365f1fd8706643752b891718",
+        "bytes": 2024
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/functional/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/functional/test_display_info.py",
+        "sha256": "722dcd93b32a573aa0350a4da0c40ddb359c0423da41141362e586552213e527",
+        "bytes": 298
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/functional/test_download.py",
+        "sha256": "ecc845596f6b7e261b8c488a0fad8dcc36d1251cb68952e545a11e3610a7b4ab",
+        "bytes": 1915
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/functional/test_htsget.py",
+        "sha256": "cbbbb511fc0c2456ca5eb9bf9365f108054ef301d4ba17d8e4534ee10349fc5d",
+        "bytes": 5927
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/functional/util.py",
+        "sha256": "acb460d5d887b2e06181ae6405edf9fd0f7a8892ccd0e337423aa44d1f71fea2",
+        "bytes": 921
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/conftest.py",
+        "sha256": "a2bddd7645b1c7a639f05500136dcf9937d216aaa70583d1d0581fc37881306a",
+        "bytes": 4739
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/mock_data_server.py",
+        "sha256": "17f6ef7fe28bc921c5269cb3cbeab24096d1bd2baf51c006835f66587f68b6fb",
+        "bytes": 3804
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_client_ip.py",
+        "sha256": "f50c96765dac074bdadad1d7fb28d0e903c9cd97556f20ec93cdeb7c893473af",
+        "bytes": 290
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_commands.py",
+        "sha256": "df31a00e7684d24469b9fc7f827849a88abb022a9886b9649340530fd067380c",
+        "bytes": 1136
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_credentials.py",
+        "sha256": "d132985f1f72d670b73786ac32698fc365a77e9e6dd394f8b0e7ea9c1d9e1e90",
+        "bytes": 2272
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_delete_temporary_files.py",
+        "sha256": "9cd3ee32fe3f129dffb19f265016dae6994a3afe879904b08d13b111e038f4ae",
+        "bytes": 5715
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_download_dataset.py",
+        "sha256": "7b026a74fb3bb3f22fce695256d0280b6ea1d78936a10e77764ba0c905c07be4",
+        "bytes": 4146
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_download_file.py",
+        "sha256": "2c22015c2f5fb1feba2fae81dbd7bf8d3bda77036ee9283372cb29dd1a8d9496",
+        "bytes": 14919
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_download_file_slice.py",
+        "sha256": "d1a4aa26043791d0413680286c3a8bcd14b131ac948ad5d82f5ef1264b7c28c6",
+        "bytes": 7447
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_file_format.py",
+        "sha256": "89a527998c0567c5e5fc6bf6839669536eba1b136bcd9f5c0975803326894743",
+        "bytes": 3108
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_generate_output_filename.py",
+        "sha256": "1855732447c30dd7bfd08a7f832ec8ee3b5436dac1eb0a541d3ad1a44bba8fdc",
+        "bytes": 1376
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_get_file_name_size_md5.py",
+        "sha256": "3a7fe42d105352cc9c5ba0d16d482c60fe29884f46358baa4e79674709a5b968",
+        "bytes": 2145
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_list_datasets.py",
+        "sha256": "02115a43bf292d0a7ebbc3a3f4cced358d2c96a47192a8b2c1f7febb01026fb6",
+        "bytes": 1052
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_list_files.py",
+        "sha256": "8618f63bacf9f00abb49a9e176d369970c8cb1531309c6aa1e867e94980ddb56",
+        "bytes": 1281
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_md5.py",
+        "sha256": "142e355f214c50a9c52fc5613553aa3b1f6dad6302adc549037d2cc0535d776b",
+        "bytes": 1029
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_merge_bin_files.py",
+        "sha256": "3e32ef69100e214cba383a813ad3589dfc21b0cef3609ec93d0768e75a1ba71c",
+        "bytes": 1769
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_openid.py",
+        "sha256": "be250645656cc91d33e41c189b9766ffa9647c46221cdff8f89c169fb6e381b2",
+        "bytes": 2724
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_pretty_printing.py",
+        "sha256": "58aedcd6e0134c38fc0c6af57d9c525ea769b1b1d493b2e709178e604354223b",
+        "bytes": 2060
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_save_to_with_dataset.py",
+        "sha256": "4825e8f03642baf89c19a2c1f0fc66ca287eef6a6330a4a5fd33e628c2744256",
+        "bytes": 7476
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_save_to_with_file.py",
+        "sha256": "fc2893f7c2a18c5aaa4f5db4e5c87305899f70ceaae8a4e4f788088c9a06e8c5",
+        "bytes": 6906
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_server_config.py",
+        "sha256": "627a62c826ba1a230ee248d8a7dba0cb0cddc0c897940a5d9a00e20d2a7a9bfb",
+        "bytes": 1741
+      },
+      {
+        "path": "ega-download-client-5ec6c4cd37cc67142285051bdbd725c824da1384/tests/unit/test_verify_output_dir.py",
+        "sha256": "24570759ea3b96f1f4bc14b1c976ce5b019c35598920d476de9f6cc67ba7e6f3",
+        "bytes": 2197
+      }
+    ],
+    "provenance": {
+      "mode": "public_github_pinned_archive",
+      "source_url": "https://codeload.github.com/EGA-archive/ega-download-client/zip/5ec6c4cd37cc67142285051bdbd725c824da1384",
+      "repository_identity_verified": false,
+      "commit_provenance": "pinned_codeload_https_response"
+    },
+    "verification": {
+      "archive_checked": true,
+      "license_text_screened": true,
+      "license_is_legal_guarantee": false,
+      "source_executed": false,
+      "agent_installed": false,
+      "dependency_licenses_audited": false,
+      "git_objects_independently_verified": false
+    },
+    "limitations": [
+      "License family screening is not a complete legal audit; inspect bundled and fetched dependency terms separately.",
+      "Repository ownership text is not verification of an organization or maintainer identity.",
+      "Pinned HTTPS retrieval and archive hash do not independently validate Git objects or author signatures.",
+      "Source is preserved without installation, imports, execution, account access or model weights.",
+      "A data client grants no authorization to controlled genomic datasets."
+    ]
+  },
+  "scope": "Public source retrieval and canonical license-text screening; not installation or dataset authorization."
+}

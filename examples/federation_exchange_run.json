@@ -1,0 +1,125 @@
+{
+  "passed": true,
+  "checked_at": "2026-09-24T17:25:19.729029+00:00",
+  "protocol": "meta-harness-contribution/1",
+  "transport": "real_loopback_http",
+  "participant_execution": "separate_cli_process_per_command",
+  "participant_subprocesses": 16,
+  "distinct_observed_process_ids": 16,
+  "steps": [
+    {
+      "command": "offers",
+      "exit_code": 0,
+      "http_denial": null
+    },
+    {
+      "command": "resources",
+      "exit_code": 0,
+      "http_denial": null
+    },
+    {
+      "command": "join",
+      "exit_code": 0,
+      "http_denial": null
+    },
+    {
+      "command": "member",
+      "exit_code": 0,
+      "http_denial": null
+    },
+    {
+      "command": "access",
+      "exit_code": 2,
+      "http_denial": 403
+    },
+    {
+      "command": "member",
+      "exit_code": 2,
+      "http_denial": 403
+    },
+    {
+      "command": "claim",
+      "exit_code": 0,
+      "http_denial": null
+    },
+    {
+      "command": "claim",
+      "exit_code": 0,
+      "http_denial": null
+    },
+    {
+      "command": "submit",
+      "exit_code": 0,
+      "http_denial": null
+    },
+    {
+      "command": "member",
+      "exit_code": 0,
+      "http_denial": null
+    },
+    {
+      "command": "member",
+      "exit_code": 0,
+      "http_denial": null
+    },
+    {
+      "command": "submit",
+      "exit_code": 0,
+      "http_denial": null
+    },
+    {
+      "command": "member",
+      "exit_code": 0,
+      "http_denial": null
+    },
+    {
+      "command": "redeem",
+      "exit_code": 0,
+      "http_denial": null
+    },
+    {
+      "command": "access",
+      "exit_code": 0,
+      "http_denial": null
+    },
+    {
+      "command": "redeem",
+      "exit_code": 0,
+      "http_denial": null
+    }
+  ],
+  "terms_explicitly_accepted": true,
+  "invitation_file_used": true,
+  "credential_file_protected": true,
+  "unauthorized_access_denied": true,
+  "invalid_member_denied": true,
+  "public_catalog_hides_resource_content": true,
+  "claim_idempotency_verified": true,
+  "reward_requires_local_review": true,
+  "duplicate_reward_prevented": true,
+  "duplicate_redemption_not_charged": true,
+  "reviewed_demo": {
+    "kind": "demo_synthetic_aggregate_metadata_qc",
+    "is_genomic_analysis": false,
+    "rows": 3,
+    "records": 30,
+    "missing": 3,
+    "missing_fraction": 0.1,
+    "input_sha256": "dc9b81b52d4ec26b4d4d5d4207b7b78a4bb1111230f6cb528d621d3ab06150b4"
+  },
+  "reward_entries": 1,
+  "redemption_entries": 1,
+  "earned_credits": 5,
+  "spent_credits": 3,
+  "remaining_credits": 2,
+  "resource_access_verified": true,
+  "export_without_credentials_verified": true,
+  "external_network_requests": 0,
+  "external_agents_contacted": 0,
+  "external_agents_recruited": 0,
+  "human_genomic_data_used": false,
+  "biological_validation": "not_performed",
+  "physical_multihost_test": "not_performed",
+  "tls_test": "not_performed",
+  "process_cleanup": "all_participant_processes_and_local_gateway_stopped"
+}

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#112d35">
+  <title>Meta-Harness — участие внешних агентов</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/network.css">
+  <link rel="stylesheet" href="/society.css">
+  <link rel="stylesheet" href="/federation.css">
+  <script src="/federation.js" defer></script>
+</head>
+<body class="society-app network-app federation-app">
+  <a class="skip-link" href="#main">К содержимому</a>
+  <aside class="sidebar">
+    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">M<span>H</span></span><span>Meta-Harness<small>RESEARCH FEDERATION</small></span></a>
+    <div class="workspace-label"><span class="workspace-dot"></span> Обнаружить · Согласовать · Проверить</div>
+    <nav class="navigation" aria-label="Участие внешних агентов">
+      <button class="nav-item active" data-section="discovery" aria-current="page"><span class="nav-symbol" aria-hidden="true">⌕</span>Поиск и кандидаты</button>
+      <button class="nav-item" data-section="offers"><span class="nav-symbol" aria-hidden="true">◎</span>Предложения участия</button>
+      <button class="nav-item" data-section="resources"><span class="nav-symbol" aria-hidden="true">▤</span>Ресурсы для обмена</button>
+      <button class="nav-item" data-section="reviews"><span class="nav-symbol" aria-hidden="true">✓</span>Проверка вкладов</button>
+      <button class="nav-item" data-section="proposals"><span class="nav-symbol" aria-hidden="true">↗</span>Приглашения и подключение</button>
+      <a class="nav-item nav-return" href="/society.html"><span class="nav-symbol" aria-hidden="true">≡</span>Исследовательские миссии</a>
+      <a class="nav-item" href="/network.html"><span class="nav-symbol" aria-hidden="true">⌘</span>Сеть и исполнители</a>
+      <a class="nav-item" href="/brain.html"><span class="nav-symbol" aria-hidden="true">∿</span>Контур и сети</a>
+    </nav>
+    <div class="sidebar-footer"><span class="small-label">УСЛОВИЯ СОТРУДНИЧЕСТВА</span><strong>Проверяемый вклад → доступ к результатам</strong><p>Оператор агента принимает условия. Зачёт вклада происходит после проверки результата.</p><span class="version">Федерация · прототип v0.7</span></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><div class="breadcrumb">Федерация <span>/</span><strong id="section-label">Поиск и кандидаты</strong></div><div class="connection"><span id="federation-dot" class="status-dot loading"></span><span id="federation-status" role="status">Подключение…</span><button id="refresh-federation" class="text-button" type="button">Обновить</button></div></header>
+    <main id="main" tabindex="-1">
+      <div id="global-error" class="panel error-panel" role="alert" hidden></div>
+      <section id="section-discovery" class="federation-section" aria-labelledby="discovery-title">
+        <div class="page-heading"><div><p class="eyebrow">DISCOVERY / CAPABILITIES / PROVENANCE</p><h1 id="discovery-title">Найти участников для проверяемой науки</h1><p class="lead">Поиск в публичных каталогах и проверка заданных карточек агентов. Сопоставьте заявленные возможности с конкретной исследовательской задачей.</p></div><span class="badge neutral">Публичные сведения</span></div>
+        <div id="federation-stats" class="stats-grid" aria-label="Состояние федерации"><div class="stat-card"><span>Кандидаты и ресурсы</span><strong>—</strong></div><div class="stat-card"><span>Предложения</span><strong>—</strong></div><div class="stat-card"><span>Материалы для обмена</span><strong>—</strong></div><div class="stat-card"><span>Ожидают проверки</span><strong>—</strong></div></div>
+        <div class="federation-split">
+          <article class="panel"><h2>Поиск возможностей</h2><form id="discovery-form">
+            <label for="discovery-query">Тема или название<input id="discovery-query" type="search" minlength="2" maxlength="500" required placeholder="Например, genomics, reproducibility или dataset quality"></label>
+            <fieldset class="federation-fieldset"><legend>Каталоги</legend><div class="provider-grid">
+              <label class="checkbox-label"><input type="checkbox" name="provider" value="agentverse" checked>Agentverse · агенты</label>
+              <label class="checkbox-label"><input type="checkbox" name="provider" value="huggingface_models" checked>Hugging Face · модели</label>
+              <label class="checkbox-label"><input type="checkbox" name="provider" value="huggingface_datasets">Hugging Face · данные</label>
+              <label class="checkbox-label"><input type="checkbox" name="provider" value="mcp_registry">MCP Registry · серверы</label>
+            </div></fieldset>
+            <div class="form-row"><label for="discovery-limit">Лимит на каталог<input id="discovery-limit" type="number" min="1" max="8" value="5" required></label><label class="checkbox-label" for="discovery-online"><input id="discovery-online" type="checkbox">Обращаться к публичным API</label></div>
+            <p id="discovery-policy" class="form-help">Локальный режим выбран по умолчанию. При включении API текст запроса будет передан выбранным каталогам. Используйте только публичные сведения.</p>
+            <button type="submit" class="button primary">Найти кандидатов →</button>
+          </form><div id="discovery-feedback" class="inline-result" aria-live="polite"></div></article>
+          <aside class="panel federation-explainer"><p class="eyebrow">ОТ КАРТОЧКИ К УЧАСТИЮ</p><h2>Что подтверждает поиск?</h2><ol class="flow-list"><li><span>01</span><div><strong>Ресурс обнаружен</strong><p>Сохранены источник и заявленные возможности. Модель, набор данных и сервер MCP сами по себе не являются самостоятельными агентами.</p></div></li><li><span>02</span><div><strong>Условия предложены</strong><p>Задача, критерии и вознаграждение доступны для оценки владельцу агента.</p></div></li><li><span>03</span><div><strong>Участие согласовано</strong><p>Внешний исполнитель подключается через шлюз с ограниченными правами.</p></div></li><li><span>04</span><div><strong>Вклад проверен</strong><p>Проверяющий оценивает результат и фиксирует основание решения.</p></div></li></ol></aside>
+        </div>
+        <details class="panel card-inspector"><summary>Проверить карточку агента по известному адресу</summary><p class="form-help">Укажите точный URL JSON-карточки, опубликованной оператором. Для адреса .onion нужен уже запущенный локальный Tor SOCKS-прокси. Этот запрос считывает карточку; он не отправляет приглашение и не запускает найденный агент.</p><form id="card-form"><div class="form-grid"><label for="card-url">URL карточки<input id="card-url" type="url" maxlength="2000" required placeholder="https://example.org/.well-known/agent-card.json"></label><label for="card-proxy">Tor SOCKS-прокси · необязательно<input id="card-proxy" maxlength="100" placeholder="127.0.0.1:9050" autocomplete="off"></label></div><p class="form-help">Прокси задаётся как loopback host:port, например 127.0.0.1:9050. Карточка описывает возможности со слов её издателя; личность организации этим не подтверждается.</p><button type="submit" class="button secondary">Прочитать карточку</button></form><div id="card-feedback" class="inline-result" aria-live="polite"></div></details>
+        <div class="section-heading"><h2>Найденные кандидаты и ресурсы</h2><span id="candidate-count" class="muted">Загрузка…</span></div><div id="candidates" class="source-grid"><p class="muted">Загрузка записей…</p></div>
+        <div class="boundary-note"><span class="note-mark" aria-hidden="true">i</span><p>Поиск охватывает выбранные каталоги и указанные адреса. Прототип не обеспечивает обнаружение всех агентов интернета или закрытых сетей. Найденная карточка не означает присоединение её владельца.</p></div>
+      </section>
+      <section id="section-offers" class="federation-section" aria-labelledby="offers-title" hidden>
+        <div class="page-heading"><div><p class="eyebrow">CONTRIBUTIONS / TERMS / ACCEPTANCE</p><h1 id="offers-title">Предложить посильную задачу</h1><p class="lead">Опишите ожидаемый результат и условия зачёта. Пилот поддерживает обзор литературы, проверку качества данных и воспроизведение метода.</p></div></div>
+        <article class="panel"><h2>Новое предложение</h2><form id="offer-form" class="stack-form">
+          <label for="offer-title">Название<input id="offer-title" minlength="3" maxlength="200" required placeholder="Проверить воспроизводимость анализа публичного набора данных"></label>
+          <label for="offer-description">Задача и ожидаемый результат<textarea id="offer-description" minlength="10" maxlength="4000" rows="4" required placeholder="Укажите публичный источник, исследовательский вопрос, формат результата и ограничения применимости."></textarea></label>
+          <div class="form-grid"><label for="offer-type">Тип работы<select id="offer-type"><option value="literature_review">Обзор литературы</option><option value="dataset_qc">Проверка качества данных</option><option value="method_reproduction">Воспроизведение метода</option></select></label><label for="offer-max">Число назначений<input id="offer-max" type="number" min="1" max="100" value="1" required></label></div>
+          <label for="offer-requirements">Критерии приёмки · по одному на строке<textarea id="offer-requirements" maxlength="4000" rows="3" required placeholder="Указать источники и их лицензии&#10;Зафиксировать версии и метод проверки&#10;Описать ограничения результата"></textarea></label>
+          <label for="offer-reward" class="short-field">Кредиты за принятый вклад<input id="offer-reward" type="number" min="0" max="10000" value="10" required></label>
+          <p class="form-help">Кредиты — внутренняя единица доступа к материалам этого прототипа; денежный эквивалент и перевод средств отсутствуют. Задачи и входные сведения в пилоте имеют класс public.</p>
+          <button type="submit" class="button primary">Сохранить предложение</button>
+        </form><div id="offer-feedback" class="inline-result" aria-live="polite"></div></article>
+        <div class="section-heading"><h2>Условия участия</h2><span id="offer-count" class="muted">Загрузка…</span></div><div id="offers" class="source-grid"></div>
+      </section>
+      <section id="section-resources" class="federation-section" aria-labelledby="resources-title" hidden>
+        <div class="page-heading"><div><p class="eyebrow">RESEARCH OUTPUTS / RIGHTS / EXCHANGE</p><h1 id="resources-title">Результаты, доступные в обмен на вклад</h1><p class="lead">Добавляйте материалы, которыми вы вправе делиться: обзоры, выводы проверок и описания воспроизводимых методов.</p></div></div>
+        <article class="panel"><h2>Добавить исследовательскую сводку</h2><form id="resource-form" class="stack-form">
+          <label for="resource-title">Название<input id="resource-title" minlength="3" maxlength="200" required></label>
+          <label for="resource-summary">Краткое описание<textarea id="resource-summary" minlength="5" maxlength="2000" rows="2" required></textarea></label>
+          <label for="resource-content">Содержимое сводки<textarea id="resource-content" minlength="5" maxlength="20000" rows="6" required placeholder="Выводы, ссылки на источники, метод проверки и ограничения."></textarea></label>
+          <div class="form-grid"><label for="resource-license">Лицензия или условия использования<input id="resource-license" maxlength="200" required placeholder="Например, CC-BY-4.0"></label><label for="resource-data">Класс сведений<select id="resource-data"><option value="public">Публичные сведения</option><option value="internal">Ограниченный доступ · после выдачи права</option></select></label></div>
+          <label for="resource-cost" class="short-field">Стоимость доступа в кредитах<input id="resource-cost" type="number" min="0" max="100000" value="5" required></label>
+          <fieldset class="federation-fieldset"><legend>Права на материал</legend><label class="checkbox-label"><input id="resource-rights" type="checkbox" required>Подтверждаю право предоставлять этот материал</label><label class="checkbox-label"><input id="resource-redistribution" type="checkbox" required>Условия материала разрешают его передачу участникам</label></fieldset>
+          <p class="form-help">В обмен допускаются сводки с подтверждёнными правами и разрешённой передачей. У материала с ограниченным доступом название и описание скрыты во внешнем каталоге; его содержимое получает допущенный участник после выдачи права. Исходные персональные геномы и медицинские записи в обмен не включаются.</p>
+          <button type="submit" class="button primary">Сохранить материал</button>
+        </form><div id="resource-feedback" class="inline-result" aria-live="polite"></div></article>
+        <div class="section-heading"><h2>Каталог результатов</h2><span id="resource-count" class="muted">Загрузка…</span></div><div id="resources" class="source-grid"></div>
+      </section>
+      <section id="section-reviews" class="federation-section" aria-labelledby="reviews-title" hidden>
+        <div class="page-heading"><div><p class="eyebrow">REVIEW / EVIDENCE / CONTRIBUTION LEDGER</p><h1 id="reviews-title">Проверить результат до зачёта</h1><p class="lead">Сопоставьте полученный вклад с критериями задачи. Укажите основание принятия или отклонения; это решение проверяющего, а не независимая научная валидация.</p></div><span id="review-count" class="badge neutral">Загрузка…</span></div>
+        <div id="reviews" class="campaign-list"></div>
+      </section>
+      <section id="section-proposals" class="federation-section" aria-labelledby="proposals-title" hidden>
+        <div class="page-heading"><div><p class="eyebrow">MATCHING / INVITATION DRAFT / OPT-IN</p><h1 id="proposals-title">Сформулировать пользу участия</h1><p class="lead">Сопоставьте кандидата с предложением. Прототип подготовит текст с задачей, условиями и доступным вознаграждением.</p></div><span class="badge neutral">Черновик · без отправки</span></div>
+        <article class="panel"><h2>Черновик приглашения</h2><form id="proposal-form"><div class="form-grid"><label for="proposal-candidate">Кандидат<select id="proposal-candidate" required><option value="">Загрузка…</option></select></label><label for="proposal-offer">Предложение<select id="proposal-offer" required><option value="">Загрузка…</option></select></label></div><p class="form-help">Найденная модель или набор данных не могут самостоятельно принять приглашение. Решение о подключении принимает уполномоченный оператор внешнего исполнителя.</p><button id="proposal-create" type="submit" class="button primary">Подготовить приглашение</button></form><div id="proposal-feedback" class="inline-result" aria-live="polite"></div></article>
+        <div id="proposal-result" class="result-region" aria-live="polite"></div>
+        <article class="panel federation-join"><p class="eyebrow">ПОДКЛЮЧЕНИЕ СВОЕГО АГЕНТА</p><h2>Контролируемое участие через шлюз</h2><ol class="federation-join-steps"><li><strong>Создайте предложение и проверьте критерии.</strong><p>Исполнитель получает конкретную задачу с публичными данными и сдаёт результат со ссылками и ограничениями.</p></li><li><strong>Выпустите приглашение на стороне координатора.</strong><pre><code>python -m workbench invite --offer ID --out invitation.json</code></pre><p>Используйте ID сохранённого предложения. Пригласительные и рабочие токены создаются через CLI и не отображаются в этой панели. Файл приглашения передаётся оператору согласованным защищённым способом.</p></li><li><strong>Запустите внешний шлюз и настройте исполнителя.</strong><p>Порт по умолчанию — <code>127.0.0.1:8767</code>. Loopback доступен только на этой машине. Для другого компьютера требуется настроенный защищённый маршрут и указанный в руководстве адрес шлюза.</p></li><li><strong>Согласуйте участие и проверьте первый результат.</strong><p>В прототипе принятие условий записывается при присоединении с ограниченным токеном. Это не удостоверение личности или принадлежности организации. Принятый вклад начисляет кредиты; доступ выдаётся только к разрешённым ресурсам.</p></li></ol><p class="form-help">Сведения о карточках и число найденных кандидатов не являются числом присоединившихся агентов.</p></article>
+      </section>
+      <footer class="page-footer"><span>Meta-Harness · федерация исследовательских исполнителей</span><span id="last-refresh">Состояние ещё не загружено</span></footer>
+    </main>
+  </div>
+  <div id="federation-toast" class="toast" role="status" hidden></div>
+</body>
+</html>

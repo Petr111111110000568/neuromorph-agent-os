@@ -1,0 +1,146 @@
+{
+  "checked_at": "2026-09-18",
+  "researcher": "science_agents_v6",
+  "search_engine": "Exa",
+  "search_calls": 6,
+  "search_result_slots": 48,
+  "definition": "search_result_slots = сумма запрошенных numResults, не число прочитанных или независимых источников",
+  "queries": [
+    {
+      "query": "Stanford Virtual Lab Biomni Paper2Agent scientific AI agent official research github results limitations license",
+      "requested_num_results": 8,
+      "returned_urls": [
+        "https://www.science.org/doi/10.1126/science.adz4351",
+        "https://www.nature.com/articles/s41586-026-11044-y",
+        "https://github.com/zou-group/virtual-lab",
+        "https://arxiv.org/html/2509.06917v2",
+        "https://biomni.stanford.edu/",
+        "https://github.com/snap-stanford/Biomni",
+        "https://biomni.stanford.edu/paper.pdf",
+        "https://pubmed.ncbi.nlm.nih.gov/40501924/"
+      ]
+    },
+    {
+      "query": "ToolUniverse Harvard MIMS scientific discovery AI agents GitHub license Nature 2026",
+      "requested_num_results": 8,
+      "returned_urls": [
+        "https://github.com/mims-harvard/ToolUniverse/",
+        "https://github.com/mims-harvard/tooluniverse",
+        "https://arxiv.org/pdf/2509.23426",
+        "https://zitniklab.hms.harvard.edu/ToolUniverse/",
+        "https://github.com/mims-harvard/ToolUniverse/blob/main/README.md",
+        "https://zitniklab.hms.harvard.edu/",
+        "https://arxiv.org/",
+        "https://github.com/mims-harvard/ToolUniverse/tree/main/plugin"
+      ]
+    },
+    {
+      "query": "FutureHouse Edison Robin autonomous scientific discovery AI agent research validation official",
+      "requested_num_results": 8,
+      "returned_urls": [
+        "https://www.futurehouse.org/research/demonstrating-end-to-end-scientific-discovery-with-robin-a-multi-agent-system",
+        "https://github.com/future-house/robin",
+        "https://www.nature.com/",
+        "https://arxiv.org/",
+        "https://www.futurehouse.org/ai-scientist",
+        "https://pubmed.ncbi.nlm.nih.gov/42156546/",
+        "https://www.futurehouse.org/news/announcing-edison-scientific",
+        "https://advances.edisonscientific.com/research/robin-multi-agent-system/"
+      ]
+    },
+    {
+      "query": "Google AI co-scientist Carnegie Mellon Coscientist autonomous scientific research Nature experiments",
+      "requested_num_results": 8,
+      "returned_urls": [
+        "https://www.nature.com/articles/s41586-026-10644-y",
+        "https://www.cmu.edu/news/stories/archives/2023/december/cmu-designed-artificially-intelligent-coscientist-automates-scientific-discovery",
+        "https://deepmind.google/",
+        "https://research.google/",
+        "https://arxiv.org/html/2608.26701",
+        "https://www.scientificamerican.com/article/how-one-chemist-is-using-ai-and-robots-to-automate-lab-experiments/",
+        "https://kingy.ai/wp-content/uploads/2025/02/ai_coscientist.pdf",
+        "https://www.researchgate.net/"
+      ]
+    },
+    {
+      "query": "Sakana AI Scientist v2 open source license workshop accepted papers evaluation limitations",
+      "requested_num_results": 8,
+      "returned_urls": [
+        "https://github.com/sakanaai/ai-scientist-v2",
+        "https://pub.sakana.ai/ai-scientist-v2/paper/paper.pdf",
+        "https://sakana.ai/ai-scientist-first-publication/",
+        "https://www.nature.com/articles/s41586-026-10265-5",
+        "https://techcrunch.com/2025/03/12/sakana-claims-its-ai-paper-passed-peer-review-but-its-a-bit-more-nuanced-than-that/",
+        "http://github.com/SakanaAI/AI-Scientist-v2",
+        "https://sakana.ai/ai-scientist-nature/",
+        "https://arxiv.org/pdf/2502.14297v3.pdf"
+      ]
+    },
+    {
+      "query": "CellVoyager autonomous single cell analysis AI agent Stanford Arc Institute official paper GitHub license",
+      "requested_num_results": 8,
+      "returned_urls": [
+        "https://github.com/zou-group/CellVoyager",
+        "https://doi.org/10.1038/s41592-026-03029-6",
+        "https://doi.org/10.1101/2025.06.03.657517",
+        "https://www.biorxiv.org/content/10.1101/2025.06.03.657517v1",
+        "https://doi.org/10.5281/zenodo.17945695",
+        "https://www.scienceopen.com/document?vid=ea5e2d21-763a-4158-a3f9-c98feb0b739b",
+        "https://doi.org/10.5281/zenodo.17945696",
+        "https://www.biorxiv.org/"
+      ]
+    }
+  ],
+  "fetched_primary_urls": [
+    "https://github.com/zou-group/virtual-lab",
+    "https://www.nature.com/articles/s41586-025-09442-9",
+    "https://github.com/snap-stanford/Biomni",
+    "https://www.science.org/doi/10.1126/science.adz4351",
+    "https://github.com/mims-harvard/ToolUniverse",
+    "https://www.nature.com/articles/s41586-026-11044-y",
+    "https://github.com/jmiao24/Paper2Agent",
+    "https://www.futurehouse.org/news/announcing-edison-scientific",
+    "https://github.com/future-house/robin",
+    "https://www.futurehouse.org/research/demonstrating-end-to-end-scientific-discovery-with-robin-a-multi-agent-system",
+    "https://advances.edisonscientific.com/research/robin-multi-agent-system/",
+    "https://www.nature.com/articles/s41586-026-10644-y",
+    "https://www.cmu.edu/news/stories/archives/2023/december/cmu-designed-artificially-intelligent-coscientist-automates-scientific-discovery",
+    "https://github.com/SakanaAI/AI-Scientist-v2",
+    "https://arxiv.org/abs/2509.23426",
+    "https://www.nature.com/articles/s41592-026-03029-6",
+    "https://github.com/zou-group/CellVoyager",
+    "https://www.nature.com/articles/s41586-023-06792-0",
+    "https://pubmed.ncbi.nlm.nih.gov/42156546/",
+    "https://www.nature.com/articles/s41586-026-10265-5",
+    "https://raw.githubusercontent.com/SakanaAI/AI-Scientist-v2/main/LICENSE",
+    "https://biomni.stanford.edu/",
+    "https://platform.edisonscientific.com/",
+    "https://docs.edisonscientific.com/",
+    "https://research.google/blog/accelerating-scientific-breakthroughs-with-an-ai-co-scientist/",
+    "https://github.com/gomesgroup/coscientist",
+    "https://github.com/SakanaAI/AI-Scientist-v2/blob/main/LICENSE",
+    "https://docs.edisonscientific.com/llms.txt",
+    "https://github.com/Future-House/paper-qa",
+    "https://github.com/Future-House/robin/blob/main/LICENSE",
+    "https://github.com/zou-group/virtual-lab/blob/main/LICENSE",
+    "https://github.com/zou-group/CellVoyager/blob/main/LICENSE",
+    "https://github.com/jmiao24/Paper2Agent/blob/main/LICENSE",
+    "https://github.com/snap-stanford/Biomni/blob/main/LICENSE",
+    "https://github.com/mims-harvard/ToolUniverse/blob/main/LICENSE",
+    "https://www.biorxiv.org/content/10.1101/2024.11.11.623004v1"
+  ],
+  "fetch_scope": "Прочитано доступное возвращённое содержание; Exa иногда ограничивал текст примерно4000 символами. Для Paper2Agent и Google дополнительно проверены основной текст и аффилиации через web open/find. Подписные полные тексты не заявлены прочитанными.",
+  "additional_primary_checks": [
+    "https://www.nature.com/articles/s41586-026-11044-y",
+    "https://www.nature.com/articles/s41586-026-10644-y",
+    "https://www.biorxiv.org/content/10.1101/2024.11.11.623004v1"
+  ],
+  "failure_notes": [
+    "web open/find Virtual Lab и CellVoyager Nature вернули Internal Error; доступный первичный абстракт получен Exa.",
+    "Автоматические аффилиации Exa/PubMed для Robin содержали подозрительные совпадения и не использованы; организация взята из официальных FutureHouse/Edison источников."
+  ],
+  "entries_created": 11,
+  "execution_status": "documentary_review_only; no external agents installed or run",
+  "onion_findings": "Для перечисленных научных систем подтверждённых onion-развёртываний в проверенных источниках не найдено; это не исчерпывающий поиск dark web.",
+  "date_handling": "При конфликте препринта и рецензируемой статьи использован опубликованный вариант по состоянию на18.09.2026."
+}

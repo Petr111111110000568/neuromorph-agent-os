@@ -1,0 +1,52 @@
+{
+  "version": "0.5.0",
+  "date": "2026-09-18",
+  "checks": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "test_domain_and_setup_url_confinement (test_accounts.AccountsTests.test_domain_and_setup_url_confinement) ... ok\ntest_environment_presence_is_dynamic_and_never_exports_secret (test_accounts.AccountsTests.test_environment_presence_is_dynamic_and_never_exports_secret) ... ok\ntest_persistence_idempotence_and_profile_update_keep_creation_time (test_accounts.AccountsTests.test_persistence_idempotence_and_profile_update_keep_creation_time) ... ok\ntest_public_metadata_profile_cannot_imply_write_access (test_accounts.AccountsTests.test_public_metadata_profile_cannot_imply_write_access) ... ok\ntest_public_providers_need_no_registration_but_are_not_remote_verified (test_accounts.AccountsTests.test_public_providers_need_no_registration_but_are_not_remote_verified) ... ok\ntest_rejects_secret_fields_raw_credentials_and_fake_status (test_accounts.AccountsTests.test_rejects_secret_fields_raw_credentials_and_fake_status) ... ok\ntest_two_coordinators_share_one_idempotent_handoff (test_accounts.AccountsTests.test_two_coordinators_share_one_idempotent_handoff) ... ok\ntest_unreviewed_service_is_not_declared_public_and_providers_are_bounded (test_accounts.AccountsTests.test_unreviewed_service_is_not_declared_public_and_providers_are_bounded) ... ok\ntest_host_origin_and_traversal_guards (test_backend.HTTPTests.test_host_origin_and_traversal_guards) ... ok\ntest_http_mutation_validation_and_export (test_backend.HTTPTests.test_http_mutation_validation_and_export) ... ok\ntest_loopback_only_and_valid_status (test_backend.HTTPTests.test_loopback_only_and_valid_status) ... ok\ntest_requires_handshake_and_recovers_invalid_frame (test_backend.MCPTests.test_requires_handshake_and_recovers_invalid_frame) ... ok\ntest_stdio_process_handshake_and_actual_plugin (test_backend.MCPTests.test_stdio_process_handshake_and_actual_plugin) ... ok\ntest_audit_detects_record_and_chain_tampering (test_backend.ServiceTests.test_audit_detects_record_and_chain_tampering) ... ok\ntest_finite_json_enforced_at_parse_and_depth (test_backend.ServiceTests.test_finite_json_enforced_at_parse_and_depth) ... ok\ntest_missing_or_changed_pins_disable_execution (test_backend.ServiceTests.test_missing_or_changed_pins_disable_execution) ... ok\ntest_pinned_subprocess_is_reproducible (test_backend.ServiceTests.test_pinned_subprocess_is_reproducible) ... ok\ntest_reject_invalid_parameters_and_urls (test_backend.ServiceTests.test_reject_invalid_parameters_and_urls) ... ok\ntest_source_persistence_and_unverified_provenance (test_backend.ServiceTests.test_source_persistence_and_unverified_provenance) ... ok\ntest_worker_timeout_is_persisted_as_failure (test_backend.ServiceTests.test_worker_timeout_is_persisted_as_failure) ... ok\ntest_workflow_persists_review_computation_and_audit (test_backend.ServiceTests.test_workflow_persists_review_computation_and_audit) ... ok\ntest_cancel_recovers_job_after_partial_submission_rollback (test_campaigns.CampaignTests.test_cancel_recovers_job_after_partial_submission_rollback) ... ok\ntest_cancel_running_campaign_fences_late_results (test_campaigns.CampaignTests.test_cancel_running_campaign_fences_late_results) ... ok\ntest_discovery_outage_is_not_reported_as_research_success (test_campaigns.CampaignTests.test_discovery_outage_is_not_reported_as_research_success) ... ok\ntest_empty_worker_result_cannot_complete_campaign (test_campaigns.CampaignTests.test_empty_worker_result_cannot_complete_campaign) ... ok\ntest_input_budgets_and_unknown_fields_rejected_before_submission (test_campaigns.CampaignTests.test_input_budgets_and_unknown_fields_rejected_before_submission) ... ok\ntest_insufficient_budget_stops_before_partial_iteration (test_campaigns.CampaignTests.test_insufficient_budget_stops_before_partial_iteration) ... ok\ntest_new_metadata_is_ingested_once_without_execution_privileges (test_campaigns.CampaignTests.test_new_metadata_is_ingested_once_without_execution_privileges) ... ok\ntest_real_bounded_cycle_survives_restart_and_budget (test_campaigns.CampaignTests.test_real_bounded_cycle_survives_restart_and_budget) ... ok\ntest_catalog_normalizes_old_sources_and_adapter_truth (test_discovery.DiscoveryTests.test_catalog_normalizes_old_sources_and_adapter_truth) ... ok\ntest_errors_do_not_leak_response_content_or_network_details (test_discovery.DiscoveryTests.test_errors_do_not_leak_response_content_or_network_details) ... ok\ntest_fetch_constructs_fixed_host_request (test_discovery.DiscoveryTests.test_fetch_constructs_fixed_host_request) ... ok\ntest_fetch_rejects_redirect_non_json_size_nonfinite (test_discovery.DiscoveryTests.test_fetch_rejects_redirect_non_json_size_nonfinite) ... ok\ntest_limits_providers_and_queries (test_discovery.DiscoveryTests.test_limits_providers_and_queries) ... ok\ntest_local_caps_and_plan_boundaries (test_discovery.DiscoveryTests.test_local_caps_and_plan_boundaries) ... ok\ntest_local_inspection_no_contents_secrets_symlinks (test_discovery.DiscoveryTests.test_local_inspection_no_contents_secrets_symlinks) ... ok\ntest_offline_ranking_has_no_network_and_no_false_match (test_discovery.DiscoveryTests.test_offline_ranking_has_no_network_and_no_false_match) ... ok\ntest_provider_shape_and_item_rejection (test_discovery.DiscoveryTests.test_provider_shape_and_item_rejection) ... ok\ntest_public_metadata_deduplication_and_limit (test_discovery.DiscoveryTests.test_public_metadata_deduplication_and_limit) ... ok\ntest_ranking_relevance_not_installation (test_discovery.DiscoveryTests.test_ranking_relevance_not_installation) ... ok\ntest_capability_routing_and_one_live_lease_per_worker (test_network_queue.NetworkQueueTests.test_capability_routing_and_one_live_lease_per_worker) ... ok\ntest_expiry_reclaim_fences_old_owner_and_exhausts_budget (test_network_queue.NetworkQueueTests.test_expiry_reclaim_fences_old_owner_and_exhausts_budget) ... ok\ntest_heartbeat_extension_and_cancellation_are_fenced (test_network_queue.NetworkQueueTests.test_heartbeat_extension_and_cancellation_are_fenced) ... ok\ntest_idempotency_lookup_recovers_submission_after_restart (test_network_queue.NetworkQueueTests.test_idempotency_lookup_recovers_submission_after_restart) ... ok\ntest_independent_processes_claim_once (test_network_queue.NetworkQueueTests.test_independent_processes_claim_once) ... ok\ntest_json_identity_and_resource_limits (test_network_queue.NetworkQueueTests.test_json_identity_and_resource_limits) ... ok\ntest_restart_completion_idempotency_and_secret_redaction (test_network_queue.NetworkQueueTests.test_restart_completion_idempotency_and_secret_redaction) ... ok\ntest_retry_error_idempotency_and_eventual_success (test_network_queue.NetworkQueueTests.test_retry_error_idempotency_and_eventual_success) ... ok\ntest_two_connections_claim_once_concurrently (test_network_queue.NetworkQueueTests.test_two_connections_claim_once_concurrently) ... ok\ntest_contract_self_dependency (test_plugins.PluginTests.test_contract_self_dependency) ... ok\ntest_diffusion_conserves_mean_but_changes_local_response (test_plugins.PluginTests.test_diffusion_conserves_mean_but_changes_local_response) ... ok\ntest_holdout_signal (test_plugins.PluginTests.test_holdout_signal) ... ok\ntest_nonfinite_boolean_and_unknown_rejected (test_plugins.PluginTests.test_nonfinite_boolean_and_unknown_rejected) ... ok\ntest_quantum_bell_and_depolarizing (test_plugins.PluginTests.test_quantum_bell_and_depolarizing) ... ok\ntest_quantum_zero_angle (test_plugins.PluginTests.test_quantum_zero_angle) ... ok\ntest_reproducibility (test_plugins.PluginTests.test_reproducibility) ... ok\ntest_zero_perturbation_is_exact_baseline (test_plugins.PluginTests.test_zero_perturbation_is_exact_baseline) ... ok\ntest_authentication_scope_and_browser_boundary (test_transport.TransportTests.test_authentication_scope_and_browser_boundary) ... ok\ntest_lease_ownership_and_idempotent_completion_over_http (test_transport.TransportTests.test_lease_ownership_and_idempotent_completion_over_http) ... ok\ntest_real_heartbeats_while_builtin_handler_runs (test_transport.TransportTests.test_real_heartbeats_while_builtin_handler_runs) ... ok\ntest_real_worker_runs_pinned_simulation_and_secret_is_not_persisted (test_transport.TransportTests.test_real_worker_runs_pinned_simulation_and_secret_is_not_persisted) ... ok\ntest_redirects_are_never_followed_and_transient_retries_are_bounded (test_transport.TransportTests.test_redirects_are_never_followed_and_transient_retries_are_bounded) ... ok\ntest_strict_bounded_json_and_request_fields (test_transport.TransportTests.test_strict_bounded_json_and_request_fields) ... ok\ntest_tls_certificate_verification_and_explicit_private_ca (test_transport.TransportTests.test_tls_certificate_verification_and_explicit_private_ca) ... ok\ntest_tls_required_for_remote_and_url_credentials_rejected (test_transport.TransportTests.test_tls_required_for_remote_and_url_credentials_rejected) ... ok\ntest_two_real_worker_processes (test_transport.TransportTests.test_two_real_worker_processes) ... ok\ntest_unknown_payload_cannot_execute_commands (test_transport.TransportTests.test_unknown_payload_cannot_execute_commands) ... ok\n\n----------------------------------------------------------------------\nRan 67 tests in 9.623s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/verify_network.py",
+        "--output",
+        "examples/distributed_offline_run.json"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"passed\": true,\n  \"online\": false,\n  \"independent_workers\": 2,\n  \"resources_before\": 60,\n  \"resources_after\": 60,\n  \"public_api_registration\": \"no_registration_required\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "web/network.js"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "web/app.js"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "browser_render_test": "not_performed"
+}

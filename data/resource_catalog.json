@@ -1,0 +1,310 @@
+{
+  "schema_version": 1,
+  "resources": [
+    {
+      "id": "europepmc-api",
+      "title": "Europe PMC · индекс научных публикаций",
+      "url": "https://europepmc.org/RestfulWebService",
+      "description": "Поиск публичных библиографических метаданных; встроен ограниченный JSON-клиент.",
+      "capabilities": [
+        "literature",
+        "genomics",
+        "epigenomics"
+      ],
+      "kind": "metadata_provider",
+      "access": "public_metadata",
+      "status": "client_tested_public_metadata",
+      "limitations": [
+        "Сеть проверяется при каждом запросе; клиент не загружает полные тексты и не проверяет научную достоверность."
+      ],
+      "provenance": {
+        "retrieved_at": "2026-09-18",
+        "source_id": "bounded_live_probe"
+      }
+    },
+    {
+      "id": "crossref-api",
+      "title": "Crossref · DOI и библиографические метаданные",
+      "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+      "description": "Поиск регистрационных метаданных научных работ; встроен ограниченный JSON-клиент.",
+      "capabilities": [
+        "literature"
+      ],
+      "kind": "metadata_provider",
+      "access": "public_metadata",
+      "status": "client_tested_public_metadata",
+      "limitations": [
+        "Метаданные предоставляются издателями и не доказывают качество работы."
+      ],
+      "provenance": {
+        "retrieved_at": "2026-09-18",
+        "source_id": "bounded_live_probe"
+      }
+    },
+    {
+      "id": "platform-scvi",
+      "title": "scvi-tools · анализ одиночных клеток",
+      "url": "https://docs.scvi-tools.org/en/stable/",
+      "description": "Вероятностные модели scRNA-seq, scATAC-seq, мультимодальных и метилированных данных; контроль качества и ошибок моделей.",
+      "capabilities": [
+        "single_cell",
+        "epigenomics",
+        "ml_benchmark"
+      ],
+      "kind": "scientific_platform",
+      "access": "documentation_public",
+      "status": "documented_adapter_unavailable",
+      "limitations": [
+        "Модели обучаются и проверяются для определённых типов данных; результаты не являются прогнозом создания органов или нового фенотипа.",
+        "Адаптер отсутствует, пакет и зависимости не установлены."
+      ]
+    },
+    {
+      "id": "platform-alphagenome",
+      "title": "AlphaGenome Research · модели регуляции генома",
+      "url": "https://github.com/google-deepmind/alphagenome_research",
+      "description": "Исследовательский код моделей последовательность → регуляторные измерения; оценка ограничений на контрольных данных.",
+      "capabilities": [
+        "genomics",
+        "epigenomics",
+        "ml_benchmark"
+      ],
+      "kind": "scientific_platform",
+      "access": "code_public_weights_separate_terms",
+      "status": "documented_adapter_unavailable",
+      "limitations": [
+        "Разные условия для кода и весов; вычислительные ресурсы и доступ требуют проверки.",
+        "Предсказание регуляторного сигнала не является прогнозом признаков целого организма.",
+        "Исполняемый адаптер отсутствует."
+      ]
+    },
+    {
+      "id": "platform-nfcore",
+      "title": "nf-core · воспроизводимые научные конвейеры",
+      "url": "https://nf-co.re/",
+      "description": "Рецензируемые сообществом конвейеры Nextflow для анализа научных данных и контроля воспроизводимости.",
+      "capabilities": [
+        "workflow",
+        "genomics",
+        "epigenomics"
+      ],
+      "kind": "scientific_platform",
+      "access": "documentation_public",
+      "status": "documented_adapter_unavailable",
+      "limitations": [
+        "Платформа не установлена, исполняемый адаптер отсутствует; необходимо отдельное воспроизводимое окружение.",
+        "Применимость к изменению взрослого организма не установлена."
+      ]
+    },
+    {
+      "id": "platform-physicell",
+      "title": "PhysiCell · многоклеточные модели",
+      "url": "https://physicell.org/",
+      "description": "Агентное моделирование многоклеточных систем и микросреды с явно заданными правилами.",
+      "capabilities": [
+        "tissue_simulation"
+      ],
+      "kind": "scientific_platform",
+      "access": "documentation_public",
+      "status": "documented_adapter_unavailable",
+      "limitations": [
+        "Механические и клеточные правила требуют калибровки и независимой проверки.",
+        "Это не готовый цифровой двойник взрослого организма; адаптер отсутствует."
+      ]
+    },
+    {
+      "id": "platform-qiskit",
+      "title": "Qiskit · квантовые схемы и классические симуляторы",
+      "url": "https://quantum.cloud.ibm.com/docs/en/guides/local-testing-mode",
+      "description": "Проверка схем на локальном симуляторе перед отдельным аппаратным исполнением.",
+      "capabilities": [
+        "quantum_simulation",
+        "ml_benchmark"
+      ],
+      "kind": "scientific_platform",
+      "access": "documentation_public",
+      "status": "documented_adapter_unavailable",
+      "limitations": [
+        "SDK не установлен; в системе есть только отдельный собственный двухкубитный контрольный модуль.",
+        "Аппаратный квантовый доступ и преимущество для биологических задач не подтверждены."
+      ]
+    },
+    {
+      "id": "platform-tooluniverse",
+      "title": "ToolUniverse · каталог научных инструментов",
+      "url": "https://github.com/mims-harvard/ToolUniverse",
+      "description": "Слой описания и вызова научных инструментов для внешних агентных систем.",
+      "capabilities": [
+        "workflow",
+        "literature",
+        "genomics"
+      ],
+      "kind": "scientific_platform",
+      "access": "documentation_public",
+      "status": "documented_adapter_unavailable",
+      "limitations": [
+        "Платформа не установлена, исполняемый адаптер отсутствует; необходимо отдельное воспроизводимое окружение.",
+        "Применимость к изменению взрослого организма не установлена."
+      ]
+    },
+    {
+      "id": "platform-nextflow",
+      "title": "Nextflow · распределённые вычислительные конвейеры",
+      "url": "https://www.nextflow.io/docs/latest/",
+      "description": "Декларативное исполнение научных конвейеров на поддерживаемых исполнителях.",
+      "capabilities": [
+        "workflow"
+      ],
+      "kind": "scientific_platform",
+      "access": "documentation_public",
+      "status": "documented_adapter_unavailable",
+      "limitations": [
+        "Платформа не установлена, исполняемый адаптер отсутствует; необходимо отдельное воспроизводимое окружение.",
+        "Применимость к изменению взрослого организма не установлена."
+      ]
+    },
+    {
+      "id": "platform-cellxgene",
+      "title": "CELLxGENE Census · атлас одиночных клеток",
+      "url": "https://chanzuckerberg.github.io/cellxgene-census/",
+      "description": "Доступ к стандартизированным данным одиночных клеток и документации для валидации моделей.",
+      "capabilities": [
+        "single_cell",
+        "genomics"
+      ],
+      "kind": "dataset_platform",
+      "access": "documentation_public",
+      "status": "documented_adapter_unavailable",
+      "limitations": [
+        "Адаптер к Census не реализован; разрешения и лицензии наборов проверяются отдельно.",
+        "Наблюдательный атлас не является доказательством причинного эффекта вмешательства."
+      ]
+    },
+    {
+      "id": "builtin-coupled-dynamics",
+      "title": "Встроенный контроль · связанные динамические системы",
+      "url": "",
+      "description": "Абстрактные линейные уравнения, анализ чувствительности и Монте-Карло; синтетические данные.",
+      "capabilities": [
+        "synthetic_control",
+        "tissue_simulation"
+      ],
+      "kind": "builtin_control",
+      "access": "local_stdlib",
+      "status": "implemented",
+      "limitations": [
+        "Абстрактный математический контроль; не моделирует реальные генетические или эпигенетические изменения."
+      ]
+    },
+    {
+      "id": "builtin-regression",
+      "title": "Встроенный контроль · ML holdout",
+      "url": "",
+      "description": "Линейная и RBF-регрессия на синтетических данных с отложенной выборкой.",
+      "capabilities": [
+        "synthetic_control",
+        "ml_benchmark"
+      ],
+      "kind": "builtin_control",
+      "access": "local_stdlib",
+      "status": "implemented",
+      "limitations": [
+        "Абстрактный математический контроль; не моделирует реальные генетические или эпигенетические изменения."
+      ]
+    },
+    {
+      "id": "builtin-quantum",
+      "title": "Встроенный контроль · два кубита",
+      "url": "",
+      "description": "CPU-модель Ry и CNOT, вероятности и выборка измерений.",
+      "capabilities": [
+        "synthetic_control",
+        "quantum_simulation"
+      ],
+      "kind": "builtin_control",
+      "access": "local_stdlib",
+      "status": "implemented",
+      "limitations": [
+        "Абстрактный математический контроль; не моделирует реальные генетические или эпигенетические изменения."
+      ]
+    },
+    {
+      "id": "builtin-structural-plasticity",
+      "title": "Встроенный контроль · синтетическая структурная пластичность",
+      "url": "",
+      "description": "Синтетический вычислительный контроль structural plasticity и морфогенеза: ограниченная абстрактная модель изменения структуры. Выбор по теме запроса не является научной валидацией.",
+      "capabilities": [
+        "synthetic_control",
+        "structural_plasticity"
+      ],
+      "kind": "builtin_control",
+      "access": "local_stdlib",
+      "status": "implemented",
+      "limitations": [
+        "Синтетическая демонстрационная модель; не прогнозирует морфогенез, структурную пластичность или изменения генома человека.",
+        "Не является воспроизведением авторского алгоритма или экспериментально подтверждённой биологической теории.",
+        "Текст вопроса используется только для выбора фиксированного plugin_id и не преобразуется в код, последовательности или инструкции вмешательства."
+      ]
+    },
+    {
+      "id": "builtin-topology",
+      "title": "Встроенный контроль · контракт топологии",
+      "url": "",
+      "description": "Проверка зависимости входов и выходов схемы; без биологических прогнозов.",
+      "capabilities": [
+        "synthetic_control",
+        "workflow"
+      ],
+      "kind": "builtin_control",
+      "access": "local_stdlib",
+      "status": "implemented",
+      "limitations": [
+        "Абстрактный математический контроль; не моделирует реальные генетические или эпигенетические изменения."
+      ]
+    },
+    {
+      "id": "builtin-kan",
+      "title": "Сети Колмогорова–Арнольда: обучаемые функции рёбер",
+      "url": "",
+      "description": "Составная обучаемая KAN с тремя вариантами базиса, сравнение с MLP и линейным контролем на синтетической регрессии.",
+      "capabilities": [
+        "kan_benchmark",
+        "ml_benchmark",
+        "workflow"
+      ],
+      "kind": "builtin_simulator",
+      "access": "local_cpu",
+      "status": "implemented_synthetic",
+      "limitations": [
+        "Самостоятельная ограниченная реализация; не реплика мозга или стороннего пакета.",
+        "Перенос на биологические данные не проверен."
+      ],
+      "provenance": {
+        "retrieved_at": "2026-09-24",
+        "source_id": "project_implementation_v0.8"
+      }
+    },
+    {
+      "id": "builtin-cortical",
+      "title": "Контекстные клетки и прогноз последовательностей",
+      "url": "",
+      "description": "Упрощённая сеть колонок, клеток и обучаемых контекстных синапсов; контроль Маркова первого и второго порядка.",
+      "capabilities": [
+        "cortical_sequence",
+        "ml_benchmark",
+        "workflow"
+      ],
+      "kind": "builtin_simulator",
+      "access": "local_cpu",
+      "status": "implemented_synthetic",
+      "limitations": [
+        "Самостоятельная ограниченная реализация; не реплика мозга или стороннего пакета.",
+        "Перенос на биологические данные не проверен."
+      ],
+      "provenance": {
+        "retrieved_at": "2026-09-24",
+        "source_id": "project_implementation_v0.8"
+      }
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+name: Research autonomy
+
+on:
+  schedule:
+    - cron: '23 6 * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/autonomy.yml'
+      - 'config/autonomy.json'
+      - 'workbench/autonomy/**'
+      - 'scripts/publish_autonomy.py'
+
+permissions:
+  contents: read
+
+# Serialize publication, including manual runs; do not interrupt an API commit.
+concurrency:
+  group: meta-harness-autonomy
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && vars.AUTONOMY_ENABLED != 'false'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Public discovery without model credentials
+        if: vars.AUTONOMY_ALLOW_MODEL_CALLS != 'true'
+        run: python3 -m workbench.autonomy --config config/autonomy.json --output-dir runtime/autonomy --online --provider none
+      - name: Public discovery and at most one configured model request
+        if: vars.AUTONOMY_ALLOW_MODEL_CALLS == 'true'
+        env:
+          AUTONOMY_PROVIDER: ${{ vars.AUTONOMY_PROVIDER || 'auto' }}
+          AUTONOMY_ALLOW_MODEL_CALLS: 'true'
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python3 -m workbench.autonomy --config config/autonomy.json --output-dir runtime/autonomy --online --provider "$AUTONOMY_PROVIDER"
+      - name: Preserve discovery and proposal data
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: autonomy-cycle-${{ github.run_id }}-${{ github.run_attempt }}
+          path: runtime/autonomy/
+          if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    needs: discover
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Trusted publisher from the workflow commit
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Download data from this run only
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: autonomy-cycle-${{ github.run_id }}-${{ github.run_attempt }}
+          path: runtime/autonomy/
+      - name: Publish validated data as a draft pull request
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 -I scripts/publish_autonomy.py --proposal runtime/autonomy/proposal.json --output runtime/autonomy/publish.json
+      - name: Preserve publication receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: autonomy-publication-${{ github.run_id }}-${{ github.run_attempt }}
+          path: runtime/autonomy/publish.json
+          if-no-files-found: warn
+          retention-days: 14

@@ -1,0 +1,617 @@
+{
+  "checked_at": "2026-09-24T17:02:16.160236+00:00",
+  "scope": "Public directory metadata only; no agents contacted/joined",
+  "results": {
+    "agentverse": {
+      "query": "research",
+      "mode": "online",
+      "data_class": "public",
+      "items": [
+        {
+          "id": "agentverse:agent1q0fcd6lqsdgmrhk4n4gp37y2s7gjcxmzmhjjrfxva5zr9edefvxkkfw87d8",
+          "name": "hf-info-hivex-research-hivex-DBR-PPO-baseline-task-3-difficulty-9",
+          "organization": "Оператор карточки не подтверждён",
+          "url": "https://agentverse.ai/",
+          "entity_type": "agent",
+          "status": "directory_listed_not_connected",
+          "capabilities": [],
+          "license": "not_specified",
+          "revision": "",
+          "provenance": {
+            "provider": "agentverse",
+            "retrieved_at": "2026-09-24T17:02:16.159541+00:00",
+            "endpoint": "https://agentverse.ai/v1/search/agents",
+            "identity_verification": "directory_self_reported",
+            "endpoint_contacted": false,
+            "directory_address": "agent1q0fcd6lqsdgmrhk4n4gp37y2s7gjcxmzmhjjrfxva5zr9edefvxkkfw87d8",
+            "listed_status": "inactive",
+            "listed_type": "hosted",
+            "owner_account": "34ee31a80edb390dd0ccc1c12a17918cff09073b6d047932",
+            "profile_url_verified": false
+          },
+          "limitations": [
+            "Карточка каталога — сведения поставщика или автора; идентичность оператора и заявленные возможности независимо не подтверждены.",
+            "Ресурс не подключён, код и веса не загружены; endpoint агента, README и инструкции карточки не исполнялись.",
+            "Наличие в каталоге не подтверждает качество, научную применимость, лицензионные права или возможность изменения организма.",
+            "Ссылка ведёт на каталог; точный адрес агента сохранён в provenance. Активность из карточки не проверялась вызовом агента."
+          ],
+          "network_layer": "clearnet",
+          "readiness": "discovered",
+          "retrieved_at": "2026-09-24T17:02:16.159541+00:00",
+          "seen_at": "2026-09-24T17:02:16.159541+00:00",
+          "self_reported_capabilities": [],
+          "collaboration": {
+            "opt_in": false,
+            "terms_url": ""
+          }
+        },
+        {
+          "id": "agentverse:agent1q0q7c2vyqdjvp89h7k9hnj3he99cautzn068cywvqz6e57d0qkgjkpapg3y",
+          "name": "hf-info-AI-ML-Research-qwen2-05_unsloth_lora_merged_gguf_Q6_K",
+          "organization": "Оператор карточки не подтверждён",
+          "url": "https://agentverse.ai/",
+          "entity_type": "agent",
+          "status": "directory_listed_not_connected",
+          "capabilities": [],
+          "license": "not_specified",
+          "revision": "",
+          "provenance": {
+            "provider": "agentverse",
+            "retrieved_at": "2026-09-24T17:02:16.159541+00:00",
+            "endpoint": "https://agentverse.ai/v1/search/agents",
+            "identity_verification": "directory_self_reported",
+            "endpoint_contacted": false,
+            "directory_address": "agent1q0q7c2vyqdjvp89h7k9hnj3he99cautzn068cywvqz6e57d0qkgjkpapg3y",
+            "listed_status": "inactive",
+            "listed_type": "hosted",
+            "owner_account": "fcdd754fc548d2f16c5ca65ba3638f572b0906ea3845cecb",
+            "profile_url_verified": false
+          },
+          "limitations": [
+            "Карточка каталога — сведения поставщика или автора; идентичность оператора и заявленные возможности независимо не подтверждены.",
+            "Ресурс не подключён, код и веса не загружены; endpoint агента, README и инструкции карточки не исполнялись.",
+            "Наличие в каталоге не подтверждает качество, научную применимость, лицензионные права или возможность изменения организма.",
+            "Ссылка ведёт на каталог; точный адрес агента сохранён в provenance. Активность из карточки не проверялась вызовом агента."
+          ],
+          "network_layer": "clearnet",
+          "readiness": "discovered",
+          "retrieved_at": "2026-09-24T17:02:16.159541+00:00",
+          "seen_at": "2026-09-24T17:02:16.159541+00:00",
+          "self_reported_capabilities": [],
+          "collaboration": {
+            "opt_in": false,
+            "terms_url": ""
+          }
+        },
+        {
+          "id": "agentverse:agent1q0rasg42ret9t48m8pdj326rvlxl7j0350583w8cpxanv8w4l6fkz8az3ww",
+          "name": "hf-info-louistvc-a2a_13_11_09",
+          "organization": "Оператор карточки не подтверждён",
+          "url": "https://agentverse.ai/",
+          "entity_type": "agent",
+          "status": "directory_listed_not_connected",
+          "capabilities": [],
+          "license": "not_specified",
+          "revision": "",
+          "provenance": {
+            "provider": "agentverse",
+            "retrieved_at": "2026-09-24T17:02:16.159541+00:00",
+            "endpoint": "https://agentverse.ai/v1/search/agents",
+            "identity_verification": "directory_self_reported",
+            "endpoint_contacted": false,
+            "directory_address": "agent1q0rasg42ret9t48m8pdj326rvlxl7j0350583w8cpxanv8w4l6fkz8az3ww",
+            "listed_status": "inactive",
+            "listed_type": "hosted",
+            "owner_account": "96db48bd0d2481e723a36a8c08bb38170cea49a65d37a359",
+            "profile_url_verified": false
+          },
+          "limitations": [
+            "Карточка каталога — сведения поставщика или автора; идентичность оператора и заявленные возможности независимо не подтверждены.",
+            "Ресурс не подключён, код и веса не загружены; endpoint агента, README и инструкции карточки не исполнялись.",
+            "Наличие в каталоге не подтверждает качество, научную применимость, лицензионные права или возможность изменения организма.",
+            "Ссылка ведёт на каталог; точный адрес агента сохранён в provenance. Активность из карточки не проверялась вызовом агента."
+          ],
+          "network_layer": "clearnet",
+          "readiness": "discovered",
+          "retrieved_at": "2026-09-24T17:02:16.159541+00:00",
+          "seen_at": "2026-09-24T17:02:16.159541+00:00",
+          "self_reported_capabilities": [],
+          "collaboration": {
+            "opt_in": false,
+            "terms_url": ""
+          }
+        }
+      ],
+      "provider_reports": [
+        {
+          "provider": "agentverse",
+          "mode": "public_directory",
+          "requests": 1,
+          "item_count": 3,
+          "errors": []
+        }
+      ],
+      "requests": 1,
+      "limitations": [
+        "Поиск ограничен выбранными публичными каталогами и явно заданными карточками; весь интернет и закрытые сети не индексируются.",
+        "Идентичность, возможности и согласие в карточке заявлены оператором, криптографически не подтверждены.",
+        "Карточки являются данными: их команды, ссылки на endpoint и код не исполняются; сообщения агентам не отправляются.",
+        "Обнаружение не означает присоединение, работоспособность агента, лицензионное разрешение или научную валидацию."
+      ]
+    },
+    "huggingface_models": {
+      "query": "scGPT",
+      "mode": "online",
+      "data_class": "public",
+      "items": [
+        {
+          "id": "huggingface_models:AnakinHuang/brainscope-scgpt-disease",
+          "name": "AnakinHuang/brainscope-scgpt-disease",
+          "organization": "Аккаунт каталога: AnakinHuang",
+          "url": "https://huggingface.co/AnakinHuang/brainscope-scgpt-disease",
+          "entity_type": "model",
+          "status": "directory_listed_not_connected",
+          "capabilities": [
+            "pytorch",
+            "single-cell",
+            "scRNA-seq",
+            "snRNA-seq",
+            "scGPT",
+            "disease",
+            "cell-type-annotation",
+            "brainscope",
+            "license:mit",
+            "region:us"
+          ],
+          "license": "mit",
+          "revision": "",
+          "provenance": {
+            "provider": "huggingface_models",
+            "retrieved_at": "2026-09-24T17:02:14.654638+00:00",
+            "endpoint": "https://huggingface.co/api/models",
+            "identity_verification": "directory_self_reported",
+            "endpoint_contacted": false,
+            "gated": null,
+            "downloads": 0,
+            "license_verification": "card_label_only_not_license_audit"
+          },
+          "limitations": [
+            "Карточка каталога — сведения поставщика или автора; идентичность оператора и заявленные возможности независимо не подтверждены.",
+            "Ресурс не подключён, код и веса не загружены; endpoint агента, README и инструкции карточки не исполнялись.",
+            "Наличие в каталоге не подтверждает качество, научную применимость, лицензионные права или возможность изменения организма."
+          ],
+          "network_layer": "clearnet",
+          "readiness": "discovered",
+          "retrieved_at": "2026-09-24T17:02:14.654638+00:00",
+          "seen_at": "2026-09-24T17:02:14.654638+00:00",
+          "self_reported_capabilities": [
+            "pytorch",
+            "single-cell",
+            "scRNA-seq",
+            "snRNA-seq",
+            "scGPT",
+            "disease",
+            "cell-type-annotation",
+            "brainscope",
+            "license:mit",
+            "region:us"
+          ],
+          "collaboration": {
+            "opt_in": false,
+            "terms_url": ""
+          }
+        },
+        {
+          "id": "huggingface_models:igorktech/sc-gpt-upf",
+          "name": "igorktech/sc-gpt-upf",
+          "organization": "Аккаунт каталога: igorktech",
+          "url": "https://huggingface.co/igorktech/sc-gpt-upf",
+          "entity_type": "model",
+          "status": "directory_listed_not_connected",
+          "capabilities": [
+            "transformers",
+            "pytorch",
+            "safetensors",
+            "gpt2",
+            "text-generation",
+            "text-generation-inference",
+            "endpoints_compatible",
+            "region:us"
+          ],
+          "license": "not_specified",
+          "revision": "",
+          "provenance": {
+            "provider": "huggingface_models",
+            "retrieved_at": "2026-09-24T17:02:14.654638+00:00",
+            "endpoint": "https://huggingface.co/api/models",
+            "identity_verification": "directory_self_reported",
+            "endpoint_contacted": false,
+            "gated": null,
+            "downloads": 28,
+            "license_verification": "card_label_only_not_license_audit"
+          },
+          "limitations": [
+            "Карточка каталога — сведения поставщика или автора; идентичность оператора и заявленные возможности независимо не подтверждены.",
+            "Ресурс не подключён, код и веса не загружены; endpoint агента, README и инструкции карточки не исполнялись.",
+            "Наличие в каталоге не подтверждает качество, научную применимость, лицензионные права или возможность изменения организма."
+          ],
+          "network_layer": "clearnet",
+          "readiness": "discovered",
+          "retrieved_at": "2026-09-24T17:02:14.654638+00:00",
+          "seen_at": "2026-09-24T17:02:14.654638+00:00",
+          "self_reported_capabilities": [
+            "transformers",
+            "pytorch",
+            "safetensors",
+            "gpt2",
+            "text-generation",
+            "text-generation-inference",
+            "endpoints_compatible",
+            "region:us"
+          ],
+          "collaboration": {
+            "opt_in": false,
+            "terms_url": ""
+          }
+        },
+        {
+          "id": "huggingface_models:metehergul/scgpt",
+          "name": "metehergul/scgpt",
+          "organization": "Аккаунт каталога: metehergul",
+          "url": "https://huggingface.co/metehergul/scgpt",
+          "entity_type": "model",
+          "status": "directory_listed_not_connected",
+          "capabilities": [
+            "transformers",
+            "pytorch",
+            "arxiv:2002.12328",
+            "endpoints_compatible",
+            "region:us"
+          ],
+          "license": "not_specified",
+          "revision": "",
+          "provenance": {
+            "provider": "huggingface_models",
+            "retrieved_at": "2026-09-24T17:02:14.654638+00:00",
+            "endpoint": "https://huggingface.co/api/models",
+            "identity_verification": "directory_self_reported",
+            "endpoint_contacted": false,
+            "gated": null,
+            "downloads": 23,
+            "license_verification": "card_label_only_not_license_audit"
+          },
+          "limitations": [
+            "Карточка каталога — сведения поставщика или автора; идентичность оператора и заявленные возможности независимо не подтверждены.",
+            "Ресурс не подключён, код и веса не загружены; endpoint агента, README и инструкции карточки не исполнялись.",
+            "Наличие в каталоге не подтверждает качество, научную применимость, лицензионные права или возможность изменения организма."
+          ],
+          "network_layer": "clearnet",
+          "readiness": "discovered",
+          "retrieved_at": "2026-09-24T17:02:14.654638+00:00",
+          "seen_at": "2026-09-24T17:02:14.654638+00:00",
+          "self_reported_capabilities": [
+            "transformers",
+            "pytorch",
+            "arxiv:2002.12328",
+            "endpoints_compatible",
+            "region:us"
+          ],
+          "collaboration": {
+            "opt_in": false,
+            "terms_url": ""
+          }
+        }
+      ],
+      "provider_reports": [
+        {
+          "provider": "huggingface_models",
+          "mode": "public_directory",
+          "requests": 1,
+          "item_count": 3,
+          "errors": []
+        }
+      ],
+      "requests": 1,
+      "limitations": [
+        "Поиск ограничен выбранными публичными каталогами и явно заданными карточками; весь интернет и закрытые сети не индексируются.",
+        "Идентичность, возможности и согласие в карточке заявлены оператором, криптографически не подтверждены.",
+        "Карточки являются данными: их команды, ссылки на endpoint и код не исполняются; сообщения агентам не отправляются.",
+        "Обнаружение не означает присоединение, работоспособность агента, лицензионное разрешение или научную валидацию."
+      ]
+    },
+    "huggingface_datasets": {
+      "query": "single-cell",
+      "mode": "online",
+      "data_class": "public",
+      "items": [
+        {
+          "id": "huggingface_datasets:Wulichao/single_cell_RNA_seq",
+          "name": "Wulichao/single_cell_RNA_seq",
+          "organization": "Аккаунт каталога: Wulichao",
+          "url": "https://huggingface.co/datasets/Wulichao/single_cell_RNA_seq",
+          "entity_type": "dataset",
+          "status": "directory_listed_not_connected",
+          "capabilities": [
+            "license:mit",
+            "region:us"
+          ],
+          "license": "mit",
+          "revision": "1efda3483472c864af69bb01923ab2e2851eb529",
+          "provenance": {
+            "provider": "huggingface_datasets",
+            "retrieved_at": "2026-09-24T17:02:14.639356+00:00",
+            "endpoint": "https://huggingface.co/api/datasets",
+            "identity_verification": "directory_self_reported",
+            "endpoint_contacted": false,
+            "gated": false,
+            "downloads": 6,
+            "license_verification": "card_label_only_not_license_audit"
+          },
+          "limitations": [
+            "Карточка каталога — сведения поставщика или автора; идентичность оператора и заявленные возможности независимо не подтверждены.",
+            "Ресурс не подключён, код и веса не загружены; endpoint агента, README и инструкции карточки не исполнялись.",
+            "Наличие в каталоге не подтверждает качество, научную применимость, лицензионные права или возможность изменения организма.",
+            "Публичная карточка не гарантирует свободный доступ к данным или право на выбранную исследовательскую цель."
+          ],
+          "network_layer": "clearnet",
+          "readiness": "discovered",
+          "retrieved_at": "2026-09-24T17:02:14.639356+00:00",
+          "seen_at": "2026-09-24T17:02:14.639356+00:00",
+          "self_reported_capabilities": [
+            "license:mit",
+            "region:us"
+          ],
+          "collaboration": {
+            "opt_in": false,
+            "terms_url": ""
+          }
+        },
+        {
+          "id": "huggingface_datasets:Lemanic/single-cell-integration",
+          "name": "Lemanic/single-cell-integration",
+          "organization": "Аккаунт каталога: Lemanic",
+          "url": "https://huggingface.co/datasets/Lemanic/single-cell-integration",
+          "entity_type": "dataset",
+          "status": "directory_listed_not_connected",
+          "capabilities": [
+            "region:us"
+          ],
+          "license": "not_specified",
+          "revision": "d435c36858720715170145fdde651648da66288b",
+          "provenance": {
+            "provider": "huggingface_datasets",
+            "retrieved_at": "2026-09-24T17:02:14.639356+00:00",
+            "endpoint": "https://huggingface.co/api/datasets",
+            "identity_verification": "directory_self_reported",
+            "endpoint_contacted": false,
+            "gated": false,
+            "downloads": 44,
+            "license_verification": "card_label_only_not_license_audit"
+          },
+          "limitations": [
+            "Карточка каталога — сведения поставщика или автора; идентичность оператора и заявленные возможности независимо не подтверждены.",
+            "Ресурс не подключён, код и веса не загружены; endpoint агента, README и инструкции карточки не исполнялись.",
+            "Наличие в каталоге не подтверждает качество, научную применимость, лицензионные права или возможность изменения организма.",
+            "Публичная карточка не гарантирует свободный доступ к данным или право на выбранную исследовательскую цель."
+          ],
+          "network_layer": "clearnet",
+          "readiness": "discovered",
+          "retrieved_at": "2026-09-24T17:02:14.639356+00:00",
+          "seen_at": "2026-09-24T17:02:14.639356+00:00",
+          "self_reported_capabilities": [
+            "region:us"
+          ],
+          "collaboration": {
+            "opt_in": false,
+            "terms_url": ""
+          }
+        },
+        {
+          "id": "huggingface_datasets:mahabubmallik/Single-Cell_Gene_Expression",
+          "name": "mahabubmallik/Single-Cell_Gene_Expression",
+          "organization": "Аккаунт каталога: mahabubmallik",
+          "url": "https://huggingface.co/datasets/mahabubmallik/Single-Cell_Gene_Expression",
+          "entity_type": "dataset",
+          "status": "directory_listed_not_connected",
+          "capabilities": [
+            "region:us"
+          ],
+          "license": "not_specified",
+          "revision": "c48c93823862e72ff0fe01c495f09f60a08ddfb3",
+          "provenance": {
+            "provider": "huggingface_datasets",
+            "retrieved_at": "2026-09-24T17:02:14.639356+00:00",
+            "endpoint": "https://huggingface.co/api/datasets",
+            "identity_verification": "directory_self_reported",
+            "endpoint_contacted": false,
+            "gated": false,
+            "downloads": 2,
+            "license_verification": "card_label_only_not_license_audit"
+          },
+          "limitations": [
+            "Карточка каталога — сведения поставщика или автора; идентичность оператора и заявленные возможности независимо не подтверждены.",
+            "Ресурс не подключён, код и веса не загружены; endpoint агента, README и инструкции карточки не исполнялись.",
+            "Наличие в каталоге не подтверждает качество, научную применимость, лицензионные права или возможность изменения организма.",
+            "Публичная карточка не гарантирует свободный доступ к данным или право на выбранную исследовательскую цель."
+          ],
+          "network_layer": "clearnet",
+          "readiness": "discovered",
+          "retrieved_at": "2026-09-24T17:02:14.639356+00:00",
+          "seen_at": "2026-09-24T17:02:14.639356+00:00",
+          "self_reported_capabilities": [
+            "region:us"
+          ],
+          "collaboration": {
+            "opt_in": false,
+            "terms_url": ""
+          }
+        }
+      ],
+      "provider_reports": [
+        {
+          "provider": "huggingface_datasets",
+          "mode": "public_directory",
+          "requests": 1,
+          "item_count": 3,
+          "errors": []
+        }
+      ],
+      "requests": 1,
+      "limitations": [
+        "Поиск ограничен выбранными публичными каталогами и явно заданными карточками; весь интернет и закрытые сети не индексируются.",
+        "Идентичность, возможности и согласие в карточке заявлены оператором, криптографически не подтверждены.",
+        "Карточки являются данными: их команды, ссылки на endpoint и код не исполняются; сообщения агентам не отправляются.",
+        "Обнаружение не означает присоединение, работоспособность агента, лицензионное разрешение или научную валидацию."
+      ]
+    },
+    "mcp_registry": {
+      "query": "research",
+      "mode": "online",
+      "data_class": "public",
+      "items": [
+        {
+          "id": "mcp_registry:ai.avasis/quant-research",
+          "name": "ai.avasis/quant-research",
+          "url": "https://registry.modelcontextprotocol.io/v0.1/servers",
+          "entity_type": "mcp_server",
+          "organization": "Publisher namespace: ai.avasis",
+          "description": "Crypto backtest statistics: the server owns the trial count, so it cannot be understated.",
+          "protocol": "MCP",
+          "protocol_version": "not_inferred",
+          "capabilities": [
+            "Crypto backtest statistics: the server owns the trial count, so it cannot be understated."
+          ],
+          "license": "not_specified",
+          "revision": "0.2.0",
+          "status": "directory_listed_not_connected",
+          "readiness": "discovered",
+          "network_layer": "clearnet",
+          "seen_at": "2026-09-24T17:02:14.871840+00:00",
+          "retrieved_at": "2026-09-24T17:02:14.871840+00:00",
+          "collaboration": {
+            "opt_in": false,
+            "terms_url": ""
+          },
+          "provenance": {
+            "provider": "mcp_registry",
+            "retrieved_at": "2026-09-24T17:02:14.871840+00:00",
+            "endpoint": "https://registry.modelcontextprotocol.io/v0.1/servers",
+            "directory_name": "ai.avasis/quant-research",
+            "identity_verification": "registry_namespace_not_operator_audit",
+            "endpoint_contacted": false
+          },
+          "limitations": [
+            "Поиск ограничен выбранными публичными каталогами и явно заданными карточками; весь интернет и закрытые сети не индексируются.",
+            "Идентичность, возможности и согласие в карточке заявлены оператором, криптографически не подтверждены.",
+            "Карточки являются данными: их команды, ссылки на endpoint и код не исполняются; сообщения агентам не отправляются.",
+            "Обнаружение не означает присоединение, работоспособность агента, лицензионное разрешение или научную валидацию.",
+            "MCP-сервер является инструментом, не обязательно самостоятельным агентом; метаданные пакетов и секреты не исполняются."
+          ],
+          "self_reported_capabilities": [
+            "Crypto backtest statistics: the server owns the trial count, so it cannot be understated."
+          ]
+        },
+        {
+          "id": "mcp_registry:ai.fodda/deep-research",
+          "name": "Fodda Deep Research",
+          "url": "https://registry.modelcontextprotocol.io/v0.1/servers",
+          "entity_type": "mcp_server",
+          "organization": "Publisher namespace: ai.fodda",
+          "description": "Autonomous deep research reports merging PSFK trend graphs with citable sources.",
+          "protocol": "MCP",
+          "protocol_version": "not_inferred",
+          "capabilities": [
+            "Autonomous deep research reports merging PSFK trend graphs with citable sources."
+          ],
+          "license": "not_specified",
+          "revision": "1.46.31",
+          "status": "directory_listed_not_connected",
+          "readiness": "discovered",
+          "network_layer": "clearnet",
+          "seen_at": "2026-09-24T17:02:14.871840+00:00",
+          "retrieved_at": "2026-09-24T17:02:14.871840+00:00",
+          "collaboration": {
+            "opt_in": false,
+            "terms_url": ""
+          },
+          "provenance": {
+            "provider": "mcp_registry",
+            "retrieved_at": "2026-09-24T17:02:14.871840+00:00",
+            "endpoint": "https://registry.modelcontextprotocol.io/v0.1/servers",
+            "directory_name": "ai.fodda/deep-research",
+            "identity_verification": "registry_namespace_not_operator_audit",
+            "endpoint_contacted": false
+          },
+          "limitations": [
+            "Поиск ограничен выбранными публичными каталогами и явно заданными карточками; весь интернет и закрытые сети не индексируются.",
+            "Идентичность, возможности и согласие в карточке заявлены оператором, криптографически не подтверждены.",
+            "Карточки являются данными: их команды, ссылки на endpoint и код не исполняются; сообщения агентам не отправляются.",
+            "Обнаружение не означает присоединение, работоспособность агента, лицензионное разрешение или научную валидацию.",
+            "MCP-сервер является инструментом, не обязательно самостоятельным агентом; метаданные пакетов и секреты не исполняются."
+          ],
+          "self_reported_capabilities": [
+            "Autonomous deep research reports merging PSFK trend graphs with citable sources."
+          ]
+        },
+        {
+          "id": "mcp_registry:ai.fodda/topic-research",
+          "name": "Fodda Topic & Trend Research",
+          "url": "https://registry.modelcontextprotocol.io/v0.1/servers",
+          "entity_type": "mcp_server",
+          "organization": "Publisher namespace: ai.fodda",
+          "description": "Trend, stats & insight search across PSFK expert graphs with citable sources.",
+          "protocol": "MCP",
+          "protocol_version": "not_inferred",
+          "capabilities": [
+            "Trend, stats & insight search across PSFK expert graphs with citable sources."
+          ],
+          "license": "not_specified",
+          "revision": "1.46.31",
+          "status": "directory_listed_not_connected",
+          "readiness": "discovered",
+          "network_layer": "clearnet",
+          "seen_at": "2026-09-24T17:02:14.871840+00:00",
+          "retrieved_at": "2026-09-24T17:02:14.871840+00:00",
+          "collaboration": {
+            "opt_in": false,
+            "terms_url": ""
+          },
+          "provenance": {
+            "provider": "mcp_registry",
+            "retrieved_at": "2026-09-24T17:02:14.871840+00:00",
+            "endpoint": "https://registry.modelcontextprotocol.io/v0.1/servers",
+            "directory_name": "ai.fodda/topic-research",
+            "identity_verification": "registry_namespace_not_operator_audit",
+            "endpoint_contacted": false
+          },
+          "limitations": [
+            "Поиск ограничен выбранными публичными каталогами и явно заданными карточками; весь интернет и закрытые сети не индексируются.",
+            "Идентичность, возможности и согласие в карточке заявлены оператором, криптографически не подтверждены.",
+            "Карточки являются данными: их команды, ссылки на endpoint и код не исполняются; сообщения агентам не отправляются.",
+            "Обнаружение не означает присоединение, работоспособность агента, лицензионное разрешение или научную валидацию.",
+            "MCP-сервер является инструментом, не обязательно самостоятельным агентом; метаданные пакетов и секреты не исполняются."
+          ],
+          "self_reported_capabilities": [
+            "Trend, stats & insight search across PSFK expert graphs with citable sources."
+          ]
+        }
+      ],
+      "provider_reports": [
+        {
+          "provider": "mcp_registry",
+          "mode": "public_directory",
+          "requests": 1,
+          "item_count": 3,
+          "errors": []
+        }
+      ],
+      "requests": 1,
+      "limitations": [
+        "Поиск ограничен выбранными публичными каталогами и явно заданными карточками; весь интернет и закрытые сети не индексируются.",
+        "Идентичность, возможности и согласие в карточке заявлены оператором, криптографически не подтверждены.",
+        "Карточки являются данными: их команды, ссылки на endpoint и код не исполняются; сообщения агентам не отправляются.",
+        "Обнаружение не означает присоединение, работоспособность агента, лицензионное разрешение или научную валидацию."
+      ]
+    }
+  }
+}

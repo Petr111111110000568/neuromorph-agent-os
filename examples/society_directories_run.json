@@ -1,0 +1,607 @@
+{
+  "passed": true,
+  "checked_at": "2026-09-18T20:46:19.067220+00:00",
+  "online": true,
+  "launch": "python -m workbench local-network --workers 2",
+  "daemon_advanced_without_browser_or_manual_tick": true,
+  "worker_registrations": 2,
+  "observed_worker_processes": 2,
+  "worker_process_ids": [
+    8,
+    9
+  ],
+  "mission": {
+    "id": "62bd4402-4f24-4bd2-bada-3ff261945561",
+    "question": "single cell epigenetics model validation",
+    "status": "completed",
+    "events": [
+      {
+        "at": "2026-09-18T20:45:49.953+00:00",
+        "event": "mission_created",
+        "role": "coordinator"
+      },
+      {
+        "at": "2026-09-18T20:45:49.954+00:00",
+        "event": "bounded_jobs_submitted",
+        "query": "epigenetics cell state models",
+        "role": "implementer"
+      },
+      {
+        "at": "2026-09-18T20:46:07.812+00:00",
+        "event": "results_checked",
+        "role": "critic",
+        "valid_envelopes": 3,
+        "verdict": "workflow_execution_only_not_scientific_validation"
+      },
+      {
+        "at": "2026-09-18T20:46:07.812+00:00",
+        "event": "mission_stopped",
+        "role": "coordinator",
+        "status": "completed"
+      }
+    ],
+    "limitations": [
+      "Семь ролей выполняются программными правилами; внешние LLM и научные платформы не подключены автоматически.",
+      "Аннотации и метаданные требуют проверки полного исследования; согласие ролей не является независимой репликацией.",
+      "Контрольный расчёт использует синтетические данные и не предсказывает изменения взрослого организма.",
+      "Сетевое выполнение поддерживает одну доверенную группу работников; A2A, Tor и федерация независимых организаций не реализованы."
+    ]
+  },
+  "jobs": [
+    {
+      "id": "job_ef753800c45044cf8b219c1437c1288f",
+      "kind": "discovery",
+      "worker_id": "local-5-1",
+      "status": "completed",
+      "attempts": 1
+    },
+    {
+      "id": "job_7df740d7c0104115926c870ff87fc696",
+      "kind": "evidence",
+      "worker_id": "local-5-2",
+      "status": "completed",
+      "attempts": 1
+    },
+    {
+      "id": "job_621efcc13a2c452eb2d32c5942ab4493",
+      "kind": "simulation",
+      "worker_id": "local-5-2",
+      "status": "completed",
+      "attempts": 1
+    }
+  ],
+  "evidence": {
+    "errors": [],
+    "items": [
+      {
+        "abstract_available": false,
+        "abstract_sha256": null,
+        "doi": "10.1080/15592294.2026.2722863",
+        "id": "doi:10.1080/15592294.2026.2722863",
+        "indicator_matches": {},
+        "indicators": [],
+        "limitations": [
+          "Индикаторы — совпадения слов в аннотации; дизайн исследования и истинность выводов не проверены.",
+          "Словарь английский; отсутствие совпадения не доказывает отсутствия метода, эффекта или группы исследования.",
+          "Аннотация не заменяет методы, полный текст, проверку независимых репликаций и области применимости.",
+          "Хеш фиксирует очищенный текст на момент получения; это не доказательство достоверности или неизменности публикации.",
+          "Результат не является рекомендацией вмешательства или прогнозом изменений организма.",
+          "Провайдер не вернул читаемую аннотацию; получены только метаданные."
+        ],
+        "provenance": {
+          "endpoint": "https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+          "hash_basis": null,
+          "provider": "europepmc",
+          "result_type": "core",
+          "retrieved_at": "2026-09-18T20:45:59.193688+00:00",
+          "source": "MED",
+          "source_id": "42678284"
+        },
+        "title": "Epigenetics in cardiovascular health, pathology, and development.",
+        "url": "https://doi.org/10.1080/15592294.2026.2722863"
+      },
+      {
+        "abstract_available": true,
+        "abstract_sha256": "d9c3973fa894e7bbb19224faaf12f74ef7f3e7a09ad2bd8de3ad080889213573",
+        "doi": "10.3390/nu18152453",
+        "excerpt": "DNA methylation is a key epigenetic mechanism linking nutritional exposures to gene…",
+        "id": "doi:10.3390/nu18152453",
+        "indicator_matches": {},
+        "indicators": [],
+        "limitations": [
+          "Индикаторы — совпадения слов в аннотации; дизайн исследования и истинность выводов не проверены.",
+          "Словарь английский; отсутствие совпадения не доказывает отсутствия метода, эффекта или группы исследования.",
+          "Аннотация не заменяет методы, полный текст, проверку независимых репликаций и области применимости.",
+          "Хеш фиксирует очищенный текст на момент получения; это не доказательство достоверности или неизменности публикации.",
+          "Результат не является рекомендацией вмешательства или прогнозом изменений организма."
+        ],
+        "provenance": {
+          "endpoint": "https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+          "hash_basis": "UTF-8 HTML-stripped whitespace-normalized abstract",
+          "provider": "europepmc",
+          "result_type": "core",
+          "retrieved_at": "2026-09-18T20:45:59.193688+00:00",
+          "source": "MED",
+          "source_id": "42588079"
+        },
+        "title": "The Impact of Nutrition on DNA Methylation: Methodological Challenges in Understanding Cause and Effect.",
+        "url": "https://doi.org/10.3390/nu18152453"
+      },
+      {
+        "abstract_available": true,
+        "abstract_sha256": "f84d812d9246a2fd7d894922ceac62ac51f3d7319e4fd58ff49fee1cd2305242",
+        "doi": "10.1093/eep/dvag028",
+        "excerpt": "Epigenetic inheritance is a form of transmission of features or traits acquired…",
+        "id": "doi:10.1093/eep/dvag028",
+        "indicator_matches": {
+          "animal": [
+            "animal models"
+          ],
+          "human": [
+            "humans"
+          ],
+          "negation_present": [
+            "not"
+          ]
+        },
+        "indicators": [
+          "animal",
+          "human",
+          "negation_present"
+        ],
+        "limitations": [
+          "Индикаторы — совпадения слов в аннотации; дизайн исследования и истинность выводов не проверены.",
+          "Словарь английский; отсутствие совпадения не доказывает отсутствия метода, эффекта или группы исследования.",
+          "Аннотация не заменяет методы, полный текст, проверку независимых репликаций и области применимости.",
+          "Хеш фиксирует очищенный текст на момент получения; это не доказательство достоверности или неизменности публикации.",
+          "Результат не является рекомендацией вмешательства или прогнозом изменений организма.",
+          "В тексте встречаются отрицания; ключевое слово может описывать отсутствие эффекта или данных."
+        ],
+        "provenance": {
+          "endpoint": "https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+          "hash_basis": "UTF-8 HTML-stripped whitespace-normalized abstract",
+          "provider": "europepmc",
+          "result_type": "core",
+          "retrieved_at": "2026-09-18T20:45:59.193688+00:00",
+          "source": "MED",
+          "source_id": "42683013"
+        },
+        "title": "Symposium report- epigenetic inheritance: impact for biology and society 27-29 August 2025, Zurich, Switzerland.",
+        "url": "https://doi.org/10.1093/eep/dvag028"
+      }
+    ],
+    "mode": "public_abstract_triage",
+    "query": "epigenetics cell state models",
+    "requests": 1
+  },
+  "discovery": {
+    "mode": "public_metadata",
+    "requests": 2,
+    "items": 3,
+    "errors": []
+  },
+  "method_control": {
+    "plugin_id": "regression_benchmark",
+    "parameters": {
+      "basis_count": 12,
+      "noise": 0.08,
+      "ridge": 0.01,
+      "samples": 180,
+      "seed": 42
+    },
+    "provenance": {
+      "builtin_hashes": {
+        "plugin_worker.py": "7d197a62256fc23444c4c8bc639d852504707ca8e05c898654b806a651171b2d",
+        "workbench/__init__.py": "23945d73e96e5f2bb40b86f506241ecc85035fe9763131c563d07b755e88eacb",
+        "workbench/plugins.py": "62fb025c3d021b0ec8aae2197c35a074e3dc7c34117576153955fcfaabae5ba4"
+      },
+      "execution": "isolated_python_subprocess",
+      "input_sha256": "d974fe51bbbc4275c6dc492ae85cf1f99b422ecf095a0d2eda9f4005d202bcbe",
+      "isolation": "Отдельный процесс и лимиты ресурсов; не контейнерная песочница.",
+      "output_sha256": "df2037b7bd94b818f5b8b99488ad301c2fa3d16d94f94ffc1d0047ef0f31a06a",
+      "python": "3.12.14",
+      "submitted_parameters": {
+        "seed": 42
+      },
+      "timeout_seconds": 10,
+      "version": "0.6.0"
+    },
+    "metrics": [
+      {
+        "label": "Test MSE · linear",
+        "value": 0.37992396426484565
+      },
+      {
+        "label": "Test MSE · RBF",
+        "value": 0.009788144774764506
+      }
+    ],
+    "interpretation": "Методический контроль на искусственных данных; не прогноз организма."
+  },
+  "claim": {
+    "id": "5dde9c63-36bc-4fd8-bf1c-5d4bf92851e8",
+    "mission_id": "62bd4402-4f24-4bd2-bada-3ff261945561",
+    "text": "Получены источники для последующей проверки содержания",
+    "scope": "Проверка программного пути; без вывода об эффективности вмешательств",
+    "source_ids": [
+      "doi:10.1080/15592294.2026.2722863"
+    ],
+    "assessment": "unreviewed",
+    "rationale": "",
+    "created_at": "2026-09-18T20:46:19.059+00:00",
+    "assessed_by": "local_user_self_reported",
+    "independently_validated": false
+  },
+  "export_without_credentials_verified": true,
+  "directory_queries_requested": true,
+  "directory_results": [
+    {
+      "job_id": "job_b162a18a2b154750bbb48613ad9f1354",
+      "worker_id": "local-5-1",
+      "status": "completed",
+      "result_validation": "envelope_checked_not_external_identity_verified",
+      "result": {
+        "errors": [],
+        "items": [
+          {
+            "capabilities": [],
+            "entity_type": "agent",
+            "id": "agentverse:agent1q0fcd6lqsdgmrhk4n4gp37y2s7gjcxmzmhjjrfxva5zr9edefvxkkfw87d8",
+            "license": "not_specified",
+            "limitations": [
+              "Карточка каталога — сведения поставщика или автора; идентичность оператора и заявленные возможности независимо не подтверждены.",
+              "Ресурс не подключён, код и веса не загружены; endpoint агента, README и инструкции карточки не исполнялись.",
+              "Наличие в каталоге не подтверждает качество, научную применимость, лицензионные права или возможность изменения организма.",
+              "Ссылка ведёт на каталог; точный адрес агента сохранён в provenance. Активность из карточки не проверялась вызовом агента."
+            ],
+            "name": "hf-info-hivex-research-hivex-DBR-PPO-baseline-task-3-difficulty-9",
+            "organization": "Оператор карточки не подтверждён",
+            "provenance": {
+              "directory_address": "agent1q0fcd6lqsdgmrhk4n4gp37y2s7gjcxmzmhjjrfxva5zr9edefvxkkfw87d8",
+              "endpoint": "https://agentverse.ai/v1/search/agents",
+              "endpoint_contacted": false,
+              "identity_verification": "directory_self_reported",
+              "listed_status": "inactive",
+              "listed_type": "hosted",
+              "owner_account": "34ee31a80edb390dd0ccc1c12a17918cff09073b6d047932",
+              "profile_url_verified": false,
+              "provider": "agentverse",
+              "retrieved_at": "2026-09-18T20:46:15.696324+00:00"
+            },
+            "revision": "",
+            "status": "directory_listed_not_connected",
+            "url": "https://agentverse.ai/"
+          },
+          {
+            "capabilities": [],
+            "entity_type": "agent",
+            "id": "agentverse:agent1q0q7c2vyqdjvp89h7k9hnj3he99cautzn068cywvqz6e57d0qkgjkpapg3y",
+            "license": "not_specified",
+            "limitations": [
+              "Карточка каталога — сведения поставщика или автора; идентичность оператора и заявленные возможности независимо не подтверждены.",
+              "Ресурс не подключён, код и веса не загружены; endpoint агента, README и инструкции карточки не исполнялись.",
+              "Наличие в каталоге не подтверждает качество, научную применимость, лицензионные права или возможность изменения организма.",
+              "Ссылка ведёт на каталог; точный адрес агента сохранён в provenance. Активность из карточки не проверялась вызовом агента."
+            ],
+            "name": "hf-info-AI-ML-Research-qwen2-05_unsloth_lora_merged_gguf_Q6_K",
+            "organization": "Оператор карточки не подтверждён",
+            "provenance": {
+              "directory_address": "agent1q0q7c2vyqdjvp89h7k9hnj3he99cautzn068cywvqz6e57d0qkgjkpapg3y",
+              "endpoint": "https://agentverse.ai/v1/search/agents",
+              "endpoint_contacted": false,
+              "identity_verification": "directory_self_reported",
+              "listed_status": "inactive",
+              "listed_type": "hosted",
+              "owner_account": "fcdd754fc548d2f16c5ca65ba3638f572b0906ea3845cecb",
+              "profile_url_verified": false,
+              "provider": "agentverse",
+              "retrieved_at": "2026-09-18T20:46:15.696324+00:00"
+            },
+            "revision": "",
+            "status": "directory_listed_not_connected",
+            "url": "https://agentverse.ai/"
+          },
+          {
+            "capabilities": [],
+            "entity_type": "agent",
+            "id": "agentverse:agent1q0rasg42ret9t48m8pdj326rvlxl7j0350583w8cpxanv8w4l6fkz8az3ww",
+            "license": "not_specified",
+            "limitations": [
+              "Карточка каталога — сведения поставщика или автора; идентичность оператора и заявленные возможности независимо не подтверждены.",
+              "Ресурс не подключён, код и веса не загружены; endpoint агента, README и инструкции карточки не исполнялись.",
+              "Наличие в каталоге не подтверждает качество, научную применимость, лицензионные права или возможность изменения организма.",
+              "Ссылка ведёт на каталог; точный адрес агента сохранён в provenance. Активность из карточки не проверялась вызовом агента."
+            ],
+            "name": "hf-info-louistvc-a2a_13_11_09",
+            "organization": "Оператор карточки не подтверждён",
+            "provenance": {
+              "directory_address": "agent1q0rasg42ret9t48m8pdj326rvlxl7j0350583w8cpxanv8w4l6fkz8az3ww",
+              "endpoint": "https://agentverse.ai/v1/search/agents",
+              "endpoint_contacted": false,
+              "identity_verification": "directory_self_reported",
+              "listed_status": "inactive",
+              "listed_type": "hosted",
+              "owner_account": "96db48bd0d2481e723a36a8c08bb38170cea49a65d37a359",
+              "profile_url_verified": false,
+              "provider": "agentverse",
+              "retrieved_at": "2026-09-18T20:46:15.696324+00:00"
+            },
+            "revision": "",
+            "status": "directory_listed_not_connected",
+            "url": "https://agentverse.ai/"
+          }
+        ],
+        "mode": "public_directory",
+        "provider": "agentverse",
+        "query": "research",
+        "requests": 1
+      },
+      "external_agent_executed": false
+    },
+    {
+      "job_id": "job_1cdab6e2df6542c1a65e63715c763a63",
+      "worker_id": "local-5-2",
+      "status": "completed",
+      "result_validation": "envelope_checked_not_external_identity_verified",
+      "result": {
+        "errors": [],
+        "items": [
+          {
+            "capabilities": [
+              "pytorch",
+              "single-cell",
+              "scRNA-seq",
+              "snRNA-seq",
+              "scGPT",
+              "disease",
+              "cell-type-annotation",
+              "brainscope",
+              "license:mit",
+              "region:us"
+            ],
+            "entity_type": "model",
+            "id": "huggingface_models:AnakinHuang/brainscope-scgpt-disease",
+            "license": "mit",
+            "limitations": [
+              "Карточка каталога — сведения поставщика или автора; идентичность оператора и заявленные возможности независимо не подтверждены.",
+              "Ресурс не подключён, код и веса не загружены; endpoint агента, README и инструкции карточки не исполнялись.",
+              "Наличие в каталоге не подтверждает качество, научную применимость, лицензионные права или возможность изменения организма."
+            ],
+            "name": "AnakinHuang/brainscope-scgpt-disease",
+            "organization": "Аккаунт каталога: AnakinHuang",
+            "provenance": {
+              "downloads": 0,
+              "endpoint": "https://huggingface.co/api/models",
+              "endpoint_contacted": false,
+              "gated": null,
+              "identity_verification": "directory_self_reported",
+              "license_verification": "card_label_only_not_license_audit",
+              "provider": "huggingface_models",
+              "retrieved_at": "2026-09-18T20:46:13.442638+00:00"
+            },
+            "revision": "",
+            "status": "directory_listed_not_connected",
+            "url": "https://huggingface.co/AnakinHuang/brainscope-scgpt-disease"
+          },
+          {
+            "capabilities": [
+              "transformers",
+              "pytorch",
+              "safetensors",
+              "gpt2",
+              "text-generation",
+              "text-generation-inference",
+              "endpoints_compatible",
+              "region:us"
+            ],
+            "entity_type": "model",
+            "id": "huggingface_models:igorktech/sc-gpt-upf",
+            "license": "not_specified",
+            "limitations": [
+              "Карточка каталога — сведения поставщика или автора; идентичность оператора и заявленные возможности независимо не подтверждены.",
+              "Ресурс не подключён, код и веса не загружены; endpoint агента, README и инструкции карточки не исполнялись.",
+              "Наличие в каталоге не подтверждает качество, научную применимость, лицензионные права или возможность изменения организма."
+            ],
+            "name": "igorktech/sc-gpt-upf",
+            "organization": "Аккаунт каталога: igorktech",
+            "provenance": {
+              "downloads": 27,
+              "endpoint": "https://huggingface.co/api/models",
+              "endpoint_contacted": false,
+              "gated": null,
+              "identity_verification": "directory_self_reported",
+              "license_verification": "card_label_only_not_license_audit",
+              "provider": "huggingface_models",
+              "retrieved_at": "2026-09-18T20:46:13.442638+00:00"
+            },
+            "revision": "",
+            "status": "directory_listed_not_connected",
+            "url": "https://huggingface.co/igorktech/sc-gpt-upf"
+          },
+          {
+            "capabilities": [
+              "transformers",
+              "pytorch",
+              "arxiv:2002.12328",
+              "endpoints_compatible",
+              "region:us"
+            ],
+            "entity_type": "model",
+            "id": "huggingface_models:metehergul/scgpt",
+            "license": "not_specified",
+            "limitations": [
+              "Карточка каталога — сведения поставщика или автора; идентичность оператора и заявленные возможности независимо не подтверждены.",
+              "Ресурс не подключён, код и веса не загружены; endpoint агента, README и инструкции карточки не исполнялись.",
+              "Наличие в каталоге не подтверждает качество, научную применимость, лицензионные права или возможность изменения организма."
+            ],
+            "name": "metehergul/scgpt",
+            "organization": "Аккаунт каталога: metehergul",
+            "provenance": {
+              "downloads": 17,
+              "endpoint": "https://huggingface.co/api/models",
+              "endpoint_contacted": false,
+              "gated": null,
+              "identity_verification": "directory_self_reported",
+              "license_verification": "card_label_only_not_license_audit",
+              "provider": "huggingface_models",
+              "retrieved_at": "2026-09-18T20:46:13.442638+00:00"
+            },
+            "revision": "",
+            "status": "directory_listed_not_connected",
+            "url": "https://huggingface.co/metehergul/scgpt"
+          }
+        ],
+        "mode": "public_directory",
+        "provider": "huggingface_models",
+        "query": "scGPT",
+        "requests": 1
+      },
+      "external_agent_executed": false
+    },
+    {
+      "job_id": "job_78fe33be41674476887da791890d306e",
+      "worker_id": "local-5-2",
+      "status": "completed",
+      "result_validation": "envelope_checked_not_external_identity_verified",
+      "result": {
+        "errors": [],
+        "items": [
+          {
+            "capabilities": [
+              "language:en",
+              "license:cc-by-4.0",
+              "size_categories:n<1K",
+              "modality:text",
+              "arxiv:2410.05080",
+              "region:us"
+            ],
+            "entity_type": "dataset",
+            "id": "huggingface_datasets:osunlp/ScienceAgentBench",
+            "license": "cc-by-4.0",
+            "limitations": [
+              "Карточка каталога — сведения поставщика или автора; идентичность оператора и заявленные возможности независимо не подтверждены.",
+              "Ресурс не подключён, код и веса не загружены; endpoint агента, README и инструкции карточки не исполнялись.",
+              "Наличие в каталоге не подтверждает качество, научную применимость, лицензионные права или возможность изменения организма.",
+              "Публичная карточка не гарантирует свободный доступ к данным или право на выбранную исследовательскую цель."
+            ],
+            "name": "osunlp/ScienceAgentBench",
+            "organization": "Аккаунт каталога: osunlp",
+            "provenance": {
+              "downloads": 2941,
+              "endpoint": "https://huggingface.co/api/datasets",
+              "endpoint_contacted": false,
+              "gated": false,
+              "identity_verification": "directory_self_reported",
+              "license_verification": "card_label_only_not_license_audit",
+              "provider": "huggingface_datasets",
+              "retrieved_at": "2026-09-18T20:46:19.018774+00:00"
+            },
+            "revision": "9c6e96c9e74572e979b0930ee735041cef528cb7",
+            "status": "directory_listed_not_connected",
+            "url": "https://huggingface.co/datasets/osunlp/ScienceAgentBench"
+          },
+          {
+            "capabilities": [
+              "language:en",
+              "license:cc-by-4.0",
+              "size_categories:n<1K",
+              "format:csv",
+              "modality:text",
+              "library:datasets",
+              "library:pandas",
+              "library:polars",
+              "library:mlcroissant",
+              "arxiv:2410.05080",
+              "region:us"
+            ],
+            "entity_type": "dataset",
+            "id": "huggingface_datasets:BDDSSD/ScienceAgentBench",
+            "license": "cc-by-4.0",
+            "limitations": [
+              "Карточка каталога — сведения поставщика или автора; идентичность оператора и заявленные возможности независимо не подтверждены.",
+              "Ресурс не подключён, код и веса не загружены; endpoint агента, README и инструкции карточки не исполнялись.",
+              "Наличие в каталоге не подтверждает качество, научную применимость, лицензионные права или возможность изменения организма.",
+              "Публичная карточка не гарантирует свободный доступ к данным или право на выбранную исследовательскую цель."
+            ],
+            "name": "BDDSSD/ScienceAgentBench",
+            "organization": "Аккаунт каталога: BDDSSD",
+            "provenance": {
+              "downloads": 52,
+              "endpoint": "https://huggingface.co/api/datasets",
+              "endpoint_contacted": false,
+              "gated": false,
+              "identity_verification": "directory_self_reported",
+              "license_verification": "card_label_only_not_license_audit",
+              "provider": "huggingface_datasets",
+              "retrieved_at": "2026-09-18T20:46:19.018774+00:00"
+            },
+            "revision": "a5e4a4d08976d0c45d0ada2205586ff231f2b53c",
+            "status": "directory_listed_not_connected",
+            "url": "https://huggingface.co/datasets/BDDSSD/ScienceAgentBench"
+          },
+          {
+            "capabilities": [
+              "license:mit",
+              "size_categories:1K",
+              "format:json",
+              "modality:tabular",
+              "modality:text",
+              "library:datasets",
+              "library:pandas",
+              "library:polars",
+              "library:mlcroissant",
+              "region:us"
+            ],
+            "entity_type": "dataset",
+            "id": "huggingface_datasets:zjunlp/DataPRM-ScienceAgentBench",
+            "license": "mit",
+            "limitations": [
+              "Карточка каталога — сведения поставщика или автора; идентичность оператора и заявленные возможности независимо не подтверждены.",
+              "Ресурс не подключён, код и веса не загружены; endpoint агента, README и инструкции карточки не исполнялись.",
+              "Наличие в каталоге не подтверждает качество, научную применимость, лицензионные права или возможность изменения организма.",
+              "Публичная карточка не гарантирует свободный доступ к данным или право на выбранную исследовательскую цель."
+            ],
+            "name": "zjunlp/DataPRM-ScienceAgentBench",
+            "organization": "Аккаунт каталога: zjunlp",
+            "provenance": {
+              "downloads": 107,
+              "endpoint": "https://huggingface.co/api/datasets",
+              "endpoint_contacted": false,
+              "gated": false,
+              "identity_verification": "directory_self_reported",
+              "license_verification": "card_label_only_not_license_audit",
+              "provider": "huggingface_datasets",
+              "retrieved_at": "2026-09-18T20:46:19.018774+00:00"
+            },
+            "revision": "ee1e53907c6bd5696bfe1e7d732e3b0d8c1f01a3",
+            "status": "directory_listed_not_connected",
+            "url": "https://huggingface.co/datasets/zjunlp/DataPRM-ScienceAgentBench"
+          }
+        ],
+        "mode": "public_directory",
+        "provider": "huggingface_datasets",
+        "query": "ScienceAgentBench",
+        "requests": 1
+      },
+      "external_agent_executed": false
+    }
+  ],
+  "static_assets_http": {
+    "/society.html": {
+      "bytes": 21587,
+      "sha256": "8aa1af6945302e3be112e22c68ffd857d3f063b8ba9ba8dba9ab2bea5ea7ecb3"
+    },
+    "/society.js": {
+      "bytes": 38313,
+      "sha256": "94d1412a18f1eec016f07fd7390743f72d6b2b96e9ef3dbecd567061d9f9a272"
+    },
+    "/society.css": {
+      "bytes": 7453,
+      "sha256": "4e8d0d8af2072ae571287cc5e881c00ea31b36b7ca0b145d42afd3e2d071c163"
+    }
+  },
+  "browser_render_test": "not_performed",
+  "physical_multihost_test": "not_performed",
+  "scientific_validation": "not_performed",
+  "process_cleanup": "launcher_and_observed_workers_stopped"
+}

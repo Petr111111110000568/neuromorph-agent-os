@@ -1,0 +1,254 @@
+{
+  "passed": true,
+  "checked_at": "2026-09-18T20:42:33.666071+00:00",
+  "online": true,
+  "launch": "python -m workbench local-network --workers 2",
+  "daemon_advanced_without_browser_or_manual_tick": true,
+  "worker_registrations": 2,
+  "observed_worker_processes": 2,
+  "worker_process_ids": [
+    8,
+    9
+  ],
+  "mission": {
+    "id": "bf24caff-c399-43c5-968b-82aa52fbd77e",
+    "question": "single cell epigenetics model validation",
+    "status": "completed",
+    "events": [
+      {
+        "at": "2026-09-18T20:42:16.639+00:00",
+        "event": "mission_created",
+        "role": "coordinator"
+      },
+      {
+        "at": "2026-09-18T20:42:16.640+00:00",
+        "event": "bounded_jobs_submitted",
+        "query": "epigenetics cell state models",
+        "role": "implementer"
+      },
+      {
+        "at": "2026-09-18T20:42:33.604+00:00",
+        "event": "results_checked",
+        "role": "critic",
+        "valid_envelopes": 3,
+        "verdict": "workflow_execution_only_not_scientific_validation"
+      },
+      {
+        "at": "2026-09-18T20:42:33.604+00:00",
+        "event": "mission_stopped",
+        "role": "coordinator",
+        "status": "completed"
+      }
+    ],
+    "limitations": [
+      "Семь ролей выполняются программными правилами; внешние LLM и научные платформы не подключены автоматически.",
+      "Аннотации и метаданные требуют проверки полного исследования; согласие ролей не является независимой репликацией.",
+      "Контрольный расчёт использует синтетические данные и не предсказывает изменения взрослого организма.",
+      "Сетевое выполнение поддерживает одну доверенную группу работников; A2A, Tor и федерация независимых организаций не реализованы."
+    ]
+  },
+  "jobs": [
+    {
+      "id": "job_b83cb257db9e41cd9bbe6f6d2bebf903",
+      "kind": "discovery",
+      "worker_id": "local-5-1",
+      "status": "completed",
+      "attempts": 1
+    },
+    {
+      "id": "job_680077bfb3cd440db10e44a8f563ac6e",
+      "kind": "evidence",
+      "worker_id": "local-5-2",
+      "status": "completed",
+      "attempts": 1
+    },
+    {
+      "id": "job_8c71147097044019a8eb05c9bf186c1b",
+      "kind": "simulation",
+      "worker_id": "local-5-2",
+      "status": "completed",
+      "attempts": 1
+    }
+  ],
+  "evidence": {
+    "errors": [],
+    "items": [
+      {
+        "abstract_available": false,
+        "abstract_sha256": null,
+        "doi": "10.1080/15592294.2026.2722863",
+        "id": "doi:10.1080/15592294.2026.2722863",
+        "indicator_matches": {},
+        "indicators": [],
+        "limitations": [
+          "Индикаторы — совпадения слов в аннотации; дизайн исследования и истинность выводов не проверены.",
+          "Словарь английский; отсутствие совпадения не доказывает отсутствия метода, эффекта или группы исследования.",
+          "Аннотация не заменяет методы, полный текст, проверку независимых репликаций и области применимости.",
+          "Хеш фиксирует очищенный текст на момент получения; это не доказательство достоверности или неизменности публикации.",
+          "Результат не является рекомендацией вмешательства или прогнозом изменений организма.",
+          "Провайдер не вернул читаемую аннотацию; получены только метаданные."
+        ],
+        "provenance": {
+          "endpoint": "https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+          "hash_basis": null,
+          "provider": "europepmc",
+          "result_type": "core",
+          "retrieved_at": "2026-09-18T20:42:25.170656+00:00",
+          "source": "MED",
+          "source_id": "42678284"
+        },
+        "title": "Epigenetics in cardiovascular health, pathology, and development.",
+        "url": "https://doi.org/10.1080/15592294.2026.2722863"
+      },
+      {
+        "abstract_available": true,
+        "abstract_sha256": "d9c3973fa894e7bbb19224faaf12f74ef7f3e7a09ad2bd8de3ad080889213573",
+        "doi": "10.3390/nu18152453",
+        "excerpt": "DNA methylation is a key epigenetic mechanism linking nutritional exposures to gene…",
+        "id": "doi:10.3390/nu18152453",
+        "indicator_matches": {},
+        "indicators": [],
+        "limitations": [
+          "Индикаторы — совпадения слов в аннотации; дизайн исследования и истинность выводов не проверены.",
+          "Словарь английский; отсутствие совпадения не доказывает отсутствия метода, эффекта или группы исследования.",
+          "Аннотация не заменяет методы, полный текст, проверку независимых репликаций и области применимости.",
+          "Хеш фиксирует очищенный текст на момент получения; это не доказательство достоверности или неизменности публикации.",
+          "Результат не является рекомендацией вмешательства или прогнозом изменений организма."
+        ],
+        "provenance": {
+          "endpoint": "https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+          "hash_basis": "UTF-8 HTML-stripped whitespace-normalized abstract",
+          "provider": "europepmc",
+          "result_type": "core",
+          "retrieved_at": "2026-09-18T20:42:25.170656+00:00",
+          "source": "MED",
+          "source_id": "42588079"
+        },
+        "title": "The Impact of Nutrition on DNA Methylation: Methodological Challenges in Understanding Cause and Effect.",
+        "url": "https://doi.org/10.3390/nu18152453"
+      },
+      {
+        "abstract_available": true,
+        "abstract_sha256": "f84d812d9246a2fd7d894922ceac62ac51f3d7319e4fd58ff49fee1cd2305242",
+        "doi": "10.1093/eep/dvag028",
+        "excerpt": "Epigenetic inheritance is a form of transmission of features or traits acquired…",
+        "id": "doi:10.1093/eep/dvag028",
+        "indicator_matches": {
+          "animal": [
+            "animal models"
+          ],
+          "human": [
+            "humans"
+          ],
+          "negation_present": [
+            "not"
+          ]
+        },
+        "indicators": [
+          "animal",
+          "human",
+          "negation_present"
+        ],
+        "limitations": [
+          "Индикаторы — совпадения слов в аннотации; дизайн исследования и истинность выводов не проверены.",
+          "Словарь английский; отсутствие совпадения не доказывает отсутствия метода, эффекта или группы исследования.",
+          "Аннотация не заменяет методы, полный текст, проверку независимых репликаций и области применимости.",
+          "Хеш фиксирует очищенный текст на момент получения; это не доказательство достоверности или неизменности публикации.",
+          "Результат не является рекомендацией вмешательства или прогнозом изменений организма.",
+          "В тексте встречаются отрицания; ключевое слово может описывать отсутствие эффекта или данных."
+        ],
+        "provenance": {
+          "endpoint": "https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+          "hash_basis": "UTF-8 HTML-stripped whitespace-normalized abstract",
+          "provider": "europepmc",
+          "result_type": "core",
+          "retrieved_at": "2026-09-18T20:42:25.170656+00:00",
+          "source": "MED",
+          "source_id": "42683013"
+        },
+        "title": "Symposium report- epigenetic inheritance: impact for biology and society 27-29 August 2025, Zurich, Switzerland.",
+        "url": "https://doi.org/10.1093/eep/dvag028"
+      }
+    ],
+    "mode": "public_abstract_triage",
+    "query": "epigenetics cell state models",
+    "requests": 1
+  },
+  "discovery": {
+    "mode": "public_metadata",
+    "requests": 2,
+    "items": 3,
+    "errors": []
+  },
+  "method_control": {
+    "plugin_id": "regression_benchmark",
+    "parameters": {
+      "basis_count": 12,
+      "noise": 0.08,
+      "ridge": 0.01,
+      "samples": 180,
+      "seed": 42
+    },
+    "provenance": {
+      "builtin_hashes": {
+        "plugin_worker.py": "7d197a62256fc23444c4c8bc639d852504707ca8e05c898654b806a651171b2d",
+        "workbench/__init__.py": "23945d73e96e5f2bb40b86f506241ecc85035fe9763131c563d07b755e88eacb",
+        "workbench/plugins.py": "62fb025c3d021b0ec8aae2197c35a074e3dc7c34117576153955fcfaabae5ba4"
+      },
+      "execution": "isolated_python_subprocess",
+      "input_sha256": "d974fe51bbbc4275c6dc492ae85cf1f99b422ecf095a0d2eda9f4005d202bcbe",
+      "isolation": "Отдельный процесс и лимиты ресурсов; не контейнерная песочница.",
+      "output_sha256": "df2037b7bd94b818f5b8b99488ad301c2fa3d16d94f94ffc1d0047ef0f31a06a",
+      "python": "3.12.14",
+      "submitted_parameters": {
+        "seed": 42
+      },
+      "timeout_seconds": 10,
+      "version": "0.6.0"
+    },
+    "metrics": [
+      {
+        "label": "Test MSE · linear",
+        "value": 0.37992396426484565
+      },
+      {
+        "label": "Test MSE · RBF",
+        "value": 0.009788144774764506
+      }
+    ],
+    "interpretation": "Методический контроль на искусственных данных; не прогноз организма."
+  },
+  "claim": {
+    "id": "24a99097-f820-4e30-9248-57b6c477c70e",
+    "mission_id": "bf24caff-c399-43c5-968b-82aa52fbd77e",
+    "text": "Получены источники для последующей проверки содержания",
+    "scope": "Проверка программного пути; без вывода об эффективности вмешательств",
+    "source_ids": [
+      "doi:10.1080/15592294.2026.2722863"
+    ],
+    "assessment": "unreviewed",
+    "rationale": "",
+    "created_at": "2026-09-18T20:42:33.661+00:00",
+    "assessed_by": "local_user_self_reported",
+    "independently_validated": false
+  },
+  "export_without_credentials_verified": true,
+  "static_assets_http": {
+    "/society.html": {
+      "bytes": 18223,
+      "sha256": "6c4ad4a940a600d46b759db6307c83ff662f9aad2400a949481a3510ead59dc2"
+    },
+    "/society.js": {
+      "bytes": 32612,
+      "sha256": "28090c3c8ba396190cb6d5f80293a9c7dd8c9c7f5eae067fd2b386ec71785d45"
+    },
+    "/society.css": {
+      "bytes": 7453,
+      "sha256": "4e8d0d8af2072ae571287cc5e881c00ea31b36b7ca0b145d42afd3e2d071c163"
+    }
+  },
+  "browser_render_test": "not_performed",
+  "physical_multihost_test": "not_performed",
+  "scientific_validation": "not_performed",
+  "process_cleanup": "launcher_and_observed_workers_stopped"
+}

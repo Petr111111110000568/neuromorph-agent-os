@@ -1,0 +1,96 @@
+{
+  "checked_at": "2026-09-24",
+  "python": "3.12.14",
+  "packages": {
+    "numpy": true,
+    "scipy": true,
+    "torch": false,
+    "fastapi": false,
+    "uvicorn": false,
+    "pytest": false,
+    "fitz": true,
+    "pydantic": true
+  },
+  "programs": {
+    "git": "/usr/local/bin/git",
+    "docker": null,
+    "podman": null,
+    "bwrap": "/usr/bin/bwrap",
+    "ffprobe": "/usr/bin/ffprobe",
+    "ffmpeg": "/usr/bin/ffmpeg",
+    "codex": null,
+    "node": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "npm": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/npm"
+  },
+  "credentials_present": {
+    "OPENAI_API_KEY": false,
+    "META_LLM_API_KEY": false,
+    "META_LLM_BASE_URL": false,
+    "META_LLM_MODEL": false
+  },
+  "github": {
+    "status": "connected_read_verified",
+    "checked_at": "2026-09-24",
+    "repository": "Petr111111110000568/neuromorph-agent-os",
+    "visibility": "public",
+    "reported_repository_size_kib": 0,
+    "permission_reports_push": true,
+    "publication": "not_performed",
+    "git_worktree_synced": false,
+    "verification_scope": "read_verified_during_v0.7_on_same_date_not_repeated_v0.8"
+  },
+  "runtime": {
+    "profile": "distributed_stdlib",
+    "version": "0.8.0",
+    "llm_configured": false,
+    "qpu_configured": false,
+    "untrusted_execution_enabled": false,
+    "persistent_queue": true,
+    "multi_machine_deployment_verified": false,
+    "external_accounts_created": false,
+    "external_agents_enrolled": 0,
+    "human_biology_validation": false,
+    "local_worker_processes_verified": 2,
+    "builtins_verified": 7,
+    "release_tests_passed": 222,
+    "brain_regions": 11,
+    "mcp_tools": 29
+  },
+  "online_discovery": {
+    "providers_verified": [
+      "agentverse",
+      "huggingface_models",
+      "huggingface_datasets",
+      "mcp_registry"
+    ],
+    "proof": "examples/federation_discovery_live.json",
+    "requests": 4,
+    "items_per_provider": 3,
+    "agent_endpoints_contacted": 0,
+    "verification_scope": "live_probe_from_v0.7_not_repeated_v0.8"
+  },
+  "tor": {
+    "implemented": "explicit_v3_card_via_local_socks5",
+    "live_onion_connection_verified": false,
+    "testing": "mock_transport_and_address_validation"
+  },
+  "isolation": {
+    "process_limits": true,
+    "security_container": false,
+    "namespace_probe": "not_repeated_this_release"
+  },
+  "local_pc": {
+    "checked_environment": "ChatGPT Work Linux runtime",
+    "user_desktop_access_verified": false
+  },
+  "browser_render_test": "not_performed_chromium_unavailable",
+  "prior_status_file": "docs/history/environment_status_v07_2026-09-24.json",
+  "optional_packages": {
+    "pykan": "reviewed_not_installed",
+    "FastKAN": "reviewed_not_installed",
+    "Wav-KAN": "reviewed_not_installed",
+    "Monty": "reviewed_not_installed",
+    "NCA": "reviewed_not_installed"
+  },
+  "user_kan_archives": "unavailable_this_turn_official_repositories_reviewed"
+}

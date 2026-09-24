@@ -1,0 +1,472 @@
+[
+  {
+    "id": "proto-a2a",
+    "name": "Agent2Agent / A2A",
+    "organization": "Linux Foundation A2A Project; первоначальный разработчик Google",
+    "entity_type": "protocol",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Самостоятельное развёртывание совместимого агента; авторизация зависит от endpoint",
+    "license": "Apache-2.0 (A2A specification repository и Python SDK)",
+    "source_url": "https://github.com/a2aproject/A2A",
+    "docs_url": "https://a2a-protocol.org/v1.0.0/specification/",
+    "provenance_urls": [
+      "https://a2a-protocol.org/latest/",
+      "https://github.com/a2aproject/A2A/blob/main/LICENSE",
+      "https://github.com/a2aproject/a2a-python/blob/main/LICENSE",
+      "https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents"
+    ],
+    "capabilities": [
+      "agent_card",
+      "task_lifecycle",
+      "async_delegation",
+      "artifacts"
+    ],
+    "strengths": [
+      "Сотрудничество между разными framework",
+      "Не требует доступа к внутренним весам и памяти агента"
+    ],
+    "weaknesses": [
+      "Карточка не доказывает идентичность или научное качество",
+      "Версии SDK и протокола требуют отдельной проверки; сайт указывает1.0.0"
+    ],
+    "evidence_level": "documentation",
+    "evidence_summary": "Спецификация определяет обмен задачами и результатами; биологическую эффективность не оценивает.",
+    "integration_status": "documented_not_connected",
+    "copy_strategy": "Развернуть Apache-2.0 SDK на фиксированном commit, сохранить notices; тестировать согласованную версию.",
+    "source_quality": "Первичная спецификация и сообщение управляющей организации; заявления о возможностях не являются benchmark.",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "proto-mcp",
+    "name": "Model Context Protocol",
+    "organization": "MCP maintainers / LF Projects; инициирован Anthropic",
+    "entity_type": "protocol",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "HTTP OAuth и разрешения resource server; stdio credentials через окружение",
+    "license": "Смешанный переход MIT → Apache-2.0; новые code/spec Apache-2.0, документация CC-BY-4.0",
+    "source_url": "https://github.com/modelcontextprotocol/modelcontextprotocol",
+    "docs_url": "https://modelcontextprotocol.io/specification/versioning",
+    "provenance_urls": [
+      "https://modelcontextprotocol.io/community/governance",
+      "https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization",
+      "https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/LICENSE"
+    ],
+    "capabilities": [
+      "tools",
+      "resources",
+      "authorization",
+      "capability_discovery"
+    ],
+    "strengths": [
+      "Единый интерфейс научных инструментов",
+      "Разделение прав инструмента и планировщика"
+    ],
+    "weaknesses": [
+      "Не является полным планировщиком науки",
+      "Текущая2026-07-28 отличается от handshake2025-11-25",
+      "Лицензии нужно читать по компоненту и версии"
+    ],
+    "evidence_level": "documentation",
+    "evidence_summary": "Официальная страница указывает current2026-07-28 и per-request negotiation.",
+    "integration_status": "documented_not_connected",
+    "copy_strategy": "Выбирать конкретный SDK и лицензию; не копировать весь смешанный репозиторий под одной декларацией.",
+    "source_quality": "Первичная спецификация, governance и текст LICENSE; состояние проверено на указанную дату.",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "proto-mcp-python",
+    "name": "MCP Python SDK",
+    "organization": "Model Context Protocol contributors; copyright Anthropic PBC",
+    "entity_type": "tool",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Локальная библиотека; удалённые серверы требуют собственных полномочий",
+    "license": "MIT",
+    "source_url": "https://github.com/modelcontextprotocol/python-sdk",
+    "docs_url": "https://modelcontextprotocol.io/docs/develop/build-server",
+    "provenance_urls": [
+      "https://github.com/modelcontextprotocol/python-sdk/blob/main/LICENSE",
+      "https://modelcontextprotocol.io/specification/versioning"
+    ],
+    "capabilities": [
+      "mcp_client",
+      "mcp_server",
+      "typed_tools"
+    ],
+    "strengths": [
+      "Открытый официальный SDK",
+      "Подходит адаптерам узких научных инструментов"
+    ],
+    "weaknesses": [
+      "MIT SDK не определяет права на обслуживаемые данные",
+      "Совместимость конкретного релиза с current spec необходимо проверять"
+    ],
+    "evidence_level": "documentation",
+    "evidence_summary": "Прочитан LICENSE SDK; совместимость установленного релиза не испытывалась.",
+    "integration_status": "documented_not_connected",
+    "copy_strategy": "Копировать/развернуть фиксированную MIT-версию с copyright; испытать контракт до подключения.",
+    "source_quality": "Первичный репозиторий и отдельно прочитанный LICENSE; не смешан с лицензией spec repository.",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "proto-langgraph",
+    "name": "LangGraph",
+    "organization": "LangChain, Inc.",
+    "entity_type": "framework",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Самостоятельный runtime; модели и hosted LangSmith подключаются отдельно",
+    "license": "MIT",
+    "source_url": "https://github.com/langchain-ai/langgraph",
+    "docs_url": "https://docs.langchain.com/oss/python/langgraph/overview",
+    "provenance_urls": [
+      "https://github.com/langchain-ai/langgraph/blob/main/LICENSE",
+      "https://docs.langchain.com/oss/python/langgraph/durable-execution"
+    ],
+    "capabilities": [
+      "durable_execution",
+      "checkpoints",
+      "workflow_graph",
+      "human_review"
+    ],
+    "strengths": [
+      "Сочетает детерминированные и LLM-шаги",
+      "Поддерживает восстановление состояния"
+    ],
+    "weaknesses": [
+      "Не даёт научных моделей или изоляции",
+      "Нужен корректный persistent backend и идемпотентные эффекты"
+    ],
+    "evidence_level": "documentation",
+    "evidence_summary": "Официальные docs описывают checkpoint/store и долгие workflow.",
+    "integration_status": "documented_not_connected",
+    "copy_strategy": "MIT runtime в отдельном worker; фиксировать версию и state schema; hosted platform имеет иные условия.",
+    "source_quality": "Разработчик описывает реально поддерживаемые API; сравнение научной точности не представлено.",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "proto-microsoft-agent-framework",
+    "name": "Microsoft Agent Framework",
+    "organization": "Microsoft",
+    "entity_type": "framework",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Python/.NET runtime; отдельные model clients и credentials",
+    "license": "MIT",
+    "source_url": "https://github.com/microsoft/agent-framework",
+    "docs_url": "https://learn.microsoft.com/en-us/agent-framework/overview/",
+    "provenance_urls": [
+      "https://github.com/microsoft/agent-framework/blob/main/LICENSE",
+      "https://learn.microsoft.com/en-us/agent-framework/migration-guide/from-autogen/"
+    ],
+    "capabilities": [
+      "multiagent_workflows",
+      "checkpoints",
+      "mcp",
+      "multiple_model_providers"
+    ],
+    "strengths": [
+      "Python и .NET",
+      "Типизированные workflow и human-in-loop"
+    ],
+    "weaknesses": [
+      "Облачные провайдеры требуют отдельного доступа",
+      "Нужно тестировать конкретную комбинацию adapters"
+    ],
+    "evidence_level": "documentation",
+    "evidence_summary": "Официальный обзор различает agents и workflows; лицензия прочитана.",
+    "integration_status": "documented_not_connected",
+    "copy_strategy": "Развернуть MIT код в отдельном узле; не переносить в core все зависимости.",
+    "source_quality": "Первичные Microsoft Learn и репозиторий; независимый benchmark здесь не проверялся.",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "proto-autogen",
+    "name": "AutoGen (maintenance mode)",
+    "organization": "Microsoft / community maintainers",
+    "entity_type": "framework",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Самостоятельное развёртывание; model provider отдельно",
+    "license": "MIT для кода (LICENSE-CODE); CC-BY-4.0 для контента (LICENSE)",
+    "source_url": "https://github.com/microsoft/autogen",
+    "docs_url": "https://learn.microsoft.com/en-us/agent-framework/migration-guide/from-autogen/",
+    "provenance_urls": [
+      "https://github.com/microsoft/autogen/blob/main/LICENSE-CODE",
+      "https://github.com/microsoft/autogen/blob/main/LICENSE"
+    ],
+    "capabilities": [
+      "existing_multiagent_apps",
+      "agent_chat",
+      "migration"
+    ],
+    "strengths": [
+      "Много уже существующих интеграций",
+      "Можно сохранить полезные старые узлы через wrapper"
+    ],
+    "weaknesses": [
+      "Нет новых функций по заявлению проекта",
+      "Рекомендуется миграция новых работ в Agent Framework",
+      "Раздельные лицензии кода и контента"
+    ],
+    "evidence_level": "documentation",
+    "evidence_summary": "README сообщает maintenance mode и направление миграции.",
+    "integration_status": "documented_not_connected",
+    "copy_strategy": "Сохранить существующие приложения с обеими лицензиями; для нового узла выбрать поддерживаемый successor.",
+    "source_quality": "Первичный README явно сообщает ограничение жизненного цикла; LICENSE и LICENSE-CODE прочитаны.",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "proto-openai-agents",
+    "name": "OpenAI Agents SDK",
+    "organization": "OpenAI",
+    "entity_type": "framework",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Самостоятельное приложение; для внешнего провайдера нужен API доступ",
+    "license": "MIT SDK; модели и сервисы под отдельными условиями",
+    "source_url": "https://github.com/openai/openai-agents-python",
+    "docs_url": "https://developers.openai.com/api/docs/guides/agents-sdk",
+    "provenance_urls": [
+      "https://github.com/openai/openai-agents-python/blob/main/LICENSE",
+      "https://developers.openai.com/api/docs/guides/tools-remote-mcp"
+    ],
+    "capabilities": [
+      "orchestration",
+      "handoffs",
+      "tools",
+      "mcp",
+      "tracing"
+    ],
+    "strengths": [
+      "Код приложения и инструменты контролирует разработчик",
+      "Явные handoffs и результаты выполнения"
+    ],
+    "weaknesses": [
+      "Лицензия SDK не даёт весов моделей",
+      "API расходы, доступ и передача данных проверяются отдельно"
+    ],
+    "evidence_level": "documentation",
+    "evidence_summary": "Официальная документация разделяет сервер приложения, SDK и hosted инструменты.",
+    "integration_status": "documented_not_connected",
+    "copy_strategy": "Развернуть MIT SDK с собственными разрешёнными API credentials; не копировать закрытую модель или аккаунт.",
+    "source_quality": "Официальные API docs и лицензия исходников; доступ пользователя к API не подтверждён этим исследованием.",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "proto-openai-responses",
+    "name": "OpenAI Responses API / remote MCP",
+    "organization": "OpenAI",
+    "entity_type": "platform",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Авторизованный API; private MCP через поддерживаемый Secure MCP Tunnel при наличии доступа",
+    "license": "Коммерческий сервис; лицензия SDK не передаёт сервис или веса",
+    "source_url": "https://developers.openai.com/api/docs/guides/tools-remote-mcp",
+    "docs_url": "https://developers.openai.com/api/docs/guides/agents-sdk",
+    "provenance_urls": [
+      "https://developers.openai.com/api/docs/guides/tools-remote-mcp",
+      "https://developers.openai.com/api/docs/guides/your-data"
+    ],
+    "capabilities": [
+      "hosted_tools",
+      "remote_mcp",
+      "model_reasoning",
+      "private_mcp_tunnel"
+    ],
+    "strengths": [
+      "Управляемый модельный runtime",
+      "Документирован доступ к private MCP без публичного открытия сервера"
+    ],
+    "weaknesses": [
+      "Требует API аккаунта, квот и billing",
+      "Режимы хранения зависят от функции и договора",
+      "Tunnel доступ в этом аккаунте не проверен"
+    ],
+    "evidence_level": "documentation",
+    "evidence_summary": "Документация описывает API и Tunnel; подключения не выполнены.",
+    "integration_status": "documented_not_connected",
+    "copy_strategy": "Использовать опубликованный API; собственный wrapper и конфигурация, без извлечения модели.",
+    "source_quality": "Первичные OpenAI docs; наличие функции в документации не равно доступу конкретному аккаунту.",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "proto-anthropic-research",
+    "name": "Claude Research / multi-agent research architecture",
+    "organization": "Anthropic",
+    "entity_type": "agent",
+    "network_layers": [
+      "clear_web",
+      "authenticated"
+    ],
+    "access_mode": "Продуктовый доступ и разрешённые интеграции; публичный API полного Research-продукта здесь не подтверждён",
+    "license": "Закрытый сервис; архитектурная статья не лицензирует внутреннюю реализацию",
+    "source_url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+    "docs_url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+    "provenance_urls": [
+      "https://www.anthropic.com/research/multiagent-systems"
+    ],
+    "capabilities": [
+      "parallel_research",
+      "lead_subagents",
+      "citation_check",
+      "artifact_memory"
+    ],
+    "strengths": [
+      "Опубликован практический опыт orchestrator-worker",
+      "Полезное разделение специалистов и артефактов"
+    ],
+    "weaknesses": [
+      "Высокие затраты токенов и координации",
+      "Авторские оценки не независимая биологическая валидация",
+      "Нет основания копировать закрытые веса/аккаунты"
+    ],
+    "evidence_level": "authors_benchmark",
+    "evidence_summary": "Авторы описывают внутренние оценки и ограничения многoагентного поиска; later study показывает проблемы самоорганизации.",
+    "integration_status": "documented_not_connected",
+    "copy_strategy": "Реализовать собственный workflow по опубликованным идеям; модель подключать только разрешённым API.",
+    "source_quality": "Первичный инженерный опыт разработчика и авторские эксперименты; заинтересованный поставщик, выводы ограничены задачами оценки.",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "proto-dbgap",
+    "name": "dbGaP controlled-access data",
+    "organization": "NCBI / NLM / NIH",
+    "entity_type": "platform",
+    "network_layers": [
+      "clear_web",
+      "authenticated"
+    ],
+    "access_mode": "Публичные описания; контролируемые данные после институциональной заявки и одобрения проекта",
+    "license": "Условия использования конкретного набора / Data Use Certification; нет общей лицензии на свободное копирование",
+    "source_url": "https://www.ncbi.nlm.nih.gov/gap/",
+    "docs_url": "https://sharing.nih.gov/accessing-data/accessing-genomic-data/how-to-request-and-access-datasets-from-dbgap",
+    "provenance_urls": [
+      "https://www.ncbi.nlm.nih.gov/sra/docs/sra-dbgap-download/"
+    ],
+    "capabilities": [
+      "human_genomic_metadata",
+      "controlled_data",
+      "authorized_download"
+    ],
+    "strengths": [
+      "Организованные исследовательские данные и правила допуска",
+      "Публичная процедура заявки"
+    ],
+    "weaknesses": [
+      "Требования к PI и институции",
+      "Право доступа зависит от проекта, а не наличия аккаунта",
+      "Нельзя свободно отправлять данные любому внешнему агенту"
+    ],
+    "evidence_level": "documentation",
+    "evidence_summary": "NIH описывает квалификацию заявителя, credentials и ежегодное разрешение.",
+    "integration_status": "documented_not_connected",
+    "copy_strategy": "Копировать разрешённые данные только по выданному scope; агент готовит материалы заявки без выдуманной аффилиации.",
+    "source_quality": "Первичный регулятор доступа; исследовательская пригодность оценивается отдельно для каждого набора.",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "proto-ega",
+    "name": "European Genome-phenome Archive / EGA",
+    "organization": "EGA service / архив и Data Access Committees поставщиков данных",
+    "entity_type": "platform",
+    "network_layers": [
+      "clear_web",
+      "authenticated"
+    ],
+    "access_mode": "Публичный каталог; персональная EGA учётная запись и разрешение DAC на набор",
+    "license": "Dataset-specific Data Access Agreement; общей лицензии на открытое копирование геномов нет",
+    "source_url": "https://ega-archive.org/",
+    "docs_url": "https://ega-archive.org/access/request-data/how-to-request-data/",
+    "provenance_urls": [
+      "https://ega-archive.org/access/download/files/pyega3/",
+      "https://www.ega-archive.org/access/data-access-committee/what-is-dac/"
+    ],
+    "capabilities": [
+      "controlled_genomic_data",
+      "dataset_catalog",
+      "dac_access"
+    ],
+    "strengths": [
+      "Явное сопоставление набора и комитета доступа",
+      "Официальный download client"
+    ],
+    "weaknesses": [
+      "Аккаунты индивидуальны и не передаются агентскому сообществу",
+      "Отдельный DAC approval; ограничения согласия участников",
+      "Поддержка не всех legacy-наборов одним клиентом"
+    ],
+    "evidence_level": "documentation",
+    "evidence_summary": "Официальная процедура требует разрешение DAC; login сам по себе недостаточен.",
+    "integration_status": "documented_not_connected",
+    "copy_strategy": "Локальная обработка только разрешённых данных; официальный клиент под отдельной кодовой лицензией.",
+    "source_quality": "Первичные инструкции оператора; права выдаёт соответствующий data controller, а не Meta-Harness.",
+    "checked_at": "2026-09-18"
+  },
+  {
+    "id": "proto-pyega3",
+    "name": "pyEGA3 / EGA download client",
+    "organization": "EGA-archive contributors",
+    "entity_type": "tool",
+    "network_layers": [
+      "clear_web",
+      "authenticated",
+      "private"
+    ],
+    "access_mode": "Локальный Python downloader; EGA credentials после разрешения",
+    "license": "Apache-2.0",
+    "source_url": "https://github.com/EGA-archive/ega-download-client",
+    "docs_url": "https://ega-archive.org/access/download/files/pyega3/",
+    "provenance_urls": [
+      "https://github.com/EGA-archive/ega-download-client/blob/master/LICENSE",
+      "https://github.com/EGA-archive/ega-download-client/commit/5ec6c4cd37cc67142285051bdbd725c824da1384"
+    ],
+    "capabilities": [
+      "authorized_download",
+      "resume",
+      "checksum_validation",
+      "htsget"
+    ],
+    "strengths": [
+      "Малый публичный source snapshot для воспроизводимой проверки",
+      "Официальный клиент с контролем целостности"
+    ],
+    "weaknesses": [
+      "Не модель и не автономный научный агент",
+      "Не даёт доступа к чужим datasets",
+      "Credentials и файлы требуют отдельного защищённого контура"
+    ],
+    "evidence_level": "documentation",
+    "evidence_summary": "Прочитан Apache2 LICENSE; GitHub metadata сообщает447KB; выбран точный commit для последующего инспектирования.",
+    "integration_status": "documented_not_connected",
+    "copy_strategy": "Скачать commit5ec6c4cd37cc67142285051bdbd725c824da1384, сохранить LICENSE/NOTICE, проверить архив; исполнение и доступ проверять отдельно.",
+    "source_quality": "Первичный репозиторий и документация EGA; snapshot candidacy не означает подключение сервиса.",
+    "checked_at": "2026-09-18"
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "description": "Plan for separately deployable modules; none of these records installs or connects a service.",
+  "workers": [
+    {"id":"science-tools","project":"ToolUniverse","transport":"MCP","status":"reviewed_not_installed","requirements":["isolated Python environment","allowlisted tools","documented model/API access where required"]},
+    {"id":"omics-workflows","project":"Nextflow + nf-core","transport":"CLI sidecar","status":"reviewed_not_installed","requirements":["Java runtime","container/HPC executor","versioned reference data","storage budget"]},
+    {"id":"single-cell","project":"scvi-tools","transport":"job API","status":"reviewed_not_installed","requirements":["separate Python environment","dataset licence","train/test split","GPU optional"]},
+    {"id":"genome-regulation","project":"AlphaGenome Research","transport":"job API","status":"reviewed_not_installed","requirements":["separate JAX environment","weight access and terms","appropriate accelerator","task-specific validation"]},
+    {"id":"quantum","project":"Qiskit / PennyLane / QuTiP","transport":"job API","status":"reviewed_not_installed","requirements":["separate environments per solver","classical baseline","QPU account only when needed"]},
+    {"id":"agent-runtime","project":"LangGraph or Microsoft Agent Framework","transport":"API/MCP","status":"reviewed_not_installed","requirements":["durable checkpoints","explicit model provider","budgeted execution","interrupt/retry design"]}
+  ]
+}

@@ -1,0 +1,431 @@
+{
+  "id": "snapshot_180053cad7d35862fb7cc00e",
+  "repository": "jmiao24/Paper2Agent",
+  "commit": "8c2d059165ef8cdcb70dbea76655b9c2b55b38e6",
+  "license_spdx": "MIT",
+  "status": "source_inspected_not_executed",
+  "created_at": "2026-09-18T20:46:22.690395+00:00",
+  "archive_sha256": "6686cb9c930b2e5b330adb06b740ba370c1b5fc2cef5f9843c24a1db0c025886",
+  "archive_bytes": 6004818,
+  "expanded_bytes": 7200968,
+  "file_count": 76,
+  "license_path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/LICENSE",
+  "license_sha256": "1075df19ebaccda19b4b7498ce113ef920368dd6db679b4eb041d7b774d499da",
+  "licenses": [
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/LICENSE",
+      "sha256": "1075df19ebaccda19b4b7498ce113ef920368dd6db679b4eb041d7b774d499da",
+      "detected_spdx": "MIT"
+    }
+  ],
+  "notices": [],
+  "storage_path": "snapshots/snapshot_180053cad7d35862fb7cc00e",
+  "manifest": [
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/.gitignore",
+      "sha256": "f218697e1375905112f73b2c6d234651f3521dc1e1ad4dccb82ff5694c5a0dd5",
+      "bytes": 236
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/.pre-commit-config.yaml",
+      "sha256": "ec8c380c08233aeefb5264e43959f0182f85cb54dd6ce02ddf4c85bd0c675290",
+      "bytes": 322
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/LICENSE",
+      "sha256": "1075df19ebaccda19b4b7498ce113ef920368dd6db679b4eb041d7b774d499da",
+      "bytes": 1070
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/README.md",
+      "sha256": "703474e9e7c3ef1e19fc705ad5333cf11b805d2efd9717967bdc1e8355797f16",
+      "bytes": 9096
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/assets/claude-code-mcp.png",
+      "sha256": "f857056b475f35479f7724a187268e6e974ecac142d38b08702946daa93b456a",
+      "bytes": 289044
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/logo/paper2agent_logo.png",
+      "sha256": "d616f444fcbab52177919d427d92c995d9f3237c0d63322d2399ac2c6b6bcb3d",
+      "bytes": 435795
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/scripts/connect_remote_mcp.sh",
+      "sha256": "e390a3e4d87b4b122c1953c4d46e4468a11c9777836917ba973114b9de2c6be6",
+      "bytes": 2348
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/SKILL.md",
+      "sha256": "69a5525de0cc115ebbef1cdd602a4cfda1836399adc44a154907d07c95f4244d",
+      "bytes": 1551
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2agent-paper/SKILL.md",
+      "sha256": "c6cf75995c56df27cb2992190e359eeedcf56fb876f88526adb06f30130d7450",
+      "bytes": 2728
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2agent-paper/assets/figure/figure-1.jpg",
+      "sha256": "17580f0146f842e78acc222bee88da9357f4a80029f552d948417c0fc8c0e7ad",
+      "bytes": 620859
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2agent-paper/assets/figure/figure-2.jpg",
+      "sha256": "c259b4a7614549bcce20afd9f1f62234d2825a56c994bbeb4325946fbcbb8066",
+      "bytes": 980073
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2agent-paper/assets/figure/figure-3.jpg",
+      "sha256": "a230b65381bdc6a47f239207aaca3612784f2f50a1bded0378c2d0b8ba6929c2",
+      "bytes": 1019647
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2agent-paper/assets/figure/figure-4.jpg",
+      "sha256": "75e348805f47ada2cf65c6dae6cf69c7ea2a9caca100435935005237fdcc61df",
+      "bytes": 808959
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2agent-paper/assets/supp_figs/extended-data-figure-1.jpg",
+      "sha256": "30a493b410bae2a104842c2dbb6bb93bba77c7430e5dc74ad66824fce383b1a7",
+      "bytes": 985470
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2agent-paper/assets/supp_figs/extended-data-figure-2.jpg",
+      "sha256": "44258aa31ced33eca64ca898e64af6abbc3853cdb4303f8f25a40a0bc5e4b2eb",
+      "bytes": 891621
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2agent-paper/assets/supp_figs/supplementary-figure-1.jpg",
+      "sha256": "91179f77c0199b6149692715fcc9fccc871636b6bf9d30b88f4ab30052280e2e",
+      "bytes": 251558
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2agent-paper/assets/supp_figs/supplementary-figure-2.jpg",
+      "sha256": "d82d4584aa4f07702039fa238b67b685edaf1d098810d0f538d9eb21ab938eff",
+      "bytes": 77603
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2agent-paper/assets/supp_figs/supplementary-figure-3.jpg",
+      "sha256": "a8820e69ed3ef8b0b7d57bf194d20497992b3da5199137d9748122c7b8a61e36",
+      "bytes": 60417
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2agent-paper/assets/supp_figs/supplementary-figure-4.jpg",
+      "sha256": "0ff4aa37717e3025115ab3784cfcd099cc730d82565605098f7b2b4ae9b27440",
+      "bytes": 146271
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2agent-paper/assets/supp_table/supplementary-table-1.csv",
+      "sha256": "71c67edff93f9b6228f5fcaa10963d8020367880db71ac7ff00b6a4b676849fc",
+      "bytes": 32287
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2agent-paper/assets/supp_table/supplementary-table-2.csv",
+      "sha256": "2b19830e801ba1908bd2421a22f631367b8665334ac31b5c9e2dc9cb5bc0e222",
+      "bytes": 4077
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2agent-paper/references/index.md",
+      "sha256": "ad1a8416dda4f384838b91667058643bfd50bb6fda5f4beac04f069d14bbe379",
+      "bytes": 5518
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2agent-paper/references/paper.md",
+      "sha256": "f68f7cd35555a332315bc7d9cb74f77f3ef4cfb71058f199014a15697478031c",
+      "bytes": 76184
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2agent-paper/references/supplement.md",
+      "sha256": "778bbae44f24f48df52f0fc4175568f3d368562a2b12ac8cbeeecda09500d33a",
+      "bytes": 162795
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/SKILL.md",
+      "sha256": "58ef21d750f3a332ce5f9cd73b02894679009b6eccb31ca6afa57f563acf5932",
+      "bytes": 6082
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/agents/openai.yaml",
+      "sha256": "7840a7dcd933fe5f914f0612295117717bdd4bab16f6fae5fe0f636d8a0c6b55",
+      "bytes": 262
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/agents/cli/test-verifier-cli.md",
+      "sha256": "a6f6625d88ae18a41771d9672897733570f9455d2cfc695cae58f0d70367b5e4",
+      "bytes": 679
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/agents/cli/tutorial-executor-cli.md",
+      "sha256": "91e573f03e90673c951fc97de335814c94314f5da8ae2049e1c898ac9ef3efeb",
+      "bytes": 685
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/agents/cli/tutorial-scanner-cli.md",
+      "sha256": "e550df52b283fe86004bf73d336f2a4b3e7a654ad49ebab0d20fabd89a727aad",
+      "bytes": 610
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/agents/cli/tutorial-tool-extractor-cli.md",
+      "sha256": "622b37d300200d0a05cf8d27751a2b5fb164d91aa7262127cd75153a9389654c",
+      "bytes": 761
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/agents/environment-python-manager.md",
+      "sha256": "96dda8760204a9b02ec270b80e71ea62813237e19d942d507fc8deb208914ead",
+      "bytes": 1856
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/agents/r/environment-r-manager.md",
+      "sha256": "7d10476cc90858714e7b5773140b3e9f66fccecfb3787b40967fa516c6bad872",
+      "bytes": 1270
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/agents/r/test-verifier-r.md",
+      "sha256": "e11694cb5c662cc291ba21b33e2e4576ef0274a6d2ab0fc0d923fea0b4b3ff99",
+      "bytes": 694
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/agents/r/tutorial-executor-r.md",
+      "sha256": "05370c0fdce4cdc431fcb59d783a4d6502edeee313bf92c244c7276608a1c1bf",
+      "bytes": 677
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/agents/r/tutorial-scanner-r.md",
+      "sha256": "1c55a37e52406cdb85f3392122e8f0d2810dab2a099d1e72f9bc41d39ae69e9f",
+      "bytes": 625
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/agents/r/tutorial-tool-extractor-r.md",
+      "sha256": "4049ff67679fbec56571017ec60ba6b02f12a31a2b8dfe9cbf59c0dcc6a2d605",
+      "bytes": 703
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/agents/test-verifier-improver.md",
+      "sha256": "ea4fff5d656663ab052fff34a7ae01c4cef0afadb944057b1b61ee3eeef1b351",
+      "bytes": 4120
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/agents/tutorial-executor.md",
+      "sha256": "f58dc823dda244e9b60aa7514294ed665d1650ff3b88552055161e11e853d481",
+      "bytes": 3176
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/agents/tutorial-scanner.md",
+      "sha256": "4d985278f0a7c2ebf9575b62598b7710fb678d6ca4bfa0b9b59a7fe5596aa5a7",
+      "bytes": 2990
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/agents/tutorial-tool-extractor-implementor.md",
+      "sha256": "4faca16577c80fa1d26f672b305b0331a0d0209efa30b15c3cc6c758d332e582",
+      "bytes": 5640
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/extensions.md",
+      "sha256": "c98b71bc62bc403bae9c284c2d531c2bdd15b1d4f5a33cf987f00e08c9efb5ad",
+      "bytes": 4651
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/language-routing.md",
+      "sha256": "f6aacebd2fa984c949227a570fd87ae7586f34e31bbd299108e276299fe4685f",
+      "bytes": 2650
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/orchestration.md",
+      "sha256": "834e9e5832b55eba6abcf31f130b5b68fccb33f67153ea280b84693bf825a79a",
+      "bytes": 7505
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/output-delivery.md",
+      "sha256": "d7bccac67b69704f9e08c7e1ce50ece3c941786abd4d8ec5bea403b2d30a06b7",
+      "bytes": 5646
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/prompts/cli/mcp-integration.md",
+      "sha256": "a271ab27e7872d1c90dff202e842cbf1db6c1837efbaf9148f9db6662d52354c",
+      "bytes": 614
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/prompts/cli/setup-and-discovery.md",
+      "sha256": "a7258bf4d4e64cb29e7630dbf9503907182219b7a932092a0a37dc4b67bf917c",
+      "bytes": 624
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/prompts/cli/tool-extraction-and-testing.md",
+      "sha256": "ecc56385ef09bd00ea4f8a5593fd00559ce7210ad0ede762905c7c8d67a486b4",
+      "bytes": 645
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/prompts/cli/tutorial-execution.md",
+      "sha256": "a7426ecc5f53b752eb507501be15a1ce524892a5f70174f6a3ac3a920f706b13",
+      "bytes": 623
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/prompts/language-and-gpu-detection.md",
+      "sha256": "fc32a164fa55e3f117b288fa72f8feb0d895f275b600ed19680681b2d85380b0",
+      "bytes": 462
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/prompts/mcp-integration.md",
+      "sha256": "836c99c699e4f7aa226540b5bca9640f41f36857fcc55f2aff7aad7970e8fe41",
+      "bytes": 1850
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/prompts/r/mcp-integration.md",
+      "sha256": "e4da3f43a029fd3de2f67798dde69aba003d41bb8d12bb241f6b07e893dc9726",
+      "bytes": 566
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/prompts/r/setup-and-discovery.md",
+      "sha256": "5fc06d2f561e5acc5b5c0c430a5d4a2c1ea1f534e100c16e0d7c57fd8b86aa89",
+      "bytes": 576
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/prompts/r/tool-extraction-and-testing.md",
+      "sha256": "8a47b8fd0fb6269d6b49006295eeccfebedae8ba0fd322f04aac8bdde897e1ca",
+      "bytes": 597
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/prompts/r/tutorial-execution.md",
+      "sha256": "a8ff75d897bb189215dc47689f81b0e38e94cd686313248c1bc29f8d9d882e4c",
+      "bytes": 575
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/prompts/runtime-requirements.md",
+      "sha256": "4512992ea4777070e36b4706b02e9d45468f3f8448f1b6243c095d5d73327885",
+      "bytes": 2116
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/prompts/setup-and-discovery.md",
+      "sha256": "d7c2733869e9887743218af5bb50bd04f88fb13e9bdaf4927cacd0eb9f2cda41",
+      "bytes": 1998
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/prompts/tool-extraction-and-testing.md",
+      "sha256": "081c477a904a816fbf5907638d9fabec43664062636095c789e8467885aabed4",
+      "bytes": 2476
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/prompts/tutorial-execution.md",
+      "sha256": "bde53dd6262c67eca08b3baf88a8403d3f4c8acd44e5f640c11a3c60736770c2",
+      "bytes": 1987
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/prompts/usage-documentation.md",
+      "sha256": "adda4222d87e94ba594dda3371eb41db11adfcd51c23428bde8e683461022f83",
+      "bytes": 2534
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/routes/cli.md",
+      "sha256": "0095f35def18aeb95bd00b9e49019378e089c70201ac65ad672e2fe06f4ac5ee",
+      "bytes": 7902
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/routes/r.md",
+      "sha256": "028e05b79df7f00bb48a11e0cd6ea0e0c3e2ee6ac911d3bae61bc385902d8e75",
+      "bytes": 9271
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/runtime-verification.md",
+      "sha256": "2f3dfc8d3a2d7c1093918cc4e79d12165f9c81531f7cde5603d2a75bfbe7a2fd",
+      "bytes": 3989
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/runtime.md",
+      "sha256": "97c883f53cc3d65cf9284bbe7137e062f55156297f8178cddde85e4fe8bd03b1",
+      "bytes": 14365
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/tool-selection-and-wrapping.md",
+      "sha256": "a2c32e55d93d5cb483d11250642af9d4202217d5533d33c24ca01ffe0cd18b98",
+      "bytes": 10329
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/references/workflow-state.md",
+      "sha256": "4ef29a66169df7eeb6d3711d04f5cbd78347ca15c96a7c9d9cabccf2e693b5e3",
+      "bytes": 15034
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/scripts/extract_notebook_images.py",
+      "sha256": "f37be93eb4a6a04d6ccf9bf2e6c9c4d211d42871b3a082e37a4c05f2ccbda1fa",
+      "bytes": 7661
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/scripts/preprocess_notebook.py",
+      "sha256": "ad563959206503df5fb77d69fbd97b6e331a54ed4794ee8f27b9978c6fdd56ff",
+      "bytes": 2686
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/scripts/verify_mcp_server.py",
+      "sha256": "e73e2d9efa0c88162616bde51950128d3dab50df104be6344e8c87edd9622d24",
+      "bytes": 11208
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2mcp/scripts/verify_workflow.py",
+      "sha256": "8432ea89d1abd419cd593ec42ec5dc5a58ec37ec1f4b5b70a1438b267ca009e1",
+      "bytes": 25569
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2skill/SKILL.md",
+      "sha256": "e05b34ab5a6d59f4c18da1323c845af296b8fd73dc3613d193e72287b593c043",
+      "bytes": 6745
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2skill/references/bundle-review.md",
+      "sha256": "ba871314b650f29337f2087ad0b0f6fa9b5531e0de9eb026a76bb9ad319ec1bc",
+      "bytes": 9518
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2skill/references/review-plan.md",
+      "sha256": "901e7030f675c0b97cb780f6533570c07434c2ee85084e31a5ea9f85b3a7dd40",
+      "bytes": 10108
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2skill/scripts/paper_bundle.py",
+      "sha256": "395f233e7a45246e7d6a908dc9ae26b8b5198bccf9b699f91bfba183a20dc4dd",
+      "bytes": 33947
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2skill/scripts/pdf_to_skill.py",
+      "sha256": "a427d0908416dc371216ecab2d30a5400c96701b723bce16a06621c8ea8784cd",
+      "bytes": 34214
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2skill/scripts/reading_package.py",
+      "sha256": "67f986139862c7d25c44180555f2506a4b600d16331d60b57b9d9a88e23ebc21",
+      "bytes": 31464
+    },
+    {
+      "path": "Paper2Agent-8c2d059165ef8cdcb70dbea76655b9c2b55b38e6/skills/paper2agent/paper2skill/scripts/test_paper_bundle.py",
+      "sha256": "d12c9911f3d04aeef77dada98d9674623891b6a2b160f3ddaa5fbabcc6b2ca61",
+      "bytes": 31904
+    }
+  ],
+  "provenance": {
+    "mode": "public_github_pinned_archive",
+    "source_url": "https://codeload.github.com/jmiao24/Paper2Agent/zip/8c2d059165ef8cdcb70dbea76655b9c2b55b38e6",
+    "repository_identity_verified": false,
+    "commit_provenance": "pinned_codeload_https_response"
+  },
+  "verification": {
+    "archive_checked": true,
+    "license_text_screened": true,
+    "license_is_legal_guarantee": false,
+    "source_executed": false,
+    "agent_installed": false,
+    "dependency_licenses_audited": false,
+    "git_objects_independently_verified": false
+  },
+  "limitations": [
+    "License family screening is not a complete legal audit; inspect bundled and fetched dependency terms separately.",
+    "Repository ownership text is not verification of an organization or maintainer identity.",
+    "Pinned HTTPS retrieval and archive hash do not independently validate Git objects or author signatures.",
+    "Source is preserved without installation, imports, execution, account access or model weights.",
+    "A data client grants no authorization to controlled genomic datasets."
+  ],
+  "commit_discovery": {
+    "url": "https://github.com/jmiao24/Paper2Agent/commit/8c2d059165ef8cdcb70dbea76655b9c2b55b38e6",
+    "method": "public_GitHub_API_then_fixed_commit_codeload"
+  }
+}

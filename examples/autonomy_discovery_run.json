@@ -1,0 +1,395 @@
+{
+  "schema_version": 1,
+  "cycle_id": "7808896e574e02561ed6c82ca1d7af9b9f3341f9eec00d4550888f7c14fefa4f",
+  "created_at": "2026-09-24T18:45:18.532861+00:00",
+  "mode": "online",
+  "project": {
+    "name": "Meta-Harness Research System",
+    "repository_url": "https://github.com/Petr111111110000568/neuromorph-agent-os"
+  },
+  "status": "blocked_provider_missing",
+  "discovery": {
+    "query": "research",
+    "requests": 4,
+    "provider_reports": [
+      {
+        "provider": "agentverse",
+        "mode": "public_directory",
+        "requests": 1,
+        "item_count": 3,
+        "errors": []
+      },
+      {
+        "provider": "huggingface_models",
+        "mode": "public_directory",
+        "requests": 1,
+        "item_count": 3,
+        "errors": []
+      },
+      {
+        "provider": "huggingface_datasets",
+        "mode": "public_directory",
+        "requests": 1,
+        "item_count": 3,
+        "errors": []
+      },
+      {
+        "provider": "mcp_registry",
+        "mode": "public_directory",
+        "requests": 1,
+        "item_count": 3,
+        "errors": []
+      }
+    ],
+    "candidates": [
+      {
+        "id": "catalog:agentverse:agent1q0fcd6lqsdgmrhk4n4gp37y2s7gjcxmzmhjjrfxva5zr9edefvxkkfw87d8",
+        "name": "hf-info-hivex-research-hivex-DBR-PPO-baseline-task-3-difficulty-9",
+        "entity_type": "agent",
+        "source_url": "https://agentverse.ai/",
+        "capabilities": [],
+        "status": "discovered",
+        "endpoint_contacted": false,
+        "enrolled": false,
+        "verification_scope": "public_catalog_metadata_only"
+      },
+      {
+        "id": "catalog:agentverse:agent1q0q7c2vyqdjvp89h7k9hnj3he99cautzn068cywvqz6e57d0qkgjkpapg3y",
+        "name": "hf-info-AI-ML-Research-qwen2-05_unsloth_lora_merged_gguf_Q6_K",
+        "entity_type": "agent",
+        "source_url": "https://agentverse.ai/",
+        "capabilities": [],
+        "status": "discovered",
+        "endpoint_contacted": false,
+        "enrolled": false,
+        "verification_scope": "public_catalog_metadata_only"
+      },
+      {
+        "id": "catalog:agentverse:agent1q0rasg42ret9t48m8pdj326rvlxl7j0350583w8cpxanv8w4l6fkz8az3ww",
+        "name": "hf-info-louistvc-a2a_13_11_09",
+        "entity_type": "agent",
+        "source_url": "https://agentverse.ai/",
+        "capabilities": [],
+        "status": "discovered",
+        "endpoint_contacted": false,
+        "enrolled": false,
+        "verification_scope": "public_catalog_metadata_only"
+      },
+      {
+        "id": "catalog:huggingface_datasets:Anthropic/enabling-independent-research",
+        "name": "Anthropic/enabling-independent-research",
+        "entity_type": "dataset",
+        "source_url": "https://huggingface.co/datasets/Anthropic/enabling-independent-research",
+        "capabilities": [
+          "language:en",
+          "license:cc-by-4.0",
+          "size_categories:1K",
+          "format:csv",
+          "modality:tabular",
+          "modality:text",
+          "library:datasets",
+          "library:pandas"
+        ],
+        "status": "discovered",
+        "endpoint_contacted": false,
+        "enrolled": false,
+        "verification_scope": "public_catalog_metadata_only"
+      },
+      {
+        "id": "catalog:huggingface_datasets:google-research-datasets/mbpp",
+        "name": "google-research-datasets/mbpp",
+        "entity_type": "dataset",
+        "source_url": "https://huggingface.co/datasets/google-research-datasets/mbpp",
+        "capabilities": [
+          "annotations_creators:crowdsourced",
+          "annotations_creators:expert-generated",
+          "language_creators:crowdsourced",
+          "language_creators:expert-generated",
+          "multilinguality:monolingual",
+          "source_datasets:original",
+          "language:en",
+          "license:cc-by-4.0"
+        ],
+        "status": "discovered",
+        "endpoint_contacted": false,
+        "enrolled": false,
+        "verification_scope": "public_catalog_metadata_only"
+      },
+      {
+        "id": "catalog:huggingface_datasets:ibm-research/watsonxDocsQA",
+        "name": "ibm-research/watsonxDocsQA",
+        "entity_type": "dataset",
+        "source_url": "https://huggingface.co/datasets/ibm-research/watsonxDocsQA",
+        "capabilities": [
+          "license:apache-2.0",
+          "size_categories:1K",
+          "format:parquet",
+          "format:optimized-parquet",
+          "modality:text",
+          "library:datasets",
+          "library:pandas",
+          "library:polars"
+        ],
+        "status": "discovered",
+        "endpoint_contacted": false,
+        "enrolled": false,
+        "verification_scope": "public_catalog_metadata_only"
+      },
+      {
+        "id": "catalog:huggingface_models:LAXMAYDAY/NOOB2-Project-Character-Reference-Bypass-Injector-Research",
+        "name": "LAXMAYDAY/NOOB2-Project-Character-Reference-Bypass-Injector-Research",
+        "entity_type": "model",
+        "source_url": "https://huggingface.co/LAXMAYDAY/NOOB2-Project-Character-Reference-Bypass-Injector-Research",
+        "capabilities": [
+          "anime",
+          "noob2-project",
+          "character-reference",
+          "single-reference",
+          "multi-reference",
+          "image-editing",
+          "image-conditioned-generation",
+          "native-reference"
+        ],
+        "status": "discovered",
+        "endpoint_contacted": false,
+        "enrolled": false,
+        "verification_scope": "public_catalog_metadata_only"
+      },
+      {
+        "id": "catalog:huggingface_models:hiwaifu-research/WaifuGemma4-26b-a4b-v1",
+        "name": "hiwaifu-research/WaifuGemma4-26b-a4b-v1",
+        "entity_type": "model",
+        "source_url": "https://huggingface.co/hiwaifu-research/WaifuGemma4-26b-a4b-v1",
+        "capabilities": [
+          "transformers",
+          "safetensors",
+          "gemma4",
+          "image-text-to-text",
+          "moe",
+          "conversational",
+          "roleplay",
+          "role-play"
+        ],
+        "status": "discovered",
+        "endpoint_contacted": false,
+        "enrolled": false,
+        "verification_scope": "public_catalog_metadata_only"
+      },
+      {
+        "id": "catalog:huggingface_models:mindlab-research/Macaron-V1.1",
+        "name": "mindlab-research/Macaron-V1.1",
+        "entity_type": "model",
+        "source_url": "https://huggingface.co/mindlab-research/Macaron-V1.1",
+        "capabilities": [
+          "safetensors",
+          "glm_moe_dsa",
+          "macaron",
+          "macaron-v1.1",
+          "glm-5.3",
+          "mixture-of-lora",
+          "personal-agent",
+          "tool-use"
+        ],
+        "status": "discovered",
+        "endpoint_contacted": false,
+        "enrolled": false,
+        "verification_scope": "public_catalog_metadata_only"
+      },
+      {
+        "id": "catalog:mcp_registry:ai.avasis/quant-research",
+        "name": "ai.avasis/quant-research",
+        "entity_type": "mcp_server",
+        "source_url": "https://registry.modelcontextprotocol.io/v0.1/servers",
+        "capabilities": [
+          "Crypto backtest statistics: the server owns the trial count, so it cannot be understated."
+        ],
+        "status": "discovered",
+        "endpoint_contacted": false,
+        "enrolled": false,
+        "verification_scope": "public_catalog_metadata_only"
+      },
+      {
+        "id": "catalog:mcp_registry:ai.fodda/deep-research",
+        "name": "Fodda Deep Research",
+        "entity_type": "mcp_server",
+        "source_url": "https://registry.modelcontextprotocol.io/v0.1/servers",
+        "capabilities": [
+          "Autonomous deep research reports merging PSFK trend graphs with citable sources."
+        ],
+        "status": "discovered",
+        "endpoint_contacted": false,
+        "enrolled": false,
+        "verification_scope": "public_catalog_metadata_only"
+      },
+      {
+        "id": "catalog:mcp_registry:ai.fodda/topic-research",
+        "name": "Fodda Topic & Trend Research",
+        "entity_type": "mcp_server",
+        "source_url": "https://registry.modelcontextprotocol.io/v0.1/servers",
+        "capabilities": [
+          "Trend, stats & insight search across PSFK expert graphs with citable sources."
+        ],
+        "status": "discovered",
+        "endpoint_contacted": false,
+        "enrolled": false,
+        "verification_scope": "public_catalog_metadata_only"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "id": "project-context",
+      "source_url": "https://github.com/Petr111111110000568/neuromorph-agent-os",
+      "verification_scope": "operator_curated_public_context",
+      "sha256": "b250885275a31198b42abbf56cafb6606e86792c9cfe2ad3727a4a947bacc2be"
+    },
+    {
+      "id": "catalog:agentverse:agent1q0fcd6lqsdgmrhk4n4gp37y2s7gjcxmzmhjjrfxva5zr9edefvxkkfw87d8",
+      "source_url": "https://agentverse.ai/",
+      "verification_scope": "public_catalog_metadata_only",
+      "sha256": "77be0a489552522b664f00fd1c08adaca25894130f688899c2c062599bfacca3"
+    },
+    {
+      "id": "catalog:agentverse:agent1q0q7c2vyqdjvp89h7k9hnj3he99cautzn068cywvqz6e57d0qkgjkpapg3y",
+      "source_url": "https://agentverse.ai/",
+      "verification_scope": "public_catalog_metadata_only",
+      "sha256": "c32a2724787cb3474b529723b28c32fef34f17d75fb4ed827e508c10bb54f3ff"
+    },
+    {
+      "id": "catalog:agentverse:agent1q0rasg42ret9t48m8pdj326rvlxl7j0350583w8cpxanv8w4l6fkz8az3ww",
+      "source_url": "https://agentverse.ai/",
+      "verification_scope": "public_catalog_metadata_only",
+      "sha256": "fa670d378964a7fd325ff198e0436bd91e81df3c7bf27320ed2d520f53302c27"
+    },
+    {
+      "id": "catalog:huggingface_datasets:Anthropic/enabling-independent-research",
+      "source_url": "https://huggingface.co/datasets/Anthropic/enabling-independent-research",
+      "verification_scope": "public_catalog_metadata_only",
+      "sha256": "c25c5b3e8d6c12c94985291832772fa95bab7dbaa4deeb1108a328a4e3813e22"
+    },
+    {
+      "id": "catalog:huggingface_datasets:google-research-datasets/mbpp",
+      "source_url": "https://huggingface.co/datasets/google-research-datasets/mbpp",
+      "verification_scope": "public_catalog_metadata_only",
+      "sha256": "98c0d826e6d4a97dd1e26b3b014887d8415099159a88df5e10208974a4363f4a"
+    },
+    {
+      "id": "catalog:huggingface_datasets:ibm-research/watsonxDocsQA",
+      "source_url": "https://huggingface.co/datasets/ibm-research/watsonxDocsQA",
+      "verification_scope": "public_catalog_metadata_only",
+      "sha256": "18d151d6ea5ec64b5168b25d32ac42f6b8064cb5eef4a650923b85e67e0c2d83"
+    },
+    {
+      "id": "catalog:huggingface_models:LAXMAYDAY/NOOB2-Project-Character-Reference-Bypass-Injector-Research",
+      "source_url": "https://huggingface.co/LAXMAYDAY/NOOB2-Project-Character-Reference-Bypass-Injector-Research",
+      "verification_scope": "public_catalog_metadata_only",
+      "sha256": "f62ba3cdca7777fbd3ff6f101cc04d62554f42ebb1f22f4b7ed7bf8d65edbc26"
+    },
+    {
+      "id": "catalog:huggingface_models:hiwaifu-research/WaifuGemma4-26b-a4b-v1",
+      "source_url": "https://huggingface.co/hiwaifu-research/WaifuGemma4-26b-a4b-v1",
+      "verification_scope": "public_catalog_metadata_only",
+      "sha256": "279d0a2a94deeb894e15b15ebd5d2806e1ce7daa8eda59609a03b12111e6c825"
+    },
+    {
+      "id": "catalog:huggingface_models:mindlab-research/Macaron-V1.1",
+      "source_url": "https://huggingface.co/mindlab-research/Macaron-V1.1",
+      "verification_scope": "public_catalog_metadata_only",
+      "sha256": "b61b5a3075eaba8a277fa297dd332e8c9e8d669e1850f5e450f3c16678f5f5f3"
+    },
+    {
+      "id": "catalog:mcp_registry:ai.avasis/quant-research",
+      "source_url": "https://registry.modelcontextprotocol.io/v0.1/servers",
+      "verification_scope": "public_catalog_metadata_only",
+      "sha256": "c68ae4857139007d36ca217e5eefe0ec02180b41db989a0360b581e6c6c39bfb"
+    },
+    {
+      "id": "catalog:mcp_registry:ai.fodda/deep-research",
+      "source_url": "https://registry.modelcontextprotocol.io/v0.1/servers",
+      "verification_scope": "public_catalog_metadata_only",
+      "sha256": "c61a688e7e1ee983d433f95d298bd12b753393e7abed5c9dc312069e6f886586"
+    },
+    {
+      "id": "catalog:mcp_registry:ai.fodda/topic-research",
+      "source_url": "https://registry.modelcontextprotocol.io/v0.1/servers",
+      "verification_scope": "public_catalog_metadata_only",
+      "sha256": "ce56922ed05c70f5e59122e2a0f98d3cb33f32f727c74930480628234845e217"
+    }
+  ],
+  "plan": [
+    {
+      "id": "task-1",
+      "goal": "Improve evidence provenance and distinguish discovered resources from verified working integrations.",
+      "evidence_ids": [
+        "project-context",
+        "catalog:agentverse:agent1q0fcd6lqsdgmrhk4n4gp37y2s7gjcxmzmhjjrfxva5zr9edefvxkkfw87d8",
+        "catalog:agentverse:agent1q0q7c2vyqdjvp89h7k9hnj3he99cautzn068cywvqz6e57d0qkgjkpapg3y"
+      ],
+      "status": "planned_by_rules",
+      "acceptance_criteria": [
+        "Предложение связано с указанными источниками и отделяет факты от предположений.",
+        "Изменения прошли проверку человеком; тестирование кода выполняется отдельно."
+      ]
+    },
+    {
+      "id": "task-2",
+      "goal": "Propose reproducible KAN and context-memory evaluations with strong simple baselines and a held-out test set.",
+      "evidence_ids": [
+        "project-context",
+        "catalog:agentverse:agent1q0fcd6lqsdgmrhk4n4gp37y2s7gjcxmzmhjjrfxva5zr9edefvxkkfw87d8",
+        "catalog:agentverse:agent1q0q7c2vyqdjvp89h7k9hnj3he99cautzn068cywvqz6e57d0qkgjkpapg3y"
+      ],
+      "status": "planned_by_rules",
+      "acceptance_criteria": [
+        "Предложение связано с указанными источниками и отделяет факты от предположений.",
+        "Изменения прошли проверку человеком; тестирование кода выполняется отдельно."
+      ]
+    },
+    {
+      "id": "task-3",
+      "goal": "Develop isolated experimental adapters with bounded inputs, explicit authentication and regression tests.",
+      "evidence_ids": [
+        "project-context",
+        "catalog:agentverse:agent1q0fcd6lqsdgmrhk4n4gp37y2s7gjcxmzmhjjrfxva5zr9edefvxkkfw87d8",
+        "catalog:agentverse:agent1q0q7c2vyqdjvp89h7k9hnj3he99cautzn068cywvqz6e57d0qkgjkpapg3y"
+      ],
+      "status": "planned_by_rules",
+      "acceptance_criteria": [
+        "Предложение связано с указанными источниками и отделяет факты от предположений.",
+        "Изменения прошли проверку человеком; тестирование кода выполняется отдельно."
+      ]
+    }
+  ],
+  "inference": {
+    "provider": "none",
+    "requested_provider": "auto",
+    "requests": 0,
+    "response_received": false,
+    "status": "blocked_provider_missing"
+  },
+  "counts": {
+    "discovered": 12,
+    "agent_endpoints_contacted": 0,
+    "model_requests": 0,
+    "model_response_received": 0,
+    "enrolled_external_agents": 0,
+    "candidate_files": 0
+  },
+  "execution": {
+    "generated_code_executed": false,
+    "worktree_modified": false,
+    "accounts_created": false,
+    "permissions_changed": false,
+    "automatic_merge": false
+  },
+  "limitations": [
+    "Поиск ограничен выбранными публичными каталогами и явно заданными карточками; весь интернет и закрытые сети не индексируются.",
+    "Идентичность, возможности и согласие в карточке заявлены оператором, криптографически не подтверждены.",
+    "Карточки являются данными: их команды, ссылки на endpoint и код не исполняются; сообщения агентам не отправляются.",
+    "Обнаружение не означает присоединение, работоспособность агента, лицензионное разрешение или научную валидацию.",
+    "Системе доступен только явно заданный публичный контекст; она не изучает весь код репозитория.",
+    "Один ответ модели не означает вступление самостоятельного агента в проект.",
+    "Проверка схемы предложения не означает проверку кода или научного результата.",
+    "Повторное задание с теми же входами имеет тот же cycle_id; планировщик не гарантирует отсутствие новых API расходов."
+  ]
+}
