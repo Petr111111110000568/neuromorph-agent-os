@@ -128,7 +128,7 @@
       "public_url": "https://huggingface.co/spaces/Qwen/Qwen3-Demo",
       "upstream_revision": "60e1db0778067d36b8a2793c350bf85cd461a298",
       "model_alias": "qwen3-235b-a22b",
-      "status": "adapter_preflight_verified",
+      "status": "live_verified",
       "registration": "declarative_registered",
       "integration": {
         "adapter": "workbench/autonomy/qwen_space.py",
@@ -136,14 +136,15 @@
         "transport": "fixed_public_gradio_interface",
         "auth_scope": "anonymous_public_space_only",
         "direct_qwen_account_access": false,
-        "private_chat_access": false
+        "private_chat_access": false,
+        "scheduled_controller": ".github/workflows/continuous.yml"
       },
       "verification": {
         "observed_on": "2026-09-25",
         "basis": "recorded_project_preflight",
         "http_get_requests": 5,
         "response_bytes": 114931,
-        "inference_post_requests": 0,
+        "inference_post_requests": 1,
         "checked": [
           "public_metadata",
           "pinned_source",
@@ -151,11 +152,11 @@
           "api_schema"
         ],
         "config_sha256": "67d6139f20128ed7bf6d33dc5862236ebbce8efd2152df1fe3f2e01d0b419e67",
-        "model_generation_verified": false
+        "model_generation_verified": true,
+        "live_run_url": "https://github.com/Petr111111110000568/neuromorph-agent-os/actions/runs/36181819041",
+        "ledger_commit": "3906e0321835c12135362ac535c52242d91f0435"
       },
       "remaining_gates": [
-        "current_cloud_adapter_checks",
-        "one_bounded_cloud_inference",
         "validate_returned_artifact"
       ],
       "limits": {
@@ -187,14 +188,14 @@
           "reasoning_control",
           "web_search_control"
         ],
-        "actual_model": null,
+        "actual_model": "Qwen3.8-Max",
         "model_generation_verified": null,
-        "scope_note": "No public model-response receipt is asserted by this descriptor."
+        "scope_note": "QWEN-005 stopped by CAPTCHA; one user-authorized attempt failed with provider error; dispatch blocked."
       },
       "remaining_gates": [
-        "verify_current_free_model_and_modes",
-        "explicit_public_task_dispatch",
-        "export_and_validate_public_result"
+        "captcha_user_recovery",
+        "completed_response_observed",
+        "validate_returned_artifact"
       ],
       "limits": {
         "free_capacity_guaranteed": false
@@ -224,13 +225,12 @@
           "web_search_control"
         ],
         "actual_model": null,
-        "model_generation_verified": null,
-        "scope_note": "No public model-response receipt is asserted by this descriptor."
+        "model_generation_verified": true,
+        "scope_note": "DEEPSEEK-007 reviewed Qwen ledger 3906e032: missing provenance correctly identified; unsupported provenance-guard proposal rejected; controller mediated, result unverified."
       },
       "remaining_gates": [
-        "verify_current_free_model_and_modes",
-        "explicit_public_task_dispatch",
-        "export_and_validate_public_result"
+        "controller_handoff",
+        "validate_returned_artifact"
       ],
       "limits": {
         "free_capacity_guaranteed": false
@@ -265,14 +265,13 @@
           "signed_in_expert_mode"
         ],
         "actual_model": null,
-        "model_generation_verified": false,
-        "response_text_observed": false,
-        "scope_note": "The signed-in account enabled Expert mode and accepted one public task packet, but the completed chat exposed no answer text; no model result is claimed."
+        "model_generation_verified": true,
+        "response_text_observed": true,
+        "scope_note": "ALICE-002 research and Expert correction completed. Correction forbids arbitrary network/file URI fetches, uses supplied bytes plus trusted registry, separates hash integrity from truth, assigns timestamps/trust in infrastructure; removes unsupported 95% and corrects OWASP03 supply chain. Remaining mapping and claims unvalidated. Controller-mediated, not autonomous cloud chat."
       },
       "remaining_gates": [
-        "verify_current_free_mode_and_research_limits",
-        "obtain_visible_response_text_without_private_data",
-        "export_and_validate_public_result"
+        "validate_remaining_risk_mapping",
+        "validate_artifacts"
       ],
       "limits": {
         "free_capacity_guaranteed": false,
@@ -462,13 +461,22 @@
         "selected_model": "K3 High",
         "project_created": true,
         "common_instructions_saved": true,
-        "model_generation_verified": false,
-        "last_result": "free_queue_overloaded_no_paid_fallback"
+        "model_generation_verified": true,
+        "last_result": "COUNCIL-2026-09-26-01_completed_549_words_and_markdown_unverified",
+        "native_schedule": "K3 daily 07:00 through 2026-10-31; completed own native cloud run with visible result chat; cross-platform delivery remains controller-mediated; timezone unconfirmed",
+        "read_main_commit": "eff8ef943159439027ce10d5daf3bbf7f8a23186",
+        "read_ledger_commit": "3906e0321835c12135362ac535c52242d91f0435",
+        "tool_results": {"Context7": "success", "Academic Data scholar": "timeout_60_seconds_no_retry"},
+        "proposal": "Canonical JSON/hash plus trusted anchor; unverified, code not executed",
+        "expected_missing_files": "council_brief and council docs 404 before pending PR6",
+        "installed_plugins": [
+          "Context7",
+          "PubMed & PMC",
+          "RCSB PDB"
+        ]
       },
       "dispatch_enabled": false,
       "remaining_gates": [
-        "free_queue_available",
-        "completed_response_observed",
         "validate_returned_artifact"
       ]
     }
@@ -512,3 +520,4 @@
     "count_as_participant_only_after_explicit_promotion": true
   }
 }
+

@@ -2,7 +2,7 @@ name: Continuous research contributions
 
 on:
   schedule:
-    - cron: '17 1,7,13,19 * * *'
+    - cron: '17 2,8,14,20 * * *'
   workflow_dispatch:
     inputs:
       initialize_ledger:
@@ -65,3 +65,4 @@ jobs:
             runtime/continuous/receipt.json
           retention-days: 7
           if-no-files-found: error
+
