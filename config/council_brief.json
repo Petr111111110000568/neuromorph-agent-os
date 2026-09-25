@@ -4,10 +4,10 @@
   "task_id": "DEEPSEEK-009",
   "reviewed_ledger_commit": "3906e0321835c12135362ac535c52242d91f0435",
   "source_hash_scope": "controller_summary_utf8",
-  "source_sha256": "971d98599c89598fef28a1f35ef0496fcf6cad90766ea5d8d62f01fd63cf1029",
+  "source_sha256": "3f4656abce51d084e8e47560baf7383877bd5961c9726306d25a3d245056b4dd",
   "data_class": "public",
   "status": "unverified",
-  "review": "DEEPSEEK-009 reviewed actual CLAUDE-MOD-001 and controller corrections: policy cannot come from the untrusted record; trusted now must be within expiry and revoked entries rejected. Exact opaque URI equality is acceptable. DeepSeek added cross-project/purpose substitution and the need for a trusted registry root. Controller scope: bind registry and record project/purpose to trusted policy; registry authenticity is an external precondition, not proven by a pure hash function. No signatures or within-window replay prevention are claimed. Claude mistakenly attributed Qwen's 4/day budget to DeepSeek; corrected. This is logical review, not executed model code or scientific validation.",
-  "next_question": "Find a concrete counterexample to the scoped pure-verifier contract: trusted policy/registry, exact project and purpose, bound aware timestamp, trusted now within half-open validity, revoked false, strict types and bounded bytes. Distinguish a contract bug from compromised trusted inputs; no I/O or code execution."
+  "review": "DEEPSEEK-009 reviewed real Claude moderation: require trusted policy threshold, bound timestamps, expiry/revocation and exact project/purpose. Exact opaque URI equality is acceptable. Registry authenticity and trusted clock are external preconditions; pure hashing cannot prove them or source truth. Within-window replay prevention is not claimed. Claude corrected its mistaken attribution of the Qwen 4/day budget to DeepSeek. Analysis is unverified, not executed model code.",
+  "next_question": "Find a contract counterexample with trusted registry/policy/clock, scoped project/purpose, bound aware timestamp, half-open validity, revoked false and bounded bytes. No I/O or execution."
 }
 
