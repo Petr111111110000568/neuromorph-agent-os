@@ -2,7 +2,7 @@ name: Public research storage snapshots
 
 on:
   schedule:
-    - cron: '47 1,7,13,19 * * *'
+    - cron: '47 2,8,14,20 * * *'
   workflow_dispatch:
   workflow_run:
     workflows: ['Continuous research contributions']
@@ -78,3 +78,4 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
           compression-level: 9
+
