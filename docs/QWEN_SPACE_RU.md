@@ -44,10 +44,11 @@ Content-Type: application/json
     },
     null,
     null
-  ],
-  "session_hash": "77777777777777777777777777777777"
+  ]
 }
 ```
+
+Поле `session_hash` намеренно не отправляется: в Gradio 5.27 пользовательский session key не совпадает с ключом очереди, который ожидает `/call/.../<event_id>` GET. [queueing.py](https://github.com/gradio-app/gradio/blob/gradio%405.27.0/gradio/queueing.py) при отсутствии этого поля создаёт новую сессию с ключом event ID. Это отличие закреплённой версии от общего руководства; произвольный session hash приводил к ошибке чтения очереди, а не доказывал сбой модели.
 
 Первый ответ имеет форму `{"event_id":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}`. Следующий GET: `https://qwen-qwen3-demo.hf.space/gradio_api/call/add_message/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`. Встречаются SSE события `generating`, `heartbeat`, `error`, `complete`. Минимальный пример структуры завершения, с опущенными необязательными UI-полями:
 
@@ -76,6 +77,8 @@ data: [{"__type__":"update"},{"__type__":"update"},{"__type__":"update"},{"__typ
 
 GET-only preflight: **5 GET, 114931 bytes, 0 inference POST**; SHA256 `/config` — `67d6139f20128ed7bf6d33dc5862236ebbce8efd2152df1fe3f2e01d0b419e67`.
 
-До последнего уточнения пользователя 11 offline tests прошли. Затем добавлены тесты parser для реальной глубины Gradio schema и ожидания SSE heartbeat: сейчас 13 тестов адаптера, новое состояние локально не запускалось. Следующий полный прогон и live inference выполняются в Colab/GitHub по поручению пользователя. Тесты не используют действующие credentials и не обращаются к модели.
+До последнего уточнения пользователя 11 offline tests прошли. Затем добавлены тесты parser для реальной глубины Gradio schema и ожидания SSE heartbeat: после регрессии session/event ID сейчас 14 тестов адаптера, новое состояние локально не запускалось. Следующий полный прогон и live inference выполняются в Colab/GitHub по поручению пользователя. Тесты не используют действующие credentials и не обращаются к модели.
 
 Production-функция использует `multiprocessing` spawn; в собственном исполняемом Python-скрипте вызывайте её внутри `if __name__ == "__main__":`. Сам импорт модели не запускает. Публиковать/исполнять полученный текст как код эта функция не умеет.
+
+

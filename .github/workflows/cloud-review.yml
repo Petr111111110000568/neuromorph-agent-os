@@ -1,0 +1,73 @@
+name: Bounded public cloud review
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '41 0,6,12,18 * * *'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: bounded-public-cloud-review
+  cancel-in-progress: false
+
+jobs:
+  review:
+    if: >-
+      github.repository == 'Petr111111110000568/neuromorph-agent-os' &&
+      github.event.repository.private == false &&
+      github.ref == format('refs/heads/{0}', github.event.repository.default_branch) &&
+      github.run_attempt == 1 && fromJSON(github.run_number) <= 28
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      PYTHONIOENCODING: utf-8
+      CLOUD_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Verify fixed window and the same-workflow ledger
+        id: select
+        timeout-minutes: 2
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -m workbench.autonomy.cloud_actions select
+      - name: Restore only the exact previous trusted checkpoint
+        if: steps.select.outputs.active == 'true' && steps.select.outputs.restore == 'true'
+        timeout-minutes: 1
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          artifact-ids: ${{ steps.select.outputs.artifact_id }}
+          run-id: ${{ steps.select.outputs.previous_run_id }}
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          merge-multiple: true
+          path: runtime/cloud-actions-control/incoming
+      - name: Validate checkpoint provenance and restore bounded state
+        id: prepare
+        if: steps.select.outputs.active == 'true'
+        timeout-minutes: 1
+        run: python3 -m workbench.autonomy.cloud_actions prepare
+      - name: One public discovery and one due free review
+        if: steps.prepare.outputs.ready == 'true'
+        timeout-minutes: 5
+        run: python3 -m workbench.autonomy.cloud_actions execute
+      - name: Preserve reserved attempts even after a failed step
+        id: pack
+        if: always() && steps.prepare.outputs.ready == 'true'
+        timeout-minutes: 1
+        run: python3 -m workbench.autonomy.cloud_actions pack
+      - name: Upload bounded data checkpoint; never executable model output
+        if: always() && steps.pack.outputs.ready == 'true'
+        timeout-minutes: 1
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: cloud-review-checkpoint-${{ github.run_id }}-1
+          path: runtime/cloud-actions-control/bundle/
+          if-no-files-found: error
+          retention-days: 8
+          compression-level: 9
+

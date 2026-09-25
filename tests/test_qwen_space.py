@@ -92,7 +92,8 @@ class QwenSpaceTests(unittest.TestCase):
         body = json.loads(posts[0].data)
         self.assertEqual(body["data"], ["Public prompt", {"model": qwen.MODEL,
             "sys_prompt": "You are a helpful and harmless assistant.", "thinking_budget": 1}, None, None])
-        self.assertRegex(body["session_hash"], r"^[a-f0-9]{32}$")
+        self.assertNotIn("session_hash", body)
+        self.assertEqual(result["session_hash"], result["event_id"])
         for call in transport.call_args_list:
             request = call.args[0]
             self.assertIsNone(request.get_header("Authorization"))
@@ -113,6 +114,26 @@ class QwenSpaceTests(unittest.TestCase):
         self.assertEqual(self.run_fixture(transport)["status"], "response_received")
         stream_call = transport.call_args_list[-1]
         self.assertEqual(stream_call.kwargs["timeout"], 30)
+
+    def test_gradio_527_event_get_matches_server_assigned_session(self):
+        transport = self.transport()
+        original = transport.side_effect
+        queue_key = None
+
+        def gradio_527(request, timeout):
+            nonlocal queue_key
+            if request.get_method() == "POST":
+                queue_key = json.loads(request.data).get("session_hash") or "a" * 32
+            if request.get_header("Accept") == "text/event-stream":
+                if request.full_url.rsplit("/", 1)[-1] != queue_key:
+                    return Response(sse("404: Session not found.", event="error"),
+                                    request.full_url, "text/event-stream")
+            return original(request, timeout)
+
+        transport.side_effect = gradio_527
+        result = self.run_fixture(transport)
+        self.assertEqual(result["status"], "response_received")
+        self.assertEqual(result["event_id"], queue_key)
 
     def test_revision_and_config_drift_stop_before_post(self):
         changed = config()
@@ -222,3 +243,4 @@ class QwenSpaceTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

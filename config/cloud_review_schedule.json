@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "zero_budget_confirmed": true,
+  "budget_evidence": {
+    "checked_at": "2026-09-25",
+    "product": "Actions",
+    "budget_usd": 0,
+    "stop_usage": true
+  },
+  "starts_at": "2026-09-25T18:30:00Z",
+  "expires_at": "2026-10-02T18:30:00Z",
+  "max_workflow_runs": 28,
+  "max_model_attempts": 28,
+  "interval_seconds": 21600
+}
+

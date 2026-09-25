@@ -12,7 +12,6 @@ import json
 import multiprocessing
 import re
 import time
-import uuid
 from urllib.error import HTTPError, URLError
 from urllib.request import ProxyHandler, Request, build_opener
 
@@ -258,12 +257,14 @@ def _perform(prompt, send, deadline, progress=None):
     result = _base("request_failed")
     try:
         _preflight(send, deadline, result)
-        session_hash = uuid.uuid4().hex
+        # Gradio 5.27 /call GET uses event_id as the queue lookup key. Sending
+        # a different session_hash makes that GET return Session not found.
+        # Omit it: Event assigns its fresh event_id as the new session key.
         body = {"data": [prompt, {"model": MODEL,
                 "sys_prompt": "You are a helpful and harmless assistant.",
-                "thinking_budget": 1}, None, None], "session_hash": session_hash}
+                "thinking_budget": 1}, None, None]}
         _remaining(deadline)
-        result.update(requests=1, request_count=1, session_hash=session_hash)
+        result.update(requests=1, request_count=1)
         if progress:
             progress(dict(result))  # Checkpoint before ambiguous network submission.
         with _response(send, ENDPOINT, deadline, result,
@@ -273,6 +274,7 @@ def _perform(prompt, send, deadline, progress=None):
         if not isinstance(event_id, str) or not _EVENT_ID.fullmatch(event_id):
             raise _Failure("invalid_response")
         result["event_id"] = event_id
+        result["session_hash"] = event_id
         if progress:
             progress(dict(result))
         with _response(send, ENDPOINT + "/" + event_id, deadline, result,
@@ -358,3 +360,4 @@ def call_qwen_space(prompt, transport=None):
     if transport is not None:
         return _perform(prompt, transport, time.monotonic() + TIMEOUT_SECONDS)
     return _isolated(prompt)
+
