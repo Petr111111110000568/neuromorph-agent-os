@@ -226,7 +226,7 @@
         ],
         "actual_model": null,
         "model_generation_verified": true,
-        "scope_note": "DEEPSEEK-007 reviewed Qwen ledger 3906e032: missing provenance correctly identified; unsupported provenance-guard proposal rejected; controller mediated, result unverified."
+        "scope_note": "DEEPSEEK-008 received actual Kimi/Alice reviews and proposed a pure verifier; controller found untrusted trust threshold and missing timestamp binding/expiry. Code unexecuted and unverified; review passed to Kimi but free queue overloaded."
       },
       "remaining_gates": [
         "controller_handoff",
@@ -463,6 +463,7 @@
         "common_instructions_saved": true,
         "model_generation_verified": true,
         "last_result": "COUNCIL-2026-09-26-01_completed_549_words_and_markdown_unverified",
+        "latest_followup": "KIMI-REVIEW-002 queued submission rejected by free queue overload; no response and no paid priority",
         "native_schedule": "K3 daily 07:00 through 2026-10-31; completed own native cloud run with visible result chat; cross-platform delivery remains controller-mediated; timezone unconfirmed",
         "read_main_commit": "eff8ef943159439027ce10d5daf3bbf7f8a23186",
         "read_ledger_commit": "3906e0321835c12135362ac535c52242d91f0435",

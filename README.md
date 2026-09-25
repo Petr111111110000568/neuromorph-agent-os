@@ -1,5 +1,7 @@
 # Meta-Harness Research System 0.10.0
 
+Облачный совет опубликован в [PR #6](https://github.com/Petr111111110000568/neuromorph-agent-os/pull/6): 510 тестов, doctor и bootstrap прошли. [Фактическая цепочка рецензий второго раунда](docs/contributions/council-2026-09-25-round-2.md) фиксирует вклад Kimi, Алисы и DeepSeek, найденные ошибки и доступность каналов. Последний [health receipt](https://github.com/Petr111111110000568/neuromorph-agent-os/actions/runs/36187395243) проверяет только облачный Git-журнал.
+
 Ночной совет: [правила обмена между платформами](docs/AGENT_COUNCIL_RU.md), [голосование и допуск логических ролей](docs/COUNCIL_SECURITY_RU.md), [облачные расписания и наблюдение](docs/CLOUD_WATCH_RU.md). Kimi завершил первый собственный облачный раунд в видимом чате; DeepSeek и Алиса передают рецензии через контроллер. Полностью автономный обмен между всеми авторизованными веб-чатами при выключенном ПК ещё не настроен.
 
 25.09.2026: независимый облачный Qwen-цикл впервые завершён и сохранил исследование и кодовое предложение в Git. [Проверяемый статус сервисов](docs/contributions/coordination-2026-09-25.md). [Российское зеркало SourceCraft](https://sourcecraft.dev/sasha1000000000002020/neuromorph-agent-os) синхронизирует main и autonomy/continuous. [Синхронизация HF](docs/RESEARCH_STORAGE_RU.md) требует отдельного write-secret. [Взаимная настройка плагинов](docs/PLUGIN_COORDINATION_RU.md) управляет профилями существующих закреплённых модулей; это не установка плагинов веб-сервисов.

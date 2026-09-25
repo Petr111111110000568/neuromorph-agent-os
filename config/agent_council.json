@@ -63,7 +63,7 @@
       "model": "record_visible_model_label_per_handoff",
       "cost_observation": "free_web_response_observed_recheck_before_new_task",
       "evidence": ["docs/contributions/coordination-2026-09-25.md#веб-участники"],
-      "observed_task_id": "DEEPSEEK-007",
+      "observed_task_id": "DEEPSEEK-008",
       "limitations": ["No autonomous API connection", "Web controller may depend on Codex quota", "Suggested tests were not thereby executed"]
     },
     {
@@ -101,7 +101,7 @@
       "capabilities_verified": ["repository_mirror", "native_job_submission", "contributor_role_ui"],
       "model": "not_confirmed_by_successful_response",
       "cost_observation": "job_1_reported_0_credits",
-      "job_observation": {"job_number": 2, "result": "startup_error", "duration_seconds": 0, "credits_reported": null, "credits_display": "dash"},
+      "job_observation": {"job_number": 2, "result": "startup_error", "duration_seconds": 4, "credits_reported": 0, "credits_display": "0"},
       "permissions": {"public_comments_issues_pr": true, "developer_ci_secrets": false},
       "evidence": ["https://sourcecraft.dev/sasha1000000000002020/neuromorph-agent-os/ai-jobs/2", "docs/AGENT_COUNCIL_RU.md#наблюдения-каналов"],
       "dispatch_eligible_now": false,
