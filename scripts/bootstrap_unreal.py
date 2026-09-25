@@ -58,7 +58,7 @@ def pin_registry(binary_hash):
     entry = next((entry for entry in entries if entry.get("id") == "unreal"), None)
     if not entry or entry.get("adapter") != "unreal_jsonl" or entry.get("revision") != SOURCE_COMMIT:
         raise ValueError("unexpected_unreal_registry_entry")
-    if entry.get("binary", {}).get("path") != str(BINARY.relative_to(ROOT)):
+    if entry.get("binary", {}).get("path") != BINARY.relative_to(ROOT).as_posix():
         raise ValueError("unexpected_binary_registry_path")
     entry["binary"]["sha256"] = binary_hash
     temporary = registry.with_name("harnesses.json.bootstrap.tmp")
@@ -274,7 +274,7 @@ def build(source, cache, run_tests=True, toolchain_format="module"):
                    "toolchain_sha256": checksum(archive),
                    "toolchain_module_h1": GO_MODULE_H1 if toolchain_format == "module" else None,
                    "toolchain_bytes": archive.stat().st_size, "go_version": version["stdout"].strip(),
-                   "binary_path": str(BINARY.relative_to(ROOT)), "binary_sha256": binary_hash,
+                   "binary_path": BINARY.relative_to(ROOT).as_posix(), "binary_sha256": binary_hash,
                    "binary_bytes": BINARY.stat().st_size, "modules": modules, "module_integrity": module_integrity,
                    "network_proxy_environment_names": [name for name in proxy_names if name in env],
                    "build": compilation, "upstream_tests": tests,

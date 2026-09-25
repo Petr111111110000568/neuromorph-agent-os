@@ -1,0 +1,285 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-09-25",
+  "review_scope": "User-requested articles and selected primary sources; knowledge records only, no new executable integrations or account connections.",
+  "baseline_commit": "e558f7083924edd6047709074d931daf51e0e38d",
+  "integration_scope": "Existing source registry auto-loads data/*_sources.json. Status describes source review, not runtime installation or validation.",
+  "items": [
+    {
+      "checked_at": "2026-09-25",
+      "integration": "existing_adapter_reference",
+      "executed_in_this_research": false,
+      "id": "cos-001",
+      "title": "Unreal Agent — архитектура и benchmark производителя",
+      "url": "https://unreallabs.ai/blog/unreal-agent/",
+      "category": "agent_harness",
+      "status": "reviewed_primary_source",
+      "summary": "Асинхронное выполнение инструментов, журнал событий, steering и заявленная экономия model turns; исходный материал пользователя.",
+      "limitations": [
+        "Экономия до 40% относится к опубликованным поставщиком конфигурациям; независимый benchmark в этой сессии не выполнялся.",
+        "В существующем адаптере Meta-Harness инструменты выключены; асинхронное преимущество этим профилем не измеряется."
+      ],
+      "published_at": "2026-09-22",
+      "read_scope": "full_article_and_official_repository"
+    },
+    {
+      "checked_at": "2026-09-25",
+      "integration": "reference_only",
+      "executed_in_this_research": false,
+      "id": "cos-002",
+      "title": "Flowise закрыли: форк Keelflow и границы лицензии",
+      "url": "https://ai-manual.ru/article/flowise-zakryili-kak-ustroen-fork-keelflow-i-chto-meshaet-prosto-prodolzhit-open-source-proekt/",
+      "category": "project_governance",
+      "status": "reviewed_secondary_source",
+      "summary": "Обзор прекращения поддержки Flowise, переноса в Keelflow и различий лицензирования компонентов.",
+      "limitations": [
+        "Хронология закрытия и разделение Apache/Commercial сверены с первичными источниками; миграция, безопасность и работоспособность Keelflow не тестировались.",
+        "Чтение статьи не означает установку Flowise/Keelflow или проверку безопасности форка."
+      ],
+      "published_at": "2026-09-24",
+      "read_scope": "full_article; project_closure_and_license_split_cross_checked_by_research_team"
+    },
+    {
+      "checked_at": "2026-09-25",
+      "integration": "reference_only",
+      "executed_in_this_research": false,
+      "id": "cos-003",
+      "title": "От ELIZA до памяти между чатами: развитие контекста",
+      "url": "https://ai-manual.ru/article/ot-eliza-do-pamyati-mezhdu-chatami-kak-ai-chatyi-nauchilis-ponimat-kontekst/",
+      "category": "context_memory",
+      "status": "reviewed_secondary_source",
+      "summary": "Исторический обзор диалоговых систем, Transformer, RAG и сохранения контекста между беседами.",
+      "limitations": [
+        "Обзор не заменяет первичные публикации и документацию конкретного runtime.",
+        "Контекст диалога, retrieval и долговременная память — разные механизмы; статья не подтверждает синхронизацию ChatGPT и Codex.",
+        "Упоминания Dreaming и GPT-Live в статье не подтверждены официальными источниками в этом исследовании."
+      ],
+      "published_at": "2026-09-24",
+      "read_scope": "article_review"
+    },
+    {
+      "checked_at": "2026-09-25",
+      "integration": "reference_only",
+      "executed_in_this_research": false,
+      "id": "cos-004",
+      "title": "Managed Deep Agents 0.8: память, credentials и HTTP — обзор AI-manual",
+      "url": "https://ai-manual.ru/article/managed-deep-agents-08-polzovatelskaya-pamyat-svoi-credentials-i-http-kanalyi-dlya-agentov-v-prodakshene/",
+      "category": "managed_agents",
+      "status": "reviewed_secondary_source",
+      "summary": "Русскоязычный обзор user memory, credentials, HTTP channels, Slack files и Parallel search в MDA 0.8.",
+      "limitations": [
+        "Схемы identity/memory и ограничения сверены с актуальными Python docs LangChain; индексированные страницы могут отставать.",
+        "Connections описаны официальной командой уже для v0.7.0+; весь механизм нельзя приписывать первому появлению в v0.8.",
+        "Передача файлов в Slack не доказывает произвольную исходящую отправку отчётов: направление и формат следует сверять по документации."
+      ],
+      "published_at": "2026-09-24",
+      "read_scope": "article_review_compared_with_release_and_docs"
+    },
+    {
+      "checked_at": "2026-09-25",
+      "integration": "reference_only",
+      "executed_in_this_research": false,
+      "id": "cos-005",
+      "title": "Managed Deep Agents v0.8: new auth, memory, and channels",
+      "url": "https://www.langchain.com/blog/langsmith-managed-deep-agents-whats-new",
+      "category": "managed_agents",
+      "status": "reviewed_primary_source",
+      "summary": "Релиз MDA 0.8: разделение agent/user memory, управление credentials, HTTP channels, Slack files и managed web search.",
+      "limitations": [
+        "Публикация производителя; интеграция MDA в Meta-Harness не выполнялась.",
+        "Public beta, LangSmith Cloud US; бесплатность Parallel объявлена только на период beta."
+      ],
+      "published_at": "2026-09-24",
+      "source_version": "0.8",
+      "read_scope": "full_release_article"
+    },
+    {
+      "checked_at": "2026-09-25",
+      "integration": "reference_only",
+      "executed_in_this_research": false,
+      "id": "cos-006",
+      "title": "Building an Agent Harness for Life Sciences: Deep Life Sci",
+      "url": "https://www.langchain.com/blog/agent-harness-life-sciences",
+      "category": "domain_agents",
+      "status": "reviewed_primary_source",
+      "summary": "Пример предметного research assistant: научные источники, извлечение данных, sandbox, subagents, traces и evals.",
+      "limitations": [
+        "Архитектурная публикация не является клинической валидацией или доказательством GxP compliance.",
+        "Заявленные 12 млн PMC articles не равны доступному open-access full-text покрытию; README уточняет ограничения."
+      ],
+      "published_at": "2026-09-17",
+      "read_scope": "full_article_and_official_repository"
+    },
+    {
+      "checked_at": "2026-09-25",
+      "integration": "reference_only",
+      "executed_in_this_research": false,
+      "id": "cos-007",
+      "title": "Cognitive OS: локальная IDE для multi-agent workflow с графом знаний",
+      "url": "https://ai-manual.ru/article/cognitive-os-lokalnaya-ide-dlya-multiagentnyih-workflow-s-grafom-znanij/",
+      "category": "cognitive_os",
+      "status": "claims_unverified",
+      "summary": "Статья описывает локальную IDE, persistent state, граф знаний и динамическое формирование контекста; сохранена как исследовательская гипотеза архитектуры.",
+      "limitations": [
+        "Однозначный первичный репозиторий, документация и release предмета статьи не идентифицированы.",
+        "Заявления о лицензии, latency и системных требованиях не подтверждены; одноимённые проекты не считаются тем же продуктом."
+      ],
+      "read_scope": "article_and_external_html_links_reviewed"
+    },
+    {
+      "checked_at": "2026-09-25",
+      "integration": "reference_only",
+      "executed_in_this_research": false,
+      "id": "cos-008",
+      "title": "LangChain: durable agent and user memory layers",
+      "url": "https://docs.langchain.com/langsmith/python/managed-deep-agents-memory",
+      "category": "context_memory",
+      "status": "reviewed_primary_source",
+      "summary": "Опциональные независимые agent/user MemoryLayer; hot AGENTS.md и cold files; доступ через authenticated principal и policy.",
+      "limitations": [
+        "Слои требуют managed-deepagents>=0.8.0; долговременная память по умолчанию выключена.",
+        "User memory разделена по deployment и principal; local dev и deployed stores различаются, автоматического общего контекста ChatGPT/Codex нет.",
+        "Использована живая Python-страница: Exa возвращал более старые варианты схемы."
+      ],
+      "source_version": ">=0.8.0",
+      "read_scope": "current_live_documentation"
+    },
+    {
+      "checked_at": "2026-09-25",
+      "integration": "reference_only",
+      "executed_in_this_research": false,
+      "id": "cos-009",
+      "title": "LangChain: connect a Managed Deep Agent over HTTP",
+      "url": "https://docs.langchain.com/langsmith/python/managed-deep-agents-channels-http",
+      "category": "agent_channels",
+      "status": "reviewed_primary_source",
+      "summary": "HTTP adapter: verify, parse, запуск, отдельная доставка ответа через post; provider задаёт пространство идентичности.",
+      "limitations": [
+        "HTTP channels требуют managed-deepagents>=0.8.0; verify выполняет аутентификацию webhook.",
+        "202 подтверждает принятие задачи, а не завершение; это не реализованный endpoint Meta-Harness."
+      ],
+      "source_version": ">=0.8.0",
+      "read_scope": "current_live_documentation"
+    },
+    {
+      "checked_at": "2026-09-25",
+      "integration": "reference_only",
+      "executed_in_this_research": false,
+      "id": "cos-010",
+      "title": "LangChain: manage connections and caller credentials",
+      "url": "https://docs.langchain.com/langsmith/python/managed-deep-agents-connections",
+      "category": "identity_credentials",
+      "status": "reviewed_primary_source",
+      "summary": "Runtime-разрешение agent-owned/user-owned credentials, OAuth consent interrupts и возобновление выполнения.",
+      "limitations": [
+        "Одинаковый connection slug не означает одинаковый credential у разных deployments.",
+        "Custom frontend самостоятельно обрабатывает authorization interrupt; Slack/Studio не собирают пользовательские API keys.",
+        "Credentials не должны входить в исследовательскую память или source registry."
+      ],
+      "read_scope": "current_docs_and_limitations"
+    },
+    {
+      "checked_at": "2026-09-25",
+      "integration": "existing_adapter_reference",
+      "executed_in_this_research": false,
+      "id": "cos-011",
+      "title": "Unreal Agent — официальный репозиторий",
+      "url": "https://github.com/unreallabsai/unreal-agent",
+      "category": "agent_harness",
+      "status": "reviewed_primary_source",
+      "summary": "MIT Go harness с append-only sessions, coordinator, model adapter, tool translators и serializable operations.",
+      "limitations": [
+        "Веб-обзор main не равен выполнению SDK; существующий адаптер проекта закреплён отдельно в config/harnesses.json.",
+        "Volatile session inbox deduplication не следует трактовать как exactly-once после сбоя."
+      ],
+      "source_version": "main reviewed 2026-09-25; project adapter pin is separate",
+      "read_scope": "README_architecture_and_license"
+    },
+    {
+      "checked_at": "2026-09-25",
+      "integration": "reference_only",
+      "executed_in_this_research": false,
+      "id": "cos-012",
+      "title": "Deep Life Sci — официальный research template",
+      "url": "https://github.com/langchain-samples/deep-life-sci",
+      "category": "domain_agents",
+      "status": "reviewed_primary_source",
+      "summary": "MIT research template на Deep Agents; PubMed, PMC OA, ClinicalTrials.gov, files, LangSmith sandbox и gateway.",
+      "limitations": [
+        "README обозначает demonstration/research/education проект; клинические решения не поддержаны.",
+        "Полный текст только в PMC open-access subset; для paywalled papers доступны abstracts.",
+        "Quickstart зависит от LangSmith; cloud deployment с user auth указан как Coming soon; установка не выполнялась."
+      ],
+      "source_version": "main reviewed 2026-09-25",
+      "read_scope": "README_requirements_limitations_and_license"
+    },
+    {
+      "checked_at": "2026-09-25",
+      "integration": "reference_only",
+      "executed_in_this_research": false,
+      "id": "cos-013",
+      "title": "Deep Agents — официальный open-source harness",
+      "url": "https://github.com/langchain-ai/deepagents",
+      "category": "agent_harness",
+      "status": "reviewed_primary_source",
+      "summary": "MIT harness на LangGraph с planning, subagents, filesystem, context management, skills и заменяемыми backends.",
+      "limitations": [
+        "Возможности upstream не означают наличие этих модулей в Meta-Harness.",
+        "Границы доступа обеспечиваются инструментами и средой; model prompts не заменяют sandbox."
+      ],
+      "source_version": "main reviewed 2026-09-25",
+      "read_scope": "official_README"
+    },
+    {
+      "checked_at": "2026-09-25",
+      "integration": "reference_only",
+      "executed_in_this_research": false,
+      "id": "cos-014",
+      "title": "Model Context Protocol specification 2026-07-28",
+      "url": "https://modelcontextprotocol.io/specification/2026-07-28",
+      "category": "agent_protocols",
+      "status": "reviewed_primary_source",
+      "summary": "Первичная спецификация host/client/server, resources, prompts, tools и согласуемых opt-in extensions.",
+      "limitations": [
+        "Текущий Meta-Harness объявляет legacy MCP 2025-11-25; чтение новой спецификации не меняет согласование протокола.",
+        "MCP не обеспечивает автоматически package lifecycle, sandbox, права либо научную проверку результата."
+      ],
+      "source_version": "2026-07-28",
+      "read_scope": "official_specification_review"
+    },
+    {
+      "checked_at": "2026-09-25",
+      "integration": "reference_only",
+      "executed_in_this_research": false,
+      "id": "cos-015",
+      "title": "W3C PROV-DM: The PROV Data Model",
+      "url": "https://www.w3.org/TR/prov-dm/",
+      "category": "evidence_provenance",
+      "status": "reviewed_primary_source",
+      "summary": "W3C Recommendation: модель сущностей, деятельностей, агентов и связей происхождения для проверяемой цепочки доказательств.",
+      "limitations": [
+        "Сохранено как модель проектирования; соответствие PROV-DM или импорт runtime не заявляются.",
+        "Происхождение данных само по себе не доказывает истинность научного утверждения."
+      ],
+      "source_version": "W3C Recommendation",
+      "read_scope": "official_recommendation_review"
+    },
+    {
+      "checked_at": "2026-09-25",
+      "integration": "reference_only",
+      "executed_in_this_research": false,
+      "id": "cos-016",
+      "title": "OpenTelemetry: semantic conventions for GenAI agent spans",
+      "url": "https://github.com/open-telemetry/semantic-conventions-genai/blob/main/docs/gen-ai/gen-ai-agent-spans.md",
+      "category": "agent_observability",
+      "status": "reviewed_primary_source",
+      "summary": "Рекомендации по описанию spans агентных вызовов, workflows и инструментов; ориентир для наблюдаемости выполнения.",
+      "limitations": [
+        "Статус схемы Development; при реализации нужны закреплённая версия и миграции.",
+        "OpenTelemetry integration не устанавливалась; trace не равен evidence validation."
+      ],
+      "source_version": "Development; main reviewed 2026-09-25",
+      "read_scope": "official_repository_document_review"
+    }
+  ]
+}

@@ -169,8 +169,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         for name in ("../escape", "/tmp/escape", "demo/../../escape", "demo\\escape", "demo/C:/escape",
                      "demo/CON", "demo/space ", "demo/dot.", "demo/./escape", "demo//escape",
                      "demo/license", "demo/run.py/child"):
-            with self.subTest(path=name), self.assertRaises(ValueError):
-                self.inspect_local(self.archive([(name, "bad")]))
+            with self.subTest(path=name):
+                # ZipInfo normalizes Windows separators at construction. Preserve
+                # the malformed wire name so this checks the actual validator.
+                member = zipfile.ZipInfo("fixture")
+                member.filename = name
+                raw = self.archive([(member, "bad")])
+                with zipfile.ZipFile(io.BytesIO(raw)) as archive:
+                    self.assertIn(name, [item.orig_filename for item in archive.infolist()])
+                with self.assertRaises(ValueError):
+                    self.inspect_local(raw)
         link = zipfile.ZipInfo("demo/link")
         link.create_system = 3
         link.external_attr = (stat.S_IFLNK | 0o777) << 16

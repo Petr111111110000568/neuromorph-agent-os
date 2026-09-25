@@ -64,6 +64,48 @@ class ServiceTests(unittest.TestCase):
             self.assertEqual(a["provenance"]["input_sha256"], b["provenance"]["input_sha256"])
             self.assertEqual(a["provenance"]["output_sha256"], b["provenance"]["output_sha256"])
 
+    def test_worker_protocol_is_utf8_with_ascii_standard_streams(self):
+        # -I ignores PYTHONIOENCODING. Force ASCII wrappers even on UTF-8 hosts
+        # so success and error envelopes must use the binary UTF-8 protocol.
+        bootstrap = (
+            "import runpy, sys\n"
+            "assert sys.flags.isolated == 1\n"
+            "for stream in (sys.stdin, sys.stdout, sys.stderr):\n"
+            "    stream.reconfigure(encoding='ascii', errors='strict')\n"
+            "sys.argv = sys.argv[1:]\n"
+            "runpy.run_path(sys.argv[0], run_name='__main__')\n"
+        )
+        cases = (
+            ("quantum_circuit", {"shots": 100, "seed": 7}, 0),
+            ("legacy_topology", {"system_id": "контур", "inputs": "данные"}, 0),
+            ("unknown_plugin", {}, 2),
+        )
+        for plugin_id, parameters, expected_code in cases:
+            with self.subTest(plugin=plugin_id):
+                child = subprocess.run(
+                    [sys.executable, "-I", "-X", "utf8=0", "-c", bootstrap,
+                     str(ROOT / "plugin_worker.py"), plugin_id],
+                    input=json.dumps(parameters, ensure_ascii=False).encode("utf-8"),
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                    cwd=self.tmp.name, timeout=10,
+                )
+                self.assertEqual(child.returncode, expected_code, child.stderr)
+                raw = child.stdout if expected_code == 0 else child.stderr
+                self.assertTrue(raw.endswith(b"\n"))
+                envelope = json.loads(raw.decode("utf-8"))
+                if expected_code:
+                    self.assertEqual(child.stdout, b"")
+                    self.assertIn("Неизвестный", envelope["error"])
+                else:
+                    self.assertEqual(child.stderr, b"")
+                    result = envelope["result"]
+                    if plugin_id == "quantum_circuit":
+                        self.assertIn("\u27e9", result["summary"])
+                    else:
+                        self.assertEqual(result["parameters"]["system_id"], "контур")
+                        self.assertEqual(result["contract"]["inputs"], ["данные"])
+
+
     def test_reject_invalid_parameters_and_urls(self):
         for parameters in ({"shots": True}, {"shots": 1}, {"shots": float("nan")}, {"unknown": 3}, []):
             with self.subTest(parameters=parameters), self.assertRaises(ServiceError):
@@ -213,9 +255,20 @@ class MCPTests(unittest.TestCase):
         ]
 
     def test_stdio_process_handshake_and_actual_plugin(self):
-        request = "\n".join(json.dumps(item) for item in self.frames()) + "\n"
-        result = subprocess.run([sys.executable, "-m", "workbench", "--data-dir", self.tmp.name, "mcp"],
-            input=request, capture_output=True, text=True, cwd=ROOT, timeout=15)
+        frames = self.frames()
+        frames[0]["params"]["clientInfo"]["name"] = "Проверка UTF-8"
+        request = "\n".join(json.dumps(item, ensure_ascii=False) for item in frames) + "\n"
+        # Force an ASCII host locale; the MCP wire must still be UTF-8.
+        bootstrap = (
+            "import runpy, sys\n"
+            "for stream in (sys.stdin, sys.stdout, sys.stderr):\n"
+            "    stream.reconfigure(encoding='ascii', errors='strict')\n"
+            "sys.argv = ['workbench', *sys.argv[1:]]\n"
+            "runpy.run_module('workbench', run_name='__main__')\n"
+        )
+        result = subprocess.run([sys.executable, "-X", "utf8=0", "-c", bootstrap,
+            "--data-dir", self.tmp.name, "mcp"],
+            input=request, capture_output=True, encoding="utf-8", cwd=ROOT, timeout=15)
         self.assertEqual(result.returncode, 0, result.stderr)
         responses = [json.loads(line) for line in result.stdout.splitlines()]
         self.assertEqual([r["id"] for r in responses], [1, 2, 3])
@@ -224,6 +277,7 @@ class MCPTests(unittest.TestCase):
         self.assertFalse(responses[2]["result"]["isError"])
         payload = json.loads(responses[2]["result"]["content"][0]["text"])
         self.assertEqual(payload["status"], "completed")
+        self.assertIn("\u27e9", payload["result"]["summary"])
 
     def test_requires_handshake_and_recovers_invalid_frame(self):
         request = '{"jsonrpc":"2.0","id":1,"method":"tools/list"}\nnot-json\n' + "\n".join(json.dumps(item) for item in self.frames()) + "\n"

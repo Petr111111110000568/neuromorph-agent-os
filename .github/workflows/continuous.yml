@@ -1,0 +1,65 @@
+name: Continuous research contributions
+
+on:
+  schedule:
+    - cron: '17 1,7,13,19 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/continuous.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: continuous-contribution-ledger
+  cancel-in-progress: false
+
+jobs:
+  contribute:
+    if: >-
+      github.repository == 'Petr111111110000568/neuromorph-agent-os' &&
+      github.event.repository.private == false && github.ref == 'refs/heads/main' &&
+      github.run_attempt == 1 && vars.CONTINUOUS_ENABLED != 'false'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - name: Reserve attempt in durable branch before inference
+        id: reserve
+        timeout-minutes: 1
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -m workbench.autonomy.continuous reserve
+      - name: Read bounded public catalogs without credentials
+        if: steps.reserve.outputs.active == 'true'
+        continue-on-error: true
+        timeout-minutes: 2
+        run: env -i PATH="$PATH" LANG=C.UTF-8 python3 -m workbench.autonomy --online --provider none --output-dir runtime/continuous/discovery
+      - name: One tokenless Qwen role with previous colleague result
+        if: steps.reserve.outputs.active == 'true'
+        continue-on-error: true
+        timeout-minutes: 3
+        run: env -i PATH="$PATH" LANG=C.UTF-8 python3 -m workbench.autonomy.continuous perform
+      - name: Save research and syntax-checked code proposals without execution
+        if: always() && steps.reserve.outputs.active == 'true'
+        timeout-minutes: 1
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -m workbench.autonomy.continuous finalize
+      - name: Keep run receipt
+        if: always() && steps.reserve.outputs.active == 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: continuous-receipt-${{ github.run_id }}
+          path: |
+            runtime/continuous/reservation.json
+            runtime/continuous/result.json
+            runtime/continuous/receipt.json
+          retention-days: 7
+          if-no-files-found: error

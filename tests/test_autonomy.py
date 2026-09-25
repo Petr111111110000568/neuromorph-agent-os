@@ -76,17 +76,25 @@ class ProposalTests(unittest.TestCase):
                 with self.subTest(path=path), self.assertRaises(ValueError):
                     engine.validate_proposal(value, {"project-context"}, root=td)
 
-    def test_symlinks_and_existing_files_are_rejected(self):
+    def test_existing_files_are_rejected(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            (root / "docs/contributions").mkdir(parents=True)
+            (root / "docs/contributions/review-checklist.md").write_text("Existing")
+            with self.assertRaises(ValueError):
+                engine.validate_proposal(proposal(), {"project-context"}, root=root)
+
+    def test_symlinks_are_rejected(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
             (root / "docs").mkdir()
             (root / "elsewhere").mkdir()
-            (root / "docs/contributions").symlink_to(root / "elsewhere", target_is_directory=True)
-            with self.assertRaises(ValueError):
-                engine.validate_proposal(proposal(), {"project-context"}, root=root)
-            (root / "docs/contributions").unlink()
-            (root / "docs/contributions").mkdir()
-            (root / "docs/contributions/review-checklist.md").write_text("Existing")
+            try:
+                (root / "docs/contributions").symlink_to(root / "elsewhere", target_is_directory=True)
+            except OSError as exc:
+                if getattr(exc, "winerror", None) == 1314:
+                    self.skipTest("Creating symlinks requires Windows privilege")
+                raise
             with self.assertRaises(ValueError):
                 engine.validate_proposal(proposal(), {"project-context"}, root=root)
 
@@ -230,7 +238,8 @@ class CycleTests(unittest.TestCase):
     def test_model_proposal_only_in_json_and_curated_input(self):
         (self.root / "PRIVATE.txt").write_text("never-read-private-repository-content")
         offline = engine.discovery.discover("research", root=self.root)
-        with mock.patch.object(engine.discovery, "discover", return_value=offline), mock.patch.object(providers, "call_model") as call:
+        # Exercise proposal validation with a fake transport, never a live budget override.
+        with mock.patch.object(engine, "live_inference_block_reason", return_value=None), mock.patch.object(engine.discovery, "discover", return_value=offline), mock.patch.object(providers, "call_model") as call:
             call.return_value = {"status": "response_received", "requests": 1, "response_received": True, "proposal": proposal()}
             result = engine.run_cycle(config(), self.output, online=True, environment={"OPENAI_API_KEY": "test-token", "AUTONOMY_ALLOW_MODEL_CALLS": "true", "UNRELATED_SECRET": "private"}, root=self.root)
         self.assertEqual(result["status"], "proposal_validated")
@@ -240,14 +249,14 @@ class CycleTests(unittest.TestCase):
         self.assertFalse((self.root / proposal()["files"][0]["path"]).exists())
         self.assertNotIn("never-read", json.dumps(call.call_args.args[3]))
         self.assertNotIn("UNRELATED_SECRET", json.dumps(call.call_args.args[3]))
-        self.assertNotIn("test-token", (self.output / "cycle.json").read_text())
+        self.assertNotIn("test-token", (self.output / "cycle.json").read_text(encoding="utf-8"))
         self.assertEqual(json.loads((self.output / "proposal.json").read_text())["status"], "validated")
 
     def test_invalid_model_files_atomic_rejection(self):
         invalid = proposal()
         invalid["files"].append({"path": ".github/workflows/pwn.yml", "content": "bad"})
         offline = engine.discovery.discover("research", root=self.root)
-        with mock.patch.object(engine.discovery, "discover", return_value=offline), mock.patch.object(providers, "call_model") as call:
+        with mock.patch.object(engine, "live_inference_block_reason", return_value=None), mock.patch.object(engine.discovery, "discover", return_value=offline), mock.patch.object(providers, "call_model") as call:
             call.return_value = {"status": "response_received", "requests": 1, "response_received": True, "proposal": invalid}
             result = engine.run_cycle(config(), self.output, online=True, environment={"ANTHROPIC_API_KEY": "test-token", "AUTONOMY_ALLOW_MODEL_CALLS": "true"}, root=self.root)
         self.assertEqual(result["status"], "proposal_rejected")
@@ -264,9 +273,69 @@ class CycleTests(unittest.TestCase):
         self.assertEqual(discover.call_args.kwargs["providers"], list(engine.discovery.PROVIDERS))
         self.assertEqual(result["discovery"]["requests"], 4)
 
+    def test_zero_spend_blocks_credentials_and_both_opt_in_flags(self):
+        value = config()
+        value["allow_model_calls"] = True
+        offline = engine.discovery.discover("research", root=self.root)
+        with mock.patch.object(engine.discovery, "discover", return_value=offline), mock.patch.object(providers, "call_model") as call:
+            result = engine.run_cycle(value, self.output, online=True, provider="openai",
+                                      environment={"OPENAI_API_KEY": "test-token",
+                                                   "AUTONOMY_ALLOW_MODEL_CALLS": "true"}, root=self.root)
+        call.assert_not_called()
+        self.assertEqual(result["status"], "blocked_zero_spend_policy")
+        self.assertEqual(result["counts"]["model_requests"], 0)
+        self.assertEqual(result["resource_policy"]["daily_spend_limit_usd"], 0)
+
+    def test_invalid_spend_policy_rejected_before_discovery(self):
+        folder = self.root / "config"
+        folder.mkdir()
+        (folder / "resource_policy.json").write_text('{"schema_version": 1, "daily_spend_limit_usd": 1}')
+        with mock.patch.object(engine.discovery, "discover") as discover, self.assertRaises(ValueError):
+            engine.run_cycle(config(), self.output, online=True, provider="none", environment={}, root=self.root)
+        discover.assert_not_called()
+
+    def test_revision_changes_identity_but_retrieval_time_does_not(self):
+        item = {"id": "model-v1", "name": "Test model", "url": "https://example.org/model",
+                "revision": "v1", "license": "Apache-2.0",
+                "provenance": {"provider": "huggingface_models", "retrieved_at": "2026-09-25T00:00:00Z",
+                               "instructions": "untrusted instructions must be omitted"}}
+        response = {"items": [item], "requests": 1, "provider_reports": []}
+        results = []
+        with mock.patch.object(engine.discovery, "discover", return_value=response):
+            for changes in ({}, {"retrieved_at": "2026-09-25T01:00:00Z"}, {"revision": "v2"}):
+                if "revision" in changes:
+                    item.update(changes)
+                else:
+                    item["provenance"].update(changes)
+                results.append(engine.run_cycle(config(), self.output, online=True, provider="none", environment={}, root=self.root))
+        self.assertEqual(results[0]["cycle_id"], results[1]["cycle_id"])
+        self.assertNotEqual(results[1]["cycle_id"], results[2]["cycle_id"])
+        self.assertEqual(results[2]["discovery"]["candidates"][0]["provenance"]["license"], "Apache-2.0")
+        self.assertNotIn("instructions", results[2]["discovery"]["candidates"][0]["provenance"])
+
+    def test_cli_records_history_across_runs(self):
+        file = self.root / "config.json"
+        file.write_text(json.dumps(config()))
+        history_path = self.root / "discovery-history.sqlite"
+        args = ["--config", str(file), "--output-dir", str(self.output), "--provider", "none",
+                "--history-db", str(history_path)]
+        receipts = []
+        for _ in range(2):
+            with mock.patch("sys.stdout", new=io.StringIO()) as stream:
+                self.assertEqual(main(args), 0)
+            receipts.append(json.loads(stream.getvalue()))
+        self.assertTrue(history_path.is_file())
+        self.assertEqual(receipts[0]["history"]["counts"]["resources"], receipts[1]["history"]["counts"]["resources"])
+        self.assertEqual(receipts[1]["history"]["counts"]["runs"], 2)
+
     def test_output_symlinks_rejected(self):
         (self.root / "target").mkdir()
-        self.output.symlink_to(self.root / "target", target_is_directory=True)
+        try:
+            self.output.symlink_to(self.root / "target", target_is_directory=True)
+        except OSError as exc:
+            if getattr(exc, "winerror", None) == 1314:
+                self.skipTest("Creating symlinks requires Windows privilege")
+            raise
         with self.assertRaises(ValueError):
             engine.run_cycle(config(), self.output, environment={}, root=self.root)
         self.output.unlink()

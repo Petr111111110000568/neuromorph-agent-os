@@ -16,6 +16,7 @@ from urllib.parse import urlsplit
 from . import __version__
 from . import council as council_rules
 from .store import Store, canonical, now
+from .resource_policy import load_policy
 
 MAX_TEXT = 12000
 MAX_OUTPUT = 1024 * 1024
@@ -119,7 +120,9 @@ class Service:
     def harnesses_status(self):
         from .harnesses import HarnessRegistry
         result = HarnessRegistry(self.root).status()
-        result['model_calls_enabled'] = os.environ.get('AUTONOMY_ALLOW_MODEL_CALLS', '').lower() == 'true'
+        requested = os.environ.get('AUTONOMY_ALLOW_MODEL_CALLS', '').lower() == 'true'
+        result['model_calls_requested'] = requested
+        result['model_calls_enabled'] = requested and result['model_calls_enabled']
         return result
 
     def harnesses_run(self, body):
@@ -448,13 +451,16 @@ class Service:
         return self.store.audit()
 
     def status(self):
+        resource_policy = load_policy(self.root)
         integrity = True
         try:
             plugin_count = len(self.plugins()["items"])
         except ServiceError:
             integrity, plugin_count = False, 0
         return {"name": "Meta-Harness Research Workbench", "version": __version__,
-          "mode": "research_simulation", "counts": {"sources": len(self.sources()["items"]),
+          "mode": "research_simulation", "resource_policy": resource_policy,
+          "model_calls_enabled": resource_policy["paid_model_calls_allowed"] and os.environ.get("AUTONOMY_ALLOW_MODEL_CALLS", "").lower() == "true",
+          "counts": {"sources": len(self.sources()["items"]),
               "runs": len(self.store.list("run")), "plugins": plugin_count},
           "environment": {"python": sys.version.split()[0], "platform": sys.platform,
               "database": "SQLite", "builtin_integrity": integrity, "llm": "not_configured",

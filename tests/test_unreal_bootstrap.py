@@ -53,7 +53,12 @@ class BootstrapTests(unittest.TestCase):
     def test_project_output_rejects_symlink(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            (root / "unsafe").symlink_to(root / "destination")
+            try:
+                (root / "unsafe").symlink_to(root / "destination")
+            except OSError as exc:
+                if getattr(exc, "winerror", None) == 1314:
+                    self.skipTest("Windows symlink privilege unavailable (WinError 1314)")
+                raise
             with patch.object(bootstrap, "ROOT", root):
                 with self.assertRaises(ValueError):
                     bootstrap.ensure_project_output(root / "unsafe" / "runner")

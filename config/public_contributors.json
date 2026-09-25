@@ -1,0 +1,485 @@
+{
+  "schema_version": 1,
+  "document_type": "declarative_public_contributor_registry",
+  "updated_on": "2026-09-25",
+  "project": {
+    "name": "Meta-Harness Research System",
+    "repository": "Petr111111110000568/neuromorph-agent-os",
+    "public_url": "https://github.com/Petr111111110000568/neuromorph-agent-os",
+    "shared_context": "docs/SHARED_AGENT_CONTEXT_RU.md"
+  },
+  "execution": {
+    "runtime_loader_implemented": false,
+    "dispatch_enabled": false,
+    "dispatch_authority": [
+      "human_controller",
+      "explicitly_authorized_service_controller"
+    ],
+    "execution_locations": [
+      "google_colab",
+      "explicitly_selected_cloud_runtime"
+    ],
+    "local_project_execution_allowed": false,
+    "daily_spend_limit_usd": 0,
+    "account_creation_allowed": false,
+    "credential_transfer_allowed": false,
+    "automatic_enrollment_allowed": false,
+    "automatic_code_execution_allowed": false,
+    "automatic_merge_allowed": false
+  },
+  "status_definitions": {
+    "declarative_registered": "Descriptor exists; this file does not connect or execute a participant.",
+    "adapter_preflight_verified": "Repository adapter and public interface preflight checked; model generation not yet verified.",
+    "manual_controller_verified": "Reasoning/search controls observed through the product UI; dispatch remains human/controller mediated.",
+    "ready_pending": "The stated readiness checks passed; the named execution or validation gate remains pending.",
+    "live_verified": "Only the named operation at the stated commit has a completed observed result.",
+    "credentials_required": "API authorization is required and is not supplied by this registry.",
+    "quarantined": "Untrusted public-catalog proposal; not eligible for task dispatch.",
+    "blocked_region": "Provider eligibility denied for the current location; no dispatch or bypass."
+  },
+  "task_contract": {
+    "input_required": [
+      "task_id",
+      "parent_task_id",
+      "handoff_id",
+      "phase",
+      "participant_id",
+      "base_commit",
+      "shared_context_sha256",
+      "input_packet_sha256",
+      "objective",
+      "acceptance_criteria",
+      "allowed_scope",
+      "data_class",
+      "sources",
+      "limits",
+      "deadline_utc"
+    ],
+    "phases": [
+      "propose",
+      "review",
+      "revise",
+      "validate",
+      "close"
+    ],
+    "data_class": "public_only",
+    "source_required": [
+      "url",
+      "retrieved_at",
+      "revision_or_version",
+      "source_sha256"
+    ],
+    "output_required": [
+      "task_id",
+      "handoff_id",
+      "base_commit",
+      "input_packet_sha256",
+      "participant_id",
+      "actual_model",
+      "actual_modes",
+      "claims",
+      "artifacts",
+      "output_sha256",
+      "limitations",
+      "status"
+    ],
+    "initial_output_status": "unverified",
+    "validation_separate": true,
+    "validation_required": [
+      "task_id",
+      "reviewed_output_sha256",
+      "base_commit",
+      "validator",
+      "cloud_environment",
+      "checks_actually_run",
+      "results",
+      "remaining_limitations"
+    ],
+    "defaults": {
+      "max_task_attempts": 3,
+      "max_retries": 2,
+      "max_handoff_hops": 4,
+      "max_public_input_bytes": 65536,
+      "max_output_bytes": 65536,
+      "timeout_seconds": 300,
+      "daily_spend_limit_usd": 0,
+      "provider_retry_policy": "stricter_adapter_limit_wins",
+      "on_quota_or_authorization_failure": "checkpoint_and_stop"
+    },
+    "forbidden_packet_content": [
+      "passwords",
+      "oauth_data",
+      "cookies",
+      "session_tokens",
+      "api_keys",
+      "private_chat_urls",
+      "private_account_documents",
+      "absolute_user_machine_paths"
+    ]
+  },
+  "participants": [
+    {
+      "id": "qwen-official-space",
+      "name": "Official Qwen/Qwen3-Demo Space",
+      "role_candidates": [
+        "proposer",
+        "reviewer"
+      ],
+      "public_url": "https://huggingface.co/spaces/Qwen/Qwen3-Demo",
+      "upstream_revision": "60e1db0778067d36b8a2793c350bf85cd461a298",
+      "model_alias": "qwen3-235b-a22b",
+      "status": "adapter_preflight_verified",
+      "registration": "declarative_registered",
+      "integration": {
+        "adapter": "workbench/autonomy/qwen_space.py",
+        "documentation": "docs/QWEN_SPACE_RU.md",
+        "transport": "fixed_public_gradio_interface",
+        "auth_scope": "anonymous_public_space_only",
+        "direct_qwen_account_access": false,
+        "private_chat_access": false
+      },
+      "verification": {
+        "observed_on": "2026-09-25",
+        "basis": "recorded_project_preflight",
+        "http_get_requests": 5,
+        "response_bytes": 114931,
+        "inference_post_requests": 0,
+        "checked": [
+          "public_metadata",
+          "pinned_source",
+          "config_schema",
+          "api_schema"
+        ],
+        "config_sha256": "67d6139f20128ed7bf6d33dc5862236ebbce8efd2152df1fe3f2e01d0b419e67",
+        "model_generation_verified": false
+      },
+      "remaining_gates": [
+        "current_cloud_adapter_checks",
+        "one_bounded_cloud_inference",
+        "validate_returned_artifact"
+      ],
+      "limits": {
+        "inference_retries": 0,
+        "inference_post_per_call": 1,
+        "free_capacity_guaranteed": false
+      },
+      "dispatch_enabled": false
+    },
+    {
+      "id": "qwen-web-controller",
+      "name": "Qwen web interface",
+      "role_candidates": [
+        "proposer",
+        "reviewer"
+      ],
+      "public_url": "https://chat.qwen.ai/",
+      "status": "manual_controller_verified",
+      "registration": "declarative_registered",
+      "integration": {
+        "transport": "human_or_authorized_ui_controller_handoff",
+        "direct_account_api_integration": false,
+        "private_chat_access": false
+      },
+      "verification": {
+        "observed_on": "2026-09-25",
+        "basis": "current_session_controller_observation",
+        "checked": [
+          "reasoning_control",
+          "web_search_control"
+        ],
+        "actual_model": null,
+        "model_generation_verified": null,
+        "scope_note": "No public model-response receipt is asserted by this descriptor."
+      },
+      "remaining_gates": [
+        "verify_current_free_model_and_modes",
+        "explicit_public_task_dispatch",
+        "export_and_validate_public_result"
+      ],
+      "limits": {
+        "free_capacity_guaranteed": false
+      },
+      "dispatch_enabled": false
+    },
+    {
+      "id": "deepseek-web-controller",
+      "name": "DeepSeek web interface",
+      "role_candidates": [
+        "reviewer",
+        "proposer"
+      ],
+      "public_url": "https://chat.deepseek.com/",
+      "status": "manual_controller_verified",
+      "registration": "declarative_registered",
+      "integration": {
+        "transport": "human_or_authorized_ui_controller_handoff",
+        "direct_account_api_integration": false,
+        "private_chat_access": false
+      },
+      "verification": {
+        "observed_on": "2026-09-25",
+        "basis": "current_session_controller_observation",
+        "checked": [
+          "reasoning_control",
+          "web_search_control"
+        ],
+        "actual_model": null,
+        "model_generation_verified": null,
+        "scope_note": "No public model-response receipt is asserted by this descriptor."
+      },
+      "remaining_gates": [
+        "verify_current_free_model_and_modes",
+        "explicit_public_task_dispatch",
+        "export_and_validate_public_result"
+      ],
+      "limits": {
+        "free_capacity_guaranteed": false
+      },
+      "dispatch_enabled": false
+    },
+    {
+      "id": "alice-web-controller",
+      "name": "Alice AI web interface",
+      "role_candidates": [
+        "researcher",
+        "reviewer",
+        "proposer"
+      ],
+      "public_url": "https://alice.yandex.ru/",
+      "status": "manual_controller_verified",
+      "registration": "declarative_registered",
+      "integration": {
+        "transport": "human_or_authorized_ui_controller_handoff",
+        "direct_account_api_integration": false,
+        "private_chat_access": false,
+        "research_mode": "Alice AI research/expert UI when enabled by the signed-in account",
+        "coding_role": "reviewer_only; no automatic code execution or repository write"
+      },
+      "verification": {
+        "observed_on": "2026-09-25",
+        "basis": "current_session_controller_observation",
+        "checked": [
+          "anonymous_chat_surface",
+          "research_agent_entry",
+        "expert_mode_login_gate",
+        "signed_in_expert_mode"
+        ],
+        "actual_model": null,
+        "model_generation_verified": false,
+        "response_text_observed": false,
+        "scope_note": "The signed-in account enabled Expert mode and accepted one public task packet, but the completed chat exposed no answer text; no model result is claimed."
+      },
+      "remaining_gates": [
+        "verify_current_free_mode_and_research_limits",
+        "obtain_visible_response_text_without_private_data",
+        "export_and_validate_public_result"
+      ],
+      "limits": {
+        "free_capacity_guaranteed": false,
+        "api_key_or_yandex_cloud_credentials_required_for_programmatic_calls": true
+      },
+      "dispatch_enabled": false
+    },
+    {
+      "id": "antigravity-controller",
+      "name": "Google Antigravity",
+      "role_candidates": [
+        "proposer",
+        "reviewer",
+        "cloud_task_controller"
+      ],
+      "public_url": "https://antigravity.google/",
+      "status": "blocked_region",
+      "registration": "declarative_registered",
+      "integration": {
+        "transport": "authorized_controller_pending_cloud_execution_target",
+        "cli_version": "1.2.11",
+        "direct_other_account_access": false,
+        "project_folder_trust_granted": false
+      },
+      "verification": {
+        "observed_on": "2026-09-25",
+        "basis": "current_session_controller_observation",
+        "checked": [
+          "cli_package_sha512",
+          "user_authorization",
+          "terms_accepted",
+          "model_list_read",
+          "usage_eligibility"
+        ],
+        "listed_models": [
+          "Gemini 3.8 Flash High",
+          "Gemini 3.1 Pro High",
+          "Claude Opus 4.6 Thinking",
+          "Claude Sonnet 4.6 Thinking",
+          "gpt-oss-120b medium"
+        ],
+        "model_calls": 0,
+        "model_generation_verified": false,
+        "free_eligibility_verified_per_model": false,
+        "eligibility_exit_code": 1,
+        "operational_access": "blocked_region",
+        "eligibility_message": "Current account is not eligible because the service is not available in the current location."
+      },
+      "remaining_gates": [
+        "provider_eligibility_resolved_without_bypass",
+        "explicit_cloud_execution_target",
+        "verify_zero_spend_eligibility_for_selected_model",
+        "one_authorized_model_call",
+        "validate_public_result"
+      ],
+      "limitations": [
+        "Model listing is not proof of a successful call or free quota.",
+        "Local project trust was declined under the cloud-only instruction.",
+        "Authentication and model listing do not override the provider eligibility denial.",
+        "No VPN, account rotation, or location bypass is authorized."
+      ],
+      "dispatch_enabled": false
+    },
+    {
+      "id": "colab-validation",
+      "name": "Google Colab validation environment",
+      "role_candidates": [
+        "cloud_validator"
+      ],
+      "public_url": "https://colab.research.google.com/",
+      "status": "live_verified",
+      "registration": "declarative_registered",
+      "integration": {
+        "transport": "user_authorized_cloud_notebook",
+        "model_agent": false
+      },
+      "verification": {
+        "observed_on": "2026-09-25",
+        "basis": "observed_cloud_baseline_result",
+        "scope": "baseline_tests_only",
+        "base_commit": "d2d50155b1046da8b1bb15bf1ef9bab8498949d5",
+        "tests_run": 343,
+        "elapsed_seconds": 55.858,
+        "result": "OK",
+        "qwen_space_inference_verified": false
+      },
+      "remaining_gates": [
+        "validate_new_changes_at_their_exact_commit",
+        "verify_runtime_and_gpu_availability_when_needed",
+        "explicit_task_dispatch"
+      ],
+      "limits": {
+        "free_capacity_guaranteed": false,
+        "persistence_guaranteed": false
+      },
+      "dispatch_enabled": false
+    },
+    {
+      "id": "openrouter-api-candidate",
+      "name": "OpenRouter API candidate",
+      "role_candidates": [
+        "proposer",
+        "reviewer"
+      ],
+      "public_url": "https://openrouter.ai/",
+      "documentation": "https://openrouter.ai/docs/api_reference/authentication",
+      "status": "credentials_required",
+      "registration": "declarative_registered",
+      "integration": {
+        "transport": "not_configured",
+        "auth_requirement": "operator_provided_api_key",
+        "credentials_in_registry": false
+      },
+      "verification": {
+        "observed_on": "2026-09-25",
+        "basis": "official_documentation_review_only",
+        "api_authentication_required": true,
+        "model_generation_verified": false,
+        "account_free_quota_verified": false
+      },
+      "remaining_gates": [
+        "existing_operator_authorization_without_secret_transfer",
+        "current_zero_price_model_and_limits_verified",
+        "explicit_cloud_dispatch_configuration",
+        "bounded_live_validation"
+      ],
+      "limits": {
+        "automatic_key_creation_allowed": false,
+        "automatic_paid_fallback_allowed": false,
+        "free_capacity_guaranteed": false
+      },
+      "dispatch_enabled": false
+    },
+    {
+      "id": "groq-api-candidate",
+      "name": "Groq API candidate",
+      "role_candidates": [
+        "proposer",
+        "reviewer"
+      ],
+      "public_url": "https://groq.com/",
+      "documentation": "https://console.groq.com/docs/quickstart",
+      "status": "credentials_required",
+      "registration": "declarative_registered",
+      "integration": {
+        "transport": "not_configured",
+        "auth_requirement": "operator_provided_api_key",
+        "credentials_in_registry": false
+      },
+      "verification": {
+        "observed_on": "2026-09-25",
+        "basis": "official_documentation_review_only",
+        "api_authentication_required": true,
+        "model_generation_verified": false,
+        "account_free_quota_verified": false
+      },
+      "remaining_gates": [
+        "existing_operator_authorization_without_secret_transfer",
+        "current_zero_spend_model_and_limits_verified",
+        "explicit_cloud_dispatch_configuration",
+        "bounded_live_validation"
+      ],
+      "limits": {
+        "automatic_key_creation_allowed": false,
+        "automatic_paid_fallback_allowed": false,
+        "free_capacity_guaranteed": false
+      },
+      "dispatch_enabled": false
+    }
+  ],
+  "contributor_discovery": {
+    "mode": "finite_public_catalog_proposals_only",
+    "allowed_catalog_provider_ids": [
+      "agentverse",
+      "huggingface_models",
+      "huggingface_datasets",
+      "mcp_registry"
+    ],
+    "endpoint_expansion_allowed": false,
+    "catalog_presence_is_consent": false,
+    "intake_status": "quarantined",
+    "max_candidates_per_pass": 12,
+    "max_passes_per_task": 1,
+    "max_proposals_per_task": 3,
+    "max_validation_attempts_per_candidate": 1,
+    "automatic_installs_allowed": false,
+    "automatic_enrollment_allowed": false,
+    "stages": [
+      "discover_metadata",
+      "quarantine",
+      "check_origin_license_interface_and_zero_spend",
+      "controller_selects_candidate",
+      "bounded_cloud_validation",
+      "controller_promotes_scoped_status_or_rejects"
+    ],
+    "promotion_requires": [
+      "public_source_and_revision",
+      "source_sha256",
+      "clear_license_and_terms",
+      "explicit_operator_scope",
+      "verified_zero_spend_path",
+      "bounded_cloud_validation_receipt",
+      "separate_result_review"
+    ],
+    "on_unavailable_or_auth_required": "retain_quarantined_proposal_and_stop",
+    "result_status": "unverified",
+    "count_as_participant_only_after_explicit_promotion": true
+  }
+}
+
