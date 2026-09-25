@@ -246,7 +246,7 @@
         "proposer"
       ],
       "public_url": "https://alice.yandex.ru/",
-      "status": "login_required",
+      "status": "manual_controller_verified",
       "registration": "declarative_registered",
       "integration": {
         "transport": "human_or_authorized_ui_controller_handoff",
@@ -261,16 +261,17 @@
         "checked": [
           "anonymous_chat_surface",
           "research_agent_entry",
-          "expert_mode_login_gate"
+        "expert_mode_login_gate",
+        "signed_in_expert_mode"
         ],
         "actual_model": null,
         "model_generation_verified": false,
-        "scope_note": "The current browser session is not signed in; Expert mode redirects to Yandex ID and no account response is claimed."
+        "response_text_observed": false,
+        "scope_note": "The signed-in account enabled Expert mode and accepted one public task packet, but the completed chat exposed no answer text; no model result is claimed."
       },
       "remaining_gates": [
-        "user_login_in_the_marked_browser_tab",
         "verify_current_free_mode_and_research_limits",
-        "send_one_public_task_packet",
+        "obtain_visible_response_text_without_private_data",
         "export_and_validate_public_result"
       ],
       "limits": {
