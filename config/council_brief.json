@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "provider": "deepseek_web",
-  "task_id": "DEEPSEEK-007",
+  "task_id": "DEEPSEEK-008",
   "reviewed_ledger_commit": "3906e0321835c12135362ac535c52242d91f0435",
   "source_hash_scope": "controller_summary_utf8",
-  "source_sha256": "aa2fee1e387f8865ba84ae5f07462e802da3560b3b29f8eaee54191a3b80674a",
+  "source_sha256": "e8751bdf9aefa00532aeb160e935140d016a5488680285343441840fa1219dce",
   "data_class": "public",
   "status": "unverified",
-  "review": "DEEPSEEK-007 found that verify_context_memory checks string membership but does not verify provenance. Suggested explicit source_uri, source_hash and source_ts fields plus comparing source_hash with a digest of the actual source bytes. Proposed provenance-guard is outside the approved builtin catalogue and is rejected; it was not enabled.",
-  "next_question": "What is the smallest provenance-check patch with a synthetic source fixture, including a deliberately wrong hash case?"
+  "review": "DEEPSEEK-008 reviewed actual Kimi and Alice replies. Its pure verifier matches record_id/URI and both blob and record digests to a registry, checks source_ts against now+5min and valid_from, and compares registry trust with record.required_trust. Controller review found an untrusted threshold downgrade (0/-1), missing valid_until and registry timestamp binding, naive/aware datetime errors, and missing type/resource bounds. Code was not executed. KIMI-REVIEW-002 was submitted but the free queue blocked its reply; paid priority was declined.",
+  "next_question": "Give a minimal pure patch and counterexamples: trust threshold from trusted policy, registry-bound timezone-aware timestamps, expiry and type/size limits; supplied bytes only, no I/O or execution."
 }
 
