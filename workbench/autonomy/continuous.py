@@ -140,7 +140,7 @@ def validate_state(state):
                 or receipt['status'] not in {'not_requested', 'applied', 'rejected', 'catalogue_unavailable'}
                 or type(receipt['profile_revision']) is not int or not 0 <= receipt['profile_revision'] < 10**9
                 or (receipt['plan_sha256'] is not None and (not isinstance(receipt['plan_sha256'], str)
-                    or not re.fullmatch('[a-f0-9]{64}', receipt['plan_sha256']))):
+                    or not re.fullmatch('[a-f0-9]{64}', receipt['plan_sha256'])))):
             raise ValueError('invalid_plugin_receipt')
     if len(json.dumps(state, ensure_ascii=False).encode()) > 64000:
         raise ValueError('state_too_large')
