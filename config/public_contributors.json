@@ -238,6 +238,48 @@
       "dispatch_enabled": false
     },
     {
+      "id": "alice-web-controller",
+      "name": "Alice AI web interface",
+      "role_candidates": [
+        "researcher",
+        "reviewer",
+        "proposer"
+      ],
+      "public_url": "https://alice.yandex.ru/",
+      "status": "login_required",
+      "registration": "declarative_registered",
+      "integration": {
+        "transport": "human_or_authorized_ui_controller_handoff",
+        "direct_account_api_integration": false,
+        "private_chat_access": false,
+        "research_mode": "Alice AI research/expert UI when enabled by the signed-in account",
+        "coding_role": "reviewer_only; no automatic code execution or repository write"
+      },
+      "verification": {
+        "observed_on": "2026-09-25",
+        "basis": "current_session_controller_observation",
+        "checked": [
+          "anonymous_chat_surface",
+          "research_agent_entry",
+          "expert_mode_login_gate"
+        ],
+        "actual_model": null,
+        "model_generation_verified": false,
+        "scope_note": "The current browser session is not signed in; Expert mode redirects to Yandex ID and no account response is claimed."
+      },
+      "remaining_gates": [
+        "user_login_in_the_marked_browser_tab",
+        "verify_current_free_mode_and_research_limits",
+        "send_one_public_task_packet",
+        "export_and_validate_public_result"
+      ],
+      "limits": {
+        "free_capacity_guaranteed": false,
+        "api_key_or_yandex_cloud_credentials_required_for_programmatic_calls": true
+      },
+      "dispatch_enabled": false
+    },
+    {
       "id": "antigravity-controller",
       "name": "Google Antigravity",
       "role_candidates": [
