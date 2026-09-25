@@ -105,20 +105,33 @@ class DiscoveryTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             d._NoRedirect().redirect_request(None,None,302,'',{},'https://evil.invalid')
 
-    def test_local_inspection_no_contents_secrets_symlinks(self):
-        with tempfile.TemporaryDirectory() as tmp, tempfile.TemporaryDirectory() as outside:
+    def test_local_inspection_no_contents_or_secrets(self):
+        with tempfile.TemporaryDirectory() as tmp:
             base=Path(tmp)
             (base/'model.py').write_text('raise RuntimeError("MUST NOT EXECUTE")')
             (base/'tokens.json').write_text('SUPER_SECRET')
             (base/'.env').write_text('SUPER_SECRET')
-            (Path(outside)/'outside.py').write_text('SUPER_SECRET')
-            (base/'symlink').symlink_to(outside,target_is_directory=True)
             result=d.inspect_local(base)
             self.assertEqual([x['title'] for x in result['items']], ['model.py'])
             self.assertNotIn('SUPER_SECRET', json.dumps(result))
             self.assertNotIn('RuntimeError', json.dumps(result))
+
+    def test_local_inspection_rejects_and_does_not_follow_symlinks(self):
+        with tempfile.TemporaryDirectory() as tmp, tempfile.TemporaryDirectory() as outside:
+            base=Path(tmp)
+            (Path(outside)/'outside.py').write_text('SUPER_SECRET')
+            try:
+                (base/'symlink').symlink_to(outside,target_is_directory=True)
+            except OSError as exc:
+                if getattr(exc, 'winerror', None) == 1314:
+                    self.skipTest('Windows symlink privilege unavailable (WinError 1314)')
+                raise
+            result=d.inspect_local(base)
+            self.assertEqual(result['items'], [])
+            self.assertNotIn('SUPER_SECRET', json.dumps(result))
             with self.assertRaises(ValueError):
                 d.inspect_local(base/'symlink')
+
 
     def test_local_caps_and_plan_boundaries(self):
         with tempfile.TemporaryDirectory() as tmp:

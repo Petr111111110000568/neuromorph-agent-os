@@ -83,6 +83,12 @@ class RegistryProcessTests(unittest.TestCase):
         self.config["harnesses"][0]["binary"]["sha256"] = file_digest(self.binary)
         (self.root / "config/harnesses.json").write_text(json.dumps(self.config))
 
+    def run_fake_provider(self, *args, **kwargs):
+        # These local fixture executables exercise runner behavior, not permission
+        # to contact a provider. Public zero-spend gates are tested separately.
+        with mock.patch("workbench.harnesses.registry.live_inference_block_reason", return_value=None):
+            return self.registry.run(*args, **kwargs)
+
     def success_binary(self):
         self.write_binary("import json, os, sys\nrequest=json.load(sys.stdin)\n"
                           "assert request['disallowed_tools']==['Bash','ViewImage','SkillUse']\n"
@@ -98,9 +104,9 @@ class RegistryProcessTests(unittest.TestCase):
     def test_real_process_default_gate_and_no_ambient_credentials(self):
         self.success_binary()
         (self.root / ".env").write_text("PRIVATE_TEST_SECRET=must-not-load")
-        denied = self.registry.run("unreal", "Public prompt", environment={"OPENAI_API_KEY": "test-token"})
+        denied = self.run_fake_provider("unreal", "Public prompt", environment={"OPENAI_API_KEY": "test-token"})
         self.assertEqual(denied["status"], "blocked_model_calls_not_allowed")
-        result = self.registry.run("unreal", "Public prompt", allow_model_calls=True,
+        result = self.run_fake_provider("unreal", "Public prompt", allow_model_calls=True,
                                    environment={"OPENAI_API_KEY": "test-token", "PRIVATE_TEST_SECRET": "private", "HTTPS_PROXY": "https://proxy.invalid"})
         self.assertEqual(result["status"], "completed")
         self.assertEqual(result["output_text"], "Protocol answer")
@@ -146,7 +152,7 @@ class RegistryProcessTests(unittest.TestCase):
 
     def test_missing_key_and_symlink_pin_rejected(self):
         self.success_binary()
-        self.assertEqual(self.registry.run("unreal", "Public prompt", allow_model_calls=True, environment={})["status"], "blocked_provider_missing")
+        self.assertEqual(self.run_fake_provider("unreal", "Public prompt", allow_model_calls=True, environment={})["status"], "blocked_provider_missing")
         original = self.binary.with_name("actual-runner")
         self.binary.rename(original)
         self.binary.symlink_to(original)
@@ -159,7 +165,7 @@ class RegistryProcessTests(unittest.TestCase):
         for body, status in cases:
             with self.subTest(status=status):
                 self.write_binary(body)
-                result = self.registry.run("unreal", "Public prompt", allow_model_calls=True, timeout_seconds=1,
+                result = self.run_fake_provider("unreal", "Public prompt", allow_model_calls=True, timeout_seconds=1,
                                            environment={"OPENAI_API_KEY": "private-test-token"})
                 self.assertEqual(result["status"], status)
                 self.assertEqual(result["output_text"], "")
@@ -179,7 +185,7 @@ class RegistryProcessTests(unittest.TestCase):
         self.assertNotIn(token.encode(), raw)
         with mock.patch.object(runner, "capture", return_value={"status": "exited", "exit_code": 0,
                                "stdout": raw, "stderr": b""}):
-            result = self.registry.run("unreal", "Public prompt", allow_model_calls=True,
+            result = self.run_fake_provider("unreal", "Public prompt", allow_model_calls=True,
                                        environment={"OPENAI_API_KEY": token})
         self.assertEqual(result["status"], "credential_in_output_rejected")
         self.assertEqual(result["output_text"], "")

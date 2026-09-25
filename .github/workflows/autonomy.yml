@@ -8,6 +8,8 @@ on:
     paths:
       - '.github/workflows/autonomy.yml'
       - 'config/autonomy.json'
+      - 'config/resource_policy.json'
+      - 'workbench/resource_policy.py'
       - 'workbench/autonomy/**'
       - 'scripts/publish_autonomy.py'
 
@@ -31,16 +33,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Public discovery without model credentials
-        if: vars.AUTONOMY_ALLOW_MODEL_CALLS != 'true'
         run: python3 -m workbench.autonomy --config config/autonomy.json --output-dir runtime/autonomy --online --provider none
-      - name: Public discovery and at most one configured model request
-        if: vars.AUTONOMY_ALLOW_MODEL_CALLS == 'true'
-        env:
-          AUTONOMY_PROVIDER: ${{ vars.AUTONOMY_PROVIDER || 'auto' }}
-          AUTONOMY_ALLOW_MODEL_CALLS: 'true'
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: python3 -m workbench.autonomy --config config/autonomy.json --output-dir runtime/autonomy --online --provider "$AUTONOMY_PROVIDER"
       - name: Preserve discovery and proposal data
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7

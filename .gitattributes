@@ -1,0 +1,2 @@
+# Pinned Python plugin hashes must remain identical on Windows and POSIX.
+*.py text eol=lf

@@ -319,9 +319,18 @@ class SocietyInterfaceTests(unittest.TestCase):
             {"jsonrpc": "2.0", "method": "notifications/initialized"},
             {"jsonrpc": "2.0", "id": 2, "method": "tools/list"},
             {"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": "route_research", "arguments": {"question": "genomics", "data_class": "internal"}}},
-            {"jsonrpc": "2.0", "id": 4, "method": "tools/call", "params": {"name": "start_research_mission", "arguments": {"question": "epigenetics model"}}}]
-        result = subprocess.run([sys.executable, "-m", "workbench", "--data-dir", str(Path(self.tmp.name) / "mcp"), "mcp"],
-            input="\n".join(json.dumps(f) for f in frames) + "\n", cwd=ROOT, capture_output=True, text=True, timeout=15)
+            {"jsonrpc": "2.0", "id": 4, "method": "tools/call", "params": {"name": "start_research_mission", "arguments": {"question": "эпигенетика model"}}}]
+        bootstrap = (
+            "import runpy, sys\n"
+            "for stream in (sys.stdin, sys.stdout, sys.stderr):\n"
+            "    stream.reconfigure(encoding='ascii', errors='strict')\n"
+            "sys.argv = ['workbench', *sys.argv[1:]]\n"
+            "runpy.run_module('workbench', run_name='__main__')\n"
+        )
+        result = subprocess.run([sys.executable, "-X", "utf8=0", "-c", bootstrap,
+            "--data-dir", str(Path(self.tmp.name) / "mcp"), "mcp"],
+            input="\n".join(json.dumps(f, ensure_ascii=False) for f in frames) + "\n",
+            cwd=ROOT, capture_output=True, encoding="utf-8", timeout=15)
         self.assertEqual(result.returncode, 0, result.stderr)
         replies = [json.loads(line) for line in result.stdout.splitlines()]
         tools = {t["name"] for t in replies[1]["result"]["tools"]}
@@ -330,6 +339,7 @@ class SocietyInterfaceTests(unittest.TestCase):
         mission = json.loads(replies[3]["result"]["content"][0]["text"])
         self.assertEqual(len(mission["jobs"]), 3)
         self.assertFalse(mission["online"])
+        self.assertEqual(mission["question"], "эпигенетика model")
 
 
 if __name__ == "__main__":

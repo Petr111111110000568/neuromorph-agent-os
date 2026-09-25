@@ -13,11 +13,12 @@ if os.name=='posix':
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from workbench.plugins import execute
 try:
+    # -I ignores PYTHONIOENCODING; the protocol always uses explicit UTF-8 bytes.
     raw=sys.stdin.buffer.read(1000001)
     if len(raw)>1000000:raise ValueError('Input too large')
-    parameters=json.loads(raw,parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON')))
+    parameters=json.loads(raw.decode("utf-8"),parse_constant=lambda _: (_ for _ in ()).throw(ValueError('Non-finite JSON')))
     result=execute(sys.argv[1],parameters)
-    print(json.dumps({'result':result},ensure_ascii=False,allow_nan=False))
+    sys.stdout.buffer.write((json.dumps({'result':result},ensure_ascii=False,allow_nan=False)+'\n').encode('utf-8'))
 except (ValueError,KeyError,IndexError) as error:
-    print(json.dumps({'error':str(error)},ensure_ascii=False),file=sys.stderr)
+    sys.stderr.buffer.write((json.dumps({'error':str(error)},ensure_ascii=False)+'\n').encode('utf-8'))
     sys.exit(2)

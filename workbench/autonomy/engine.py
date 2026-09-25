@@ -10,7 +10,9 @@ from pathlib import Path, PurePosixPath
 from urllib.parse import urlsplit
 
 from ..federation import discovery
+from ..resource_policy import load_policy, live_inference_block_reason
 from . import providers
+from .history import candidate_digest
 
 ROOT = Path(__file__).resolve().parents[2]
 PREFIXES = ("docs/contributions/", "tests/proposals/", "workbench/experiments/")
@@ -192,12 +194,21 @@ def validate_proposal(value, evidence_ids, max_tasks=3, root=ROOT, known_tokens=
 def _candidate(item):
     """Expose only public metadata, never endpoint instructions or arbitrary fields."""
     provenance = item.get("provenance", {})
+    if not isinstance(provenance, dict):
+        provenance = {}
+    public_provenance = {}
+    for key in ("provider", "source_id", "source_url", "revision", "license", "repo_id",
+                "card_url", "retrieved_at", "raw_sha256"):
+        value = item.get(key, provenance.get(key))
+        if isinstance(value, (str, int)) and not isinstance(value, bool):
+            public_provenance[key] = str(value)[:2000 if key.endswith("url") else 256]
     original_id = str(item.get("id", ""))
     identity = "catalog:" + (original_id if len(original_id) <= 512 else _digest(original_id))
     return {"id": identity, "name": str(item.get("name", ""))[:240],
             "entity_type": str(item.get("entity_type", "resource"))[:60],
             "source_url": str(item.get("url") or item.get("source_url") or provenance.get("source_url", ""))[:2000],
             "capabilities": [str(v)[:100] for v in item.get("capabilities", [])[:8]],
+            "provenance": public_provenance,
             "status": "discovered", "endpoint_contacted": False, "enrolled": False,
             "verification_scope": "public_catalog_metadata_only"}
 
@@ -224,6 +235,8 @@ def _write_outputs(output_dir, cycle, proposal, report):
 def run_cycle(config, output_dir, online=False, provider=None, environment=None, root=ROOT):
     """Run once. Only known credential variables are read; no repository scan."""
     config = validate_config(config)
+    resource_policy = load_policy(root)
+    policy_block_reason = live_inference_block_reason(root)
     if type(online) is not bool:
         raise ValueError("online must be boolean")
     env = os.environ if environment is None else environment
@@ -240,14 +253,15 @@ def run_cycle(config, output_dir, online=False, provider=None, environment=None,
     evidence = [{"id": "project-context", "source_url": config["project"]["repository_url"],
                  "verification_scope": "operator_curated_public_context", "sha256": _digest(config["project"])}]
     evidence.extend({"id": item["id"], "source_url": item["source_url"],
-                     "verification_scope": item["verification_scope"], "sha256": _digest(item)} for item in candidates)
+                     "verification_scope": item["verification_scope"], "sha256": candidate_digest(item)} for item in candidates)
     plan = [{"id": "task-" + str(i + 1), "goal": goal,
              "evidence_ids": ["project-context"] + [c["id"] for c in candidates[:2]],
              "status": "planned_by_rules", "acceptance_criteria": [
                  "Предложение связано с указанными источниками и отделяет факты от предположений.",
                  "Изменения прошли проверку человеком; тестирование кода выполняется отдельно."]}
             for i, goal in enumerate(config["development"]["goals"][:config["development"]["max_tasks"]])]
-    identity = {"config": config, "candidates": candidates, "provider": resolved, "online": online}
+    identity = {"config": config, "candidate_digests": [candidate_digest(item) for item in candidates],
+                "provider": resolved, "online": online, "resource_policy": resource_policy}
     cycle_id = _digest(identity)
     proposal = {"schema_version": 1, "cycle_id": cycle_id, "status": "none", "title": "", "summary": "",
                 "files": [], "tasks": [], "review_required": True, "code_executed": False}
@@ -262,6 +276,8 @@ def run_cycle(config, output_dir, online=False, provider=None, environment=None,
         inference["status"] = "blocked_offline"
     elif not allowed:
         inference["status"] = "blocked_model_calls_not_allowed"
+    elif policy_block_reason:
+        inference["status"] = policy_block_reason
     else:
         context = {"project": config["project"], "plan": plan, "evidence": evidence, "catalog_candidates": candidates,
                    "limits": {"max_tasks": config["development"]["max_tasks"], "max_files": MAX_FILES,
@@ -282,6 +298,7 @@ def run_cycle(config, output_dir, online=False, provider=None, environment=None,
                 inference["status"] = "proposal_rejected"
     cycle = {"schema_version": 1, "cycle_id": cycle_id,
              "created_at": datetime.now(timezone.utc).isoformat(), "mode": "online" if online else "offline",
+             "resource_policy": resource_policy,
              "project": {"name": config["project"]["name"], "repository_url": config["project"]["repository_url"]},
              "status": inference["status"], "discovery": {"query": settings["query"],
                  "requests": discovery_result["requests"], "provider_reports": discovery_result["provider_reports"],
@@ -295,14 +312,15 @@ def run_cycle(config, output_dir, online=False, provider=None, environment=None,
                  "Системе доступен только явно заданный публичный контекст; она не изучает весь код репозитория.",
                  "Один ответ модели не означает вступление самостоятельного агента в проект.",
                  "Проверка схемы предложения не означает проверку кода или научного результата.",
-                 "Повторное задание с теми же входами имеет тот же cycle_id; планировщик не гарантирует отсутствие новых API расходов."]}
+                 "Лимит расходов 0 блокирует внешние API моделей; переменная среды не отменяет эту политику.",
+                 "cycle_id отражает содержимое карточек, но не время повторного получения; история включается через --history-db."]}
     _no_secrets(cycle, known_tokens)
     report = ("# Meta-Harness: ограниченный цикл развития\n\n"
               f"Цикл: `{cycle_id}`. Режим: `{cycle['mode']}`. Статус: `{cycle['status']}`.\n\n"
               f"Обнаружено ресурсов: {len(candidates)}; запросов каталогов: {discovery_result['requests']}; "
               f"запросов модели: {inference['requests']}; внешних участников: 0.\n\n"
-              "Обнаруженные карточки не подключают агентов автоматически. API модели вызывается только при "
-              "явном включении, наличии собственного ключа и доступного тарифа; сетевые ошибки отражаются в cycle.json.\n\n"
+              "Обнаруженные карточки не подключают агентов автоматически. Политика расходов 0 блокирует внешние "
+              "API моделей даже при заданных ключах и переменных среды; сетевые ошибки каталогов отражаются в cycle.json.\n\n"
               f"Предложено файлов: {len(proposal['files'])}. Файлы сохранены только как содержимое proposal.json. "
               "Они не записаны в рабочее дерево и не исполнялись. Следующий шаг — человеческая проверка предложения.\n\n"
               "## План по правилам\n\n" + "\n".join(f"- {item['goal']}" for item in plan) + "\n\n"

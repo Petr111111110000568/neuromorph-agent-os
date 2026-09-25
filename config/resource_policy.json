@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "daily_spend_limit_usd": 0,
+  "paid_model_calls_allowed": false,
+  "public_catalog_reads_allowed": true
+}
+

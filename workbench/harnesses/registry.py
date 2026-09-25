@@ -9,6 +9,7 @@ from pathlib import Path
 import re
 
 from ..autonomy.providers import json_load
+from ..resource_policy import load_policy, live_inference_block_reason
 from . import runner
 
 
@@ -130,6 +131,8 @@ class HarnessRegistry:
         return {}
 
     def status(self):
+        policy = load_policy(self.root)
+        block_reason = live_inference_block_reason(self.root)
         items = []
         for entry in self._entries():
             inspection, _ = self._inspect(entry)
@@ -143,13 +146,15 @@ class HarnessRegistry:
                           "last_status": receipt.get("last_status"), "tools_enabled": False,
                           "execution_isolation": "process_limits_not_sandbox",
                           "platform_supported": os.name == "posix"})
-        return {"schema_version": 1, "harnesses": items, "limits": {
+        return {"schema_version": 1, "harnesses": items, "resource_policy": policy,
+                "model_calls_enabled": block_reason is None, "model_calls_block_reason": block_reason, "limits": {
             "max_prompt_utf8_bytes": runner.MAX_PROMPT_BYTES, "max_output_bytes": runner.MAX_OUTPUT_BYTES,
             "timeout_seconds_max": 60, "api_request_cap": None, "api_token_cap": None,
-            "note": "Time and output limits do not bound provider token usage or total charges."}}
+            "note": "Live inference is blocked by the zero-spend policy. Time and output limits alone are not a monetary budget."}}
 
     def run(self, harness_id, prompt, allow_model_calls=False, provider="openai", model=None,
             environment=None, timeout_seconds=30, protocol_test_base_url=None):
+        block_reason = live_inference_block_reason(self.root)
         entry = next((e for e in self._entries() if e["id"] == harness_id), None)
         if entry is None:
             raise ValueError("Unknown harness")
@@ -161,6 +166,8 @@ class HarnessRegistry:
             return dict(result, status="external_worker_required")
         if not inspection["pin_verified"]:
             return dict(result, status=inspection["build_status"])
+        if protocol_test_base_url is None and block_reason:
+            return dict(result, status=block_reason, mode="live", counts={"events": 0, "model_responses": 0})
         result.update(runner.run(entry, executable, prompt, allow_model_calls=allow_model_calls, provider=provider,
                                  model=model, environment=environment, timeout_seconds=timeout_seconds,
                                  protocol_test_base_url=protocol_test_base_url))

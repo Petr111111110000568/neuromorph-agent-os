@@ -119,7 +119,14 @@ DESCRIPTIONS.update({
 
 
 def serve_stdio(service, reader=None, writer=None):
-    reader, writer = reader or sys.stdin, writer or sys.stdout
+    # MCP uses UTF-8 independently of the host locale. Reconfigure only our
+    # default streams; caller-provided text streams keep their own lifecycle.
+    if reader is None:
+        reader = sys.stdin
+        reader.reconfigure(encoding="utf-8", errors="strict")
+    if writer is None:
+        writer = sys.stdout
+        writer.reconfigure(encoding="utf-8", errors="strict", newline="\n")
     initialized = False
     ready = False
     while True:
