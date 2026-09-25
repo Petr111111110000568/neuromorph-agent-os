@@ -261,8 +261,8 @@
         "checked": [
           "anonymous_chat_surface",
           "research_agent_entry",
-        "expert_mode_login_gate",
-        "signed_in_expert_mode"
+          "expert_mode_login_gate",
+          "signed_in_expert_mode"
         ],
         "actual_model": null,
         "model_generation_verified": false,
@@ -441,6 +441,36 @@
         "free_capacity_guaranteed": false
       },
       "dispatch_enabled": false
+    },
+    {
+      "id": "kimi-web-controller",
+      "name": "Kimi project reviewer",
+      "role_candidates": [
+        "researcher",
+        "reviewer"
+      ],
+      "public_url": "https://www.kimi.ai/",
+      "status": "manual_controller_verified",
+      "registration": "declarative_registered",
+      "integration": {
+        "transport": "authorized_product_ui",
+        "direct_api_access": false,
+        "private_chat_access": false
+      },
+      "verification": {
+        "observed_on": "2026-09-25",
+        "selected_model": "K3 High",
+        "project_created": true,
+        "common_instructions_saved": true,
+        "model_generation_verified": false,
+        "last_result": "free_queue_overloaded_no_paid_fallback"
+      },
+      "dispatch_enabled": false,
+      "remaining_gates": [
+        "free_queue_available",
+        "completed_response_observed",
+        "validate_returned_artifact"
+      ]
     }
   ],
   "contributor_discovery": {
@@ -482,4 +512,3 @@
     "count_as_participant_only_after_explicit_promotion": true
   }
 }
-

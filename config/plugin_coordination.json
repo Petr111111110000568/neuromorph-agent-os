@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "network_allowed": false,
+  "credentials_allowed": false,
+  "paid_calls_allowed": false,
+  "resources": {"max_enabled": 7, "cpu_seconds": 42, "memory_mb": 3584},
+  "initial_profiles": {
+    "author": ["regression_benchmark"],
+    "reviewer": ["legacy_topology"],
+    "reviser": ["cortical_sequence"]
+  },
+  "catalogue": {
+    "structural_plasticity": {"version": "0.7.0", "roles": ["author", "reviewer", "reviser"], "requires": [], "conflicts": [], "cpu_seconds": 6, "memory_mb": 512},
+    "coupled_dynamics": {"version": "0.4.0", "roles": ["author", "reviewer", "reviser"], "requires": [], "conflicts": [], "cpu_seconds": 6, "memory_mb": 512},
+    "regression_benchmark": {"version": "0.4.0", "roles": ["author", "reviewer", "reviser"], "requires": [], "conflicts": [], "cpu_seconds": 6, "memory_mb": 512},
+    "quantum_circuit": {"version": "0.4.0", "roles": ["author", "reviewer", "reviser"], "requires": [], "conflicts": [], "cpu_seconds": 6, "memory_mb": 512},
+    "legacy_topology": {"version": "0.4.0", "roles": ["author", "reviewer", "reviser"], "requires": [], "conflicts": [], "cpu_seconds": 6, "memory_mb": 512},
+    "kan_benchmark": {"version": "0.8.0", "roles": ["author", "reviewer", "reviser"], "requires": [], "conflicts": [], "cpu_seconds": 6, "memory_mb": 512},
+    "cortical_sequence": {"version": "0.8.0", "roles": ["author", "reviewer", "reviser"], "requires": [], "conflicts": [], "cpu_seconds": 6, "memory_mb": 512}
+  }
+}

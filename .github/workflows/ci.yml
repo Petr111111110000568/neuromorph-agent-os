@@ -24,4 +24,8 @@ jobs:
         run: python3 -m unittest discover -s tests -v
       - name: Builtin integrity and environment checks
         run: python3 -m workbench doctor
+      - name: Verify peer plugin profile bootstrap without model calls
+        run: |
+          env -i PATH="$PATH" LANG=C.UTF-8 python3 -m workbench.autonomy.plugin_coordination bootstrap
+          env -i PATH="$PATH" LANG=C.UTF-8 python3 -m workbench.autonomy.plugin_coordination bootstrap
 
