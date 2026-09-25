@@ -32,7 +32,9 @@ SOURCE_PINS = {
 }
 TIMEOUT_SECONDS = 120
 MAX_PROMPT_CHARS = 4000
-MAX_RESPONSE_BYTES = 256 * 1024
+# Wire traffic includes repeated full generating snapshots, not just the answer.
+MAX_RESPONSE_BYTES = 8 * 1024 * 1024
+MAX_EVENT_BYTES = 256 * 1024
 MAX_PREFLIGHT_BYTES = 192 * 1024
 MAX_LINE_BYTES = 128 * 1024
 _EVENT_ID = re.compile(r"[a-f0-9]{32}\Z")
@@ -214,9 +216,13 @@ def _text_from_complete(payload):
 
 
 def _sse(response, deadline):
+    # Gradio 5.27 /call serializes full output snapshots in generating events.
+    # Bound total wire traffic separately; retain only the complete event data.
+    # Source: gradio@5.27.0/gradio/routes.py, simple_predict_get.process_msg.
     buffer = b""
     event = None
-    data = []
+    data = bytearray()
+    event_bytes = 0
     total = 0
     while True:
         _remaining(deadline)
@@ -232,24 +238,36 @@ def _sse(response, deadline):
             line, buffer = buffer.split(b"\n", 1)
             if len(line) > MAX_LINE_BYTES:
                 raise _Failure("response_too_large")
+            event_bytes += len(line) + 1
+            if event_bytes > MAX_EVENT_BYTES:
+                raise _Failure("response_too_large")
             line = line.rstrip(b"\r")
             if not line:
                 if event == "error":
                     raise _Failure("provider_unavailable")
                 if event == "complete":
-                    return _text_from_complete(json_load(b"\n".join(data))), total
+                    return _text_from_complete(json_load(bytes(data))), total
                 if event not in (None, "heartbeat", "generating"):
                     raise _Failure("invalid_response")
-                event, data = None, []
+                event, event_bytes = None, 0
+                data.clear()
             elif line.startswith(b"event: "):
                 if event is not None:
                     raise _Failure("invalid_response")
                 event = line[7:].decode("ascii")
+                if event not in {"complete", "error", "heartbeat", "generating"}:
+                    raise _Failure("invalid_response")
             elif line.startswith(b"data: "):
-                data.append(line[6:])
+                if event is None:
+                    raise _Failure("invalid_response")
+                if event == "complete":
+                    if data:
+                        data.extend(b"\n")
+                    data.extend(line[6:])
+                # Intermediate snapshots and upstream error bodies are discarded.
             elif not line.startswith(b":"):
                 raise _Failure("invalid_response")
-        if len(buffer) > MAX_LINE_BYTES:
+        if len(buffer) > MAX_LINE_BYTES or event_bytes + len(buffer) > MAX_EVENT_BYTES:
             raise _Failure("response_too_large")
 
 
@@ -360,4 +378,3 @@ def call_qwen_space(prompt, transport=None):
     if transport is not None:
         return _perform(prompt, transport, time.monotonic() + TIMEOUT_SECONDS)
     return _isolated(prompt)
-

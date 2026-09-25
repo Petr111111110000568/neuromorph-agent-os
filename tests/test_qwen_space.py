@@ -189,12 +189,50 @@ class QwenSpaceTests(unittest.TestCase):
     def test_stream_bytes_and_slow_drip_have_bounds(self):
         transport = self.transport(b":" + b"x" * (qwen.MAX_LINE_BYTES + 1))
         self.assertEqual(self.run_fixture(transport)["status"], "response_too_large")
-        transport = self.transport(b"event: heartbeat\ndata: null\n\n" * 15000)
-        self.assertEqual(self.run_fixture(transport)["status"], "response_too_large")
+        heartbeat = b"event: heartbeat\ndata: null\n\n"
+        response = Response(heartbeat * (qwen.MAX_RESPONSE_BYTES // len(heartbeat) + 1), "fixture")
+        with self.assertRaises(qwen._Failure) as error:
+            qwen._sse(response, qwen.time.monotonic() + 10)
+        self.assertEqual(error.exception.status, "response_too_large")
+        self.assertEqual(response.tell(), qwen.MAX_RESPONSE_BYTES + 1)
         with patch.object(qwen.time, "monotonic", side_effect=[0, 2]):
             with self.assertRaises(qwen._Failure) as error:
                 qwen._sse(Response(b":x\n\n", "fixture"), 1)
         self.assertEqual(error.exception.status, "deadline_exceeded")
+
+    def test_cumulative_snapshots_exceed_old_cap_but_final_answer_is_received(self):
+        pending = sse(complete("x" * 12000, status="pending"), event="generating")
+        raw = pending * 32 + sse(complete("Final unverified proposal"))
+        self.assertGreater(len(raw), 256 * 1024)
+        self.assertLess(len(raw), qwen.MAX_RESPONSE_BYTES)
+        transport = self.transport(raw)
+        result = self.run_fixture(transport)
+        self.assertEqual(result["status"], "response_received")
+        self.assertEqual(result["text"], "Final unverified proposal")
+        self.assertEqual(result["response_bytes"], len(raw))
+        self.assertEqual(sum(c.args[0].get_method() == "POST" for c in transport.call_args_list), 1)
+
+    def test_only_complete_payload_is_parsed_and_intermediate_text_is_not_returned(self):
+        raw = (sse(complete("Intermediate secret-free draft", status="pending"), event="generating")
+               * 3 + sse(complete("Final proposal")))
+        with patch.object(qwen, "json_load", wraps=qwen.json_load) as parse:
+            text, _ = qwen._sse(Response(raw, "fixture"), qwen.time.monotonic() + 10)
+        self.assertEqual(text, "Final proposal")
+        parse.assert_called_once()
+        self.assertNotIn(b"Intermediate", parse.call_args.args[0])
+
+    def test_multiline_event_and_final_answer_keep_independent_size_caps(self):
+        # Each line is legal, but a single event exceeds its aggregate cap.
+        padding = (b"data: " + b" " * (64 * 1024) + b"\n") * 4
+        for event in (b"complete", b"generating"):
+            raw = b"event: " + event + b"\n" + padding + b"\n" + sse()
+            transport = self.transport(raw)
+            self.assertEqual(self.run_fixture(transport)["status"], "response_too_large")
+        # Increasing the wire allowance must not increase the answer limit.
+        transport = self.transport(sse(complete("x" * (64 * 1024 + 1))))
+        result = self.run_fixture(transport)
+        self.assertEqual(result["status"], "incomplete_response")
+        self.assertNotIn("text", result)
 
     def test_http_rate_limit_no_retry_and_no_error_body(self):
         transport = self.transport()
@@ -243,4 +281,3 @@ class QwenSpaceTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

@@ -48,7 +48,7 @@ def _adapter_provenance(result):
     expected_booleans = {'thinking': True, 'web_search': False,
                          'automatic_retry': False, 'unverified': True}
     limits = {'requests': 1, 'request_count': 1, 'http_requests': 8,
-              'preflight_bytes': 192 * 1024, 'response_bytes': 256 * 1024}
+              'preflight_bytes': 192 * 1024, 'response_bytes': 8 * 1024 * 1024}
     observations = {}
     for key, expected in fixed.items():
         if key in result:
