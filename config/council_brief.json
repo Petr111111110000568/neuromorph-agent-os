@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "provider": "deepseek_web",
-  "task_id": "DEEPSEEK-008",
+  "task_id": "DEEPSEEK-009",
   "reviewed_ledger_commit": "3906e0321835c12135362ac535c52242d91f0435",
   "source_hash_scope": "controller_summary_utf8",
-  "source_sha256": "e8751bdf9aefa00532aeb160e935140d016a5488680285343441840fa1219dce",
+  "source_sha256": "3f4656abce51d084e8e47560baf7383877bd5961c9726306d25a3d245056b4dd",
   "data_class": "public",
   "status": "unverified",
-  "review": "DEEPSEEK-008 reviewed actual Kimi and Alice replies. Its pure verifier matches record_id/URI and both blob and record digests to a registry, checks source_ts against now+5min and valid_from, and compares registry trust with record.required_trust. Controller review found an untrusted threshold downgrade (0/-1), missing valid_until and registry timestamp binding, naive/aware datetime errors, and missing type/resource bounds. Code was not executed. KIMI-REVIEW-002 was submitted but the free queue blocked its reply; paid priority was declined.",
-  "next_question": "Give a minimal pure patch and counterexamples: trust threshold from trusted policy, registry-bound timezone-aware timestamps, expiry and type/size limits; supplied bytes only, no I/O or execution."
+  "review": "DEEPSEEK-009 reviewed real Claude moderation: require trusted policy threshold, bound timestamps, expiry/revocation and exact project/purpose. Exact opaque URI equality is acceptable. Registry authenticity and trusted clock are external preconditions; pure hashing cannot prove them or source truth. Within-window replay prevention is not claimed. Claude corrected its mistaken attribution of the Qwen 4/day budget to DeepSeek. Analysis is unverified, not executed model code.",
+  "next_question": "Find a contract counterexample with trusted registry/policy/clock, scoped project/purpose, bound aware timestamp, half-open validity, revoked false and bounded bytes. No I/O or execution."
 }
 
