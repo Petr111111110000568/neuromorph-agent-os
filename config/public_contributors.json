@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "document_type": "declarative_public_contributor_registry",
-  "updated_on": "2026-09-25",
+  "updated_on": "2026-09-26",
   "project": {
     "name": "Meta-Harness Research System",
     "repository": "Petr111111110000568/neuromorph-agent-os",
@@ -118,6 +118,40 @@
     ]
   },
   "participants": [
+    {
+      "id": "claude-web-moderator",
+      "name": "Claude Moderator",
+      "public_url": "https://claude.ai/",
+      "role_candidates": [
+        "moderator",
+        "council_member",
+        "reviewer"
+      ],
+      "registration": "declarative_registered",
+      "membership_basis": "explicit_user_request",
+      "status": "native_project_review_completed_unverified",
+      "integration": {
+        "transport": "authorized_product_ui",
+        "direct_api_access": false,
+        "native_schedule_created": false
+      },
+      "verification": {
+        "observed_on": "2026-09-26",
+        "project_created": true,
+        "common_instructions_saved": true,
+        "selected_model": "Sonnet 5",
+        "effort": "Max",
+        "web_search_enabled": true,
+        "account_plan": "Free",
+        "task_id": "CLAUDE-MOD-002",
+        "model_generation_verified": true,
+        "scientific_claims_validated": false
+      },
+      "dispatch_enabled": false,
+      "remaining_gates": [
+        "separate_cloud_controller_if_requested"
+      ]
+    },
     {
       "id": "qwen-official-space",
       "name": "Official Qwen/Qwen3-Demo Space",
@@ -467,7 +501,10 @@
         "native_schedule": "K3 daily 07:00 through 2026-10-31; completed own native cloud run with visible result chat; cross-platform delivery remains controller-mediated; timezone unconfirmed",
         "read_main_commit": "eff8ef943159439027ce10d5daf3bbf7f8a23186",
         "read_ledger_commit": "3906e0321835c12135362ac535c52242d91f0435",
-        "tool_results": {"Context7": "success", "Academic Data scholar": "timeout_60_seconds_no_retry"},
+        "tool_results": {
+          "Context7": "success",
+          "Academic Data scholar": "timeout_60_seconds_no_retry"
+        },
         "proposal": "Canonical JSON/hash plus trusted anchor; unverified, code not executed",
         "expected_missing_files": "council_brief and council docs 404 before pending PR6",
         "installed_plugins": [
