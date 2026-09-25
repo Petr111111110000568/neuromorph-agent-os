@@ -58,7 +58,7 @@ class GitHub:
                 or not path.startswith("/") or path.startswith("//")
                 or any(c in path for c in "\r\n\\#")):
             raise LedgerError("invalid_api_request")
-        url = "https://api.github.com/repos/" + self.repository + path
+        url = "https://api.github.com/repos/" + self.repository + ('' if path == '/' else path)
         data = None if payload is None else json.dumps(payload, ensure_ascii=False, allow_nan=False).encode("utf-8")
         request = Request(url, data=data, method=method, headers={
             "Authorization": "Bearer " + self._token,

@@ -243,7 +243,7 @@ def reserve():
     previous, head, base = fetch_state(api)
     if previous is None:
         # Missing state must never silently reset a running schedule.
-        if os.environ.get('GITHUB_RUN_NUMBER') != '1':
+        if os.environ.get('GITHUB_RUN_NUMBER') != '1' and os.environ.get('CONTINUOUS_INITIALIZE') != 'true':
             raise ValueError('missing_durable_ledger')
         previous = initial_state()
     state = reserve_state(previous, int(time.time()), os.environ['GITHUB_RUN_ID'], os.environ['GITHUB_SHA'])
@@ -321,8 +321,13 @@ def main(argv=None):
     try:
         globals()[args.operation]()
         return 0
-    except Exception:
-        print('Continuous cycle stopped: invalid state, unavailable storage or changed contract. Reservation retained.', file=sys.stderr)
+    except Exception as exc:
+        reason = getattr(exc, 'reason', type(exc).__name__)
+        status = getattr(exc, 'status', None)
+        if not isinstance(reason, str) or not re.fullmatch(r'[a-zA-Z_]{1,80}', reason):
+            reason = 'unavailable'
+        print('Continuous cycle stopped: ' + reason + (' HTTP ' + str(status) if type(status) is int else '')
+              + '. Any existing reservation is retained.', file=sys.stderr)
         return 2
 
 
