@@ -315,5 +315,143 @@ class ContinuousStateTests(unittest.TestCase):
         self.assertIs(receipt["code_executed"], False)
         self.assertIs(receipt["automatic_merge"], False)
 
+    def test_legacy_live_state_migrates_profiles_without_resetting_attempts_or_contract(self):
+        legacy = succeed(reserve())
+        legacy.pop('plugin_receipt', None)
+        snapshot = copy.deepcopy(legacy)
+        catalog = controller.plugins.catalogue(controller.ROOT)
+        pending = controller.reserve_state(legacy, legacy['next_due'], '101', BASE_COMMIT,
+                                           plugin_catalog=catalog)
+        self.assertEqual(legacy, snapshot)
+        self.assertEqual(controller.validate_state(legacy), legacy)
+        self.assertEqual(pending['attempts'], 2)
+        self.assertEqual(pending['successes'], 1)
+        self.assertEqual(pending['phase'], 1)
+        self.assertEqual(pending['contract'], legacy['contract'])
+        self.assertEqual(pending['plugin_profiles']['revision'], 0)
+        prompt = controller.make_prompt(pending, [], plugin_catalog=catalog)
+        packet = json.loads(prompt.split('\n', 1)[1])
+        self.assertEqual(packet['plugin_coordination']['profiles'], pending['plugin_profiles']['profiles'])
+        self.assertEqual(len(packet['plugin_coordination']['allowed_plugins']), 7)
+        self.assertIn('Optionally add plugin_change', prompt)
+        self.assertLessEqual(len(prompt), 4000)
+
+    def test_valid_peer_change_is_applied_by_trusted_finalize_and_persisted_with_research(self):
+        catalog = controller.plugins.catalogue(controller.ROOT)
+        pending = controller.reserve_state(controller.initial_state(), NOW, '100', BASE_COMMIT,
+                                           plugin_catalog=catalog)
+        proposal = {**message(), 'plugin_change': {'target': 'reviewer', 'enable': ['kan_benchmark'],
+                    'disable': [], 'reason': 'Review a reproducible synthetic baseline'}}
+        reservation = {'head_sha': 'b' * 40, 'state': pending}
+        result = {'status': 'response_received', 'message': proposal}
+        with patch.object(controller, 'ledger_api', return_value=Mock()), \
+                patch.object(controller, 'read_json', side_effect=[reservation, result, {}]), \
+                patch.object(controller, 'write_json') as output, \
+                patch.object(controller.time, 'time', return_value=NOW), \
+                patch('scripts.continuous_ledger.fetch_state', return_value=(pending, 'b' * 40, BASE_COMMIT)), \
+                patch('scripts.continuous_ledger.commit_state', return_value='c' * 40) as commit, \
+                patch('sys.stdout', new_callable=io.StringIO):
+            controller.finalize()
+        saved = commit.call_args.args[2]
+        self.assertEqual(saved['successes'], 1)
+        self.assertEqual(saved['last_message'], proposal)
+        self.assertEqual(saved['journal'][-1]['status'], 'response_received')
+        self.assertIn('kan_benchmark', saved['plugin_profiles']['profiles']['reviewer'])
+        self.assertEqual(saved['plugin_profiles']['journal'][-1]['actor'], 'author')
+        self.assertEqual(saved['plugin_receipt']['status'], 'applied')
+        self.assertEqual(saved['plugin_receipt']['mode'], 'profile_configuration')
+        self.assertIs(saved['plugin_receipt']['execution_allowed'], False)
+        self.assertEqual(output.call_args.args[1]['plugin_coordination'], saved['plugin_receipt'])
+        resumed = controller.reserve_state(saved, saved['next_due'], '101', BASE_COMMIT, plugin_catalog=catalog)
+        self.assertEqual(resumed['pending']['role'], 'reviewer')
+        self.assertEqual(resumed['plugin_profiles'], saved['plugin_profiles'])
+        self.assertEqual(pending['plugin_profiles']['revision'], 0)
+
+    def test_unsafe_peer_change_is_rejected_without_losing_valid_research_or_advancing_profile(self):
+        catalog = controller.plugins.catalogue(controller.ROOT)
+        base_change = {'target': 'reviewer', 'enable': ['kan_benchmark'], 'disable': [], 'reason': 'Review benchmark'}
+        changes = [{**base_change, 'target': 'author'}, {**base_change, 'enable': ['remote_installer']},
+                   {**base_change, 'credentials': {'grant': True}}, {**base_change, 'actor': 'reviewer'},
+                   {**base_change, 'disable': ['kan_benchmark']}, ['not', 'a', 'proposal']]
+        for change in changes:
+            with self.subTest(change=change):
+                pending = controller.reserve_state(controller.initial_state(), NOW, '100', BASE_COMMIT,
+                                                   plugin_catalog=catalog)
+                finished = controller.finish_state(pending, {'status': 'response_received',
+                    'message': {**message(), 'plugin_change': change}}, NOW, plugin_catalog=catalog)
+                self.assertEqual(finished['last_message']['research'], message()['research'])
+                self.assertEqual(finished['successes'], 1)
+                self.assertEqual(finished['phase'], 1)
+                self.assertEqual(finished['journal'][-1]['status'], 'response_received')
+                self.assertEqual(finished['plugin_receipt']['status'], 'rejected')
+                self.assertEqual(finished['plugin_profiles'], pending['plugin_profiles'])
+
+    def test_changed_main_pins_stop_model_call_and_changed_catalogue_cannot_reset_profiles(self):
+        catalog = controller.plugins.catalogue(controller.ROOT)
+        pending = controller.reserve_state(controller.initial_state(), NOW, '100', BASE_COMMIT,
+                                           plugin_catalog=catalog)
+        reservation = {'head_sha': 'b' * 40, 'state': pending}
+        with patch.object(controller, 'load_policy'), \
+                patch.object(controller, 'read_json', return_value=reservation), \
+                patch.object(controller.plugins, 'catalogue', side_effect=ValueError('builtin_integrity_failure')), \
+                patch.object(qwen_space, 'call_qwen_space') as call, \
+                patch.object(controller, 'public_metadata') as catalogs:
+            with self.assertRaisesRegex(ValueError, 'builtin_integrity_failure'):
+                controller.perform()
+        call.assert_not_called()
+        catalogs.assert_not_called()
+        changed_catalog = {**catalog, 'catalogue_sha256': 'f' * 64}
+        proposal = {**message(), 'plugin_change': {'target': 'reviewer', 'enable': ['kan_benchmark'],
+                    'disable': [], 'reason': 'A request tied to the old verified catalogue'}}
+        finished = controller.finish_state(pending, {'status': 'response_received', 'message': proposal},
+                                           NOW, plugin_catalog=changed_catalog)
+        self.assertEqual(finished['successes'], 1)
+        self.assertEqual(finished['plugin_profiles'], pending['plugin_profiles'])
+        self.assertEqual(finished['plugin_receipt']['status'], 'catalogue_unavailable')
+        with self.assertRaises(ValueError):
+            controller.reserve_state(finished, finished['next_due'], '101', BASE_COMMIT,
+                                     plugin_catalog=changed_catalog)
+
+    def test_eight_entry_profile_journal_preserves_monotonic_revision_and_json_limits(self):
+        catalog = controller.plugins.catalogue(controller.ROOT)
+        state = controller.initial_state()
+        now = NOW
+        for index in range(12):
+            pending = controller.reserve_state(state, now, str(100 + index), BASE_COMMIT, plugin_catalog=catalog)
+            target = controller.ROLES[(pending['phase'] + 1) % 3]
+            enabled = 'quantum_circuit' in pending['plugin_profiles']['profiles'][target]
+            proposal = {**message(), 'plugin_change': {'target': target,
+                'enable': [] if enabled else ['quantum_circuit'],
+                'disable': ['quantum_circuit'] if enabled else [], 'reason': 'Exercise bounded peer coordination'}}
+            state = controller.finish_state(pending, {'status': 'response_received', 'message': proposal},
+                                            now, plugin_catalog=catalog)
+            self.assertEqual(state['plugin_receipt']['status'], 'applied')
+            now += 86400
+        profile = state['plugin_profiles']
+        self.assertEqual(profile['revision'], 12)
+        self.assertEqual(len(profile['journal']), 8)
+        self.assertEqual(profile['journal'][0]['revision'], 5)
+        self.assertEqual(controller.plugins.validate_state(profile, catalog, journal_limit=8), profile)
+        self.assertLess(len(json.dumps(state, ensure_ascii=False).encode()), 64000)
+        restored = controller.validate_state(json.loads(json.dumps(state)))
+        pending = controller.reserve_state(restored, now, '112', BASE_COMMIT, plugin_catalog=catalog)
+        prompt = controller.make_prompt(pending, [{'title': 'x' * 5000}], plugin_catalog=catalog)
+        self.assertLessEqual(len(prompt), 4000)
+        self.assertEqual(json.loads(prompt.split('\n', 1)[1])['public_cards'], [])
+
+    def test_profile_context_keeps_json_complete_when_previous_message_is_large(self):
+        catalog = controller.plugins.catalogue(controller.ROOT)
+        previous = message('s' * 500, python='value = ' + repr('x' * 2900))
+        previous.update(research='r' * 1800, next_question='q' * 400)
+        state = succeed(reserve(), proposal=previous)
+        pending = controller.reserve_state(state, state['next_due'], '101', BASE_COMMIT, plugin_catalog=catalog)
+        prompt = controller.make_prompt(pending, [{'title': 'z' * 4000}], plugin_catalog=catalog)
+        packet = json.loads(prompt.split('\n', 1)[1])
+        self.assertLessEqual(len(prompt), 4000)
+        self.assertEqual(len(packet['plugin_coordination']['allowed_plugins']), 7)
+        self.assertIs(packet['previous_is_excerpt'], True)
+        self.assertEqual(packet['public_cards'], [])
+        self.assertTrue(packet['previous_untrusted_message']['python'])
+
 if __name__ == "__main__":
     unittest.main()

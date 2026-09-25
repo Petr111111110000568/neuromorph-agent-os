@@ -1,0 +1,80 @@
+name: Public research storage snapshots
+
+on:
+  schedule:
+    - cron: '47 1,7,13,19 * * *'
+  workflow_dispatch:
+  workflow_run:
+    workflows: ['Continuous research contributions']
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-research-storage
+  cancel-in-progress: false
+
+jobs:
+  synchronize:
+    if: >-
+      github.repository == 'Petr111111110000568/neuromorph-agent-os' &&
+      github.event.repository.private == false && github.ref == 'refs/heads/main' &&
+      github.run_attempt == 1 && vars.RESEARCH_STORAGE_ENABLED != 'false' &&
+      (github.event_name != 'workflow_run' ||
+        (github.event.workflow_run.head_branch == 'main' &&
+         github.event.workflow_run.run_attempt == 1 &&
+         github.event.workflow_run.head_repository.full_name == github.repository))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    steps:
+      - name: Check out trusted publisher from main
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: main
+          path: trusted
+          persist-credentials: false
+          submodules: false
+          lfs: false
+      - name: Check out proposal ledger only as data
+        id: ledger
+        continue-on-error: true
+        timeout-minutes: 1
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: autonomy/continuous
+          path: ledger-checkout
+          persist-credentials: false
+          submodules: false
+          lfs: false
+      - name: Snapshot main with optional dataset write permission
+        id: main_snapshot
+        continue-on-error: true
+        timeout-minutes: 2
+        env:
+          HF_WRITE_TOKEN: ${{ secrets.HF_WRITE_TOKEN }}
+        run: >-
+          python3 -I trusted/scripts/sync_research_storage.py
+          --source-ref main --repo-dir trusted
+          --output runtime/research-storage/main/receipt.json
+      - name: Snapshot ledger using only the trusted main publisher
+        if: always() && steps.ledger.outcome == 'success'
+        continue-on-error: true
+        timeout-minutes: 2
+        env:
+          HF_WRITE_TOKEN: ${{ secrets.HF_WRITE_TOKEN }}
+        run: >-
+          python3 -I trusted/scripts/sync_research_storage.py
+          --source-ref autonomy/continuous --repo-dir ledger-checkout
+          --output runtime/research-storage/continuous/receipt.json
+      - name: Preserve storage receipts and public manifests
+        if: always()
+        timeout-minutes: 1
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: research-storage-${{ github.run_id }}
+          path: runtime/research-storage/
+          if-no-files-found: warn
+          retention-days: 7
+          compression-level: 9

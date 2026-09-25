@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "canonical_repository": "https://github.com/Petr111111110000568/neuromorph-agent-os",
+  "source_refs": [
+    "main",
+    "autonomy/continuous"
+  ],
+  "hf_dataset": "Kto-to/neuromorph-agent-contributions",
+  "hf_visibility": "public",
+  "hf_authentication": "optional_HF_WRITE_TOKEN_cloud_secret_with_dataset_write_permission",
+  "hf_status": "adapter_implemented_live_write_not_verified",
+  "max_source_files_per_snapshot": 64,
+  "max_source_bytes_per_snapshot": 5242880,
+  "max_file_bytes": 262144,
+  "large_file_upload": false,
+  "raw_chat_upload": false,
+  "generated_code_execution": false,
+  "automatic_paid_fallback": false,
+  "russian_mirror": {
+    "provider_candidate": "SourceCraft",
+    "plan": "Free_only",
+    "status": "native_pull_mirror_created_initial_import_verified",
+    "target_url": "https://sourcecraft.dev/sasha1000000000002020/neuromorph-agent-os",
+    "sync_direction": "canonical_GitHub_to_mirror_only",
+    "preferred_transport": "native_pull_mirror",
+    "documented_interval_seconds": 7200,
+    "documentation": "https://sourcecraft.dev/portal/docs/en/sourcecraft/operations/migration"
+  },
+  "configuration_role": "declarative_inventory_only_hard_limits_and_destination_are_in_trusted_script"
+}
