@@ -4,10 +4,11 @@ on:
   schedule:
     - cron: '17 1,7,13,19 * * *'
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/continuous.yml'
+    inputs:
+      initialize_ledger:
+        description: 'Initialize a missing ledger only after verifying no model attempt was lost'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -35,6 +36,7 @@ jobs:
         timeout-minutes: 1
         env:
           GH_TOKEN: ${{ github.token }}
+          CONTINUOUS_INITIALIZE: ${{ inputs.initialize_ledger || false }}
         run: python3 -m workbench.autonomy.continuous reserve
       - name: Read bounded public catalogs without credentials
         if: steps.reserve.outputs.active == 'true'

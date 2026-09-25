@@ -4,6 +4,7 @@ import importlib.util
 import json
 from pathlib import Path
 import unittest
+from unittest.mock import MagicMock
 
 MODULE = Path(__file__).resolve().parents[1] / "scripts" / "continuous_ledger.py"
 SPEC = importlib.util.spec_from_file_location("continuous_ledger_tested", MODULE)
@@ -61,6 +62,19 @@ class FakeAPI:
 
 
 class ContinuousLedgerTests(unittest.TestCase):
+    def test_repository_metadata_uses_canonical_url_without_redirect(self):
+        api = ledger.GitHub("owner/repo", "dummy-test-token")
+        response = MagicMock()
+        response.__enter__.return_value = response
+        response.geturl.return_value = "https://api.github.com/repos/owner/repo"
+        response.read.return_value = b'{"private":false,"default_branch":"main"}'
+        api._opener = MagicMock()
+        api._opener.open.return_value = response
+        self.assertEqual(api.request("GET", "/")["default_branch"], "main")
+        request = api._opener.open.call_args.args[0]
+        self.assertEqual(request.full_url, "https://api.github.com/repos/owner/repo")
+        self.assertEqual(api._opener.open.call_count, 1)
+
     def test_first_bootstrap_uses_main_and_fixed_paths(self):
         api = FakeAPI()
         self.assertEqual(ledger.fetch_state(api), (None, None, BASE))
