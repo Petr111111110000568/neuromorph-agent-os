@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 import ast
 import copy
+from datetime import datetime, timezone
 import hashlib
 import json
 import os
@@ -22,6 +23,7 @@ from . import council as councils
 from .local_review import public_metadata
 from .providers import json_load
 from ..resource_policy import load_policy
+from ..provenance_verifier import verify_provenance
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'runtime/continuous'
@@ -35,7 +37,13 @@ STATUSES = {'response_received', 'invalid_model_json', 'invalid_python', 'no_res
     'deadline_exceeded', 'response_too_large', 'incomplete_response', 'invalid_response',
     'dependency_unavailable', 'failed', 'request_failed'} | PERMANENT
 MESSAGE_KEYS = {'summary', 'research', 'python', 'next_question'}
-OPTIONAL_STATE_KEYS = {'plugin_profiles', 'plugin_receipt', 'council', 'council_receipt'}
+OPTIONAL_STATE_KEYS = {'plugin_profiles', 'plugin_receipt', 'council', 'council_receipt', 'brief_admission'}
+BRIEF_PROJECT = 'neuromorph-agent-os'
+BRIEF_PURPOSE = 'public-council-handoff'
+BRIEF_REASONS = frozenset({'verified_against_trusted_registry', 'brief_missing', 'brief_invalid',
+    'admission_missing', 'admission_invalid', 'invalid_input', 'unknown_record', 'revoked',
+    'source_mismatch', 'timestamp_mismatch', 'invalid_time_window', 'not_current',
+    'insufficient_trust', 'payload_too_large', 'digest_mismatch', 'scope_mismatch'})
 MAX_COUNCIL_STATE_BYTES = 16 * 1024
 PLUGIN_JOURNAL_LIMIT = 8
 STATE_KEYS = {'schema_version', 'contract', 'attempts', 'successes', 'phase', 'next_due',
@@ -110,6 +118,8 @@ def validate_state(state):
     if type(state) is not dict or not STATE_KEYS <= set(state) <= STATE_KEYS | OPTIONAL_STATE_KEYS or type(state['schema_version']) is not int or state['schema_version'] != 1 or state['contract'] != CONTRACT:
         raise ValueError('state_contract_mismatch')
     roles = _roles(state)
+    if 'brief_admission' in state:
+        validate_brief_receipt(state['brief_admission'])
     if 'council' in state and len(json.dumps(state['council'], ensure_ascii=False).encode()) > MAX_COUNCIL_STATE_BYTES:
         raise ValueError('council_checkpoint_budget')
     if 'council_receipt' in state:
@@ -314,7 +324,7 @@ def reserve_state(previous, now, run_id, base_commit, *, plugin_catalog=None):
 
 def validate_council_brief(value):
     keys = {'schema_version', 'provider', 'task_id', 'reviewed_ledger_commit', 'source_hash_scope',
-            'source_sha256', 'data_class', 'status', 'review', 'next_question'}
+            'source_sha256', 'source_uri', 'source_ts', 'data_class', 'status', 'review', 'next_question'}
     if type(value) is not dict or set(value) != keys:
         raise ValueError('invalid_council_brief')
     if type(value['schema_version']) is not int or value['schema_version'] != 1:
@@ -330,7 +340,7 @@ def validate_council_brief(value):
     if (value['source_hash_scope'] != 'controller_summary_utf8' or value['data_class'] != 'public'
             or value['status'] != 'unverified'):
         raise ValueError('invalid_council_brief')
-    for key, cap in (('review', 600), ('next_question', 200)):
+    for key, cap in (('review', 600), ('next_question', 200), ('source_uri', 128), ('source_ts', 32)):
         if not value[key].strip() or len(value[key]) > cap or any(ord(char) < 32 for char in value[key]):
             raise ValueError('invalid_council_brief')
     if hashlib.sha256(value['review'].encode('utf-8')).hexdigest() != value['source_sha256']:
@@ -347,6 +357,107 @@ def load_council_brief(root=ROOT):
     except FileNotFoundError:
         return None  # Older checkouts remain usable without an external brief.
     return validate_council_brief(value)
+
+def validate_brief_receipt(value):
+    if type(value) is not dict or set(value) != {'status', 'reason', 'record_id'}:
+        raise ValueError('invalid_brief_receipt')
+    if (type(value['status']) is not str or type(value['reason']) is not str
+            or value['status'] not in {'accepted', 'rejected', 'not_present'} or value['reason'] not in BRIEF_REASONS):
+        raise ValueError('invalid_brief_receipt')
+    if value['status'] == 'accepted' and value['record_id'] is None:
+        raise ValueError('invalid_brief_receipt')
+    if (value['status'] == 'accepted') != (value['reason'] == 'verified_against_trusted_registry'):
+        raise ValueError('invalid_brief_receipt')
+    if (value['status'] == 'not_present') != (value['reason'] == 'brief_missing'):
+        raise ValueError('invalid_brief_receipt')
+    if value['record_id'] is not None and (type(value['record_id']) is not str
+            or not re.fullmatch('[A-Z][A-Z0-9-]{0,63}', value['record_id'])):
+        raise ValueError('invalid_brief_receipt')
+    return copy.deepcopy(value)
+
+
+def _admission_timestamp(value):
+    # The trusted manifest uses the narrower whole-second UTC representation.
+    if type(value) is not str or not re.fullmatch(r'[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z', value):
+        raise ValueError('invalid_admission_manifest')
+    return datetime.strptime(value, '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=timezone.utc)
+
+
+def validate_brief_admission(value):
+    if (type(value) is not dict or set(value) != {'schema_version', 'policy', 'registry'}
+            or type(value['schema_version']) is not int or value['schema_version'] != 1):
+        raise ValueError('invalid_admission_manifest')
+    policy = value['policy']
+    if (type(policy) is not dict or set(policy) != {'project_id', 'purpose', 'min_trust', 'max_blob_bytes'}
+            or policy['project_id'] != BRIEF_PROJECT or policy['purpose'] != BRIEF_PURPOSE
+            or type(policy['min_trust']) is not int or policy['min_trust'] != 1
+            or type(policy['max_blob_bytes']) is not int or not 1 <= policy['max_blob_bytes'] <= 4800):
+        raise ValueError('invalid_admission_manifest')
+    registry = value['registry']
+    if type(registry) is not dict or not 1 <= len(registry) <= 8:
+        raise ValueError('invalid_admission_manifest')
+    expected = {'project_id', 'purpose', 'source_uri', 'digest', 'source_ts', 'valid_from', 'valid_until', 'trust', 'revoked'}
+    for record_id, entry in registry.items():
+        if type(record_id) is not str or not re.fullmatch('[A-Z][A-Z0-9-]{0,63}', record_id):
+            raise ValueError('invalid_admission_manifest')
+        if (type(entry) is not dict or set(entry) != expected
+                or entry['project_id'] != BRIEF_PROJECT or entry['purpose'] != BRIEF_PURPOSE
+                or entry['source_uri'] != 'urn:neuromorph:council:' + record_id
+                or type(entry['digest']) is not str or not re.fullmatch('[a-f0-9]{64}', entry['digest'])
+                or type(entry['trust']) is not int or not 0 <= entry['trust'] <= 1
+                or type(entry['revoked']) is not bool):
+            raise ValueError('invalid_admission_manifest')
+        issued, start, end = (_admission_timestamp(entry[key]) for key in ('source_ts', 'valid_from', 'valid_until'))
+        if not start <= issued < end:
+            raise ValueError('invalid_admission_manifest')
+    return copy.deepcopy(value)
+
+
+def brief_now():
+    return datetime.now(timezone.utc)
+
+
+def admit_council_brief(root, now):
+    """Admit the complete unverified brief using an operator-reviewed checkout snapshot.
+
+    Neither file is a signature or independently authenticated registry. Revocation
+    after this checkout is not visible to this run. Never learn trusted digests,
+    policy, dates or trust from the brief. Rejected text/URI is not in the receipt.
+    """
+    receipt = {'status': 'rejected', 'reason': 'brief_invalid', 'record_id': None}
+    try:
+        brief = load_council_brief(root)
+    except (OSError, ValueError, TypeError, KeyError, UnicodeError, RecursionError):
+        return None, receipt
+    if brief is None:
+        receipt.update(status='not_present', reason='brief_missing')
+        return None, receipt
+    try:
+        manifest = plugins._read(Path(root) / 'config/council_brief_admission.json', 16384)
+        manifest = validate_brief_admission(manifest)
+    except FileNotFoundError:
+        receipt['reason'] = 'admission_missing'
+        return None, receipt
+    except (OSError, ValueError, TypeError, KeyError, UnicodeError, RecursionError):
+        receipt['reason'] = 'admission_invalid'
+        return None, receipt
+    if brief['task_id'] in manifest['registry']:
+        receipt['record_id'] = brief['task_id']
+    # Bind every model-visible field, including question, provider and ledger ref.
+    # The computed digest is an untrusted claim, never a new registry entry.
+    try:
+        packet = json.dumps(brief, ensure_ascii=False, sort_keys=True,
+            separators=(',', ':'), allow_nan=False).encode('utf-8')
+    except (UnicodeError, ValueError, TypeError, RecursionError):
+        receipt['reason'] = 'brief_invalid'
+        return None, receipt
+    record = {'record_id': brief['task_id'], 'project_id': BRIEF_PROJECT, 'purpose': BRIEF_PURPOSE,
+        'source_uri': brief['source_uri'], 'source_ts': brief['source_ts'],
+        'digest': hashlib.sha256(packet).hexdigest()}
+    result = verify_provenance(packet, record, manifest['registry'], manifest['policy'], now)
+    receipt.update(status='accepted' if result.accepted else 'rejected', reason=result.reason)
+    validate_brief_receipt(receipt)
+    return (brief if result.accepted else None), receipt
 
 def make_prompt(state, cards, *, plugin_catalog=None, council_brief=None):
     role = state['pending']['role']
@@ -424,6 +535,10 @@ def finish_state(reserved, result, now, *, plugin_catalog=None):
     status = result.get('status', 'no_result') if isinstance(result, dict) else 'no_result'
     if status not in STATUSES:
         status = 'failed'
+    if isinstance(result, dict) and 'brief_admission' in result:
+        state['brief_admission'] = validate_brief_receipt(result['brief_admission'])
+    else:
+        state.pop('brief_admission', None)
     message = None
     evidence = result.get('input') if isinstance(result, dict) else None
     if evidence is not None:
@@ -530,7 +645,7 @@ def perform():
         return
     catalog = plugins.catalogue(ROOT)
     _profile_state(state, catalog)
-    council_brief = load_council_brief(ROOT)
+    council_brief, brief_receipt = admit_council_brief(ROOT, brief_now())
     try:
         cards = public_metadata(OUT / 'discovery/cycle.json')
     except (OSError, ValueError):
@@ -540,7 +655,7 @@ def perform():
     result = qwen_space.call_qwen_space(prompt)
     status = result.get('status', 'failed')
     record = {'status': status, 'prompt_sha256': hashlib.sha256(prompt.encode()).hexdigest(),
-        'message': None, 'code_executed': False, 'validated': False,
+        'message': None, 'code_executed': False, 'validated': False, 'brief_admission': brief_receipt,
         'public_source_count': len(json_load(prompt.split('\n', 1)[1])['public_cards']),
         'base_commit': state['pending']['base_commit'],
         'input': {'prompt': prompt, 'prompt_sha256': hashlib.sha256(prompt.encode()).hexdigest(),
@@ -582,7 +697,8 @@ def finalize():
         'next_due': state['next_due'], 'provider_blocked': state['provider_blocked'],
         'code_executed': False, 'automatic_merge': False,
         'plugin_coordination': state.get('plugin_receipt'),
-        'council_coordination': state.get('council_receipt')})
+        'council_coordination': state.get('council_receipt'),
+        'brief_admission': state.get('brief_admission')})
     print(json.dumps(read_json(OUT / 'receipt.json')))
 
 

@@ -98,7 +98,7 @@
       "evidence": [
         "docs/contributions/coordination-2026-09-25.md#веб-участники"
       ],
-      "observed_task_id": "DEEPSEEK-009",
+      "observed_task_id": "DEEPSEEK-010",
       "limitations": [
         "No autonomous API connection",
         "Web controller may depend on Codex quota",
@@ -238,7 +238,7 @@
         "reviewer"
       ],
       "membership_basis": "explicit_user_request",
-      "status": "native_project_review_completed_unverified",
+      "status": "native_code_audit_completed_free_quota_exhausted",
       "controller_dependency": "active_authorized_browser_controller",
       "capabilities_verified": [
         "free_account",
@@ -250,17 +250,20 @@
       ],
       "model": "Sonnet 5",
       "effort": "Max",
-      "observed_task_id": "CLAUDE-MOD-002",
+      "observed_task_id": "CLAUDE-MOD-003",
       "cost_observation": "Free plan; Fable and Opus upgrade options not selected",
       "evidence": [
-        "docs/CLAUDE_MODERATOR_RU.md"
+        "docs/CLAUDE_MODERATOR_RU.md",
+        "docs/contributions/council-2026-09-26-round-4.md"
       ],
       "limitations": [
         "Completed analysis contains errors corrected by controller; no model code execution",
         "Native chat is not an autonomous cloud scheduler",
         "No Claude API key or paid Code/Cowork connection",
         "External membership does not impersonate a Qwen role vote"
-      ]
+      ],
+      "dispatch_eligible_now": false,
+      "quota_reset_display": "4:50 AM; timezone unverified"
     },
     {
       "id": "jules_cloud",

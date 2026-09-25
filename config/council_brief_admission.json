@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "policy": {
+    "project_id": "neuromorph-agent-os",
+    "purpose": "public-council-handoff",
+    "min_trust": 1,
+    "max_blob_bytes": 4800
+  },
+  "registry": {
+    "DEEPSEEK-009": {
+      "project_id": "neuromorph-agent-os",
+      "purpose": "public-council-handoff",
+      "source_uri": "urn:neuromorph:council:DEEPSEEK-009",
+      "digest": "2b2ade18a19c68c76b919b1281eb806678bd1169eb99aad4fb58bbf0d56cd562",
+      "source_ts": "2026-09-25T21:14:20Z",
+      "valid_from": "2026-09-25T21:14:20Z",
+      "valid_until": "2026-10-02T00:00:00Z",
+      "trust": 1,
+      "revoked": false
+    }
+  }
+}
+
