@@ -129,7 +129,7 @@
       ],
       "registration": "declarative_registered",
       "membership_basis": "explicit_user_request",
-      "status": "native_project_review_completed_unverified",
+      "status": "native_code_audit_completed_free_quota_exhausted",
       "integration": {
         "transport": "authorized_product_ui",
         "direct_api_access": false,
@@ -143,9 +143,10 @@
         "effort": "Max",
         "web_search_enabled": true,
         "account_plan": "Free",
-        "task_id": "CLAUDE-MOD-002",
+        "task_id": "CLAUDE-MOD-003",
         "model_generation_verified": true,
-        "scientific_claims_validated": false
+        "scientific_claims_validated": false,
+        "review_scope": "Static review of the actual verifier and tests; no contract counterexample found, not a scientific validation"
       },
       "dispatch_enabled": false,
       "remaining_gates": [

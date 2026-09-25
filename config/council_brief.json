@@ -8,6 +8,8 @@
   "data_class": "public",
   "status": "unverified",
   "review": "DEEPSEEK-009 reviewed real Claude moderation: require trusted policy threshold, bound timestamps, expiry/revocation and exact project/purpose. Exact opaque URI equality is acceptable. Registry authenticity and trusted clock are external preconditions; pure hashing cannot prove them or source truth. Within-window replay prevention is not claimed. Claude corrected its mistaken attribution of the Qwen 4/day budget to DeepSeek. Analysis is unverified, not executed model code.",
-  "next_question": "Find a contract counterexample with trusted registry/policy/clock, scoped project/purpose, bound aware timestamp, half-open validity, revoked false and bounded bytes. No I/O or execution."
+  "next_question": "Find a contract counterexample with trusted registry/policy/clock, scoped project/purpose, bound aware timestamp, half-open validity, revoked false and bounded bytes. No I/O or execution.",
+  "source_uri": "urn:neuromorph:council:DEEPSEEK-009",
+  "source_ts": "2026-09-25T21:14:20Z"
 }
 

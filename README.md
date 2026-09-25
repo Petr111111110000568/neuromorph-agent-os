@@ -1,5 +1,7 @@
 # Meta-Harness Research System 0.10.0
 
+26.09.2026, раунд 4: [независимый аудит Claude и DeepSeek](docs/contributions/council-2026-09-26-round-4.md) привёл к [допуску публичного брифа](docs/COUNCIL_BRIEF_ADMISSION_RU.md) перед передачей Qwen. Данные сверяются с отдельно заданным registry/policy; отвергнутый пакет не включается в prompt, а фиксированная причина сохраняется в квитанции. Корень доверия — принятый checkout, а не самоотчёт модели.
+
 26.09.2026: [третий раунд Claude → DeepSeek → код](docs/contributions/council-2026-09-26-round-3.md) добавляет pure provenance verifier с project/purpose binding, trusted policy, expiry/revocation и синтетическими тестами. Это проверка целостности относительно доверенного реестра, не научная валидация или новый доступ к аккаунтам.
 
 Облачный совет опубликован в [PR #6](https://github.com/Petr111111110000568/neuromorph-agent-os/pull/6): 510 тестов, doctor и bootstrap прошли. [Фактическая цепочка рецензий второго раунда](docs/contributions/council-2026-09-25-round-2.md) фиксирует вклад Kimi, Алисы и DeepSeek, найденные ошибки и доступность каналов. Последний [health receipt](https://github.com/Petr111111110000568/neuromorph-agent-os/actions/runs/36187395243) проверяет только облачный Git-журнал.
