@@ -2,6 +2,16 @@
 
 Дата проверки: 26.09.2026. Лимит дополнительных расходов: 0.
 
+Облачная проверка commit `9dd335856dc130842df31047a0af940ae57b1fcc`:
+[601 тест, doctor и bootstrap](https://github.com/Petr111111110000568/neuromorph-agent-os/actions/runs/36221054601)
+прошли; [настоящий Hermes SDK и Instinct probe](https://github.com/Petr111111110000568/neuromorph-agent-os/actions/runs/36221054614)
+прошли. Hermes fixture: один запрос шлюзу, ноль генераций, exit0.
+Instinct: 3/6 совпадений с метками, ошибки на отрицании/русском запросе/приветствии;
+это исследовательский компонент, не доверенный маршрутизатор.
+[Квитанции](contributions/hermes-instinct-2026-09-26.json).
+[Конечный Colab notebook](../notebooks/hermes_instinct_colab.ipynb) подготовлен;
+он отдельно не исполнялся в Colab и не создаёт вторую live-квоту.
+
 ## Hermes в существующем исследовательском цикле
 
 Источник — официальный [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent),

@@ -1,3 +1,7 @@
+# Hermes и Instinct — облачная интеграция 26.09.2026
+
+[Hermes research profile](docs/HERMES_AND_INSTINCT_RU.md) подключает настоящий SDK к существующей общей Qwen-квоте. Ежечасный планировщик проверяет допуск; модель вызывается не чаще чем через6ч, максимум4попытки/24ч. [Результаты](docs/contributions/hermes-instinct-2026-09-26.json): SDK fixture и601 облачный тест прошли. [Instinct comparison](docs/INSTINCT_COMPARISON_RU.md): открытый эвристический компонент показал3/6 на шести примерах и оставлен в исследовательском стенде. Это не SDK облачного instinct.com. [Colab notebook](notebooks/hermes_instinct_colab.ipynb) подготовлен для конечной проверки без внешних генераций.
+
 # Meta-Harness Research System 0.10.0
 
 26.09.2026: [облачные harness и проверяемая интеграция](docs/HARNESS_PLATFORM_INTEGRATION_2026-09-26_RU.md) добавляют закреплённые DSH, Qwen Code, Gemini CLI и OpenCode. [Colab notebook](https://colab.research.google.com/github/Petr111111110000568/neuromorph-agent-os/blob/main/notebooks/cloud_harnesses_colab.ipynb) выполняет конечную CPU-проверку и одну явно выделенную попытку бесплатного обзора. [Cloud receipts](docs/contributions/cloud-harnesses-2026-09-26.json) различают установку CLI, протокольный тест и ответ внешней модели. Это не постоянный мост нативных чатов.
