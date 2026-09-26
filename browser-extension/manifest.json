@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "NeuroMorf · локальный мост ассистентов",
+  "version": "0.1.0",
+  "description": "По явному действию передаёт вопрос в разрешённую вкладку AI и возвращает выделенный пользователем ответ. Без cookies и паролей.",
+  "permissions": ["storage", "scripting", "alarms"],
+  "host_permissions": ["http://127.0.0.1:8765/*", "http://localhost:8765/*"],
+  "optional_host_permissions": ["https://chat.qwen.ai/*", "https://chat.deepseek.com/*", "https://alice.yandex.ru/*", "https://yandex.ru/*", "https://kimi.com/*", "https://www.kimi.com/*", "https://kimi.ai/*", "https://www.kimi.ai/*"],
+  "background": {"service_worker": "background.js", "type": "module"},
+  "action": {"default_popup": "popup.html", "default_title": "NeuroMorf: разрешённые участники"},
+  "content_scripts": [{"matches": ["http://127.0.0.1:8765/assistants.html", "http://localhost:8765/assistants.html"], "js": ["local-bridge.js"], "run_at": "document_idle", "all_frames": false}],
+  "content_security_policy": {"extension_pages": "script-src 'self'; object-src 'none'"}
+}
