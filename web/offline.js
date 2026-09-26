@@ -1,0 +1,22 @@
+'use strict';
+const $=id=>document.getElementById(id);
+let pending=null,busy=false;
+const label={reserved:'Запрос сохранён',pending:'Подготовка',running:'Модель работает',completed:'Три предложения сохранены',interrupted:'Прервано; автоматического повтора нет',failed:'Ошибка',timeout:'Превышено время',stopped:'Остановлено',unsupported_platform:'Профиль этой ОС не поддержан'};
+const element=(tag,text)=>{const e=document.createElement(tag);e.textContent=text;return e;};
+function renderAnswer(card,answer){
+  const text=answer.text||answer.excerpt||'';
+  card.append(element('h4',answer.role||'Ответ'));
+  const legacy=typeof text==='string'&&text.trimStart().startsWith('Loading model...')&&text.includes('build      : b11146-7fe450e19')&&text.includes('available commands:')&&text.includes('/read <file>');
+  if(legacy){
+    card.append(element('p','Исторический диагностический вывод; не очищенный ответ модели'));
+    card.append(element('p','Сырой вывод с локальными путями сохранён в истории и скрыт в этой панели.'));
+    return;
+  }
+  card.append(element('p',text));
+  if(answer.truncated===true)card.append(element('p','Показан фрагмент ответа; полный текст сохранён в артефакте этого цикла.'));
+}
+async function api(path,body){const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),20000);try{const r=await fetch(path,{method:body?'POST':'GET',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined,cache:'no-store',signal:controller.signal});const d=await r.json();if(!r.ok){const e=new Error(d.error?.message||'Ошибка запроса');e.status=r.status;throw e;}return d;}finally{clearTimeout(timer);}}
+async function refresh(){try{const d=await api('/api/offline');$('notice').textContent=d.model+' · '+(d.model_files_present?'файлы настроены; хеши проверяются перед запуском':'нужна установка модели')+' · '+d.notice;$('jobs').replaceChildren();for(const j of d.jobs.slice().reverse()){const c=element('article','');c.className='panel';c.append(element('h3',j.question),element('p',(label[j.status]||j.status)+' · попыток: '+j.attempts));for(const a of j.result?.answers||[])renderAnswer(c,a);if(j.result?.notice)c.append(element('p',j.result.notice));$('jobs').append(c);}if(!d.jobs.length)$('jobs').append(element('p','Циклы ещё не запускались.'));$('run').disabled=busy||d.running||!d.model_files_present;}catch(e){$('notice').textContent=e.message;$('run').disabled=true;}}
+$('council').addEventListener('submit',async e=>{e.preventDefault();if(busy)return;const question=$('question').value.trim();if(!question||!$('public').checked)return;if(pending&&pending.question!==question){$('submission').textContent='Сначала подтвердите предыдущую отправку тем же вопросом.';return;}pending ||= {question,request_id:crypto.randomUUID(),public_data_confirmed:true};busy=true;$('run').disabled=true;$('question').disabled=true;try{const r=await api('/api/offline/start',pending);$('submission').textContent='Сохранён цикл '+r.id;pending=null;$('question').disabled=false;await refresh();}catch(err){$('submission').textContent=err.message+' Повтор сохранит тот же ключ.';if([400,503].includes(err.status)){pending=null;$('question').disabled=false;}}finally{busy=false;await refresh();}});
+window.addEventListener('beforeunload',e=>{if(pending){e.preventDefault();e.returnValue='';}});
+$('stop').addEventListener('click',async()=>{try{await api('/api/offline/stop',{});$('submission').textContent='Остановка запрошена; текущий вызов может завершиться до остановки следующего.';await refresh();}catch(e){$('submission').textContent=e.message;}});$('refresh').addEventListener('click',refresh);refresh();setInterval(()=>{if(!document.hidden&&!busy)refresh();},5000);

@@ -19,6 +19,9 @@ from ..resource_policy import load_policy
 
 MAX_INPUT = 192 * 1024
 MAX_OUTPUT = 32 * 1024
+MAX_PROMPT = 32 * 1024
+MAX_TRANSCRIPT = MAX_PROMPT + MAX_OUTPUT + 256
+OUTPUT_FORMAT = "llama.cpp-b11146-output-file-v1"
 _PROVIDERS = {"agentverse": {"agentverse.ai"},
     "huggingface_models": {"huggingface.co"}, "huggingface_datasets": {"huggingface.co"},
     "mcp_registry": {"registry.modelcontextprotocol.io"}}
@@ -128,12 +131,53 @@ def _prompt(metadata):
             "\nEND UNTRUSTED METADATA\n/no_think\n")
 
 
+def parse_cli_output(raw, prompt, *, private_paths=()):
+    """Read only the b11146 -o transcript, never scrape human-facing stdout.
+
+    Pinned cli-context.cpp writes the exact user text followed by one Assistant
+    record. An unknown prefix, another role, a reasoning section or incomplete
+    framing is rejected instead of guessing where the answer begins.
+    Source: ggml-org/llama.cpp@7fe450e19305b828c199d602c23a8337aaa1f03b,
+    tools/cli/cli-context.cpp:473-476,576-605. Windows ofstream adds CRLF.
+    """
+    if (not isinstance(raw, bytes) or len(raw) > MAX_TRANSCRIPT or not isinstance(prompt, str)
+            or not prompt or "\x00" in prompt or len(prompt.encode("utf-8")) > MAX_PROMPT):
+        raise ValueError("Invalid bounded CLI transcript")
+    text = raw.decode("utf-8").replace("\r\n", "\n")
+    # The source removes exactly one terminal newline from the supplied prompt.
+    supplied = prompt[:-1] if prompt.endswith("\n") else prompt
+    prefix = "User:\n" + supplied + "\n\nAssistant:\n"
+    if not text.startswith(prefix) or not text.endswith("\n\n"):
+        raise ValueError("Unknown or incomplete CLI transcript framing")
+    answer = text[len(prefix):-2].strip()
+    if (not answer or len(answer.encode("utf-8")) > MAX_OUTPUT
+            or any(ord(character) < 32 and character not in "\n\r\t" for character in answer)
+            or any(marker in answer for marker in ("[Start thinking]", "[End thinking]", "<think>", "</think>"))
+            or any(line in {"User:", "Assistant:"} for line in answer.splitlines())):
+        raise ValueError("Ambiguous or invalid CLI assistant content")
+    normalized = answer.replace("\\", "/").casefold()
+    if any(str(path).replace("\\", "/").casefold() in normalized for path in private_paths if str(path)):
+        raise ValueError("Local runtime path echoed in assistant content")
+    return answer
+
+
 def _run_local(executable, model, prompt, *, max_tokens, timeout, stop_file):
-    """Only a fixed, tested b11146 Vulkan0 profile; no arbitrary extra arguments."""
+    """Fixed b11146 Vulkan0 profile; bounded transcript output, no shell.
+
+    b11146 cli-server.h starts the loopback server in std::thread in THIS
+    process, so killing/waiting on the process also terminates that server.
+    The CLI's banner and truncated prompt echo are diagnostics, never answers.
+    """
+    if (not isinstance(prompt, str) or not prompt.strip() or prompt.startswith("/") or "\x00" in prompt
+            or len(prompt.encode("utf-8")) > MAX_PROMPT):
+        return {"status": "failed"}
     with tempfile.TemporaryDirectory(prefix="local-review-") as temp:
         prompt_path = Path(temp) / "prompt.txt"
+        transcript_path = Path(temp) / "response.txt"
         prompt_path.write_text(prompt, encoding="utf-8", newline="\n")
         command = [str(executable), "--offline", "-m", str(model), "-f", str(prompt_path),
+            "-o", str(transcript_path), "--no-escape", "--reasoning", "off",
+            "--color", "off", "--log-colors", "off", "--no-show-timings",
             "-st", "--simple-io", "--no-display-prompt", "-n", str(max_tokens), "-c", "4096",
             "-ngl", "99", "--device", "Vulkan0", "-fa", "on", "--temp", "0.7",
             "--top-p", "0.8", "--top-k", "20", "--min-p", "0", "--presence-penalty", "1.5"]
@@ -153,6 +197,8 @@ def _run_local(executable, model, prompt, *, max_tokens, timeout, stop_file):
                         status = "timeout"
                     elif any(os.fstat(stream.fileno()).st_size > MAX_OUTPUT for stream in (stdout, stderr)):
                         status = "failed"
+                    elif transcript_path.exists() and _safe_path(transcript_path).stat().st_size > MAX_TRANSCRIPT:
+                        status = "failed"
                     if status:
                         child.kill()
                         break
@@ -162,9 +208,22 @@ def _run_local(executable, model, prompt, *, max_tokens, timeout, stop_file):
                     return {"status": status or "failed"}
                 if any(os.fstat(stream.fileno()).st_size > MAX_OUTPUT for stream in (stdout, stderr)):
                     return {"status": "failed"}
-                stdout.seek(0)
-                text = stdout.read(MAX_OUTPUT + 1).decode("utf-8")
-                return {"status": "unverified_proposal", "text": text} if text.strip() else {"status": "failed"}
+                # b11146 currently ignores generate_completion(false) in run(),
+                # so exit code zero alone does not establish a successful stream.
+                # ui::show_error emits this fixed marker; fail closed on either
+                # stream rather than publishing partial text or the diagnostics.
+                for stream in (stdout, stderr):
+                    stream.seek(0)
+                    if b"Error:" in stream.read(MAX_OUTPUT + 1):
+                        return {"status": "failed"}
+                try:
+                    with _safe_path(transcript_path).open("rb") as transcript:
+                        raw = transcript.read(MAX_TRANSCRIPT + 1)
+                    text = parse_cli_output(raw, prompt, private_paths=(executable, model, temp))
+                except (OSError, ValueError, UnicodeError):
+                    return {"status": "failed"}
+                return {"status": "unverified_proposal", "text": text, "output_format": OUTPUT_FORMAT,
+                        "stdout_published": False}
             finally:
                 if child.poll() is None:
                     child.kill()

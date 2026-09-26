@@ -1,0 +1,120 @@
+name: Offline portability fixtures
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/offline-portability.yml'
+      - 'workbench/**'
+      - 'scripts/offline_bundle.py'
+      - 'scripts/download_kimi_weights.py'
+      - 'scripts/run_offline_mcp.py'
+      - 'scripts/install_windows_bundle.ps1'
+      - 'tests/test_offline_*.py'
+      - 'tests/test_kimi_weight_download.py'
+      - 'config/**'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/offline-portability.yml'
+      - 'workbench/**'
+      - 'scripts/offline_bundle.py'
+      - 'scripts/download_kimi_weights.py'
+      - 'scripts/run_offline_mcp.py'
+      - 'scripts/install_windows_bundle.ps1'
+      - 'tests/test_offline_*.py'
+      - 'tests/test_kimi_weight_download.py'
+      - 'config/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: offline-portability-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fixtures:
+    name: Fixtures / ${{ matrix.os }} / Python 3.13
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022, macos-15]
+    env:
+      PYTHONUTF8: '1'
+      PYTHONIOENCODING: utf-8
+      PYTHONNOUSERSITE: '1'
+      PIP_NO_INDEX: '1'
+      AUTONOMY_ALLOW_MODEL_CALLS: 'false'
+      HF_HUB_OFFLINE: '1'
+      TRANSFORMERS_OFFLINE: '1'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # Existing project pin: v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0; official signed commit verified 2026-09-26
+        with:
+          python-version: '3.13'
+          check-latest: false
+      - name: Bounded offline fixtures (no weights, inference, or external requests)
+        shell: python
+        run: |
+          import os
+          from pathlib import Path
+          import sys
+          import tempfile
+          import unittest
+
+          sys.path.insert(0, str(Path.cwd().resolve()))
+          assert sys.version_info[:2] == (3, 13), sys.version
+          # macOS may expose /var through a symlink. Keep fixture parents
+          # canonical without weakening production path validation.
+          fixture_root = Path(os.environ["RUNNER_TEMP"]).resolve() / "neuromorph-offline-fixtures"
+          fixture_root.mkdir(exist_ok=True)
+          tempfile.tempdir = str(fixture_root)
+          patterns = (
+              "test_offline_bundle.py",
+              "test_offline_council.py",
+              "test_offline_control.py",
+              "test_offline_http.py",
+              "test_offline_mcp.py",
+              "test_local_review.py",
+              "test_kimi_weight_download.py",
+          )
+          suite = unittest.TestSuite()
+          loader = unittest.TestLoader()
+          for pattern in patterns:
+              selected = loader.discover("tests", pattern=pattern)
+              if selected.countTestCases() == 0:
+                  raise SystemExit("No tests collected for " + pattern)
+              suite.addTests(selected)
+          print("Fixture tests:", suite.countTestCases(), "Python:", sys.version, flush=True)
+          result = unittest.TextTestRunner(verbosity=2).run(suite)
+          raise SystemExit(0 if result.wasSuccessful() else 1)
+      - name: Windows bootstrap syntax
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $tokens=$null; $errors=$null
+          [System.Management.Automation.Language.Parser]::ParseFile((Join-Path (Get-Location) 'scripts/install_windows_bundle.ps1'),[ref]$tokens,[ref]$errors) | Out-Null
+          if($errors.Count) { $errors | Format-List; exit 1 }
+      - name: Doctor (builtin integrity and SQLite only)
+        if: ${{ !cancelled() }}
+        shell: python
+        run: |
+          import json
+          import subprocess
+          import sys
+
+          result = subprocess.run(
+              [sys.executable, "-m", "workbench", "doctor"],
+              check=True, capture_output=True, text=True, encoding="utf-8", timeout=60,
+          )
+          report = json.loads(result.stdout)
+          assert report["status"]["environment"]["builtin_integrity"] is True
+          assert report["audit"]["valid"] is True
+          assert report["status"]["model_calls_enabled"] is False
+          print(result.stdout)
+

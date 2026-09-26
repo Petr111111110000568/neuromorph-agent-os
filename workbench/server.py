@@ -99,6 +99,10 @@ def make_server(service, host="127.0.0.1", port=8765, cloud_auth=None):
             if path == '/api/science/catalog':
                 from .science import catalogue
                 return self.response(catalogue())
+            if path == '/api/offline':
+                if cloud_auth is not None:
+                    raise ServiceError('Offline runtime is local only','local_only',403)
+                return self.response(service.offline.snapshot())
             if path in ('/api/studio', '/api/studio/export'):
                 return self.response(service.studio.snapshot(self.owner), download='neuromorph-workspace.json' if path.endswith('/export') else None)
             if path == '/api/harnesses':
@@ -200,6 +204,15 @@ def make_server(service, host="127.0.0.1", port=8765, cloud_auth=None):
                 if path == '/api/science/protocol':
                     from .science import protocol_task
                     return self.response(service.studio.save(protocol_task(self.body()), self.owner))
+                if path in ('/api/offline/start','/api/offline/stop'):
+                    if cloud_auth is not None:
+                        raise ServiceError('Offline runtime is local only','local_only',403)
+                    data=self.body()
+                    if path.endswith('/start'):
+                        return self.response(service.offline.start(data),202)
+                    if data != {}:
+                        raise ServiceError('Stop expects an empty object')
+                    return self.response(service.offline.stop())
                 if path == '/api/harnesses/run':
                     return self.response(service.harnesses_run(self.body()))
                 routes = {"/api/sources": service.add_source, "/api/run": service.run,

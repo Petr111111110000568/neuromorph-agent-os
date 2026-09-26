@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "purpose": "Evidence-only inventory of reviewed source snapshots; not an installation manifest or grant of permissions.",
+  "reviewed_at": "2026-09-26",
+  "default_runtime_activation": false,
+  "policy": {
+    "spend_limit": 0,
+    "automatic_skill_installation": false,
+    "mutable_main_updater": false,
+    "automatic_browser_capture": false,
+    "external_ai_capture": false,
+    "model_may_grant_capabilities": false
+  },
+  "items": [
+    {
+      "reviewed_at": "2026-09-26",
+      "status": "reviewed_not_installed",
+      "installed": false,
+      "activated_connection": false,
+      "executed": false,
+      "full_security_audit": false,
+      "id": "cognitive-os-eugenexonr",
+      "repository": "https://github.com/eugenexonr/cognitive-os",
+      "commit": "7e0811f2c79444ca80a456f29a0c0f86c7283234",
+      "license": "MIT",
+      "license_url": "https://github.com/eugenexonr/cognitive-os/blob/7e0811f2c79444ca80a456f29a0c0f86c7283234/LICENSE",
+      "license_sha256": "d3e7398ee4a1ea0fec328131a2d756139fa251f25d948e5b03e8e6897e1b1157",
+      "kind": "methodology_and_optional_scripts",
+      "mcp_transports_documented": [],
+      "reviewed_files": 10,
+      "selected_ideas": [
+        "CognitiveDecisionLog: prediction, confidence, observed result, evidence reference, revision",
+        "Separate instructions from observations and hypotheses",
+        "Explicit unknowns and scoped corrections"
+      ],
+      "excluded_by_default": [
+        "cog-update.sh tracking origin/main",
+        "Direct nontransactional compaction of research state",
+        "Global skill installation or replacement of agent instructions"
+      ],
+      "dependencies": {
+        "methodology": "Markdown; no runtime dependency",
+        "optional_scripts": "Python and PyYAML for compact_decisions.py; no dependency lock in reviewed tree"
+      },
+      "limitations": [
+        "Not an LLM, IDE, or scientific validation system",
+        "Upstream evidence is N=1",
+        "Soft safety instructions do not enforce permissions"
+      ]
+    },
+    {
+      "reviewed_at": "2026-09-26",
+      "status": "reviewed_not_installed",
+      "installed": false,
+      "activated_connection": false,
+      "executed": false,
+      "full_security_audit": false,
+      "id": "openclaw",
+      "repository": "https://github.com/openclaw/openclaw",
+      "commit": "718bf2ccae9f42735ce95eda37f0abbd67ceb821",
+      "license": "MIT",
+      "license_url": "https://github.com/openclaw/openclaw/blob/718bf2ccae9f42735ce95eda37f0abbd67ceb821/LICENSE",
+      "license_sha256": "73571b25326281d369087f469842c02444fe39faaecebda4d82ed21ff3a1c29d",
+      "license_note": "Repository API NOASSERTION; actual LICENSE and package.json both MIT; retain THIRD_PARTY_NOTICES and audit dependency licenses separately.",
+      "version_from_package": "2026.9.6",
+      "kind": "agent_gateway",
+      "mcp_transports_documented": [
+        "stdio",
+        "streamable-http",
+        "sse"
+      ],
+      "mcp_probe_performed": false,
+      "reviewed_files": 14,
+      "top_level_bundled_skills_found": 51,
+      "bundled_skill_bodies_reviewed": [
+        "healthcheck",
+        "taskflow",
+        "mcporter",
+        "github",
+        "clawhub"
+      ],
+      "selected_ideas": [
+        "Capability separation between gateway, executor, model, MCP tools, and LAN node enrollment",
+        "TaskFlow revision and mutation receipt reconciliation",
+        "Requester and project scoped tool allowlists"
+      ],
+      "excluded_by_default": [
+        "Bulk ClawHub installation",
+        "Gateway-wide cross-user transcript sharing",
+        "Elevated host-shell access",
+        "Native browser-profile capture",
+        "Automatic LAN pairing or root filesystem grants"
+      ],
+      "dependencies": {
+        "node": ">=24.16.0 <25 || >=26.1.0",
+        "package_manager": "pnpm@12.4.2",
+        "mcp_sdk": "1.30.0",
+        "native_components": "PTY/browser/native libraries and optional sqlite-vec; isolated build needed"
+      },
+      "limitations": [
+        "One gateway is one operator or mutually trusting team boundary",
+        "Not a hostile multi-tenant isolation boundary",
+        "Saved MCP config does not establish a working connection",
+        "Skills and scan results are not proof of absence of malicious behavior"
+      ]
+    },
+    {
+      "reviewed_at": "2026-09-26",
+      "status": "reviewed_not_installed",
+      "installed": false,
+      "activated_connection": false,
+      "executed": false,
+      "full_security_audit": false,
+      "id": "mimik",
+      "repository": "https://github.com/westpoint-io/mimik",
+      "commit": "27b6928a6942612357ed514da2ebbe3bdddc181d",
+      "branch_observed": "dev",
+      "license": "MIT",
+      "license_url": "https://github.com/westpoint-io/mimik/blob/27b6928a6942612357ed514da2ebbe3bdddc181d/LICENSE",
+      "license_sha256": "63f5c6a5a274bfcd43cd4e9b3bdd89e64f3be9b9500c95e7e0ab45ca5da5bcda",
+      "kind": "browser_workflow_recorder",
+      "version_from_package": "1.2.0",
+      "mcp_transports_documented": [],
+      "reviewed_files": 8,
+      "selected_ideas": [
+        "Import reviewed step-by-step guide as non-executable research artifact"
+      ],
+      "excluded_by_default": [
+        "Automatic browser capture",
+        "All-site permission grant",
+        "External AI/voice/TTS submission",
+        "Automatic replay of imported steps"
+      ],
+      "dependencies": {
+        "stack": "WXT / React / TypeScript",
+        "package_manager": "pnpm@10.32.1",
+        "postinstall": "wxt prepare"
+      },
+      "limitations": [
+        "Chrome manifest requests <all_urls>; Firefox hosts are optional",
+        "Regex blur is not comprehensive secret redaction",
+        "AI-enabled functions transmit context to configured providers",
+        "Extension installation and runtime not tested"
+      ]
+    },
+    {
+      "id": "mira-veyran",
+      "reviewed_at": "2026-09-26",
+      "status": "unavailable_public_code",
+      "website": "https://mira.technology/",
+      "status_url": "https://mira.technology/status/",
+      "repository": null,
+      "commit": null,
+      "license": null,
+      "installed": false,
+      "activated_connection": false,
+      "executed": false,
+      "full_security_audit": false,
+      "mcp_transports_documented": [],
+      "limitations": [
+        "Official status says no public conversation access",
+        "No public source, model weights, license, or callable API found in reviewed official material",
+        "Official FAQ states subjective experience is not scientifically established"
+      ]
+    }
+  ],
+  "validation": {
+    "source_metadata_checked": true,
+    "source_files_saved": 32,
+    "static_review": true,
+    "build": false,
+    "runtime": false,
+    "model_call": false,
+    "scientific_validation": false
+  }
+}
