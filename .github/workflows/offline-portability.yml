@@ -63,6 +63,7 @@ jobs:
           import tempfile
           import unittest
 
+          sys.path.insert(0, str(Path.cwd().resolve()))
           assert sys.version_info[:2] == (3, 13), sys.version
           # macOS may expose /var through a symlink. Keep fixture parents
           # canonical without weakening production path validation.
