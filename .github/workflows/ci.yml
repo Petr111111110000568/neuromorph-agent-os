@@ -26,10 +26,11 @@ jobs:
         run: python3 -m workbench doctor
       - name: Browser bridge policy and concurrency checks (no browser or model calls)
         run: |
-          node --test browser-extension/policy.test.mjs browser-extension/bridge.test.mjs browser-extension/frontend.test.mjs
+          node --test browser-extension/policy.test.mjs browser-extension/bridge.test.mjs browser-extension/frontend.test.mjs browser-extension/science-ui.test.mjs
           node --check browser-extension/background.js
           node --check web/assistants.js
           node --check web/studio.js
+          node --check web/science.js
       - name: Verify peer plugin profile bootstrap without model calls
         run: |
           env -i PATH="$PATH" LANG=C.UTF-8 python3 -m workbench.autonomy.plugin_coordination bootstrap
