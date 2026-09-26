@@ -1,5 +1,7 @@
 # Meta-Harness Research System 0.10.0
 
+26.09.2026, раунд 5: [реальная рецензия Claude и DeepSeek](docs/contributions/council-2026-09-26-round-5.md) связана с исправлением потери admission receipt и [синтетическим экспериментом памяти M03](docs/EVIDENCE_MEMORY_EXPERIMENT_RU.md). Конечный облачный workflow сравнивает membership, scope-only и provenance-aware retrieval, сохраняет метрики и evidence pack без LLM/API-ключей. Это инженерная проверка на фиксированном наборе; целостность данных не доказывает истинность утверждения или работу общей сети нативных чатов.
+
 26.09.2026, раунд 4: [независимый аудит Claude и DeepSeek](docs/contributions/council-2026-09-26-round-4.md) привёл к [допуску публичного брифа](docs/COUNCIL_BRIEF_ADMISSION_RU.md) перед передачей Qwen. Данные сверяются с отдельно заданным registry/policy; отвергнутый пакет не включается в prompt, а фиксированная причина сохраняется в квитанции. Корень доверия — принятый checkout, а не самоотчёт модели.
 
 26.09.2026: [третий раунд Claude → DeepSeek → код](docs/contributions/council-2026-09-26-round-3.md) добавляет pure provenance verifier с project/purpose binding, trusted policy, expiry/revocation и синтетическими тестами. Это проверка целостности относительно доверенного реестра, не научная валидация или новый доступ к аккаунтам.
@@ -180,4 +182,3 @@ python -m workbench scout --query research --providers agentverse,huggingface_mo
 ```
 
 Внешние ответы могут меняться. Административная консоль остаётся на loopback; публикуется только отдельный шлюз с ограниченными маршрутами. SQLite хранится на локальном диске координатора. Требования к внешнему развёртыванию приведены в руководстве.
-

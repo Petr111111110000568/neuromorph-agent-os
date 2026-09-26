@@ -83,7 +83,11 @@ def allowed_path(path):
             or str(PurePosixPath(path)) != path or PurePosixPath(path).is_absolute()
             or any(part.startswith('.') or part.startswith('__') for part in path.split('/'))):
         return False
-    if path == 'README.md':
+    if path in {'README.md', 'docs/EVIDENCE_MEMORY_EXPERIMENT_RU.md'}:
+        return True
+    # Only this reviewed public synthetic pack, never arbitrary project datasets.
+    if path in {'data/experiments/evidence_memory/' + name for name in
+                ('sources.json', 'registry.json', 'cases.json', 'manifest.json', 'LICENSE.md')}:
         return True
     if re.fullmatch(r'docs/(?:research(?:-[0-9]{4}-[0-9]{2}-[0-9]{2})?|contributions)/[A-Za-z0-9_-]+\.(?:md|tex)', path):
         return True

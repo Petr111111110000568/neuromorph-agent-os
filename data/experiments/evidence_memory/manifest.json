@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "experiment": "evidence-memory-v1",
+  "license": "CC0-1.0",
+  "origin": "generated-synthetic",
+  "seed": 20260926,
+  "label_rule": "first12hex(sha256(UTF8(str(seed)+\":\"+label_key)))",
+  "fixed_now": "2026-09-26T00:00:00Z",
+  "scopes": [
+    "alpha",
+    "beta"
+  ],
+  "splits": [
+    "development",
+    "synthetic_holdout"
+  ],
+  "methods": [
+    "membership",
+    "scope_only",
+    "provenance"
+  ],
+  "parameters": {
+    "candidate_order": "as_listed",
+    "match": "exact_question",
+    "max_candidates": 8,
+    "max_blob_bytes": 1024
+  },
+  "files": {
+    "sources.json": "ec9a4a92d2c4e2d60aac46952dd9ec7ebbe6c5b14f01510620aa18dcd8e6d2cb",
+    "registry.json": "968d7fec1a542202b4d60c3666ca438e2c1bf932989e4ddb524de7279ef139e8",
+    "cases.json": "1bd5d93d78345e60c28aecf84176bc7fe82d072eac42c3fe193461f9b90d1096"
+  }
+}

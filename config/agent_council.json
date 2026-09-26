@@ -96,9 +96,9 @@
       "model": "record_visible_model_label_per_handoff",
       "cost_observation": "free_web_response_observed_recheck_before_new_task",
       "evidence": [
-        "docs/contributions/coordination-2026-09-25.md#веб-участники"
+        "docs/contributions/council-2026-09-26-round-5.md"
       ],
-      "observed_task_id": "DEEPSEEK-010",
+      "observed_task_id": "DEEPSEEK-011",
       "limitations": [
         "No autonomous API connection",
         "Web controller may depend on Codex quota",
@@ -238,7 +238,7 @@
         "reviewer"
       ],
       "membership_basis": "explicit_user_request",
-      "status": "native_code_audit_completed_free_quota_exhausted",
+      "status": "native_admission_audit_completed_receipt_loss_found",
       "controller_dependency": "active_authorized_browser_controller",
       "capabilities_verified": [
         "free_account",
@@ -250,11 +250,11 @@
       ],
       "model": "Sonnet 5",
       "effort": "Max",
-      "observed_task_id": "CLAUDE-MOD-003",
+      "observed_task_id": "CLAUDE-MOD-004",
       "cost_observation": "Free plan; Fable and Opus upgrade options not selected",
       "evidence": [
         "docs/CLAUDE_MODERATOR_RU.md",
-        "docs/contributions/council-2026-09-26-round-4.md"
+        "docs/contributions/council-2026-09-26-round-5.md"
       ],
       "limitations": [
         "Completed analysis contains errors corrected by controller; no model code execution",
@@ -263,7 +263,7 @@
         "External membership does not impersonate a Qwen role vote"
       ],
       "dispatch_eligible_now": false,
-      "quota_reset_display": "4:50 AM; timezone unverified"
+      "quota_reset_display": "Previous free-limit notice cleared; one free response observed 2026-09-26; recheck before dispatch"
     },
     {
       "id": "jules_cloud",
@@ -383,4 +383,3 @@
     "contains_private_chats_or_credentials": false
   }
 }
-

@@ -1,0 +1,388 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "d01",
+      "split": "development",
+      "category": "valid_own",
+      "project_id": "alpha",
+      "question": "What is the colour marker?",
+      "candidate_ids": [
+        "a_color"
+      ],
+      "expected": {
+        "decision": "answer",
+        "answer": "b018c2449a51",
+        "source_ids": [
+          "a_color"
+        ]
+      }
+    },
+    {
+      "id": "d02",
+      "split": "development",
+      "category": "valid_own",
+      "project_id": "beta",
+      "question": "What is the colour marker?",
+      "candidate_ids": [
+        "b_color"
+      ],
+      "expected": {
+        "decision": "answer",
+        "answer": "f22cd2598afe",
+        "source_ids": [
+          "b_color"
+        ]
+      }
+    },
+    {
+      "id": "d03",
+      "split": "development",
+      "category": "foreign_only",
+      "project_id": "alpha",
+      "question": "What is the colour marker?",
+      "candidate_ids": [
+        "b_color"
+      ],
+      "expected": {
+        "decision": "refuse",
+        "answer": null,
+        "source_ids": []
+      }
+    },
+    {
+      "id": "d04",
+      "split": "development",
+      "category": "foreign_first",
+      "project_id": "alpha",
+      "question": "What is the colour marker?",
+      "candidate_ids": [
+        "b_color",
+        "a_color"
+      ],
+      "expected": {
+        "decision": "answer",
+        "answer": "b018c2449a51",
+        "source_ids": [
+          "a_color"
+        ]
+      }
+    },
+    {
+      "id": "d05",
+      "split": "development",
+      "category": "expired_boundary",
+      "project_id": "alpha",
+      "question": "What is the colour marker?",
+      "candidate_ids": [
+        "a_expired"
+      ],
+      "expected": {
+        "decision": "refuse",
+        "answer": null,
+        "source_ids": []
+      }
+    },
+    {
+      "id": "d06",
+      "split": "development",
+      "category": "revoked_only",
+      "project_id": "alpha",
+      "question": "What is the colour marker?",
+      "candidate_ids": [
+        "a_revoked"
+      ],
+      "expected": {
+        "decision": "refuse",
+        "answer": null,
+        "source_ids": []
+      }
+    },
+    {
+      "id": "d07",
+      "split": "development",
+      "category": "blob_tamper",
+      "project_id": "alpha",
+      "question": "What is the colour marker?",
+      "candidate_ids": [
+        "a_tampered"
+      ],
+      "expected": {
+        "decision": "refuse",
+        "answer": null,
+        "source_ids": []
+      }
+    },
+    {
+      "id": "d08",
+      "split": "development",
+      "category": "trusted_irrelevant",
+      "project_id": "alpha",
+      "question": "What is the colour marker?",
+      "candidate_ids": [
+        "a_irrelevant"
+      ],
+      "expected": {
+        "decision": "refuse",
+        "answer": null,
+        "source_ids": []
+      }
+    },
+    {
+      "id": "d09",
+      "split": "development",
+      "category": "trust_downgrade",
+      "project_id": "alpha",
+      "question": "What is the colour marker?",
+      "candidate_ids": [
+        "a_low"
+      ],
+      "expected": {
+        "decision": "refuse",
+        "answer": null,
+        "source_ids": []
+      }
+    },
+    {
+      "id": "d10",
+      "split": "development",
+      "category": "expired_first",
+      "project_id": "alpha",
+      "question": "What is the colour marker?",
+      "candidate_ids": [
+        "a_expired",
+        "a_color"
+      ],
+      "expected": {
+        "decision": "answer",
+        "answer": "b018c2449a51",
+        "source_ids": [
+          "a_color"
+        ]
+      }
+    },
+    {
+      "id": "h01",
+      "split": "synthetic_holdout",
+      "category": "unfamiliar_positive",
+      "project_id": "alpha",
+      "question": "What is the tessellation marker?",
+      "candidate_ids": [
+        "a_shape"
+      ],
+      "expected": {
+        "decision": "answer",
+        "answer": "02654772852d",
+        "source_ids": [
+          "a_shape"
+        ]
+      }
+    },
+    {
+      "id": "h02",
+      "split": "synthetic_holdout",
+      "category": "unfamiliar_positive",
+      "project_id": "beta",
+      "question": "What is the routing marker?",
+      "candidate_ids": [
+        "b_route"
+      ],
+      "expected": {
+        "decision": "answer",
+        "answer": "4a7d81803559",
+        "source_ids": [
+          "b_route"
+        ]
+      }
+    },
+    {
+      "id": "h03",
+      "split": "synthetic_holdout",
+      "category": "same_answer_foreign_only",
+      "project_id": "alpha",
+      "question": "What is the shared marker?",
+      "candidate_ids": [
+        "b_shared"
+      ],
+      "expected": {
+        "decision": "refuse",
+        "answer": null,
+        "source_ids": []
+      }
+    },
+    {
+      "id": "h04",
+      "split": "synthetic_holdout",
+      "category": "same_answer_foreign_first",
+      "project_id": "alpha",
+      "question": "What is the shared marker?",
+      "candidate_ids": [
+        "b_shared",
+        "a_shared"
+      ],
+      "expected": {
+        "decision": "answer",
+        "answer": "c2a73bcb5b58",
+        "source_ids": [
+          "a_shared"
+        ]
+      }
+    },
+    {
+      "id": "h05",
+      "split": "synthetic_holdout",
+      "category": "deleted_record",
+      "project_id": "alpha",
+      "question": "What is the deleted marker?",
+      "candidate_ids": [
+        "a_deleted"
+      ],
+      "expected": {
+        "decision": "refuse",
+        "answer": null,
+        "source_ids": []
+      }
+    },
+    {
+      "id": "h06",
+      "split": "synthetic_holdout",
+      "category": "timestamp_rebinding",
+      "project_id": "alpha",
+      "question": "What is the colour marker?",
+      "candidate_ids": [
+        "a_rebound"
+      ],
+      "expected": {
+        "decision": "refuse",
+        "answer": null,
+        "source_ids": []
+      }
+    },
+    {
+      "id": "h07",
+      "split": "synthetic_holdout",
+      "category": "self_rehash_tamper",
+      "project_id": "alpha",
+      "question": "What is the colour marker?",
+      "candidate_ids": [
+        "a_rehashed"
+      ],
+      "expected": {
+        "decision": "refuse",
+        "answer": null,
+        "source_ids": []
+      }
+    },
+    {
+      "id": "h08",
+      "split": "synthetic_holdout",
+      "category": "wrong_purpose",
+      "project_id": "alpha",
+      "question": "What is the colour marker?",
+      "candidate_ids": [
+        "a_other_purpose"
+      ],
+      "expected": {
+        "decision": "refuse",
+        "answer": null,
+        "source_ids": []
+      }
+    },
+    {
+      "id": "h09",
+      "split": "synthetic_holdout",
+      "category": "source_binding",
+      "project_id": "alpha",
+      "question": "What is the colour marker?",
+      "candidate_ids": [
+        "a_wrong_binding"
+      ],
+      "expected": {
+        "decision": "refuse",
+        "answer": null,
+        "source_ids": []
+      }
+    },
+    {
+      "id": "h10",
+      "split": "synthetic_holdout",
+      "category": "revoked_first",
+      "project_id": "alpha",
+      "question": "What is the colour marker?",
+      "candidate_ids": [
+        "a_revoked",
+        "a_color"
+      ],
+      "expected": {
+        "decision": "answer",
+        "answer": "b018c2449a51",
+        "source_ids": [
+          "a_color"
+        ]
+      }
+    },
+    {
+      "id": "h11",
+      "split": "synthetic_holdout",
+      "category": "trusted_irrelevant",
+      "project_id": "alpha",
+      "question": "What is the routing marker?",
+      "candidate_ids": [
+        "a_irrelevant"
+      ],
+      "expected": {
+        "decision": "refuse",
+        "answer": null,
+        "source_ids": []
+      }
+    },
+    {
+      "id": "h12",
+      "split": "synthetic_holdout",
+      "category": "registered_false_claim",
+      "project_id": "alpha",
+      "question": "What is the calibration marker?",
+      "candidate_ids": [
+        "a_false"
+      ],
+      "expected": {
+        "decision": "answer",
+        "answer": "0d1b19728db9",
+        "source_ids": [
+          "a_false"
+        ]
+      }
+    },
+    {
+      "id": "h13",
+      "split": "synthetic_holdout",
+      "category": "valid_after_irrelevant",
+      "project_id": "beta",
+      "question": "What is the routing marker?",
+      "candidate_ids": [
+        "a_irrelevant",
+        "b_route"
+      ],
+      "expected": {
+        "decision": "answer",
+        "answer": "4a7d81803559",
+        "source_ids": [
+          "b_route"
+        ]
+      }
+    },
+    {
+      "id": "h14",
+      "split": "synthetic_holdout",
+      "category": "no_candidates",
+      "project_id": "alpha",
+      "question": "What is the absent marker?",
+      "candidate_ids": [],
+      "expected": {
+        "decision": "refuse",
+        "answer": null,
+        "source_ids": []
+      }
+    }
+  ]
+}
