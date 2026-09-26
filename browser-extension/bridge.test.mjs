@@ -50,3 +50,17 @@ test('resolve is rejected while injection is active and stale final write cannot
   local.data.pending={task_id:'replacement-task',chat_url:payload.url,tab_id:8};finish();
   assert.equal((await pending).ok,false);assert.equal(local.data.pending.task_id,'replacement-task');
 });
+test('resolve owns the same lock across storage await, rejecting second resolve and new dispatch',async()=>{
+  reset();local.data.pending={task_id:payload.task_id,chat_url:payload.url,tab_id:8};
+  const originalRemove=local.remove;let finish,entered=false;
+  local.remove=async key=>{entered=true;await new Promise(resolve=>{finish=resolve;});await originalRemove(key);};
+  try {
+    const first=request('resolve',{task_id:payload.task_id,confirmed:true});
+    while(!entered)await new Promise(resolve=>setImmediate(resolve));
+    assert.equal((await request('resolve',{task_id:payload.task_id,confirmed:true})).ok,false);
+    assert.equal((await request('dispatch',{...payload,task_id:'task-new-1234'})).ok,false);
+    assert.equal(injections,0);finish();assert.equal((await first).ok,true);
+    assert.equal((await request('dispatch',{...payload,task_id:'task-new-1234'})).ok,true);
+    assert.equal(local.data.pending.task_id,'task-new-1234');
+  } finally {local.remove=originalRemove;}
+});

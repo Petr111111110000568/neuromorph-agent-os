@@ -88,11 +88,14 @@ async function command(m,sender) {
   if(m.action==='scan') return {ok:true,candidates:await scan()};
   if(m.action==='resolve') {
     if(busy) fail('Отправка ещё выполняется. Сначала дождитесь её завершения и проверьте чат.');
-    const {pending}=await chrome.storage.local.get('pending');
-    if(!pending || pending.task_id!==p.task_id || p.confirmed!==true) fail('Укажите проверенную незавершённую задачу.');
-    await chrome.storage.local.remove('pending');
-    await chrome.storage.session.remove('capture');
-    return {ok:true};
+    busy=true;
+    try {
+      const {pending}=await chrome.storage.local.get('pending');
+      if(!pending || pending.task_id!==p.task_id || p.confirmed!==true) fail('Укажите проверенную незавершённую задачу.');
+      await chrome.storage.local.remove('pending');
+      await chrome.storage.session.remove('capture');
+      return {ok:true};
+    } finally {busy=false;}
   }
   if(!Number.isInteger(p.tab_id) || !validTask(p.task_id)) fail('Некорректная задача или вкладка.');
   const tab=await chrome.tabs.get(p.tab_id), provider=providerFor(tab.url);
