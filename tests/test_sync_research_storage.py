@@ -50,6 +50,21 @@ class FakeHF:
 
 
 class StorageSnapshotTests(unittest.TestCase):
+    def test_only_reviewed_synthetic_evidence_pack_is_exported(self):
+        root = 'data/experiments/evidence_memory/'
+        files = {root + name: b'Public synthetic fixture.\n' for name in
+                 ('sources.json', 'registry.json', 'cases.json', 'manifest.json', 'LICENSE.md')}
+        snapshot = storage.make_snapshot(COMMIT, 'main', files)
+        self.assertEqual(snapshot['manifest']['source_file_count'], len(files))
+        for path, raw in files.items():
+            self.assertEqual(snapshot['files']['snapshots/main/files/' + path], raw)
+        for path in (root + 'credentials.json', root + 'private/cases.json',
+                     'data/experiments/another_project/cases.json',
+                     'runtime/evidence-memory/report.json'):
+            with self.subTest(path=path):
+                with self.assertRaises(storage.StorageError):
+                    storage.make_snapshot(COMMIT, 'main', {path: b'private fixture'})
+
     def test_allowlist_includes_math_research_and_experiments(self):
         allowed = ('README.md', 'docs/research/x.md', 'docs/research/x.tex',
                    'docs/research-2026-09-25/summary.md', 'docs/contributions/continuous-state.json',

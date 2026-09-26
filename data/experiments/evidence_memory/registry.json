@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "registry": {
+    "a_color": {
+      "project_id": "alpha",
+      "purpose": "synthetic-recall",
+      "source_uri": "urn:synthetic:evidence-memory:a_color",
+      "digest": "810b195dfb186bdabfb2e843d8d5a98d19ffde1f1d1d85fdb2ec30d6f080e830",
+      "source_ts": "2026-09-25T00:00:00Z",
+      "valid_from": "2026-09-24T00:00:00Z",
+      "valid_until": "2026-10-02T00:00:00Z",
+      "trust": 1,
+      "revoked": false
+    },
+    "b_color": {
+      "project_id": "beta",
+      "purpose": "synthetic-recall",
+      "source_uri": "urn:synthetic:evidence-memory:b_color",
+      "digest": "e4265535b38317a7b61d0b30717bc2c6a04c577d4119fb3786ee4ecc6154968b",
+      "source_ts": "2026-09-25T00:00:00Z",
+      "valid_from": "2026-09-24T00:00:00Z",
+      "valid_until": "2026-10-02T00:00:00Z",
+      "trust": 1,
+      "revoked": false
+    },
+    "a_shape": {
+      "project_id": "alpha",
+      "purpose": "synthetic-recall",
+      "source_uri": "urn:synthetic:evidence-memory:a_shape",
+      "digest": "e20c9da67deaeeb1c6cc8978a480f38ddd3f536e96df20d9359e625198ddb11a",
+      "source_ts": "2026-09-25T00:00:00Z",
+      "valid_from": "2026-09-24T00:00:00Z",
+      "valid_until": "2026-10-02T00:00:00Z",
+      "trust": 1,
+      "revoked": false
+    },
+    "b_route": {
+      "project_id": "beta",
+      "purpose": "synthetic-recall",
+      "source_uri": "urn:synthetic:evidence-memory:b_route",
+      "digest": "d67c61b093b58e3979539d0699e6d5fd06671ca63885444c163ce8befab7280e",
+      "source_ts": "2026-09-25T00:00:00Z",
+      "valid_from": "2026-09-24T00:00:00Z",
+      "valid_until": "2026-10-02T00:00:00Z",
+      "trust": 1,
+      "revoked": false
+    },
+    "a_shared": {
+      "project_id": "alpha",
+      "purpose": "synthetic-recall",
+      "source_uri": "urn:synthetic:evidence-memory:a_shared",
+      "digest": "23ed19edbac34afe0f8ccfeb5d9c4465f42575147f6e7707661c9bf150fb2cde",
+      "source_ts": "2026-09-25T00:00:00Z",
+      "valid_from": "2026-09-24T00:00:00Z",
+      "valid_until": "2026-10-02T00:00:00Z",
+      "trust": 1,
+      "revoked": false
+    },
+    "b_shared": {
+      "project_id": "beta",
+      "purpose": "synthetic-recall",
+      "source_uri": "urn:synthetic:evidence-memory:b_shared",
+      "digest": "2b9117418e656bcb7dde026cb4783faa6acffc34615ccf831a33e45a0a93a0f4",
+      "source_ts": "2026-09-25T00:00:00Z",
+      "valid_from": "2026-09-24T00:00:00Z",
+      "valid_until": "2026-10-02T00:00:00Z",
+      "trust": 1,
+      "revoked": false
+    },
+    "a_expired": {
+      "project_id": "alpha",
+      "purpose": "synthetic-recall",
+      "source_uri": "urn:synthetic:evidence-memory:a_expired",
+      "digest": "12799b1dcf023f5cf07bc55e77ecefaf68b89aca6db4d4f849fea2eb2d76c95a",
+      "source_ts": "2026-09-25T00:00:00Z",
+      "valid_from": "2026-09-24T00:00:00Z",
+      "valid_until": "2026-09-26T00:00:00Z",
+      "trust": 1,
+      "revoked": false
+    },
+    "a_revoked": {
+      "project_id": "alpha",
+      "purpose": "synthetic-recall",
+      "source_uri": "urn:synthetic:evidence-memory:a_revoked",
+      "digest": "3985a54d48600a27ea6b9cc04ca4deb893ac5507eb5b201ce7777395e5a616ea",
+      "source_ts": "2026-09-25T00:00:00Z",
+      "valid_from": "2026-09-24T00:00:00Z",
+      "valid_until": "2026-10-02T00:00:00Z",
+      "trust": 1,
+      "revoked": true
+    },
+    "a_low": {
+      "project_id": "alpha",
+      "purpose": "synthetic-recall",
+      "source_uri": "urn:synthetic:evidence-memory:a_low",
+      "digest": "0ec13b3fbcdf25043b9788f7615c4b50b3503251b9f83d1839c7a4ecc1729b2f",
+      "source_ts": "2026-09-25T00:00:00Z",
+      "valid_from": "2026-09-24T00:00:00Z",
+      "valid_until": "2026-10-02T00:00:00Z",
+      "trust": 0,
+      "revoked": false
+    },
+    "a_false": {
+      "project_id": "alpha",
+      "purpose": "synthetic-recall",
+      "source_uri": "urn:synthetic:evidence-memory:a_false",
+      "digest": "08a9e17060c5b4b40920f8516bb3be4fb848cf4a2094f62564f35fe37784ef19",
+      "source_ts": "2026-09-25T00:00:00Z",
+      "valid_from": "2026-09-24T00:00:00Z",
+      "valid_until": "2026-10-02T00:00:00Z",
+      "trust": 1,
+      "revoked": false
+    },
+    "a_irrelevant": {
+      "project_id": "alpha",
+      "purpose": "synthetic-recall",
+      "source_uri": "urn:synthetic:evidence-memory:a_irrelevant",
+      "digest": "b5f23632433d174ed388f15eba8ca48a2cf453638650242b152e65ca235e9e66",
+      "source_ts": "2026-09-25T00:00:00Z",
+      "valid_from": "2026-09-24T00:00:00Z",
+      "valid_until": "2026-10-02T00:00:00Z",
+      "trust": 1,
+      "revoked": false
+    }
+  },
+  "policies": {
+    "alpha": {
+      "project_id": "alpha",
+      "purpose": "synthetic-recall",
+      "min_trust": 1,
+      "max_blob_bytes": 1024
+    },
+    "beta": {
+      "project_id": "beta",
+      "purpose": "synthetic-recall",
+      "min_trust": 1,
+      "max_blob_bytes": 1024
+    }
+  }
+}

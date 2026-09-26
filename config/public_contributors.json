@@ -129,7 +129,7 @@
       ],
       "registration": "declarative_registered",
       "membership_basis": "explicit_user_request",
-      "status": "native_code_audit_completed_free_quota_exhausted",
+      "status": "manual_controller_verified",
       "integration": {
         "transport": "authorized_product_ui",
         "direct_api_access": false,
@@ -143,10 +143,10 @@
         "effort": "Max",
         "web_search_enabled": true,
         "account_plan": "Free",
-        "task_id": "CLAUDE-MOD-003",
+        "task_id": "CLAUDE-MOD-004",
         "model_generation_verified": true,
         "scientific_claims_validated": false,
-        "review_scope": "Static review of the actual verifier and tests; no contract counterexample found, not a scientific validation"
+        "review_scope": "Static review of real admission path found receipt loss before result checkpoint; fault-injection fix verified by controller in cloud PR10. Size-overflow reachability not established; no scientific validation."
       },
       "dispatch_enabled": false,
       "remaining_gates": [
@@ -253,7 +253,7 @@
         "private_chat_access": false
       },
       "verification": {
-        "observed_on": "2026-09-25",
+        "observed_on": "2026-09-26",
         "basis": "current_session_controller_observation",
         "checked": [
           "reasoning_control",
@@ -261,7 +261,7 @@
         ],
         "actual_model": null,
         "model_generation_verified": true,
-        "scope_note": "DEEPSEEK-008 received actual Kimi/Alice reviews and proposed a pure verifier; controller found untrusted trust threshold and missing timestamp binding/expiry. Code unexecuted and unverified; review passed to Kimi but free queue overloaded."
+        "scope_note": "DEEPSEEK-011 completed a synthetic-memory method review from supplied description. Six cases and explicit denominators; controller distinguishes output leakage, contamination and developer-visible regression split from blinded evaluation. No execution by DeepSeek."
       },
       "remaining_gates": [
         "controller_handoff",
@@ -559,4 +559,3 @@
     "count_as_participant_only_after_explicit_promotion": true
   }
 }
-

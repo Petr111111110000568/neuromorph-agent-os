@@ -1,0 +1,69 @@
+name: Synthetic evidence memory experiment
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'workbench/experiments/**'
+      - 'workbench/provenance_verifier.py'
+      - 'data/experiments/evidence_memory/**'
+      - 'tests/test_evidence_memory_experiment.py'
+      - '.github/workflows/evidence-memory.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'workbench/experiments/**'
+      - 'workbench/provenance_verifier.py'
+      - 'data/experiments/evidence_memory/**'
+      - 'tests/test_evidence_memory_experiment.py'
+      - '.github/workflows/evidence-memory.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: evidence-memory-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  experiment:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - name: Run fixed synthetic experiment without model credentials
+        run: >-
+          env -i PATH="$PATH" LANG=C.UTF-8
+          python3 -m workbench.experiments.evidence_memory
+          --output-dir runtime/evidence-memory
+      - name: Record the actual checkout and artifact hashes
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, subprocess
+          root = pathlib.Path('runtime/evidence-memory')
+          receipt = {
+              'schema_version': 1,
+              'checkout_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+              'run_url': 'https://github.com/' + os.environ['GITHUB_REPOSITORY'] + '/actions/runs/' + os.environ['GITHUB_RUN_ID'],
+              'event': os.environ['GITHUB_EVENT_NAME'],
+              'model_calls': 0,
+              'additional_spend_usd': 0,
+              'artifacts': {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest()
+                            for p in sorted(root.rglob('*')) if p.is_file()},
+          }
+          (root / 'cloud-receipt.json').write_text(json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(receipt, sort_keys=True))
+          # Public synthetic report only: allows review without artifact credentials.
+          print('EVIDENCE_MEMORY_REPORT=' + json.dumps(json.loads((root / 'report.json').read_text(encoding='utf-8')), sort_keys=True))
+          PY
+      - name: Preserve evidence pack, metrics and resource receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: evidence-memory-${{ github.run_id }}
+          path: runtime/evidence-memory/
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 9
