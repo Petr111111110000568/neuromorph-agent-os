@@ -118,6 +118,16 @@ class Service:
         self._brain = None
         self._brain_lock = threading.Lock()
         self._harness_slot = threading.BoundedSemaphore(1)
+        self._offline = None
+        self._offline_lock = threading.Lock()
+
+    @property
+    def offline(self):
+        with self._offline_lock:
+            if self._offline is None:
+                from .offline_control import OfflineControl
+                self._offline = OfflineControl(self.root, self.store.path.parent)
+            return self._offline
 
     def harnesses_status(self):
         from .harnesses import HarnessRegistry
