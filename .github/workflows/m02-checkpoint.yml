@@ -1,0 +1,70 @@
+name: M02 durable checkpoint experiment
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'workbench/project_dispatcher.py'
+      - 'workbench/m02_checkpoint.py'
+      - 'config/m02_fixture.json'
+      - 'scripts/m02_experiment.py'
+      - '.github/workflows/m02-checkpoint.yml'
+  workflow_dispatch:
+    inputs:
+      previous_run_id:
+        description: 'Exact successful seed run ID; empty creates a new synthetic seed'
+        required: false
+        type: string
+      manifest_sha256:
+        description: 'Seed manifest SHA-256 from that run receipt; required for resume'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: m02-checkpoint-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  experiment:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      PREVIOUS_RUN_ID: ${{ inputs.previous_run_id }}
+      EXPECTED_MANIFEST_SHA: ${{ inputs.manifest_sha256 }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - name: Verify explicit producer identity before downloading checkpoint
+        if: env.PREVIOUS_RUN_ID != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/m02_experiment.py verify-producer --output runtime/producer.json
+      - name: Fetch only the identified seed artifact
+        if: env.PREVIOUS_RUN_ID != ''
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: m02-checkpoint-${{ inputs.previous_run_id }}
+          run-id: ${{ inputs.previous_run_id }}
+          github-token: ${{ github.token }}
+          path: runtime/incoming
+      - name: Execute finite synthetic seed or verified resume without model credentials
+        run: >-
+          env -i PATH="$PATH" LANG=C.UTF-8
+          GITHUB_REPOSITORY="$GITHUB_REPOSITORY" GITHUB_RUN_ID="$GITHUB_RUN_ID"
+          GITHUB_SHA="$GITHUB_SHA" GITHUB_REF_NAME="$GITHUB_REF_NAME"
+          GITHUB_WORKFLOW_REF="$GITHUB_WORKFLOW_REF"
+          PREVIOUS_RUN_ID="$PREVIOUS_RUN_ID" EXPECTED_MANIFEST_SHA="$EXPECTED_MANIFEST_SHA"
+          python3 scripts/m02_experiment.py run --output runtime/m02
+      - name: Preserve synthetic state and public receipt
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: m02-checkpoint-${{ github.run_id }}
+          path: runtime/m02/
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 9

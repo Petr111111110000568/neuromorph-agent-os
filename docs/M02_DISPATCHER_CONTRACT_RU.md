@@ -1,6 +1,6 @@
 # M02: минимальный диспетчер проектов поверх существующей Queue
 
-Статический проект спецификации, 26.09.2026. Это требования и план проверки, не реализованная функция. Код и тесты локально не запускались. Основание: `docs/PROJECT_MISSION_AND_ACCEPTANCE_RU.md`, фактические `workbench/network/queue.py`, `network/control.py`, `brain.py`, `society/control.py`, `network/worker.py` и `tests/test_network_queue.py`.
+Контракт от 26.09.2026. Конечная реализация и её границы описаны в [M02_IMPLEMENTATION_RU.md](M02_IMPLEMENTATION_RU.md); облачная проверка выполняется отдельно от этого документа. Код и тесты локально не запускались. Основание: `docs/PROJECT_MISSION_AND_ACCEPTANCE_RU.md`, фактические `workbench/network/queue.py`, `network/control.py`, `brain.py`, `society/control.py`, `network/worker.py` и `tests/test_network_queue.py`.
 
 ## Что уже реализовано и повторять не нужно
 
