@@ -214,6 +214,8 @@ class ContinuousStateTests(unittest.TestCase):
             self.assertNotIn("GH_TOKEN", os.environ)
             self.assertNotIn("GITHUB_TOKEN", os.environ)
             self.assertIn("untrusted observations", prompt)
+            self.assertEqual(output.call_args.args[1]['status'], 'no_result')
+            self.assertEqual(output.call_args.args[1]['input']['prompt'], prompt)
             return {"status": "response_received", "text": json.dumps(proposal)}
 
         with patch.dict(os.environ, {}, clear=True), patch.object(controller, "load_policy"), \
@@ -224,7 +226,7 @@ class ContinuousStateTests(unittest.TestCase):
                 patch("sys.stdout", new_callable=io.StringIO):
             controller.perform()
         call.assert_called_once()
-        output.assert_called_once()
+        self.assertEqual(output.call_args.args[0], controller.OUT / 'result.json')
         record = output.call_args.args[1]
         self.assertEqual(record["status"], "response_received")
         self.assertEqual(record["message"], proposal)
@@ -822,6 +824,83 @@ class ContinuousStateTests(unittest.TestCase):
             self.assertNotIn('\ud800', prompt)
             self.assertEqual(result['brief_admission']['reason'], 'brief_invalid')
             self.assertEqual(result['status'], 'response_received')
+
+    def finalize_interrupted_result(self, pending, expected_admission):
+        finished_at = pending['pending']['at'] + 1
+        with patch.object(controller, 'ledger_api', return_value=Mock()), \
+                patch.object(controller.time, 'time', return_value=finished_at), \
+                patch('scripts.continuous_ledger.fetch_state', return_value=(pending, 'b' * 40, BASE_COMMIT)), \
+                patch('scripts.continuous_ledger.commit_state', return_value='c' * 40) as commit, \
+                patch('sys.stdout', new_callable=io.StringIO):
+            # Read the actual checkpoint files left by perform, not a mocked result.
+            controller.finalize()
+        commit.assert_called_once()
+        saved = commit.call_args.args[2]
+        receipt = controller.read_json(controller.OUT / 'receipt.json')
+        self.assertEqual(saved['brief_admission'], expected_admission)
+        self.assertEqual(receipt['brief_admission'], expected_admission)
+        self.assertEqual(receipt['status'], 'no_result')
+        self.assertEqual(saved['journal'][-1]['status'], 'no_result')
+        self.assertEqual(saved['attempts'], pending['attempts'])
+        self.assertEqual(saved['recent_attempts'], pending['recent_attempts'])
+        self.assertEqual(saved['successes'], pending['successes'])
+        self.assertEqual(saved['last_message'], pending['last_message'])
+        self.assertEqual(saved['failures'], pending['failures'] + 1)
+        self.assertEqual(saved['next_due'], finished_at + 86400)
+        self.assertIsNone(saved['pending'])
+        self.assertEqual(saved['contract'], pending['contract'])
+        self.assertIs(receipt['code_executed'], False)
+        self.assertIs(receipt['automatic_merge'], False)
+        return saved
+
+    def test_prompt_failure_keeps_admission_through_real_checkpoint_and_finalize(self):
+        pending = reserve()
+        expected = {'status': 'accepted', 'reason': 'verified_against_trusted_registry',
+                    'record_id': 'DEEPSEEK-009'}
+        with tempfile.TemporaryDirectory() as folder, patch.object(controller, 'OUT', Path(folder)):
+            controller.write_json(controller.OUT / 'reservation.json', {'head_sha': 'b' * 40, 'state': pending})
+            with patch.object(controller, 'load_policy'), \
+                    patch.object(controller, 'public_metadata', return_value=[]), \
+                    patch.object(controller, 'make_prompt', side_effect=ValueError('prompt_too_large')), \
+                    patch.object(qwen_space, 'call_qwen_space') as call:
+                with self.assertRaisesRegex(ValueError, 'prompt_too_large'):
+                    controller.perform()
+            call.assert_not_called()
+            self.assertEqual(controller.read_json(controller.OUT / 'result.json'),
+                             {'status': 'no_result', 'brief_admission': expected})
+            saved = self.finalize_interrupted_result(pending, expected)
+            self.assertIsNone(saved['journal'][-1]['input_sha256'])
+
+    def test_adapter_exception_preserves_prepared_input_without_retry_or_success(self):
+        previous = succeed(reserve(), proposal=message('Keep prior research'))
+        pending = reserve(previous, previous['next_due'], '101')
+        expected = {'status': 'accepted', 'reason': 'verified_against_trusted_registry',
+                    'record_id': 'DEEPSEEK-009'}
+        with tempfile.TemporaryDirectory() as folder, patch.object(controller, 'OUT', Path(folder)):
+            controller.write_json(controller.OUT / 'reservation.json', {'head_sha': 'b' * 40, 'state': pending})
+
+            def interrupted_call(prompt):
+                checkpoint = controller.read_json(controller.OUT / 'result.json')
+                self.assertEqual(checkpoint['status'], 'no_result')
+                self.assertEqual(checkpoint['brief_admission'], expected)
+                self.assertEqual(checkpoint['input']['prompt'], prompt)
+                self.assertEqual(checkpoint['input']['prompt_sha256'], hashlib.sha256(prompt.encode()).hexdigest())
+                raise RuntimeError('ADAPTER_DETAIL_MUST_NOT_BE_PUBLISHED')
+
+            with patch.object(controller, 'load_policy'), \
+                    patch.object(controller, 'public_metadata', return_value=[]), \
+                    patch.object(qwen_space, 'call_qwen_space', side_effect=interrupted_call) as call:
+                with self.assertRaisesRegex(RuntimeError, 'ADAPTER_DETAIL_MUST_NOT_BE_PUBLISHED'):
+                    controller.perform()
+            call.assert_called_once()
+            checkpoint = controller.read_json(controller.OUT / 'result.json')
+            self.assertEqual(checkpoint['status'], 'no_result')
+            self.assertIsNone(checkpoint['message'])
+            self.assertEqual(checkpoint['input']['base_commit'], BASE_COMMIT)
+            self.assertEqual(checkpoint['input']['provider_contract'], controller.PROVIDER_CONTRACT)
+            self.assertNotIn('ADAPTER_DETAIL_MUST_NOT_BE_PUBLISHED', json.dumps(checkpoint))
+            saved = self.finalize_interrupted_result(pending, expected)
+            self.assertEqual(saved['journal'][-1]['input_sha256'], checkpoint['input']['prompt_sha256'])
+
 if __name__ == "__main__":
     unittest.main()
-
