@@ -61,7 +61,11 @@ class ReservedQwenTurn:
                 raise ValueError('already_attempted')
             self.attempted = True
             self.receipt['status'] = 'request_rejected'
-            validate_payload(payload, self.prompt)
+            try:
+                validate_payload(payload, self.prompt)
+            except ValueError as exc:
+                self.receipt['rejection_reason'] = str(exc)
+                raise
             if self.provider is None:
                 self.result = {'status': 'protocol_fixture_received', 'text': FIXTURE}
             else:

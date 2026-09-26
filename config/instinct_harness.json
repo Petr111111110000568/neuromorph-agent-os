@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "package": "instinct-ai",
+  "version": "0.2.0",
+  "source_repository": "https://github.com/bhavikprit/instinct-ai",
+  "source_commit": "7d123c27b29384298082b4e46bab1d517f99414a",
+  "wheel_url": "https://files.pythonhosted.org/packages/34/4d/bd943c8d7d54f776c33c12e5f898e0737920e5c81c565a2d4013b68c4a64/instinct_ai-0.2.0-py3-none-any.whl",
+  "wheel_sha256": "b0f84e23a3525cddc04afb43bdccd204d6b6354410b4892e8cd86d4b8d220a4c",
+  "backend": "explicit_local_heuristic",
+  "cloud_instinct_affiliation": "unverified",
+  "remote_model_calls": 0,
+  "automatic_routing": false
+}

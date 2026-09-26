@@ -2,7 +2,7 @@ name: Continuous research contributions
 
 on:
   schedule:
-    - cron: '17 2,8,14,20 * * *'
+    - cron: '17 * * * *'
   workflow_dispatch:
     inputs:
       initialize_ledger:
@@ -31,9 +31,6 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
-      - name: Install pinned Hermes core in isolated cloud environment
-        timeout-minutes: 12
-        run: env -i PATH="$PATH" LANG=C.UTF-8 GITHUB_ACTIONS=true python3 scripts/bootstrap_hermes.py --execute --output-dir runtime/hermes-harness
       - name: Reserve attempt in durable branch before inference
         id: reserve
         timeout-minutes: 1
@@ -41,6 +38,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           CONTINUOUS_INITIALIZE: ${{ inputs.initialize_ledger || false }}
         run: python3 -m workbench.autonomy.continuous reserve
+      - name: Install pinned Hermes only for an admitted research attempt
+        if: steps.reserve.outputs.active == 'true'
+        timeout-minutes: 12
+        run: env -i PATH="$PATH" LANG=C.UTF-8 GITHUB_ACTIONS=true python3 scripts/bootstrap_hermes.py --execute --output-dir runtime/hermes-harness
       - name: Read bounded public catalogs without credentials
         if: steps.reserve.outputs.active == 'true'
         continue-on-error: true
