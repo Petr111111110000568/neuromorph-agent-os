@@ -180,6 +180,14 @@ def extract_uv(wheel, destination):
     Path(destination).chmod(0o700)
 
 
+def install_commands(uv, source, python, constraints, bootstrap_python):
+    return [
+        [str(uv), 'sync', '--frozen', '--no-dev', '--no-default-groups',
+         '--no-install-project', '--python', str(bootstrap_python)],
+        [str(uv), 'pip', 'install', '--python', str(python), '--no-deps',
+         '--build-constraint', str(constraints), '-e', str(source)],
+    ]
+
 def bootstrap(output='runtime/hermes-harness', *, execute=False, root=ROOT,
               runner=run_bounded, downloader=download_uv):
     manifest = load_manifest()
@@ -223,10 +231,14 @@ def bootstrap(output='runtime/hermes-harness', *, execute=False, root=ROOT,
         extract_uv(wheel, uv)
         constraints = output / 'build-constraints.txt'
         constraints.write_text('\n'.join(manifest['build_constraints']) + '\n', encoding='utf-8')
-        command([str(uv), 'sync', '--frozen', '--no-dev', '--no-default-groups',
-                 '--python', sys.executable, '--build-constraint', str(constraints)], source, 600)
         python = output / 'venv' / 'bin' / 'python'
+        # uv sync has no --build-constraint flag. Install its locked runtime graph
+        # first; then install only the editable project with pip build constraints.
+        # No vendor pyproject/lock bytes need changing for the build-only policy.
+        commands = install_commands(uv, source, python, constraints, sys.executable)
+        command(commands[0], source, 600)
         require(python.is_file(), 'installed_python_missing')
+        command(commands[1], source, 180)
         verify_source(source, manifest)
         command(prefix + ['diff', '--exit-code', 'HEAD', '--'], source, 20)
         receipt.update(status='installed', install_model_calls=0, sdk_fixture='not_run',

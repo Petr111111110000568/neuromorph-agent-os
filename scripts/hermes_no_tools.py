@@ -187,6 +187,19 @@ def source_identity(source, env):
                 'source_checkout_changed')
 
 
+def safe_failure(exc):
+    """Useful import diagnostics without exception messages, locals or source lines."""
+    frames = []
+    trace = exc.__traceback__
+    while trace is not None:
+        name = Path(trace.tb_frame.f_code.co_filename).name
+        frames.append({'file': re.sub(r'[^A-Za-z0-9_.-]', '_', name)[:80],
+                       'line': trace.tb_lineno})
+        trace = trace.tb_next
+    return {'status': 'failed', 'reason': str(exc) if type(exc) is HermesError else 'sdk_failed',
+            'failure_kind': re.sub(r'[^A-Za-z0-9_]', '_', type(exc).__name__)[:64],
+            'frames': frames[-6:], 'model': MODEL, 'source_commit': COMMIT, 'tools': []}
+
 def _deadline(signum, frame):
     raise HermesError('sdk_timeout')
 
@@ -223,8 +236,8 @@ def execute(source_root, base_url, prompt_file, output_file, home_dir):
             from run_agent import AIAgent
             result = run_sdk(prompt, base_url, home, AIAgent)
     except Exception as exc:
-        result = {'status': 'failed', 'reason': str(exc) if isinstance(exc, HermesError) else 'sdk_failed',
-                  'model': MODEL, 'source_commit': COMMIT, 'tools': []}
+        result = safe_failure(exc)
+
     finally:
         signal.alarm(0)
     result['sdk_log_bytes'] = sink.count
@@ -242,7 +255,7 @@ def main(argv=None):
     try:
         result = execute(args.source_root, args.base_url, args.prompt_file, args.output_file, args.home_dir)
     except Exception as exc:
-        result = {'status': 'failed', 'reason': str(exc) if isinstance(exc, HermesError) else 'sdk_failed'}
+        result = safe_failure(exc)
     print(json.dumps({key: value for key, value in result.items() if key != 'text'}, ensure_ascii=False))
     return 0 if result['status'] == 'response_received' else 1
 
