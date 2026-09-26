@@ -11,6 +11,9 @@ on:
       - 'scripts/install_windows_bundle.ps1'
       - 'tests/test_offline_*.py'
       - 'tests/test_kimi_weight_download.py'
+      - 'tests/test_project_dispatcher.py'
+      - 'tests/test_m02_*.py'
+      - 'scripts/m02_experiment.py'
       - 'config/**'
   push:
     branches: [main]
@@ -23,6 +26,9 @@ on:
       - 'scripts/install_windows_bundle.ps1'
       - 'tests/test_offline_*.py'
       - 'tests/test_kimi_weight_download.py'
+      - 'tests/test_project_dispatcher.py'
+      - 'tests/test_m02_*.py'
+      - 'scripts/m02_experiment.py'
       - 'config/**'
   workflow_dispatch:
 
@@ -68,31 +74,38 @@ jobs:
           import unittest
 
           sys.path.insert(0, str(Path.cwd().resolve()))
-          assert sys.version_info[:2] == (3, 13), sys.version
-          # macOS may expose /var through a symlink. Keep fixture parents
-          # canonical without weakening production path validation.
-          fixture_root = Path(os.environ["RUNNER_TEMP"]).resolve() / "neuromorph-offline-fixtures"
-          fixture_root.mkdir(exist_ok=True)
-          tempfile.tempdir = str(fixture_root)
-          patterns = (
-              "test_offline_bundle.py",
-              "test_offline_council.py",
-              "test_offline_control.py",
-              "test_offline_http.py",
-              "test_offline_mcp.py",
-              "test_local_review.py",
-              "test_kimi_weight_download.py",
-          )
-          suite = unittest.TestSuite()
-          loader = unittest.TestLoader()
-          for pattern in patterns:
-              selected = loader.discover("tests", pattern=pattern)
-              if selected.countTestCases() == 0:
-                  raise SystemExit("No tests collected for " + pattern)
-              suite.addTests(selected)
-          print("Fixture tests:", suite.countTestCases(), "Python:", sys.version, flush=True)
-          result = unittest.TextTestRunner(verbosity=2).run(suite)
-          raise SystemExit(0 if result.wasSuccessful() else 1)
+          def main():
+              assert sys.version_info[:2] == (3, 13), sys.version
+              # Canonical parents preserve production symlink validation on macOS.
+              fixture_root = Path(os.environ["RUNNER_TEMP"]).resolve() / "neuromorph-offline-fixtures"
+              fixture_root.mkdir(exist_ok=True)
+              tempfile.tempdir = str(fixture_root)
+              patterns = (
+                  "test_offline_bundle.py",
+                  "test_offline_council.py",
+                  "test_offline_control.py",
+                  "test_offline_http.py",
+                  "test_offline_mcp.py",
+                  "test_local_review.py",
+                  "test_kimi_weight_download.py",
+                  "test_project_dispatcher.py",
+                  "test_m02_checkpoint.py",
+                  "test_m02_experiment.py",
+              )
+              suite = unittest.TestSuite()
+              loader = unittest.TestLoader()
+              for pattern in patterns:
+                  selected = loader.discover("tests", pattern=pattern)
+                  if selected.countTestCases() == 0:
+                      raise SystemExit("No tests collected for " + pattern)
+                  suite.addTests(selected)
+              print("Fixture tests:", suite.countTestCases(), "Python:", sys.version, flush=True)
+              result = unittest.TextTestRunner(verbosity=2).run(suite)
+              return 0 if result.wasSuccessful() else 1
+
+          # M02 uses genuine spawn workers; children must not rerun the suite.
+          if __name__ == "__main__":
+              raise SystemExit(main())
       - name: Windows bootstrap syntax
         if: runner.os == 'Windows'
         shell: pwsh

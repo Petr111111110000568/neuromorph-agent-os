@@ -1,0 +1,39 @@
+{
+  "schema": "neuromorph.m02.fixture-pack.v1",
+  "parent": ["CHATGPT-REVIEW-001", "CLAUDE-MOD-005"],
+  "base_commit": "2b731fbba92fc8427b7296f80579e9d6a8e02e9c",
+  "projects": [
+    {
+      "project_id": "m02-alpha",
+      "mission": "Проверить конечный переход immutable input → Queue → artifact → review.",
+      "allowed_artifacts": ["synthetic-evidence", "fixture:evidence_alpha", "fixture:repair_alpha"],
+      "closure_criteria": ["Артефакт принят отдельным review; повторы не создают новое исполнение."],
+      "resource_policy": {"max_reserved_attempts": 8, "max_attempts_per_handoff": 2, "max_paid_calls": 0, "max_model_calls": 0}
+    },
+    {
+      "project_id": "m02-beta",
+      "mission": "Восстановить второй проект из checkpoint и выполнить один ограниченный rework.",
+      "allowed_artifacts": ["synthetic-evidence", "fixture:evidence_beta", "fixture:repair_alpha"],
+      "closure_criteria": ["Сохранены прежний result hash, новая revision и общий монотонный резерв."],
+      "resource_policy": {"max_reserved_attempts": 8, "max_attempts_per_handoff": 2, "max_paid_calls": 0, "max_model_calls": 0}
+    }
+  ],
+  "tasks": [
+    {
+      "task_id": "m02-alpha-evidence", "project_id": "m02-alpha",
+      "goal": "Проверить текущий артефакт по immutable contract.",
+      "dependencies": [], "revision": 1, "handoff_id": "m02-alpha-r1",
+      "base_commit": "2b731fbba92fc8427b7296f80579e9d6a8e02e9c",
+      "handler": "m02.fixture.v1", "fixture_id": "evidence_alpha",
+      "limitations": ["Синтетическая инженерная проверка без model/API calls; не научная валидация."]
+    },
+    {
+      "task_id": "m02-beta-evidence", "project_id": "m02-beta",
+      "goal": "Проверить текущий артефакт по immutable contract.",
+      "dependencies": [], "revision": 1, "handoff_id": "m02-beta-r1",
+      "base_commit": "2b731fbba92fc8427b7296f80579e9d6a8e02e9c",
+      "handler": "m02.fixture.v1", "fixture_id": "evidence_beta",
+      "limitations": ["Синтетическая инженерная проверка без model/API calls; не научная валидация."]
+    }
+  ]
+}
