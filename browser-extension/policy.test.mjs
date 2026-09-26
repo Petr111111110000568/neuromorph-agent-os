@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {providerFor,localPage,reserveAllowed,validTask} from './policy.mjs';
 test('exact host and path boundary rejects lookalikes, credentials, foreign ports',()=>{
-  for(const value of ['https://chat.deepseek.com.evil.test/','https://evil.test/?u=https://chat.qwen.ai','http://chat.qwen.ai/','https://u:p@chat.qwen.ai/','https://yandex.ru/mail/','https://yandex.ru/aliceevil/','https://chat.qwen.ai:444/','https://chat.qwen.ai/?access_token=secret'])assert.equal(providerFor(value),null,value);
+  for(const value of ['https://chat.deepseek.com.evil.test/','https://evil.test/?u=https://chat.qwen.ai','http://chat.qwen.ai/','https://u:p@chat.qwen.ai/','https://yandex.ru/mail/','https://yandex.ru/aliceevil/','https://chat.qwen.ai:444/','https://chat.qwen.ai/?access_token=secret','https://chat.qwen.ai/#access_token=secret'])assert.equal(providerFor(value),null,value);
   assert.equal(providerFor('https://yandex.ru/alice/chat/abc/'),'alice');assert.equal(providerFor('https://chat.deepseek.com/a/chat/s/abc'),'deepseek');assert.equal(providerFor('https://www.kimi.com/'),'kimi');
 });
 test('local UI authority excludes other pages and ports',()=>{

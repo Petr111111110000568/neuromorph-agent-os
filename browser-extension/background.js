@@ -49,8 +49,7 @@ async function pageAdapter(action, prompt, expectedURL) {
     const label=(e.getAttribute('aria-label')||e.getAttribute('title')||e.innerText||'').trim();
     return /^(send|send message|send prompt|отправить|отправить сообщение|发送|发送消息)$/i.test(label);
   });
-  // Structural selector observed in the actual DeepSeek UI, without hashed classes.
-  if(!sends.length && location.hostname==='chat.deepseek.com') sends=[...document.querySelectorAll('[role="button"].ds-button--primary.ds-button--circle')].filter(e=>visible(e)&&!e.classList.contains('ds-button--disabled')&&e.getAttribute('aria-disabled')!=='true');
+  // An unlabeled structural button is insufficient proof of Send. Keep a draft.
   if(sends.length!==1) return {ok:false,error:'Текст подготовлен. Не найдено однозначной кнопки отправки — нажмите её в чате самостоятельно.',draft_prepared:true};
   sends[0].click();
   return {ok:true,status:'send_clicked_unconfirmed',baseline_responses:responses.length,draft_prepared:true,notice:'Кнопка нажата один раз. Приём сервисом, модель и завершение ответа ещё не подтверждены.'};
@@ -88,6 +87,7 @@ async function command(m,sender) {
   if(m.action==='status') return {ok:true,...await settings(),...await chrome.storage.session.get(['candidates','scanned_at']),...await chrome.storage.local.get(['pending','history'])};
   if(m.action==='scan') return {ok:true,candidates:await scan()};
   if(m.action==='resolve') {
+    if(busy) fail('Отправка ещё выполняется. Сначала дождитесь её завершения и проверьте чат.');
     const {pending}=await chrome.storage.local.get('pending');
     if(!pending || pending.task_id!==p.task_id || p.confirmed!==true) fail('Укажите проверенную незавершённую задачу.');
     await chrome.storage.local.remove('pending');
@@ -99,19 +99,20 @@ async function command(m,sender) {
   if(!provider || p.provider!==provider || tab.url!==p.url || !await permitted(tab,provider)) fail('Сервис, адрес или разрешение не совпадают.');
   if(m.action==='selection') return {task_id:p.task_id,provider,chat_url:tab.url,...await inject(tab,provider,'selection')};
   if(m.action==='capture') {
+    const bind=result=>({...result,task_id:p.task_id,provider,chat_url:tab.url});
     const {pending}=await chrome.storage.local.get('pending');
     if(!pending || pending.task_id!==p.task_id || pending.tab_id!==p.tab_id || pending.chat_url!==p.url) fail('Нет соответствующей ожидающей задачи.');
-    if(provider!=='deepseek') return {ok:true,status:'manual_import_required'};
-    if(Date.now()-pending.reserved_at>300000) return {ok:true,status:'capture_timeout_unconfirmed'};
-    if(pending.status!=='send_clicked_unconfirmed') return {ok:true,status:'manual_import_required'};
+    if(provider!=='deepseek') return bind({ok:true,status:'manual_import_required'});
+    if(Date.now()-pending.reserved_at>300000) return bind({ok:true,status:'capture_timeout_unconfirmed'});
+    if(pending.status!=='send_clicked_unconfirmed') return bind({ok:true,status:'manual_import_required'});
     const observed=await inject(tab,provider,'capture');
-    if(observed?.blocked) return {ok:true,status:'provider_blocked'};
-    if(!observed?.text || observed.count!==pending.baseline_responses+1 || observed.stopping) return {ok:true,status:'waiting_unconfirmed'};
+    if(observed?.blocked) return bind({ok:true,status:'provider_blocked'});
+    if(!observed?.text || observed.count!==pending.baseline_responses+1 || observed.stopping) return bind({ok:true,status:'waiting_unconfirmed'});
     const {capture}=await chrome.storage.session.get('capture');
     const same=capture?.task_id===p.task_id && observed.text===capture?.text;
     const stableSince=same?capture.since:Date.now();
     await chrome.storage.session.set({capture:{task_id:p.task_id,text:observed.text,since:stableSince}});
-    return same && Date.now()-stableSince>=8000 ? {ok:true,status:'captured_unconfirmed',text:observed.text,task_id:p.task_id,provider,chat_url:tab.url,observed_at:now(),verification:'candidate_needs_human_confirmation'} : {ok:true,status:'waiting_unconfirmed'};
+    return same && Date.now()-stableSince>=8000 ? bind({ok:true,status:'captured_unconfirmed',text:observed.text,observed_at:now(),verification:'candidate_needs_human_confirmation'}) : bind({ok:true,status:'waiting_unconfirmed'});
   }
   if(m.action!=='dispatch' || typeof p.prompt!=='string' || !p.prompt.trim() || p.prompt.length>8000) fail('Некорректный запрос.');
   if(busy) fail('Другая операция уже выполняется.');
@@ -127,6 +128,8 @@ async function command(m,sender) {
     await chrome.storage.local.set({pending:receipt,history:[...history.filter(x=>x.reserved_at>Date.now()-172800000),receipt].slice(-100)});
     const result=await inject(tab,provider,'dispatch',p.prompt);
     const final={...receipt,...result,updated_at:now()};
+    const stillPending=(await chrome.storage.local.get('pending')).pending;
+    if(stillPending?.task_id!==receipt.task_id || stillPending?.chat_url!==receipt.chat_url || stillPending?.tab_id!==receipt.tab_id) fail('Ожидающая задача изменилась. Запоздалая квитанция не сохранена.');
     await chrome.storage.local.set({pending:final});
     return final;
   } finally {busy=false;}

@@ -7,7 +7,7 @@ export const PROVIDERS = Object.freeze({
 export function providerFor(raw) {
   try {
     const u=new URL(raw);
-    if(u.protocol!=='https:' || u.username || u.password || (u.port && u.port!=='443') || [...u.searchParams.keys()].some(k=>/^(access_token|refresh_token|api_key|authorization|password|token)$/i.test(k))) return null;
+    if(u.protocol!=='https:' || u.username || u.password || u.hash || (u.port && u.port!=='443') || [...u.searchParams.keys()].some(k=>/^(access_token|refresh_token|api_key|authorization|password|token)$/i.test(k))) return null;
     if(u.hostname==='chat.qwen.ai') return 'qwen';
     if(u.hostname==='chat.deepseek.com') return 'deepseek';
     if(u.hostname==='alice.yandex.ru' || (u.hostname==='yandex.ru' && /^\/alice(?:\/|$)/.test(u.pathname))) return 'alice';

@@ -26,7 +26,7 @@ jobs:
         run: python3 -m workbench doctor
       - name: Browser bridge policy and concurrency checks (no browser or model calls)
         run: |
-          node --test browser-extension/policy.test.mjs browser-extension/bridge.test.mjs
+          node --test browser-extension/policy.test.mjs browser-extension/bridge.test.mjs browser-extension/frontend.test.mjs
           node --check browser-extension/background.js
           node --check web/assistants.js
           node --check web/studio.js
