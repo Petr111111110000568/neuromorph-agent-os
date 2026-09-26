@@ -49,11 +49,28 @@ try {
         else { continue }
         if($name -notmatch '^[A-Za-z0-9_.-]+$' -or $name -in @('.','..') -or $entry.Length -gt 32MB) { throw 'Unexpected bootstrap member.' }
         $target = Join-Path $stage $name
-        $out = [IO.File]::Open($target,[IO.FileMode]::CreateNew,[IO.FileAccess]::Write,[IO.FileShare]::None)
-        $createdFiles.Add($target)
-        $inputStream = $entry.Open()
-        try { $inputStream.CopyTo($out) } finally { $inputStream.Dispose(); $out.Dispose() }
+        $out = $null
+        $inputStream = $null
+        try {
+            $out = [IO.File]::Open($target,[IO.FileMode]::CreateNew,[IO.FileAccess]::Write,[IO.FileShare]::None)
+            $createdFiles.Add($target)
+            $inputStream = $entry.Open()
+            $inputStream.CopyTo($out)
+        } finally {
+            try {
+                if($null -ne $inputStream) { $inputStream.Dispose() }
+            } finally {
+                if($null -ne $out) { $out.Dispose() }
+            }
+        }
     }
+    # The installed runtime includes ../app; bootstrap must never resolve that
+    # against a shared TEMP sibling. Keep only this stage and its stdlib ZIP.
+    $pathFiles = @(Get-ChildItem -LiteralPath $stage -File | Where-Object { $_.Name -match '^python[0-9]+\._pth$' })
+    if($pathFiles.Count -ne 1) { throw 'One embedded Python path file is required.' }
+    $zipName = $pathFiles[0].Name.Replace('._pth','.zip')
+    if(-not (Test-Path -LiteralPath (Join-Path $stage $zipName) -PathType Leaf)) { throw 'Embedded Python standard library ZIP is required.' }
+    [IO.File]::WriteAllText($pathFiles[0].FullName, ($zipName + "`n.`n"), [Text.Encoding]::ASCII)
     $python = Join-Path $stage 'python.exe'
     $installer = Join-Path $stage 'offline_bundle.py'
     if(-not (Test-Path -LiteralPath $python -PathType Leaf) -or -not (Test-Path -LiteralPath $installer -PathType Leaf)) { throw 'Windows Python and installer are required in this bundle.' }
