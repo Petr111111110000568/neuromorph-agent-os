@@ -1,0 +1,703 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-09-26",
+  "items": [
+    {
+      "id": "deep-life-sci",
+      "name": "Deep Life Sci",
+      "url": "https://github.com/langchain-samples/deep-life-sci",
+      "category": "Научный harness",
+      "primary_sources": [
+        "https://www.langchain.com/blog/agent-harness-life-sciences",
+        "https://github.com/langchain-samples/deep-life-sci",
+        "https://github.com/langchain-samples/deep-life-sci/blob/main/LICENSE"
+      ],
+      "status": "Изучен; не установлен",
+      "license": "MIT",
+      "access": "Код открыт; LangSmith Sandbox требует карту даже на бесплатном Developer, включает 5 LCU/месяц; ключи моделей отдельные.",
+      "integration": "Адаптеры научных источников, таблицы, трассировка и оценка результатов.",
+      "next_action": "Закрепить ревизию и проверить модули источников без запуска установки.",
+      "limitations": "Демонстрационный проект; не для клинических решений. Облачный вход пользователей ещё запланирован. Полные тексты ограничены открытой частью PMC; ответы могут ошибаться.",
+      "evidence": "Проверен официальный репозиторий, main c7fccee95a44f71c38bc0724f3742380bcb7a528; бесплатные вычисления не подтверждены.",
+      "reviewed_at": "2026-09-26",
+      "quality": "Primary publisher/developer source read; product performance claims remain vendor-reported unless explicitly labelled benchmark paper.",
+      "installed": false,
+      "tested": false,
+      "summary": "Открытый исследовательский помощник для литературы и анализа данных в биомедицине."
+    },
+    {
+      "id": "claude-science",
+      "name": "Claude Science (beta)",
+      "url": "https://claude.com/product/claude-science",
+      "category": "Научная среда",
+      "primary_sources": [
+        "https://claude.com/product/claude-science",
+        "https://claude.com/programs/team-plan-for-scientists"
+      ],
+      "status": "Изучен; доступ не подтверждён",
+      "license": "Proprietary app; source-code license not found on reviewed official pages.",
+      "access": "Бета на Pro/Max/Team/Enterprise; академическое предложение требует проверки принадлежности и условий.",
+      "integration": "История артефактов, ядра Python/R, научные визуализаторы и фоновая рецензия.",
+      "next_action": "Проверить право доступа перед установкой и подключением вычислений.",
+      "limitations": "Это приложение, а не новая модель. Актуальная страница перечисляет Windows, macOS и Linux; извлечение Exa отставало. Вычисления пользователя не становятся бесплатными; запросы обрабатывает Anthropic.",
+      "evidence": "Официальный FAQ описывает код, среду и диалог в составе происхождения каждого артефакта.",
+      "reviewed_at": "2026-09-26",
+      "quality": "Primary publisher/developer source read; product performance claims remain vendor-reported unless explicitly labelled benchmark paper.",
+      "installed": false,
+      "tested": false,
+      "summary": "Научная рабочая среда Claude с воспроизводимыми артефактами и подключением вычислений."
+    },
+    {
+      "id": "gemini-for-science",
+      "name": "Gemini for Science / Co-Scientist",
+      "url": "https://ai.google/gemini-for-science/",
+      "category": "Научная программа",
+      "primary_sources": [
+        "https://ai.google/gemini-for-science/",
+        "https://deepmind.google/blog/co-scientist-a-multi-agent-ai-partner-to-accelerate-research/",
+        "https://docs.cloud.google.com/gemini/enterprise/docs/co-scientist-and-alphaevolve"
+      ],
+      "status": "Изучен; доступ не подтверждён",
+      "license": "Proprietary services; no deployable Co-Scientist source license found in reviewed pages.",
+      "access": "Google Labs описывает экспериментальные инструменты; доступ аккаунта, квоты и цена не подтверждены.",
+      "integration": "Роли генератора, критика, ранжирования и уточнения гипотез; очередь координатора.",
+      "next_action": "Проверить доступ Labs и бюджет до ограниченного исследования.",
+      "limitations": "Гипотезы требуют экспериментального подтверждения. Корпоративная документация не доказывает бесплатный личный доступ. Региональное ограничение Antigravity остаётся отдельным условием.",
+      "evidence": "Первичные источники описывают Literature Insights, Hypothesis Generation и Computational Discovery.",
+      "reviewed_at": "2026-09-26",
+      "quality": "Primary publisher/developer source read; product performance claims remain vendor-reported unless explicitly labelled benchmark paper.",
+      "installed": false,
+      "tested": false,
+      "summary": "Научные инструменты Gemini для обзора литературы, генерации и проверки гипотез."
+    },
+    {
+      "id": "beaver-microsoft",
+      "name": "Beaver — scientific curation harness",
+      "url": "https://www.microsoft.com/en-us/research/publication/building-agent-harnesses-for-scientific-curation-from-multimodal-sources/",
+      "category": "Исследовательский материал",
+      "primary_sources": [
+        "https://www.microsoft.com/en-us/research/publication/building-agent-harnesses-for-scientific-curation-from-multimodal-sources/",
+        "https://arxiv.org/html/2606.21005v2"
+      ],
+      "status": "Статья изучена; код не проверен",
+      "license": "Paper CC BY 4.0; a deployable official code release/license was not located in reviewed pages.",
+      "access": "Статья открыта; готовый официальный сервис и бесплатные вычисления не подтверждены.",
+      "integration": "Схема извлечения со ссылками на доказательства, квитанции ошибок и проверка по эталону.",
+      "next_action": "Собрать небольшой тестовый набор публичных документов с эталонными значениями.",
+      "limitations": "GRAS 81,0 относится к исследовательскому набору, а не универсальной точности. Статья не является устанавливаемым сервисом. Нельзя подменять проект одноимёнными репозиториями.",
+      "evidence": "Работа описывает поэтапную курацию и диагностику по артефактам; происхождение данных само по себе не доказывает истинность.",
+      "reviewed_at": "2026-09-26",
+      "quality": "Primary publisher/developer source read; product performance claims remain vendor-reported unless explicitly labelled benchmark paper.",
+      "installed": false,
+      "tested": false,
+      "summary": "Исследовательский harness Beaver извлекает структурированные данные из текста, таблиц и рисунков."
+    },
+    {
+      "id": "cas-newton",
+      "name": "CAS Newton",
+      "url": "https://www.cas.org/solutions/cas-newton",
+      "category": "Научный сервис",
+      "primary_sources": [
+        "https://www.cas.org/solutions/cas-newton",
+        "https://www.cas.org/press-releases/meet-cas-newton-agentic-ai-built-for-science",
+        "https://www.cas.org/resources/article/cas-newton-for-cas-ip-finder"
+      ],
+      "status": "Изучен; доступ не подтверждён",
+      "license": "Proprietary software and licensed CAS Content Collection.",
+      "access": "Доступ через продукты CAS; бесплатное право использования API не установлено.",
+      "integration": "Лицензированный адаптер CAS Connections/API/MCP после проверки прав.",
+      "next_action": "Оставить отключённым при бюджете 0 до подтверждения бесплатного доступа.",
+      "limitations": "Сам CAS предупреждает о неточностях и необходимости проверки источников. Курируемый корпус не исключает выдуманные утверждения. Доступ к закрытому корпусу не получен.",
+      "evidence": "Официальная справка IP Finder признаёт ошибки выбора полей; трассируемость не равна безошибочности.",
+      "reviewed_at": "2026-09-26",
+      "quality": "Primary publisher/developer source read; product performance claims remain vendor-reported unless explicitly labelled benchmark paper.",
+      "installed": false,
+      "tested": false,
+      "summary": "CAS Newton отвечает на научные вопросы по курируемому корпусу CAS со ссылками на источники."
+    },
+    {
+      "id": "causaly",
+      "name": "Causaly Agentic Research",
+      "url": "https://www.causaly.com/products/agentic-research",
+      "category": "Научный сервис",
+      "primary_sources": [
+        "https://www.causaly.com/products/agentic-research",
+        "https://www.causaly.com/products/scientific-workflows",
+        "https://www.causaly.com/blog/introducing-agentic-research-a-new-era-for-scientific-decision-making"
+      ],
+      "status": "Изучен; доступ не подтверждён",
+      "license": "Proprietary service/data fabric; source code license not located.",
+      "access": "Корпоративный сервис; бесплатные API и непрерывные вычисления не подтверждены.",
+      "integration": "Матрица доказательств, допущения, ограничения, журнал методов и этапы рецензии.",
+      "next_action": "Добавить граф утверждений и доказательств; внешний адаптер включать после проверки доступа.",
+      "limitations": "93% точности утверждений и 88% LitQA2 — показатели поставщика, здесь не воспроизведены. Связь в графе не доказывает причинность. Безошибочность не гарантирована.",
+      "evidence": "Официальный продукт описывает многошаговые исследования с прослеживаемыми выводами и внутренними/внешними данными.",
+      "reviewed_at": "2026-09-26",
+      "quality": "Primary publisher/developer source read; product performance claims remain vendor-reported unless explicitly labelled benchmark paper.",
+      "installed": false,
+      "tested": false,
+      "summary": "Causaly объединяет биомедицинские доказательства и агентные исследовательские процессы."
+    },
+    {
+      "id": "paper2agent",
+      "name": "Paper2Agent",
+      "url": "https://github.com/jmiao24/Paper2Agent",
+      "category": "Научный harness",
+      "primary_sources": [
+        "https://github.com/jmiao24/Paper2Agent",
+        "https://github.com/jmiao24/Paper2Agent/blob/main/LICENSE"
+      ],
+      "status": "Изучен; не установлен",
+      "license": "MIT",
+      "access": "Код открыт; штатный процесс использует Claude Code и модельные вызовы; сложная сборка оценивается авторами примерно в $15.",
+      "integration": "Упаковка научного метода с MCP-манифестом и квитанциями воспроизведения.",
+      "next_action": "Проверить один публичный пример без исполнения до подготовки изолированной бесплатной среды.",
+      "limitations": "Обычно нужен код публикации, одного PDF недостаточно. Созданный код требует проверки перед исполнением. Примерные MCP-адреса не вызывались и не подключались.",
+      "evidence": "Прочитаны README и лицензия: поиск примеров, исполнение, извлечение инструментов и отчёты покрытия.",
+      "reviewed_at": "2026-09-26",
+      "quality": "Primary publisher/developer source read; product performance claims remain vendor-reported unless explicitly labelled benchmark paper.",
+      "installed": false,
+      "tested": false,
+      "summary": "Paper2Agent превращает методы и учебные примеры исследовательских репозиториев в MCP-инструменты."
+    },
+    {
+      "id": "ursa",
+      "name": "URSA — Universal Research and Scientific Agent",
+      "url": "https://github.com/lanl/ursa",
+      "category": "Научный harness",
+      "primary_sources": [
+        "https://github.com/lanl/ursa",
+        "https://github.com/lanl/ursa/blob/main/LICENSE",
+        "https://arxiv.org/html/2506.22653"
+      ],
+      "status": "Изучен; не установлен",
+      "license": "BSD-3 per repository LICENSE text (GitHub classifier says Other).",
+      "access": "Код ursa-ai открыт; модели и вычисления подключаются отдельно; рекомендован Python 3.11–3.12.",
+      "integration": "Изолированная однопользовательская исследовательская роль через MCP.",
+      "next_action": "Проверить закреплённую версию в облачном тесте без инструментов; добавить изоляцию сессий.",
+      "limitations": "README прямо предупреждает: MCP-сервер не изолирует сессии и не подходит для нескольких пользователей. Исполнитель запускает команды; venv не является песочницей. Публичный сетевой доступ не настроен.",
+      "evidence": "Проверены документация ролей, панель, MCP-транспорт и текст лицензии LANL.",
+      "reviewed_at": "2026-09-26",
+      "quality": "Primary publisher/developer source read; product performance claims remain vendor-reported unless explicitly labelled benchmark paper.",
+      "installed": false,
+      "tested": false,
+      "summary": "URSA от LANL объединяет планирование, поиск научных материалов и исполнение задач."
+    },
+    {
+      "id": "s1-nexusagent",
+      "name": "S1-NexusAgent",
+      "url": "https://github.com/CASIA-LM/S1-NexusAgent",
+      "category": "Научный harness",
+      "primary_sources": [
+        "https://github.com/CASIA-LM/S1-NexusAgent",
+        "https://github.com/CASIA-LM/S1-NexusAgent/blob/main/LICENSE",
+        "https://arxiv.org/abs/2602.01550"
+      ],
+      "status": "Изучен; не установлен",
+      "license": "Apache-2.0 verified in LICENSE.",
+      "access": "Код открыт; требуются ключи модели и эмбеддингов, рекомендован DeepSeek; бесплатное исполнение не подтверждено.",
+      "integration": "Поиск подходящих инструментов, вложенные циклы исполнения и рецензируемые научные навыки.",
+      "next_action": "Проверить конфигурацию и зависимости закреплённой ревизии; подготовить тест без сети.",
+      "limitations": "Описание репозитория устарело относительно README с кодом и CLI. 130+ инструментов README и тысячи в экосистеме статьи — разные показатели. Образ песочницы latest необходимо заменить проверенной ревизией.",
+      "evidence": "README содержит структуру workflow, CLI и требования к DeepSeek/эмбеддингам.",
+      "reviewed_at": "2026-09-26",
+      "quality": "Primary publisher/developer source read; product performance claims remain vendor-reported unless explicitly labelled benchmark paper.",
+      "installed": false,
+      "tested": false,
+      "summary": "S1-NexusAgent разделяет глобальное планирование и выполнение научных подзадач."
+    },
+    {
+      "id": "agents-a1",
+      "name": "InternScience Agents-A1",
+      "url": "https://huggingface.co/InternScience/Agents-A1",
+      "category": "Модель с открытыми весами",
+      "primary_sources": [
+        "https://huggingface.co/InternScience/Agents-A1",
+        "https://huggingface.co/InternScience/Agents-A1/raw/main/README.md"
+      ],
+      "status": "Изучен; веса не загружены",
+      "license": "Apache-2.0 model-card metadata; license obligations must be retained on redistribution.",
+      "access": "Открыты веса 35B MoE BF16; HF сообщает об отсутствии Inference Provider; бесплатный сервер не найден.",
+      "integration": "Дополнительная модель через проверенный сервер vLLM/SGLang с совместимым API.",
+      "next_action": "Проверить доступные RAM/GPU и бесплатную среду перед выбором меньшей или квантованной версии.",
+      "limitations": "Результаты тестов опубликованы авторами, здесь не воспроизведены. 35B весов требуют значительных памяти и загрузки даже при 3B активных параметров. Вход в аккаунт не означает работающий инференс.",
+      "evidence": "Карточка содержит веса, инструкции сервера, параметры инструментов и статус отсутствия провайдера.",
+      "reviewed_at": "2026-09-26",
+      "quality": "Primary publisher/developer source read; product performance claims remain vendor-reported unless explicitly labelled benchmark paper.",
+      "installed": false,
+      "tested": false,
+      "summary": "Agents-A1 — открытая модель InternScience для рассуждений и работы с инструментами."
+    },
+    {
+      "id": "awesome-agent-scientists",
+      "name": "Awesome Agent Scientists / Agentic Science survey",
+      "url": "https://github.com/AgenticScience/Awesome-Agent-Scientists",
+      "category": "Каталог исследований",
+      "primary_sources": [
+        "https://github.com/AgenticScience/Awesome-Agent-Scientists",
+        "https://github.com/AgenticScience/Awesome-Agent-Scientists/blob/main/LICENSE"
+      ],
+      "status": "Справочный материал изучен",
+      "license": "MIT repository; individual linked papers/code have separate licenses.",
+      "access": "Открытая библиография; не предоставляет модель, API или вычисления.",
+      "integration": "Исходный реестр исследований и предметная классификация с устранением дублей.",
+      "next_action": "Импортировать проверенные библиографические записи со статусом доказательств.",
+      "limitations": "Наличие в списке не подтверждает качество, поддержку и готовность запуска. Это не устанавливаемая автономная платформа. Лицензии связанных работ проверяются отдельно.",
+      "evidence": "Репозиторий организует обзор по биологии, химии, материалам, физике и стадиям научного процесса.",
+      "reviewed_at": "2026-09-26",
+      "quality": "Primary publisher/developer source read; product performance claims remain vendor-reported unless explicitly labelled benchmark paper.",
+      "installed": false,
+      "tested": false,
+      "summary": "Каталог Agentic Science систематизирует научные агентные работы по дисциплинам."
+    },
+    {
+      "id": "frontiers-scaince",
+      "name": "AI, agentic models and lab automation for scientific discovery",
+      "url": "https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3389/frai.2025.1649155/full",
+      "category": "Научный обзор",
+      "primary_sources": [
+        "https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3389/frai.2025.1649155/full"
+      ],
+      "status": "Справочный материал изучен",
+      "license": "Open-access article; exact reuse notice should be checked before copying figures/full text.",
+      "access": "Открытая обзорная статья от 29 августа 2025 года; исполняемой платформы нет.",
+      "integration": "Требования воспроизводимости, аудита, безопасности и участия исследователя.",
+      "next_action": "Добавить библиографическую ссылку, отделив обзорные утверждения от экспериментальных подтверждений.",
+      "limitations": "Обзор охватывает период до середины 2025 года и не подтверждает доступность сервисов в 2026. Обсуждение управления не сертифицирует безопасность проекта. Прочитаны аннотация, введение и выбранные разделы, не все цитируемые исследования.",
+      "evidence": "Автор Thomas Hartung; DOI 10.3389/frai.2025.1649155; описаны ограничения воспроизводимости и равного доступа.",
+      "reviewed_at": "2026-09-26",
+      "quality": "Primary publisher/developer source read; product performance claims remain vendor-reported unless explicitly labelled benchmark paper.",
+      "installed": false,
+      "tested": false,
+      "summary": "Обзор Frontiers рассматривает переход от научных помощников к автоматизированным лабораториям."
+    },
+    {
+      "id": "hermes",
+      "name": "Hermes Agent",
+      "url": "https://github.com/NousResearch/hermes-agent",
+      "category": "Исполнение агентов",
+      "primary_sources": [
+        "https://github.com/NousResearch/hermes-agent",
+        "https://raw.githubusercontent.com/NousResearch/hermes-agent/main/README.md"
+      ],
+      "status": "Изучен; сохранена закреплённая версия",
+      "license": "MIT",
+      "access": "Открытый код; модель и вычисления предоставляются отдельно.",
+      "integration": "Сохранить уже проверенную версию 0.21.5/f97608f178d1ffeca59860195ab7da295f7c8e5f; новые main-функции не считать установленными.",
+      "next_action": "Проверять следующие задачи через существующий admission, budget и receipt.",
+      "limitations": "MIT не означает бесплатные внешние модели. Обновление не выполнялось.",
+      "reviewed_at": "2026-09-26",
+      "commit": "1c535d9689b71e201eaca7122714991b7088a8dd",
+      "quality": "Первичный сайт проекта; заявления владельца не являются независимой валидацией.",
+      "summary": "Сохранить уже проверенную версию 0.21.5/f97608f178d1ffeca59860195ab7da295f7c8e5f; новые main-функции не считать установленными."
+    },
+    {
+      "id": "aporb-agentic-os",
+      "name": "Agentic OS / aporb",
+      "url": "https://github.com/aporb/agentic-os",
+      "category": "Интерфейс",
+      "primary_sources": [
+        "https://github.com/aporb/agentic-os",
+        "https://raw.githubusercontent.com/aporb/agentic-os/main/README.md"
+      ],
+      "status": "Изучен; не установлен",
+      "license": "MIT",
+      "access": "Локальное приложение Next.js 15; Hermes API и модель нужны отдельно.",
+      "integration": "Заимствовать разделение неизменяемых Sources, редактируемой Wiki и личного Journal; runtime подключать ограниченным адаптером.",
+      "next_action": "Перед исполнением закрепить зависимости и проверить SSRF/обновлятор; переносить концепции с атрибуцией.",
+      "limitations": "README включает SSRF protection и supply-chain hardening updater в будущую дорожную карту; localhost-консоль не готовый публичный multi-user сервис.",
+      "reviewed_at": "2026-09-26",
+      "commit": "ea1f00a41e3b0cd40ddd6269110e5c21fa7b3ef5",
+      "quality": "Первичный сайт проекта; заявления владельца не являются независимой валидацией.",
+      "summary": "Заимствовать разделение неизменяемых Sources, редактируемой Wiki и личного Journal; runtime подключать ограниченным адаптером."
+    },
+    {
+      "id": "modimihir-agentic-os",
+      "name": "Agentic OS / modimihir07",
+      "url": "https://github.com/modimihir07/agentic-os",
+      "category": "Интерфейс",
+      "primary_sources": [
+        "https://github.com/modimihir07/agentic-os",
+        "https://raw.githubusercontent.com/modimihir07/agentic-os/main/README.md",
+        "https://github.com/modimihir07/agentic-os/blob/c7ebbb41d85608e7b49e4f1f801c92c3991be254/server.py"
+      ],
+      "status": "Изучен; не установлен",
+      "license": "MIT",
+      "access": "Локальный FastAPI/SPA, внешние CLI и provider credentials.",
+      "integration": "Полезны журнал запусков, Kanban, FTS5, circuit-breaker и состояние агента; интеграция через контракт run/result.",
+      "next_action": "Не запускать install.sh; провести отдельный dependency/auth/command audit до запуска.",
+      "limitations": "README утверждает нулевую стоимость и stable, но бесплатность конкретных моделей/agy региона не проверена. Прочитан server.py, это не полный security audit.",
+      "reviewed_at": "2026-09-26",
+      "commit": "c7ebbb41d85608e7b49e4f1f801c92c3991be254",
+      "quality": "Первичный сайт проекта; заявления владельца не являются независимой валидацией.",
+      "summary": "Полезны журнал запусков, Kanban, FTS5, circuit-breaker и состояние агента; интеграция через контракт run/result."
+    },
+    {
+      "id": "harnessing-agentic-ai",
+      "name": "Harnessing Agentic AI for Research and Practice",
+      "url": "https://github.com/drfittri/harnessing-agentic-ai",
+      "category": "Учебный пример",
+      "primary_sources": [
+        "https://github.com/drfittri/harnessing-agentic-ai",
+        "https://raw.githubusercontent.com/drfittri/harnessing-agentic-ai/main/README.md"
+      ],
+      "status": "Изучен; не установлен",
+      "license": "README: free reuse for teaching with attribution; GitHub SPDX license null",
+      "access": "Открытые слайды и синтетический demo kit.",
+      "integration": "Применить слепое двойное screening и проверку таблиц как идеи собственных синтетических acceptance-тестов.",
+      "next_action": "Уточнить лицензию для использования вне обучения до копирования материалов.",
+      "limitations": "Учебные вымышленные данные; не клинические данные и не доказательство научной эффективности.",
+      "reviewed_at": "2026-09-26",
+      "commit": "47a4c25e5259e0ea1f117c37727a18310f1bd54d",
+      "quality": "Первичный сайт проекта; заявления владельца не являются независимой валидацией.",
+      "summary": "Применить слепое двойное screening и проверку таблиц как идеи собственных синтетических acceptance-тестов."
+    },
+    {
+      "id": "agentik-os",
+      "name": "Agentik {OS}",
+      "url": "https://www.agentik-os.com/",
+      "category": "Консалтинг",
+      "primary_sources": [
+        "https://www.agentik-os.com/"
+      ],
+      "status": "Коммерческий сайт изучен",
+      "license": "Не установлена",
+      "access": "Chief AI Officer as a Service, сайт услуг.",
+      "integration": "Только внешний каталог, не runtime-провайдер.",
+      "next_action": "Запрашивать техническую документацию только если понадобятся конкретные возможности.",
+      "limitations": "Не связан по проверенным данным с одноимёнными GitHub-проектами; бесплатный API и открытый код не найдены.",
+      "reviewed_at": "2026-09-26",
+      "commit": null,
+      "quality": "Первичный сайт проекта; заявления владельца не являются независимой валидацией.",
+      "summary": "Только внешний каталог, не runtime-провайдер."
+    },
+    {
+      "id": "anolisa",
+      "name": "ANOLISA / agentic-os.sh",
+      "url": "https://agentic-os.sh/",
+      "category": "Изоляция исполнения",
+      "primary_sources": [
+        "https://agentic-os.sh/",
+        "https://agentic-os.sh/docs/building/",
+        "https://github.com/agentic-os-org/ANOLISA"
+      ],
+      "status": "Кандидат для Linux; не установлен",
+      "license": "Apache-2.0",
+      "access": "Открытый Linux runtime/security/observability; часть macOS, Windows не общая цель.",
+      "integration": "Кандидат на отдельный Linux worker: checkpoint, bounded output compression, security policy.",
+      "next_action": "Проверять один выбранный компонент в одноразовой Linux VM; native Windows не менять.",
+      "limitations": "Большинство ключевых компонентов Linux-specific; system installation/FUSE/eBPF требуют иной изоляции и прав. Заявления о compression не равны экономии счета модели.",
+      "reviewed_at": "2026-09-26",
+      "commit": "4507cfb74ec39f6f264e8753a3eaf7715c7a83ee",
+      "quality": "Первичный сайт проекта; заявления владельца не являются независимой валидацией.",
+      "summary": "Кандидат на отдельный Linux worker: checkpoint, bounded output compression, security policy."
+    },
+    {
+      "id": "agentic-os-domain",
+      "name": "agentic-os.com",
+      "url": "https://agentic-os.com/",
+      "category": "Неподтверждённый ресурс",
+      "primary_sources": [
+        "https://agentic-os.com/"
+      ],
+      "status": "Содержимое не подтверждено",
+      "license": "Не установлена",
+      "access": "Корневая страница возвращает JS redirect /lander; /lander не прочитан.",
+      "integration": "Не подключать как провайдера.",
+      "next_action": "Дождаться проверяемой документации/кода/оператора сервиса.",
+      "limitations": "Нет подтверждённого agent runtime. Отличать от agentic-os.sh и agentik-os.com.",
+      "reviewed_at": "2026-09-26",
+      "commit": null,
+      "quality": "Первичный сайт проекта; заявления владельца не являются независимой валидацией.",
+      "summary": "Не подключать как провайдера."
+    },
+    {
+      "id": "mindstudio-agentic-os",
+      "name": "MindStudio: Agentic Operating System",
+      "url": "https://www.mindstudio.ai/blog/what-is-agentic-operating-system",
+      "category": "Инженерный материал",
+      "primary_sources": [
+        "https://www.mindstudio.ai/blog/what-is-agentic-operating-system"
+      ],
+      "status": "Справочный материал изучен",
+      "license": "Авторский материал, лицензия кода не применима",
+      "access": "Публичная статья поставщика.",
+      "integration": "Слои memory/tools/orchestration/workflows/shared context использовать для анализа требований.",
+      "next_action": "Сопоставлять каждую обещанную возможность с работающим модулем и квитанцией.",
+      "limitations": "Не отдельный устанавливаемый OS-пакет; коммерческая статья не независимый benchmark.",
+      "reviewed_at": "2026-09-26",
+      "commit": null,
+      "quality": "Первичный сайт проекта; заявления владельца не являются независимой валидацией.",
+      "summary": "Слои memory/tools/orchestration/workflows/shared context использовать для анализа требований."
+    },
+    {
+      "id": "agentic-engineering-os",
+      "name": "Agentic Engineering OS",
+      "url": "https://pypi.org/project/agentic-engineering-os/",
+      "category": "Инструменты разработки",
+      "primary_sources": [
+        "https://pypi.org/project/agentic-engineering-os/",
+        "https://github.com/SwastikPandey1024/agentic-engineering-os"
+      ],
+      "status": "Изучен; не установлен",
+      "license": "MIT",
+      "access": "PyPI v1.1.0; Python >=3.10; стандартная библиотека по README.",
+      "integration": "Кандидат правил/doctor/шаблонов IDE; не смешивать с научным inference/runtime.",
+      "next_action": "Отдельно сравнить с уже действующими AGENTS/doctor/CI, не переписывать их генератором init.",
+      "limitations": "init/configure модифицируют рабочие правила и hooks; установка не производилась, zero-dependency заявлено автором.",
+      "reviewed_at": "2026-09-26",
+      "commit": "5e65b49b0d9366d60886ae22e693299c511c82a0",
+      "quality": "Первичный сайт проекта; заявления владельца не являются независимой валидацией.",
+      "summary": "Кандидат правил/doctor/шаблонов IDE; не смешивать с научным inference/runtime."
+    },
+    {
+      "id": "ecc-agentic-os",
+      "name": "ECC Agentic OS skill",
+      "url": "https://mcpmarket.com/tools/skills/agentic-os",
+      "category": "Инструкции агента",
+      "primary_sources": [
+        "https://mcpmarket.com/tools/skills/agentic-os",
+        "https://github.com/affaan-m/ECC/blob/main/skills/agentic-os/SKILL.md",
+        "https://github.com/affaan-m/ECC"
+      ],
+      "status": "Первоисточник найден и изучен",
+      "license": "MIT (ECC repository)",
+      "access": "Открытый Markdown skill; нужен работающий harness и отдельно доступная модель.",
+      "integration": "Полезны явный агентный реестр, scope памяти и журнал handoff.",
+      "next_action": "Импортировать только проверенный ограниченный шаблон с version/source; не всю коллекцию hooks.",
+      "limitations": "MCP Market — каталог, не исполнитель и не источник бесплатных моделей; число stars относится ко всему ECC. Skill не создаёт работающий daemon сам.",
+      "reviewed_at": "2026-09-26",
+      "commit": "e482e579415fde18357cafce70f177ae19fd7f03",
+      "quality": "Первичный сайт проекта; заявления владельца не являются независимой валидацией.",
+      "summary": "Полезны явный агентный реестр, scope памяти и журнал handoff."
+    },
+    {
+      "id": "devto-agentic-os",
+      "name": "Sai Tarrun: Building an Agentic OS",
+      "url": "https://dev.to/saitarrun/building-an-agentic-os-a-complete-end-to-end-guide-for-autonomous-ai-engineering-workflows-25dk",
+      "category": "Учебный пример",
+      "primary_sources": [
+        "https://dev.to/saitarrun/building-an-agentic-os-a-complete-end-to-end-guide-for-autonomous-ai-engineering-workflows-25dk"
+      ],
+      "status": "Изучен; найден дефект проверки",
+      "license": "Лицензия предоставленных фрагментов отдельно не установлена",
+      "access": "Публичное руководство; AI CLI в примерах placeholders.",
+      "integration": "Взять разделение executor/auditor и критерии готовности, но не копировать gate.",
+      "next_action": "Сохранить контрпример: `python -m pytest || true` скрывает ошибку тестов; наш CI должен fail closed.",
+      "limitations": "Руководство противоречит собственной deterministic-gate цели; placeholders не готовая интеграция.",
+      "reviewed_at": "2026-09-26",
+      "commit": null,
+      "quality": "Первичный сайт проекта; заявления владельца не являются независимой валидацией.",
+      "summary": "Взять разделение executor/auditor и критерии готовности, но не копировать gate."
+    },
+    {
+      "id": "exai-cloud",
+      "name": "exAI Agentic OS",
+      "url": "https://exai.cloud/",
+      "category": "Коммерческая платформа",
+      "primary_sources": [
+        "https://exai.cloud/"
+      ],
+      "status": "Изучено описание поставщика",
+      "license": "Закрытая/не установлена",
+      "access": "Enterprise IDE/Builder/Runner; публичные технические обещания.",
+      "integration": "Внешний каталог; UI-идея plan/build/test/package/govern с квитанциями.",
+      "next_action": "Нужны проверяемый API/тариф/лицензия прежде реального подключения.",
+      "limitations": "Не проверены заявленные 26 агентов, 30+ часов и customer logos; бесплатный доступ не подтверждён.",
+      "reviewed_at": "2026-09-26",
+      "commit": null,
+      "quality": "Первичный сайт проекта; заявления владельца не являются независимой валидацией.",
+      "summary": "Внешний каталог; UI-идея plan/build/test/package/govern с квитанциями."
+    },
+    {
+      "id": "opengrowth",
+      "name": "OpenGrowth.AI",
+      "url": "https://opengrowth.ai/",
+      "category": "Консалтинг",
+      "primary_sources": [
+        "https://opengrowth.ai/"
+      ],
+      "status": "Изучено описание поставщика",
+      "license": "Не установлена",
+      "access": "Fractional experts + agents; бесплатная консультация не free compute.",
+      "integration": "Внешний каталог; не исполнять как бесплатный research backend.",
+      "next_action": "Нужны интерфейс и условия для интеграции.",
+      "limitations": "Маркетинговые данные не подтверждают API, открытый код или бесплатный постоянный research runtime.",
+      "reviewed_at": "2026-09-26",
+      "commit": null,
+      "quality": "Первичный сайт проекта; заявления владельца не являются независимой валидацией.",
+      "summary": "Внешний каталог; не исполнять как бесплатный research backend."
+    },
+    {
+      "id": "irreplaceable-ai-engineer",
+      "name": "Irreplaceable AI Engineer",
+      "url": "https://irreplaceable-ai.ru/products/ai-engineer",
+      "category": "Обучение",
+      "primary_sources": [
+        "https://irreplaceable-ai.ru/products/ai-engineer"
+      ],
+      "status": "Учебная программа изучена",
+      "license": "Учебные материалы, свободная лицензия не установлена",
+      "access": "Практический курс TypeScript/JS об Agentic OS.",
+      "integration": "Источник образовательной архитектуры и терминов.",
+      "next_action": "Не представлять курс как подключённый облачный агент.",
+      "limitations": "Публичная страница обещает репозиторий участникам; открытый reusable repo и бесплатный доступ не проверены.",
+      "reviewed_at": "2026-09-26",
+      "commit": null,
+      "quality": "Первичный сайт проекта; заявления владельца не являются независимой валидацией.",
+      "summary": "Источник образовательной архитектуры и терминов."
+    },
+    {
+      "id": "github-fuzzing",
+      "name": "GitHub Security Lab Taskflow Fuzzing",
+      "url": "https://github.blog/security/application-security/ai-powered-fuzzing-with-the-github-security-lab-taskflow-agent/",
+      "category": "Проверка безопасности",
+      "primary_sources": [
+        "https://github.blog/security/application-security/ai-powered-fuzzing-with-the-github-security-lab-taskflow-agent/",
+        "https://github.com/GitHubSecurityLab/seclab-taskflows-fuzzing",
+        "https://raw.githubusercontent.com/GitHubSecurityLab/seclab-taskflows-fuzzing/669a16a4fff8bd24886337e29f6348f6dc1f1415/README.md"
+      ],
+      "status": "Изучен; нужна изолированная среда",
+      "license": "MIT (seclab-taskflows-fuzzing)",
+      "access": "Linux, AFL++/clang/lcov, LLM provider; вычисления и LLM отдельно.",
+      "integration": "Кандидат ограниченной проверки собственных C/C++ компонентов; не общая платформа НИОКР.",
+      "next_action": "Только одноразовая среда без секретов, собственный/разрешённый target, pinned dependencies и лимит времени.",
+      "limitations": "Автор прямо предупреждает: LLM-selected build commands выполняются на host без контейнера. Автономность не sandbox; Python-core проекта не прямая цель C/C++ fuzzing.",
+      "reviewed_at": "2026-09-26",
+      "commit": "669a16a4fff8bd24886337e29f6348f6dc1f1415",
+      "quality": "Первичный сайт проекта; заявления владельца не являются независимой валидацией.",
+      "summary": "Кандидат ограниченной проверки собственных C/C++ компонентов; не общая платформа НИОКР."
+    },
+    {
+      "id": "rosalind",
+      "name": "Rosalind Workbench / GPT-Rosalind",
+      "url": "https://openai.com/ru-RU/rosalind/",
+      "category": "Научная среда",
+      "summary": "Научное рабочее пространство с просмотром данных, направляемыми задачами и прослеживаемыми результатами.",
+      "status": "Изучен; доступ не подтверждён",
+      "license": "Проприетарная платформа; лицензия открытого кода не установлена.",
+      "access": "Explore использует доступные пользователю модели ChatGPT; Research требует допуска организации. Наличие плагина не подтверждает доступ к GPT-Rosalind.",
+      "integration": "Применены принципы общего вопроса, плана, источников и результатов. Вызываемых инструментов Rosalind в текущей сессии не обнаружено.",
+      "next_action": "Проверить доступные инструменты и условия конкретного аккаунта перед запуском; сейчас доступна постановка протокола.",
+      "limitations": "Research preview рабочего пространства не равен бесплатной облачной инфраструктуре или научной валидации.",
+      "primary_sources": [
+        "https://openai.com/ru-RU/rosalind/",
+        "https://developers.openai.com/blog/rosalind-workbench"
+      ],
+      "reviewed_at": "2026-09-26"
+    },
+    {
+      "id": "langgraph",
+      "name": "LangGraph",
+      "url": "https://docs.langchain.com/oss/python/langgraph/functional-api",
+      "category": "Оркестрация",
+      "summary": "Граф и сохраняемые контрольные точки для исследовательского процесса с этапами проверки.",
+      "status": "Документация изучена",
+      "license": "Лицензия не проверена в этом обзоре.",
+      "access": "Документация открыта; хранение, модели и инфраструктура подключаются отдельно.",
+      "integration": "Учтены устойчивые идентификаторы задач и повторяемое сохранение. Новый LangGraph runtime не установлен.",
+      "next_action": "Сопоставить существующую очередь проекта с replay/checkpoint-контрактом на конечном тесте.",
+      "limitations": "Возобновление переигрывает код от контрольной точки. Внешние действия требуют идемпотентности; checkpoint не гарантирует ровно один внешний эффект.",
+      "primary_sources": [
+        "https://docs.langchain.com/oss/python/langgraph/functional-api"
+      ],
+      "reviewed_at": "2026-09-26"
+    },
+    {
+      "id": "autogen",
+      "name": "AutoGen",
+      "url": "https://github.com/microsoft/autogen",
+      "category": "Оркестрация",
+      "summary": "Мультиагентный фреймворк в режиме сопровождения; новые проекты README направляет в Microsoft Agent Framework.",
+      "status": "Изучен; не установлен",
+      "license": "Точные условия LICENSE-CODE нужно проверить перед включением кода.",
+      "access": "Репозиторий открыт; модельные API и ключи предоставляются отдельно.",
+      "integration": "Использовать разделение участников и журнал действий, не начинать новую зависимость только из-за популярного названия.",
+      "next_action": "Сравнить поддерживаемый Microsoft Agent Framework с существующим ядром по конкретному адаптеру.",
+      "limitations": "MCP-поддержка сама по себе не даёт права на инструменты и не предоставляет бесплатный inference.",
+      "primary_sources": [
+        "https://github.com/microsoft/autogen"
+      ],
+      "reviewed_at": "2026-09-26"
+    },
+    {
+      "id": "autogen-studio",
+      "name": "AutoGen Studio",
+      "url": "https://github.com/microsoft/autogen",
+      "category": "Интерфейс",
+      "summary": "Интерфейс прототипирования мультиагентных workflow, а не готовое защищённое личное облако.",
+      "status": "Изучен; не установлен",
+      "license": "Точные условия пакета нужно проверить перед установкой.",
+      "access": "Открытый прототип; расходы моделей и инфраструктуры отдельно.",
+      "integration": "Взяты идея визуальных этапов и отдельный статус запуска. Существующая НИОКР-студия сохраняется.",
+      "next_action": "Сравнивать пользовательский процесс на одинаковом задании, не переносить прототип в production без собственного контроля доступа.",
+      "limitations": "Официальный README прямо предупреждает, что Studio не production-ready и требует реализации authentication/security.",
+      "primary_sources": [
+        "https://github.com/microsoft/autogen"
+      ],
+      "reviewed_at": "2026-09-26"
+    },
+    {
+      "id": "langsmith-custom-apps",
+      "name": "LangSmith Custom Apps",
+      "url": "https://ai-manual.ru/article/langsmith-custom-apps-kak-sozdat-sobstvennyij-interfejs-dlya-dannyih-ai-agentov/",
+      "category": "Интерфейс",
+      "summary": "Специализированные формы рецензирования, сравнение экспериментов и просмотр трасс внутри LangSmith.",
+      "status": "Вторичный источник изучен",
+      "license": "Условия SaaS, не лицензия свободного хостинга.",
+      "access": "Статья указывает Plus/Enterprise для создания через чат; актуальные права аккаунта и тариф в этом проходе не проверены.",
+      "integration": "Применить отдельную рубрику рецензента и явные критерии результата в локальной студии.",
+      "next_action": "Проверить официальный анонс и тариф перед внешним размещением. Бесплатное подключение не заявляется.",
+      "limitations": "Запрос предполагаемого URL официального анонса через Exa не дал страницы. Подтверждён только прочитанный вторичный материал.",
+      "primary_sources": [],
+      "reviewed_at": "2026-09-26"
+    },
+    {
+      "id": "connectome-reference",
+      "name": "Карта мозга мухи — исследовательский пример",
+      "url": "https://habr.com/ru/articles/1086792/",
+      "category": "Исследовательский материал",
+      "summary": "Материал о сравнении коннектомов, пригодный как пример проверки переноса выводов между видами.",
+      "status": "Вторичный источник изучен",
+      "license": "Права на текст и исходные данные проверяются отдельно.",
+      "access": "Статья публична; первичные данные и научная работа в этом проходе не проверены.",
+      "integration": "Шаблон обзора должен разделять наблюдение у модельного организма и гипотезу о человеке.",
+      "next_action": "Найти указанную первичную публикацию и открытые данные, проверить метод и границы обобщения.",
+      "limitations": "Это не агентная платформа. Числа и причинные интерпретации из пересказа не прошли независимую проверку.",
+      "primary_sources": [],
+      "reviewed_at": "2026-09-26"
+    },
+    {
+      "id": "advanced-harness-article",
+      "name": "Advanced Agentic Harness — разбор Островка",
+      "url": "https://habr.com/ru/companies/ostrovok/articles/1084568/",
+      "category": "Инженерный материал",
+      "summary": "Разбор типизированных инструментов, DAG, ролей, бюджетов и трассировки на учебной задаче.",
+      "status": "Материал изучен",
+      "license": "Лицензия исходной реализации не установлена.",
+      "access": "Текст публичен; mock-примеры отделены автором от реального LLM.",
+      "integration": "Учтены раздельные роли плана, исполнения и проверки; факт сохранения задачи не считается запуском.",
+      "next_action": "Проверить первичный код и воспроизвести один конечный пример в облачной тестовой среде.",
+      "limitations": "Учебный пример не подтверждает устойчивость к гонкам, изоляцию пользователей или качество научного вывода.",
+      "primary_sources": [],
+      "reviewed_at": "2026-09-26"
+    },
+    {
+      "id": "agentic-os-video",
+      "name": "Agentic OS — видео о SEED, PAUL и Hermes",
+      "url": "https://www.youtube.com/watch?v=01mYICuCI_Q",
+      "category": "Инженерный материал",
+      "summary": "Авторский процесс сборки личной панели, хранилища знаний и подключения Hermes.",
+      "status": "Текстовая расшифровка просмотрена",
+      "license": "Лицензии показанных репозиториев нужно проверять отдельно.",
+      "access": "В описанном процессе есть VPS и hosting; постоянные бесплатные вычисления не подтверждены.",
+      "integration": "Сохранить цикл план → изменение → проверка → обновление контекста как проектный процесс.",
+      "next_action": "Идентифицировать точные репозитории и версии прежде, чем переносить команды установки.",
+      "limitations": "Видео и показанная панель не доказывают готовую инфраструктуру, безопасность или отсутствие расходов. Команды глобальной установки не исполнялись.",
+      "primary_sources": [
+        "https://www.youtube.com/watch?v=01mYICuCI_Q"
+      ],
+      "reviewed_at": "2026-09-26"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#153b3d"><title>Научные инструменты · NeuroMorf</title><link rel="stylesheet" href="/studio.css"><link rel="stylesheet" href="/science.css"><script src="/science.js" defer></script></head>
+<body>
+<a class="skip-link" href="#main">К содержимому</a>
+<header class="app-header"><a class="brand" href="/studio.html"><span class="brand-mark" aria-hidden="true">N<span>M</span></span><span>NeuroMorf<small>Исследовательская студия</small></span></a><nav class="header-links" aria-label="Разделы"><a href="/studio.html">Проекты</a><a href="/assistants.html">AI-ассистенты</a><a href="/harnesses.html">Исполнители</a></nav><div class="session-area"><span id="session-label">Проверяем сеанс…</span><a id="login-link" href="/auth/login" class="button small" hidden>Войти</a></div></header>
+<main id="main" tabindex="-1">
+<section class="intro"><div><p class="eyebrow">НАУЧНЫЕ СИСТЕМЫ / ПРОВЕРЯЕМЫЕ ПРОТОКОЛЫ</p><h1>От инструмента к исследованию</h1><p class="lead">Сравните возможности платформ, выберите метод и сохраните проверяемый план в своём проекте.</p></div><div class="intro-actions"><button id="refresh" type="button" class="button">Обновить</button><a class="button primary" href="#protocol">Составить протокол ↓</a></div></section>
+<div id="notice" class="notice" role="status" aria-live="polite">Загружаем каталог и проекты…</div>
+<nav class="science-shortcuts" aria-label="Рабочая область"><a href="/studio.html">← Проекты и результаты</a><a href="/assistants.html">Передать задание ассистенту →</a></nav>
+<section aria-labelledby="catalog-heading">
+<div class="section-heading"><div><h2 id="catalog-heading">Каталог научных систем</h2><p id="catalog-notice">Обзор возможностей не подтверждает подключение аккаунта или доступность вычислений.</p></div><span id="reviewed" class="meta"></span></div>
+<div class="filters"><label>Поиск<input id="search" type="search" maxlength="200" placeholder="Система, метод или ограничение"></label><label>Категория<select id="category"><option value="">Все категории</option></select></label></div>
+<p id="catalog-count" class="meta" aria-live="polite"></p><div id="catalog" class="science-grid"><p class="empty-state">Каталог загружается…</p></div>
+</section>
+<section id="protocol" class="protocol-section" aria-labelledby="protocol-heading">
+<div class="section-heading"><div><p class="eyebrow">СОХРАНЯЕМЫЙ ПЛАН</p><h2 id="protocol-heading">Протокол исследования</h2><p>Вопрос, контроль и критерии результата попадут в задачу проекта. Запуск вычислений оформляется отдельно.</p></div></div>
+<div class="protocol-layout"><form id="protocol-form" class="panel">
+<fieldset id="protocol-fields" disabled><legend>Постановка исследования</legend>
+<div class="field-pair"><label>Проект<select id="project" required><option value="">Загружаем проекты…</option></select></label><label>Рабочий процесс<select id="template" required><option value="">Выберите процесс</option></select></label></div>
+<label>Платформа для рассмотрения<select id="platform" required><option value="">Выберите платформу</option></select></label>
+<p class="form-help">Выбор платформы фиксирует намерение. Он не подключает аккаунт и не отправляет ей данные.</p>
+<label>Название исследования<input id="title" required maxlength="200" placeholder="Конкретный результат, который нужно получить"></label>
+<label>Исследовательский вопрос<textarea id="question" required maxlength="4000" rows="3" placeholder="Что сравниваем и на каких данных?"></textarea></label>
+<label>Гипотеза<textarea id="hypothesis" required maxlength="2000" rows="2" placeholder="Какое проверяемое предположение рассматриваем?"></textarea></label>
+<label>Метод и исходные данные<textarea id="method" required maxlength="2000" rows="3" placeholder="Источники, выборка, параметры и воспроизводимые шаги"></textarea></label>
+<label>Контроль и возможный контрпример<textarea id="control" required maxlength="2000" rows="2" placeholder="Базовый метод, отрицательный контроль, что опровергнет вывод"></textarea></label>
+<label>Критерии результата и ограничения<textarea id="criteria" required maxlength="4000" rows="3" placeholder="Метрики, пороги, артефакты проверки и границы применимости"></textarea></label>
+</fieldset>
+<p id="form-status" class="notice" role="status" aria-live="polite">Сначала выберите существующий проект. Новый проект можно создать в студии.</p>
+<div class="protocol-actions"><button id="save" class="button primary" type="submit" disabled>Сохранить задачу</button><button id="export" class="button" type="button">Скачать протокол</button><button id="new-protocol" class="text-button" type="button" hidden>Новый протокол</button></div>
+<p class="form-help">Если подтверждение сохранения потеряется, повтор отправит тот же протокол с тем же ключом. До получения результата редактирование зафиксировано. Черновик хранится в этой вкладке; скачайте его перед закрытием.</p>
+</form><aside class="protocol-aside"><div class="panel"><h3 id="template-name">Выберите рабочий процесс</h3><p id="template-description" class="meta">Шаги появятся после выбора шаблона.</p><ol id="template-steps" class="protocol-steps"></ol></div><div class="panel provenance-note"><p class="eyebrow">ЦЕПОЧКА ДОКАЗАТЕЛЬСТВ</p><h3>Сохраняйте основания вывода</h3><p>Источник → утверждение → метод → результат → ограничение.</p><p>Запишите версию данных, параметры и фактическую модель в материале проекта. Согласие агентов само по себе не является независимой репликацией.</p><a href="/studio.html">Открыть материалы проекта →</a></div></aside></div>
+</section><footer><span>NeuroMorf · научные инструменты</span><span>Дополнительные расходы: 0 · автоматических вызовов нет</span></footer>
+</main><noscript><p class="no-script">Для каталога и сохранения протокола нужен JavaScript. <a href="/studio.html">Вернуться в студию</a>.</p></noscript>
+</body></html>

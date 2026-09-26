@@ -54,7 +54,7 @@ class StudioHTTPTests(unittest.TestCase):
         return result
 
     def test_private_routes_require_session_including_exports(self):
-        for path in ['/api/studio','/api/studio/export','/api/sources','/api/export','/api/session']:
+        for path in ['/api/studio','/api/studio/export','/api/sources','/api/export','/api/session','/api/science/catalog']:
             self.assertEqual(self.request(path)[0],401,path)
 
     def test_write_requires_cookie_origin_and_csrf(self):
@@ -81,6 +81,12 @@ class StudioHTTPTests(unittest.TestCase):
 
     def test_parameter_flood_rejected(self):
         self.assertEqual(self.request('/api/studio?'+'&'.join('k'+str(i)+'=x' for i in range(40)))[0],400)
+
+    def test_science_protocol_requires_session_and_csrf_before_validation(self):
+        self.assertEqual(self.request('/api/science/protocol',{'execute':True})[0],401)
+        self.assertEqual(self.request('/api/science/protocol',{'execute':True},cookie='fixture=owner')[0],403)
+        self.assertEqual(self.request('/api/science/protocol',{'execute':True},cookie='fixture=owner',csrf='csrf-fixture')[0],400)
+        self.assertEqual(self.service.studio.snapshot('owner')['tasks'],[])
 
 
 if __name__ == '__main__':
