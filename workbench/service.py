@@ -105,6 +105,8 @@ class Service:
     def __init__(self, root=None, db_path=None, timeout=10):
         self.root = Path(root or Path(__file__).resolve().parent.parent).resolve()
         self.store = Store(db_path or self.root / "state" / "workbench.sqlite3")
+        from .studio import StudioWorkspace
+        self.studio = StudioWorkspace(self.store)
         self.timeout = timeout
         self.slots = threading.BoundedSemaphore(2)
         self._network = None
