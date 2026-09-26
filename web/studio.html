@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#153b3d">
+  <meta name="description" content="Рабочее пространство НИОКР: вопросы, протоколы, задачи, источники и проверяемые результаты.">
+  <title>Студия НИОКР · NeuroMorf</title>
+  <link rel="stylesheet" href="/studio.css">
+  <script src="/studio.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">К содержимому</a>
+  <header class="app-header">
+    <a class="brand" href="/studio.html"><span class="brand-mark" aria-hidden="true">N<span>M</span></span><span>NeuroMorf<small>Исследовательская студия</small></span></a>
+    <nav class="header-links" aria-label="Разделы приложения"><a href="/assistants.html">AI-ассистенты</a><a href="/brain.html">Лаборатория</a><a href="/cloud.html">Облачный журнал</a><a href="/">Все инструменты</a></nav>
+    <div class="session-area"><span id="session-label">Проверяем сеанс…</span><a id="login-link" class="button small" href="/auth/login" hidden>Войти</a><button id="logout-button" class="button small" type="button" hidden>Выйти</button></div>
+  </header>
+  <main id="main" tabindex="-1">
+    <section class="intro" aria-labelledby="page-title">
+      <div><p class="eyebrow">ВОПРОС → ПРОТОКОЛ → ПРОВЕРКА → РЕЗУЛЬТАТ</p><h1 id="page-title">Рабочее место исследователя</h1><p class="lead">Соберите вопрос, план и доказательства в одном проекте. Сохраняйте решения и проверяйте результаты участников.</p></div>
+      <div class="intro-actions"><button id="refresh-button" class="button" type="button">Обновить</button><button id="new-project" class="button primary" type="button" disabled>+ Проект</button></div>
+    </section>
+    <div id="notice" class="notice" role="status" aria-live="polite">Загружаем рабочее пространство…</div>
+    <section class="workspace-bar" aria-label="Проект и возможности">
+      <label class="project-picker">Проект<select id="project-select"><option value="">Все проекты</option></select></label>
+      <button id="edit-project" class="button small" type="button" disabled>О проекте</button>
+      <div class="capabilities" id="capabilities"><span class="badge">Возможности не проверены</span></div>
+    </section>
+    <section class="project-summary" id="project-summary" hidden aria-label="Описание проекта"><h2 id="project-title"></h2><p id="project-body"></p></section>
+    <section class="metrics" aria-label="Состояние выбранных проектов">
+      <div><span>Задачи</span><strong id="metric-tasks">—</strong><small>сохранены в пространстве</small></div>
+      <div><span>На проверке</span><strong id="metric-review">—</strong><small>ждут решения исследователя</small></div>
+      <div><span>Материалы</span><strong id="metric-artifacts">—</strong><small>с заметками об основаниях</small></div>
+      <div><span>Проверены тестом*</span><strong id="metric-tested">—</strong><small>*отметка автора материала</small></div>
+    </section>
+    <div class="workspace-tabs" role="tablist" aria-label="Рабочие разделы">
+      <button type="button" role="tab" id="tab-board" aria-controls="pane-board" aria-selected="true" data-tab="board">План работ</button>
+      <button type="button" role="tab" id="tab-artifacts" aria-controls="pane-artifacts" aria-selected="false" tabindex="-1" data-tab="artifacts">Материалы</button>
+      <button type="button" role="tab" id="tab-participants" aria-controls="pane-participants" aria-selected="false" tabindex="-1" data-tab="participants">Участники</button>
+      <button type="button" role="tab" id="tab-core" aria-controls="pane-core" aria-selected="false" tabindex="-1" data-tab="core">Инструменты и данные</button>
+      <button type="button" role="tab" id="tab-journal" aria-controls="pane-journal" aria-selected="false" tabindex="-1" data-tab="journal">Журнал</button>
+    </div>
+    <section id="pane-board" class="tab-pane" role="tabpanel" aria-labelledby="tab-board">
+      <div class="section-heading"><div><h2>От замысла к результату</h2><p>Гипотеза и протокол — в карточке задачи. Перевод между этапами фиксирует ваше решение.</p></div><button id="new-task" class="button primary" type="button" disabled>+ Задача</button></div>
+      <div class="filters"><label>Поиск<input id="task-search" type="search" placeholder="Вопрос, название или текст задачи" maxlength="200"></label><label>Этап<select id="status-filter"><option value="">Все этапы</option><option value="planned">Замысел и протокол</option><option value="working">Эксперимент</option><option value="review">Проверка</option><option value="done">Результат</option><option value="paused">Пауза</option></select></label></div>
+      <p id="board-count" class="meta"></p><div id="board" class="board"></div>
+      <p class="section-note">Создание задачи сохраняет план. Для запуска расчёта откройте лабораторию; сам статус задачи ничего не запускает.</p>
+    </section>
+    <section id="pane-artifacts" class="tab-pane" role="tabpanel" aria-labelledby="tab-artifacts" hidden>
+      <div class="section-heading"><div><h2>Источники и результаты</h2><p>Сохраните ссылку, наблюдение или ответ участника вместе с его ограничениями.</p></div><button id="new-artifact" class="button primary" type="button" disabled>+ Материал</button></div>
+      <div class="filters"><label>Поиск<input id="artifact-search" type="search" placeholder="Название, текст или источник" maxlength="200"></label><label>Проверка<select id="evidence-filter"><option value="">Все материалы</option><option value="unreviewed">Не проверен</option><option value="reviewed">Просмотрен человеком</option><option value="tested">Проверен тестом — отметка автора</option></select></label></div>
+      <div id="artifacts" class="artifact-grid"></div>
+      <p class="section-note">Отметка «Проверен тестом» отражает заявление автора, а не автоматическую, научную или клиническую валидацию. Укажите метод и ссылку на результат в тексте.</p>
+    </section>
+    <section id="pane-participants" class="tab-pane" role="tabpanel" aria-labelledby="tab-participants" hidden>
+      <div class="section-heading"><div><h2>Совет участников</h2><p>Один вопрос, отдельные предложения и проверка оснований. Точная модель указывается по фактическому ответу сервиса.</p></div><button id="export-council" class="button" type="button">Скачать протокол совета</button></div>
+      <div class="assistant-entry panel"><div><h3>Панель AI-ассистентов</h3><p>Добавьте ссылку на сервис и проверьте доступные способы работы с ним. Возможности подключения и отправки показываются в самой панели.</p></div><a class="button primary" href="/assistants.html">Открыть ассистентов →</a></div>
+      <div class="participant-grid">
+        <article class="participant-card"><div class="participant-logo">Q</div><h3>Qwen</h3><span class="badge">Облачный наблюдатель: журнал</span><p>История имеющегося облачного контура доступна в журнале. Текущая работоспособность и последний ответ проверяются отдельно.</p><div class="card-links"><a href="/cloud.html">Проверить журнал</a><a href="https://chat.qwen.ai/" target="_blank" rel="noopener noreferrer">Открыть чат ↗</a></div></article>
+        <article class="participant-card"><div class="participant-logo">D</div><h3>DeepSeek</h3><span class="badge neutral">Задание и ответ — вручную</span><p>Экспортируйте вопрос из карточки задачи и перенесите ответ в материал. Прямой API и личный чат здесь не подключены.</p><a href="https://chat.deepseek.com/" target="_blank" rel="noopener noreferrer">Открыть чат ↗</a></article>
+        <article class="participant-card"><div class="participant-logo">Я</div><h3>YandexGPT / Алиса</h3><span class="badge neutral">Задание и ответ — вручную</span><p>Укажите в результате фактически показанную модель и источники. Доступность сервиса и его тариф проверяются в самом сервисе.</p><a href="https://alice.yandex.ru/" target="_blank" rel="noopener noreferrer">Открыть Алису ↗</a></article>
+        <article class="participant-card"><div class="participant-logo">K</div><h3>Kimi</h3><span class="badge neutral">Точная версия не подтверждена</span><p>В том числе для запрошенной K3 сначала проверьте название в сервисе. Перенос задания и результата выполняется явно.</p><a href="https://www.kimi.com/" target="_blank" rel="noopener noreferrer">Открыть Kimi ↗</a></article>
+      </div>
+      <div class="council-flow"><div><span>01</span><h3>Поставить вопрос</h3><p>Задача, гипотеза, критерии и допустимые публичные данные.</p></div><div><span>02</span><h3>Получить предложение</h3><p>Экспорт задания с task ID, ответ отдельным материалом.</p></div><div><span>03</span><h3>Проверить</h3><p>Второй участник проверяет источники и слабые места.</p></div><div><span>04</span><h3>Зафиксировать результат</h3><p>Исследователь отмечает проверку и следующие действия.</p></div></div>
+      <p class="section-note">Экспорт — описание рабочего процесса, без запуска сервисов и передачи паролей. Имена участников не подтверждают наличие их API. Внешним сервисам передавайте только предназначенные для них данные.</p>
+    </section>
+    <section id="pane-core" class="tab-pane" role="tabpanel" aria-labelledby="tab-core" hidden>
+      <div class="section-heading"><div><h2>Действующие инструменты</h2><p>Расчёты, источники и история запусков существующего ядра.</p></div></div>
+      <div class="tool-grid"><a class="tool-card" href="/brain.html"><span>01 / ЛАБОРАТОРИЯ</span><h3>Расчёт и протокол</h3><p>Открыть существующий модуль сессий и экспериментов.</p><strong>Открыть →</strong></a><a class="tool-card" href="/cloud.html"><span>02 / ОБЛАЧНЫЙ КОНТУР</span><h3>Проверить выполнение</h3><p>Фактические попытки, ответы и ограничения облачного наблюдателя.</p><strong>Открыть →</strong></a><a class="tool-card" href="/harnesses.html"><span>03 / КАТАЛОГ</span><h3>Средства для агентов</h3><p>Реестр возможностей и состояния интеграций.</p><strong>Открыть →</strong></a></div>
+      <div class="panel data-panel"><h3>Получить актуальные данные ядра</h3><div class="button-row"><button type="button" class="button" data-api="sources">Источники</button><button type="button" class="button" data-api="runs">Запуски</button><button type="button" class="button" data-api="cloud-status">Облачный статус</button></div><p id="core-status" class="meta" role="status">Запрос выполняется только по нажатию.</p><pre id="core-data" tabindex="0" hidden></pre></div>
+    </section>
+    <section id="pane-journal" class="tab-pane" role="tabpanel" aria-labelledby="tab-journal" hidden>
+      <div class="section-heading"><div><h2>История изменений</h2><p>Серверные события создания и изменения записей.</p></div></div><ol id="events" class="event-list"></ol>
+    </section>
+    <section class="storage-panel panel" aria-labelledby="storage-title"><div><p class="eyebrow">ВАШИ ДАННЫЕ</p><h2 id="storage-title">Экспорт и чтение без сети</h2><p>Скачайте записи или явно сохраните снимок в этом браузере. Снимок содержит тексты проекта; не сохраняйте его на чужом устройстве.</p><p id="snapshot-status" class="meta">Сохранённый снимок не проверен.</p></div><div class="storage-actions"><button id="export-state" class="button" type="button" disabled>Экспорт JSON</button><button id="save-snapshot" class="button" type="button" disabled>Сохранить снимок</button><button id="load-snapshot" class="button" type="button">Читать снимок</button><button id="clear-snapshot" class="text-button" type="button">Удалить снимок</button></div></section>
+    <footer><span>NeuroMorf · исследовательское пространство</span><span id="sync-time">Соединение не проверено</span></footer>
+  </main>
+  <dialog id="editor" aria-labelledby="editor-title">
+    <form id="editor-form"><div class="dialog-heading"><div><p class="eyebrow" id="editor-kind">ЗАПИСЬ</p><h2 id="editor-title">Новая запись</h2></div><button id="close-editor" class="icon-button" type="button" aria-label="Закрыть редактор">×</button></div>
+      <p id="editor-version" class="meta"></p><p id="editor-error" class="notice error" role="alert" hidden></p>
+      <label>Название<input id="field-title" name="title" required maxlength="200" autocomplete="off"></label>
+      <div id="project-field"><label>Проект<select id="field-project" name="project_id"></select></label></div>
+      <fieldset id="task-fields"><legend>Постановка исследования</legend><label>Вопрос<textarea id="field-question" name="question" rows="3" maxlength="12000" placeholder="Что именно нужно выяснить?"></textarea></label><label>Критерии результата<textarea id="field-criteria" name="criteria" rows="3" maxlength="12000" placeholder="Как проверить ответ? Какие данные и ограничения существенны?"></textarea></label><label>Этап<select id="field-status" name="status"><option value="planned">Замысел и протокол</option><option value="working">Эксперимент</option><option value="review">Проверка</option><option value="done">Результат</option><option value="paused">Пауза</option></select></label></fieldset>
+      <fieldset id="artifact-fields"><legend>Основания результата</legend><label>Источник, ссылка HTTPS (необязательно)<input id="field-source" name="source_url" type="url" maxlength="2048" placeholder="https://…"></label><label>Состояние проверки<select id="field-evidence" name="evidence"><option value="unreviewed">Не проверен</option><option value="reviewed">Просмотрен человеком</option><option value="tested">Проверен тестом — моя отметка</option></select></label><p class="form-help">Для ответа модели укажите сервис, фактическую модель, дату, task ID и ссылки. Для теста — метод, результат и ограничения.</p></fieldset>
+      <label><span id="body-label">Описание</span><textarea id="field-body" name="body" rows="7" maxlength="12000"></textarea></label><p class="form-help">Черновик остаётся только в открытой форме до нажатия «Сохранить». Это действие не запускает вычисления и не отправляет текст внешним участникам.</p>
+      <div class="dialog-actions"><button id="save-record" class="button primary" type="submit">Сохранить</button><button id="export-brief" class="button" type="button">Скачать задание</button><button id="export-draft" class="button" type="button">Скачать черновик</button><button id="reload-record" class="text-button" type="button" hidden>Загрузить актуальную версию</button></div>
+    </form>
+  </dialog>
+  <noscript><div class="no-script">Для рабочего пространства нужен JavaScript. Существующие инструменты доступны по ссылкам вверху страницы.</div></noscript>
+</body>
+</html>

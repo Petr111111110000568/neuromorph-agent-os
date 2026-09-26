@@ -13,8 +13,8 @@ class LocalServer(ThreadingHTTPServer):
     allow_reuse_address = True
 
 
-def make_server(service, host="127.0.0.1", port=8765):
-    if host != "127.0.0.1":
+def make_server(service, host="127.0.0.1", port=8765, cloud_auth=None):
+    if host != "127.0.0.1" and not (cloud_auth is not None and host == '0.0.0.0'):
         raise ValueError("Only 127.0.0.1 binding is supported")
     if not isinstance(port, int) or isinstance(port, bool) or not 0 <= port <= 65535:
         raise ValueError("Port must be in 0..65535")
@@ -31,7 +31,7 @@ def make_server(service, host="127.0.0.1", port=8765):
             # URLs/questions may contain private project information.
             pass
 
-        def response(self, data, status=200, content_type="application/json; charset=utf-8", download=None):
+        def response(self, data, status=200, content_type="application/json; charset=utf-8", download=None, headers=()):
             if isinstance(data, str):
                 data = data.encode("utf-8")
             elif not isinstance(data, bytes):
@@ -46,6 +46,8 @@ def make_server(service, host="127.0.0.1", port=8765):
             self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'")
             if download:
                 self.send_header("Content-Disposition", f'attachment; filename="{download}"')
+            for name, value in headers:
+                self.send_header(name, value)
             self.end_headers()
             if self.command != "HEAD":
                 self.wfile.write(data)
@@ -55,13 +57,16 @@ def make_server(service, host="127.0.0.1", port=8765):
             allowed = {f"127.0.0.1:{port}", f"localhost:{port}"}
             if port == 80:
                 allowed |= {"127.0.0.1", "localhost"}
+            if cloud_auth is not None:
+                allowed = {urlsplit(cloud_auth.config.public_origin).netloc}
             hosts = self.headers.get_all("Host", [])
             if len(hosts) != 1 or hosts[0].lower() not in allowed:
                 raise ServiceError("Invalid Host header", "invalid_host", 403)
             origins = self.headers.get_all("Origin", [])
-            if len(origins) > 1 or origins and origins[0].lower() not in {"http://" + host for host in allowed}:
+            allowed_origins = {cloud_auth.config.public_origin} if cloud_auth else {"http://" + host for host in allowed}
+            if len(origins) > 1 or origins and origins[0] not in allowed_origins:
                 raise ServiceError("Cross-origin requests are not permitted", "invalid_origin", 403)
-            if self.headers.get("Sec-Fetch-Site") == "cross-site":
+            if self.headers.get("Sec-Fetch-Site") == "cross-site" and not (cloud_auth and self.command == 'GET' and urlsplit(self.path).path == '/auth/yandex/callback'):
                 raise ServiceError("Cross-site requests are not permitted", "cross_site", 403)
             parsed = urlsplit(self.path)
             if parsed.scheme or parsed.netloc:
@@ -69,7 +74,7 @@ def make_server(service, host="127.0.0.1", port=8765):
             path = unquote(parsed.path)
             if "\\" in path or "\x00" in path or any(part == ".." for part in path.split("/")):
                 raise ServiceError("Invalid path", "invalid_path", 400)
-            return path, parse_qs(parsed.query)
+            return path, parse_qs(parsed.query, keep_blank_values=True, max_num_fields=32)
 
         def body(self):
             if self.headers.get("Transfer-Encoding"):
@@ -91,6 +96,8 @@ def make_server(service, host="127.0.0.1", port=8765):
             return parse_json(data.decode("utf-8"))
 
         def dispatch_get(self, path, query):
+            if path in ('/api/studio', '/api/studio/export'):
+                return self.response(service.studio.snapshot(self.owner), download='neuromorph-workspace.json' if path.endswith('/export') else None)
             if path == '/api/harnesses':
                 return self.response(service.harnesses_status())
             if path == '/api/harnesses/runs':
@@ -128,7 +135,7 @@ def make_server(service, host="127.0.0.1", port=8765):
             if path.startswith("/api/"):
                 raise ServiceError("Endpoint not found", "not_found", 404)
             web = (service.root / "web").resolve()
-            target = (web / ("index.html" if path == "/" else path.lstrip("/"))).resolve()
+            target = (web / (("studio.html" if cloud_auth else "index.html") if path == "/" else path.lstrip("/"))).resolve()
             if not target.is_relative_to(web) or not target.is_file():
                 raise ServiceError("File not found", "not_found", 404)
             if target.suffix.lower() not in {".html", ".css", ".js", ".svg", ".png", ".jpg", ".ico", ".woff", ".woff2"}:
@@ -157,10 +164,36 @@ def make_server(service, host="127.0.0.1", port=8765):
         def handle_operation(self, post, unsupported=False):
             try:
                 path, query = self.guard()
+                self.owner = 'local'
+                if cloud_auth is not None:
+                    from .cloud_auth import AuthError
+                    try:
+                        if path == '/auth/login' and self.command == 'GET':
+                            login = cloud_auth.begin()
+                            return self.response('', 302, headers=[('Location', login['authorize_url']), ('Set-Cookie', login['set_cookie'])])
+                        if path == '/auth/yandex/callback' and self.command == 'GET':
+                            if any(len(v) != 1 for v in query.values()):
+                                raise ServiceError('Invalid OAuth response', 'invalid_oauth', 400)
+                            login = cloud_auth.callback({k:v[0] for k,v in query.items()}, self.headers.get('Cookie',''))
+                            return self.response('', 302, headers=[('Location','/studio.html'),('Set-Cookie',login['set_cookie']),('Set-Cookie',login['clear_oauth_cookie'])])
+                        if path.startswith('/api/') or path == '/auth/logout':
+                            session = cloud_auth.authorize_write(self.headers.get('Cookie',''), self.headers.get('Origin',''), self.headers.get('X-CSRF-Token','')) if post else cloud_auth.session(self.headers.get('Cookie',''))
+                            self.owner = session['subject']
+                            if path == '/api/session':
+                                return self.response({'authenticated':True, 'csrf_token':session['csrf_token'], 'expires_at':session['expires_at']})
+                            if path == '/auth/logout' and post:
+                                result = cloud_auth.logout(self.headers.get('Cookie',''),self.headers.get('Origin',''),self.headers.get('X-CSRF-Token',''))
+                                return self.response({'logged_out':True}, headers=[('Set-Cookie',result['set_cookie'])])
+                    except AuthError as exc:
+                        return self.response({'error':{'code':exc.code,'message':'Authentication or request verification failed.'}}, getattr(exc,'status',401))
+                elif path == '/api/session':
+                    return self.response({'authenticated':False,'mode':'local','csrf_token':None})
                 if unsupported:
                     raise ServiceError("Method not supported", "method_not_allowed", 405)
                 if not post:
                     return self.dispatch_get(path, query)
+                if path == '/api/studio/save':
+                    return self.response(service.studio.save(self.body(), self.owner))
                 if path == '/api/harnesses/run':
                     return self.response(service.harnesses_run(self.body()))
                 routes = {"/api/sources": service.add_source, "/api/run": service.run,
