@@ -1,0 +1,2989 @@
+{
+  "receipt": {
+    "additional_spend_usd": 0,
+    "artifacts": {
+      "evidence-pack/cases.json": "1bd5d93d78345e60c28aecf84176bc7fe82d072eac42c3fe193461f9b90d1096",
+      "evidence-pack/manifest.json": "9ffc2bacb0f801d0cbebf4d4bf56a411e165ea88a0af52adc183ab98825d98ae",
+      "evidence-pack/registry.json": "968d7fec1a542202b4d60c3666ca438e2c1bf932989e4ddb524de7279ef139e8",
+      "evidence-pack/sources.json": "ec9a4a92d2c4e2d60aac46952dd9ec7ebbe6c5b14f01510620aa18dcd8e6d2cb",
+      "report.json": "89fd85992777f99f43454104cd897e02f67e3b679201940b3d67d1aeb5123625",
+      "report.md": "d1bd39251c046482c845d0f1a11b4d30f07232e0980a677ca6be94380bc6dc19"
+    },
+    "checkout_commit": "1d3e6654b3b682daadf8a48e26310d0e2657dc12",
+    "event": "pull_request",
+    "model_calls": 0,
+    "run_url": "https://github.com/Petr111111110000568/neuromorph-agent-os/actions/runs/36211338827",
+    "schema_version": 1
+  },
+  "report": {
+    "experiment": "evidence-memory-v1",
+    "implementation_sha256": {
+      "evidence_memory.py": "8f780aaf88d02252cc7b721eeb8ee9bee0256db84e71233b0c9c0f89b696268e",
+      "provenance_verifier.py": "ae8c4e73e56c2f8e42b509fb1dbc33cb4f805e043ea19140867316c1f754aa1c"
+    },
+    "inputs": {
+      "files": {
+        "cases.json": "1bd5d93d78345e60c28aecf84176bc7fe82d072eac42c3fe193461f9b90d1096",
+        "registry.json": "968d7fec1a542202b4d60c3666ca438e2c1bf932989e4ddb524de7279ef139e8",
+        "sources.json": "ec9a4a92d2c4e2d60aac46952dd9ec7ebbe6c5b14f01510620aa18dcd8e6d2cb"
+      },
+      "fixed_now": "2026-09-26T00:00:00Z",
+      "manifest_sha256": "9ffc2bacb0f801d0cbebf4d4bf56a411e165ea88a0af52adc183ab98825d98ae",
+      "seed": 20260926
+    },
+    "resources": {
+      "host_billing": "not measured; execution uses caller-authorized cloud runner",
+      "model_calls": 0,
+      "network_calls": 0,
+      "paid_inference_usd": 0,
+      "platform": "Linux",
+      "process_cpu_seconds": 0.004429651,
+      "python": "3.12.3",
+      "timing_scope": "load_and_evaluate_before_report_write",
+      "wall_seconds": 0.004430733000006626
+    },
+    "results": {
+      "acceptance": {
+        "passed": true,
+        "positive_coverage_both_splits": true,
+        "safety_cases_pass": true,
+        "zero_foreign_scope_accepts": true
+      },
+      "limitations": [
+        "synthetic regression only; split visible to developer, not blinded",
+        "gold labels written by fixture authors, not independently validated",
+        "integrity and scoped admission do not establish truth: registered_false_claim is deliberately wrong",
+        "all synthetic bytes loaded; measured leakage is selected output evidence, not read isolation",
+        "trusted checkout supplies registry and manifest; no signature or remote trust anchor",
+        "exact question matching only; no LLM, embeddings, semantic retrieval or human-memory claim"
+      ],
+      "methods": {
+        "membership": {
+          "cases": [
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "d01",
+              "category": "valid_own",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "source_ids": [
+                  "a_color"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_color"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "d02",
+              "category": "valid_own",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "f22cd2598afe",
+                "decision": "answer",
+                "source_ids": [
+                  "b_color"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "f22cd2598afe",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "b_color"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": true,
+              "case_id": "d03",
+              "category": "foreign_only",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": true,
+              "false_refusal": false,
+              "foreign_accept": true,
+              "foreign_probe": true,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "f22cd2598afe",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "b_color"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "d04",
+              "category": "foreign_first",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": true,
+              "foreign_probe": true,
+              "gold": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "source_ids": [
+                  "a_color"
+                ]
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "f22cd2598afe",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "b_color"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": true,
+              "wrong_source": true
+            },
+            {
+              "answerable": false,
+              "answered": true,
+              "case_id": "d05",
+              "category": "expired_boundary",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": true,
+              "expired_probe": true,
+              "false_accept": true,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_expired"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": true,
+              "case_id": "d06",
+              "category": "revoked_only",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": true,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_revoked"
+              },
+              "revoked_accept": true,
+              "revoked_probe": true,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": true,
+              "case_id": "d07",
+              "category": "blob_tamper",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": true,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "e199bd7f1add",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_tampered"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "d08",
+              "category": "trusted_irrelevant",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "irrelevant_question"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": true,
+              "case_id": "d09",
+              "category": "trust_downgrade",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": true,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_low"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "d10",
+              "category": "expired_first",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": true,
+              "expired_probe": true,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "source_ids": [
+                  "a_color"
+                ]
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_expired"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": true
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "h01",
+              "category": "unfamiliar_positive",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "02654772852d",
+                "decision": "answer",
+                "source_ids": [
+                  "a_shape"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "02654772852d",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_shape"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "h02",
+              "category": "unfamiliar_positive",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "4a7d81803559",
+                "decision": "answer",
+                "source_ids": [
+                  "b_route"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "4a7d81803559",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "b_route"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": true,
+              "case_id": "h03",
+              "category": "same_answer_foreign_only",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": true,
+              "false_refusal": false,
+              "foreign_accept": true,
+              "foreign_probe": true,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "c2a73bcb5b58",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "b_shared"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "h04",
+              "category": "same_answer_foreign_first",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": true,
+              "foreign_probe": true,
+              "gold": {
+                "answer": "c2a73bcb5b58",
+                "decision": "answer",
+                "source_ids": [
+                  "a_shared"
+                ]
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "c2a73bcb5b58",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "b_shared"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": true
+            },
+            {
+              "answerable": false,
+              "answered": true,
+              "case_id": "h05",
+              "category": "deleted_record",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": true,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "54da4ce58e97",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_deleted"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": true,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": true,
+              "case_id": "h06",
+              "category": "timestamp_rebinding",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": true,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_rebound"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": true,
+              "case_id": "h07",
+              "category": "self_rehash_tamper",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": true,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "e199bd7f1add",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_rehashed"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": true,
+              "case_id": "h08",
+              "category": "wrong_purpose",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": true,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_other_purpose"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "h09",
+              "category": "source_binding",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "payload_source_binding"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "h10",
+              "category": "revoked_first",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "source_ids": [
+                  "a_color"
+                ]
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_revoked"
+              },
+              "revoked_accept": true,
+              "revoked_probe": true,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": true
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "h11",
+              "category": "trusted_irrelevant",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "irrelevant_question"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "h12",
+              "category": "registered_false_claim",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "0d1b19728db9",
+                "decision": "answer",
+                "source_ids": [
+                  "a_false"
+                ]
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "3507fcc5fb3b",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_false"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": true,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "h13",
+              "category": "valid_after_irrelevant",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": true,
+              "gold": {
+                "answer": "4a7d81803559",
+                "decision": "answer",
+                "source_ids": [
+                  "b_route"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "4a7d81803559",
+                "decision": "answer",
+                "examined": 2,
+                "skipped": [
+                  "irrelevant_question"
+                ],
+                "source_id": "b_route"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "h14",
+              "category": "no_candidates",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 0,
+                "skipped": [],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            }
+          ],
+          "overall": {
+            "answers": 20,
+            "cases": 24,
+            "correct_answer_rate": {
+              "denominator": 10,
+              "numerator": 5,
+              "rate": 0.5
+            },
+            "correct_refusal_rate": {
+              "denominator": 14,
+              "numerator": 4,
+              "rate": 0.2857142857142857
+            },
+            "expired_accept_rate": {
+              "denominator": 2,
+              "numerator": 2,
+              "rate": 1
+            },
+            "false_accept_rate": {
+              "denominator": 14,
+              "numerator": 10,
+              "rate": 0.7142857142857143
+            },
+            "false_refusals": 0,
+            "foreign_accept_rate": {
+              "denominator": 5,
+              "numerator": 4,
+              "rate": 0.8
+            },
+            "gold_answers": 10,
+            "gold_refusals": 14,
+            "invalid_accept_share": {
+              "denominator": 20,
+              "numerator": 15,
+              "rate": 0.75
+            },
+            "revoked_accept_rate": {
+              "denominator": 2,
+              "numerator": 2,
+              "rate": 1
+            },
+            "unknown_source_accepts": 1,
+            "wrong_answers": 2,
+            "wrong_sources": 4
+          },
+          "splits": {
+            "development": {
+              "answers": 9,
+              "cases": 10,
+              "correct_answer_rate": {
+                "denominator": 4,
+                "numerator": 2,
+                "rate": 0.5
+              },
+              "correct_refusal_rate": {
+                "denominator": 6,
+                "numerator": 1,
+                "rate": 0.16666666666666666
+              },
+              "expired_accept_rate": {
+                "denominator": 2,
+                "numerator": 2,
+                "rate": 1
+              },
+              "false_accept_rate": {
+                "denominator": 6,
+                "numerator": 5,
+                "rate": 0.8333333333333334
+              },
+              "false_refusals": 0,
+              "foreign_accept_rate": {
+                "denominator": 2,
+                "numerator": 2,
+                "rate": 1
+              },
+              "gold_answers": 4,
+              "gold_refusals": 6,
+              "invalid_accept_share": {
+                "denominator": 9,
+                "numerator": 7,
+                "rate": 0.7777777777777778
+              },
+              "revoked_accept_rate": {
+                "denominator": 1,
+                "numerator": 1,
+                "rate": 1
+              },
+              "unknown_source_accepts": 0,
+              "wrong_answers": 1,
+              "wrong_sources": 2
+            },
+            "synthetic_holdout": {
+              "answers": 11,
+              "cases": 14,
+              "correct_answer_rate": {
+                "denominator": 6,
+                "numerator": 3,
+                "rate": 0.5
+              },
+              "correct_refusal_rate": {
+                "denominator": 8,
+                "numerator": 3,
+                "rate": 0.375
+              },
+              "expired_accept_rate": {
+                "denominator": 0,
+                "numerator": 0,
+                "rate": null
+              },
+              "false_accept_rate": {
+                "denominator": 8,
+                "numerator": 5,
+                "rate": 0.625
+              },
+              "false_refusals": 0,
+              "foreign_accept_rate": {
+                "denominator": 3,
+                "numerator": 2,
+                "rate": 0.6666666666666666
+              },
+              "gold_answers": 6,
+              "gold_refusals": 8,
+              "invalid_accept_share": {
+                "denominator": 11,
+                "numerator": 8,
+                "rate": 0.7272727272727273
+              },
+              "revoked_accept_rate": {
+                "denominator": 1,
+                "numerator": 1,
+                "rate": 1
+              },
+              "unknown_source_accepts": 1,
+              "wrong_answers": 1,
+              "wrong_sources": 2
+            }
+          }
+        },
+        "provenance": {
+          "cases": [
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "d01",
+              "category": "valid_own",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "source_ids": [
+                  "a_color"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_color"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "d02",
+              "category": "valid_own",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "f22cd2598afe",
+                "decision": "answer",
+                "source_ids": [
+                  "b_color"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "f22cd2598afe",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "b_color"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "d03",
+              "category": "foreign_only",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": true,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "scope_mismatch"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "d04",
+              "category": "foreign_first",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": true,
+              "gold": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "source_ids": [
+                  "a_color"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 2,
+                "skipped": [
+                  "scope_mismatch"
+                ],
+                "source_id": "a_color"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "d05",
+              "category": "expired_boundary",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": true,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "not_current"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "d06",
+              "category": "revoked_only",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "revoked"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": true,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "d07",
+              "category": "blob_tamper",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "digest_mismatch"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "d08",
+              "category": "trusted_irrelevant",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "irrelevant_question"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "d09",
+              "category": "trust_downgrade",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "insufficient_trust"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "d10",
+              "category": "expired_first",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": true,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "source_ids": [
+                  "a_color"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 2,
+                "skipped": [
+                  "not_current"
+                ],
+                "source_id": "a_color"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "h01",
+              "category": "unfamiliar_positive",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "02654772852d",
+                "decision": "answer",
+                "source_ids": [
+                  "a_shape"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "02654772852d",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_shape"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "h02",
+              "category": "unfamiliar_positive",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "4a7d81803559",
+                "decision": "answer",
+                "source_ids": [
+                  "b_route"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "4a7d81803559",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "b_route"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "h03",
+              "category": "same_answer_foreign_only",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": true,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "scope_mismatch"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "h04",
+              "category": "same_answer_foreign_first",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": true,
+              "gold": {
+                "answer": "c2a73bcb5b58",
+                "decision": "answer",
+                "source_ids": [
+                  "a_shared"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "c2a73bcb5b58",
+                "decision": "answer",
+                "examined": 2,
+                "skipped": [
+                  "scope_mismatch"
+                ],
+                "source_id": "a_shared"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "h05",
+              "category": "deleted_record",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "unknown_record"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "h06",
+              "category": "timestamp_rebinding",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "timestamp_mismatch"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "h07",
+              "category": "self_rehash_tamper",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "digest_mismatch"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "h08",
+              "category": "wrong_purpose",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "scope_mismatch"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "h09",
+              "category": "source_binding",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "payload_source_binding"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "h10",
+              "category": "revoked_first",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "source_ids": [
+                  "a_color"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 2,
+                "skipped": [
+                  "revoked"
+                ],
+                "source_id": "a_color"
+              },
+              "revoked_accept": false,
+              "revoked_probe": true,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "h11",
+              "category": "trusted_irrelevant",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "irrelevant_question"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "h12",
+              "category": "registered_false_claim",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "0d1b19728db9",
+                "decision": "answer",
+                "source_ids": [
+                  "a_false"
+                ]
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "3507fcc5fb3b",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_false"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": true,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "h13",
+              "category": "valid_after_irrelevant",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": true,
+              "gold": {
+                "answer": "4a7d81803559",
+                "decision": "answer",
+                "source_ids": [
+                  "b_route"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "4a7d81803559",
+                "decision": "answer",
+                "examined": 2,
+                "skipped": [
+                  "irrelevant_question"
+                ],
+                "source_id": "b_route"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "h14",
+              "category": "no_candidates",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 0,
+                "skipped": [],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            }
+          ],
+          "overall": {
+            "answers": 10,
+            "cases": 24,
+            "correct_answer_rate": {
+              "denominator": 10,
+              "numerator": 9,
+              "rate": 0.9
+            },
+            "correct_refusal_rate": {
+              "denominator": 14,
+              "numerator": 14,
+              "rate": 1
+            },
+            "expired_accept_rate": {
+              "denominator": 2,
+              "numerator": 0,
+              "rate": 0
+            },
+            "false_accept_rate": {
+              "denominator": 14,
+              "numerator": 0,
+              "rate": 0
+            },
+            "false_refusals": 0,
+            "foreign_accept_rate": {
+              "denominator": 5,
+              "numerator": 0,
+              "rate": 0
+            },
+            "gold_answers": 10,
+            "gold_refusals": 14,
+            "invalid_accept_share": {
+              "denominator": 10,
+              "numerator": 1,
+              "rate": 0.1
+            },
+            "revoked_accept_rate": {
+              "denominator": 2,
+              "numerator": 0,
+              "rate": 0
+            },
+            "unknown_source_accepts": 0,
+            "wrong_answers": 1,
+            "wrong_sources": 0
+          },
+          "splits": {
+            "development": {
+              "answers": 4,
+              "cases": 10,
+              "correct_answer_rate": {
+                "denominator": 4,
+                "numerator": 4,
+                "rate": 1
+              },
+              "correct_refusal_rate": {
+                "denominator": 6,
+                "numerator": 6,
+                "rate": 1
+              },
+              "expired_accept_rate": {
+                "denominator": 2,
+                "numerator": 0,
+                "rate": 0
+              },
+              "false_accept_rate": {
+                "denominator": 6,
+                "numerator": 0,
+                "rate": 0
+              },
+              "false_refusals": 0,
+              "foreign_accept_rate": {
+                "denominator": 2,
+                "numerator": 0,
+                "rate": 0
+              },
+              "gold_answers": 4,
+              "gold_refusals": 6,
+              "invalid_accept_share": {
+                "denominator": 4,
+                "numerator": 0,
+                "rate": 0
+              },
+              "revoked_accept_rate": {
+                "denominator": 1,
+                "numerator": 0,
+                "rate": 0
+              },
+              "unknown_source_accepts": 0,
+              "wrong_answers": 0,
+              "wrong_sources": 0
+            },
+            "synthetic_holdout": {
+              "answers": 6,
+              "cases": 14,
+              "correct_answer_rate": {
+                "denominator": 6,
+                "numerator": 5,
+                "rate": 0.8333333333333334
+              },
+              "correct_refusal_rate": {
+                "denominator": 8,
+                "numerator": 8,
+                "rate": 1
+              },
+              "expired_accept_rate": {
+                "denominator": 0,
+                "numerator": 0,
+                "rate": null
+              },
+              "false_accept_rate": {
+                "denominator": 8,
+                "numerator": 0,
+                "rate": 0
+              },
+              "false_refusals": 0,
+              "foreign_accept_rate": {
+                "denominator": 3,
+                "numerator": 0,
+                "rate": 0
+              },
+              "gold_answers": 6,
+              "gold_refusals": 8,
+              "invalid_accept_share": {
+                "denominator": 6,
+                "numerator": 1,
+                "rate": 0.16666666666666666
+              },
+              "revoked_accept_rate": {
+                "denominator": 1,
+                "numerator": 0,
+                "rate": 0
+              },
+              "unknown_source_accepts": 0,
+              "wrong_answers": 1,
+              "wrong_sources": 0
+            }
+          }
+        },
+        "scope_only": {
+          "cases": [
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "d01",
+              "category": "valid_own",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "source_ids": [
+                  "a_color"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_color"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "d02",
+              "category": "valid_own",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "f22cd2598afe",
+                "decision": "answer",
+                "source_ids": [
+                  "b_color"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "f22cd2598afe",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "b_color"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "d03",
+              "category": "foreign_only",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": true,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "scope_or_membership"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "d04",
+              "category": "foreign_first",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": true,
+              "gold": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "source_ids": [
+                  "a_color"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 2,
+                "skipped": [
+                  "scope_or_membership"
+                ],
+                "source_id": "a_color"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": true,
+              "case_id": "d05",
+              "category": "expired_boundary",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": true,
+              "expired_probe": true,
+              "false_accept": true,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_expired"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": true,
+              "case_id": "d06",
+              "category": "revoked_only",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": true,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_revoked"
+              },
+              "revoked_accept": true,
+              "revoked_probe": true,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": true,
+              "case_id": "d07",
+              "category": "blob_tamper",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": true,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "e199bd7f1add",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_tampered"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "d08",
+              "category": "trusted_irrelevant",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "irrelevant_question"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": true,
+              "case_id": "d09",
+              "category": "trust_downgrade",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": true,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_low"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "d10",
+              "category": "expired_first",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": true,
+              "expired_probe": true,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "source_ids": [
+                  "a_color"
+                ]
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_expired"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "development",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": true
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "h01",
+              "category": "unfamiliar_positive",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "02654772852d",
+                "decision": "answer",
+                "source_ids": [
+                  "a_shape"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "02654772852d",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_shape"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "h02",
+              "category": "unfamiliar_positive",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "4a7d81803559",
+                "decision": "answer",
+                "source_ids": [
+                  "b_route"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "4a7d81803559",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "b_route"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "h03",
+              "category": "same_answer_foreign_only",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": true,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "scope_or_membership"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "h04",
+              "category": "same_answer_foreign_first",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": true,
+              "gold": {
+                "answer": "c2a73bcb5b58",
+                "decision": "answer",
+                "source_ids": [
+                  "a_shared"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "c2a73bcb5b58",
+                "decision": "answer",
+                "examined": 2,
+                "skipped": [
+                  "scope_or_membership"
+                ],
+                "source_id": "a_shared"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "h05",
+              "category": "deleted_record",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "scope_or_membership"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": true,
+              "case_id": "h06",
+              "category": "timestamp_rebinding",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": true,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_rebound"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": true,
+              "case_id": "h07",
+              "category": "self_rehash_tamper",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": true,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "e199bd7f1add",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_rehashed"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "h08",
+              "category": "wrong_purpose",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "scope_or_membership"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "h09",
+              "category": "source_binding",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "payload_source_binding"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "h10",
+              "category": "revoked_first",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "source_ids": [
+                  "a_color"
+                ]
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "b018c2449a51",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_revoked"
+              },
+              "revoked_accept": true,
+              "revoked_probe": true,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": true
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "h11",
+              "category": "trusted_irrelevant",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 1,
+                "skipped": [
+                  "irrelevant_question"
+                ],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "h12",
+              "category": "registered_false_claim",
+              "correct_answer": false,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": "0d1b19728db9",
+                "decision": "answer",
+                "source_ids": [
+                  "a_false"
+                ]
+              },
+              "invalid_accept": true,
+              "prediction": {
+                "answer": "3507fcc5fb3b",
+                "decision": "answer",
+                "examined": 1,
+                "skipped": [],
+                "source_id": "a_false"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": true,
+              "wrong_source": false
+            },
+            {
+              "answerable": true,
+              "answered": true,
+              "case_id": "h13",
+              "category": "valid_after_irrelevant",
+              "correct_answer": true,
+              "correct_refusal": false,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": true,
+              "gold": {
+                "answer": "4a7d81803559",
+                "decision": "answer",
+                "source_ids": [
+                  "b_route"
+                ]
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": "4a7d81803559",
+                "decision": "answer",
+                "examined": 2,
+                "skipped": [
+                  "irrelevant_question"
+                ],
+                "source_id": "b_route"
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            },
+            {
+              "answerable": false,
+              "answered": false,
+              "case_id": "h14",
+              "category": "no_candidates",
+              "correct_answer": false,
+              "correct_refusal": true,
+              "expired_accept": false,
+              "expired_probe": false,
+              "false_accept": false,
+              "false_refusal": false,
+              "foreign_accept": false,
+              "foreign_probe": false,
+              "gold": {
+                "answer": null,
+                "decision": "refuse",
+                "source_ids": []
+              },
+              "invalid_accept": false,
+              "prediction": {
+                "answer": null,
+                "decision": "refuse",
+                "examined": 0,
+                "skipped": [],
+                "source_id": null
+              },
+              "revoked_accept": false,
+              "revoked_probe": false,
+              "split": "synthetic_holdout",
+              "unknown_source_accept": false,
+              "wrong_answer": false,
+              "wrong_source": false
+            }
+          ],
+          "overall": {
+            "answers": 16,
+            "cases": 24,
+            "correct_answer_rate": {
+              "denominator": 10,
+              "numerator": 7,
+              "rate": 0.7
+            },
+            "correct_refusal_rate": {
+              "denominator": 14,
+              "numerator": 8,
+              "rate": 0.5714285714285714
+            },
+            "expired_accept_rate": {
+              "denominator": 2,
+              "numerator": 2,
+              "rate": 1
+            },
+            "false_accept_rate": {
+              "denominator": 14,
+              "numerator": 6,
+              "rate": 0.42857142857142855
+            },
+            "false_refusals": 0,
+            "foreign_accept_rate": {
+              "denominator": 5,
+              "numerator": 0,
+              "rate": 0
+            },
+            "gold_answers": 10,
+            "gold_refusals": 14,
+            "invalid_accept_share": {
+              "denominator": 16,
+              "numerator": 9,
+              "rate": 0.5625
+            },
+            "revoked_accept_rate": {
+              "denominator": 2,
+              "numerator": 2,
+              "rate": 1
+            },
+            "unknown_source_accepts": 0,
+            "wrong_answers": 1,
+            "wrong_sources": 2
+          },
+          "splits": {
+            "development": {
+              "answers": 8,
+              "cases": 10,
+              "correct_answer_rate": {
+                "denominator": 4,
+                "numerator": 3,
+                "rate": 0.75
+              },
+              "correct_refusal_rate": {
+                "denominator": 6,
+                "numerator": 2,
+                "rate": 0.3333333333333333
+              },
+              "expired_accept_rate": {
+                "denominator": 2,
+                "numerator": 2,
+                "rate": 1
+              },
+              "false_accept_rate": {
+                "denominator": 6,
+                "numerator": 4,
+                "rate": 0.6666666666666666
+              },
+              "false_refusals": 0,
+              "foreign_accept_rate": {
+                "denominator": 2,
+                "numerator": 0,
+                "rate": 0
+              },
+              "gold_answers": 4,
+              "gold_refusals": 6,
+              "invalid_accept_share": {
+                "denominator": 8,
+                "numerator": 5,
+                "rate": 0.625
+              },
+              "revoked_accept_rate": {
+                "denominator": 1,
+                "numerator": 1,
+                "rate": 1
+              },
+              "unknown_source_accepts": 0,
+              "wrong_answers": 0,
+              "wrong_sources": 1
+            },
+            "synthetic_holdout": {
+              "answers": 8,
+              "cases": 14,
+              "correct_answer_rate": {
+                "denominator": 6,
+                "numerator": 4,
+                "rate": 0.6666666666666666
+              },
+              "correct_refusal_rate": {
+                "denominator": 8,
+                "numerator": 6,
+                "rate": 0.75
+              },
+              "expired_accept_rate": {
+                "denominator": 0,
+                "numerator": 0,
+                "rate": null
+              },
+              "false_accept_rate": {
+                "denominator": 8,
+                "numerator": 2,
+                "rate": 0.25
+              },
+              "false_refusals": 0,
+              "foreign_accept_rate": {
+                "denominator": 3,
+                "numerator": 0,
+                "rate": 0
+              },
+              "gold_answers": 6,
+              "gold_refusals": 8,
+              "invalid_accept_share": {
+                "denominator": 8,
+                "numerator": 4,
+                "rate": 0.5
+              },
+              "revoked_accept_rate": {
+                "denominator": 1,
+                "numerator": 1,
+                "rate": 1
+              },
+              "unknown_source_accepts": 0,
+              "wrong_answers": 1,
+              "wrong_sources": 1
+            }
+          }
+        }
+      }
+    },
+    "schema_version": 1
+  },
+  "export_note": "Parsed lossless from the public GitHub job log. Receipt artifact hashes refer to original cloud files, not this combined JSON serialization."
+}
