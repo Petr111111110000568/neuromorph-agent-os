@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-09-26",
+  "project_commit": "9dd335856dc130842df31047a0af940ae57b1fcc",
+  "cloud_run": "https://github.com/Petr111111110000568/neuromorph-agent-os/actions/runs/36221054614",
+  "hermes": [
+    {
+      "path": "runtime/hermes-harness/receipt.json",
+      "receipt": {
+        "schema_version": 1,
+        "status": "installed",
+        "source_commit": "f97608f178d1ffeca59860195ab7da295f7c8e5f",
+        "version": "0.21.5",
+        "source_root": "/home/runner/work/neuromorph-agent-os/neuromorph-agent-os/runtime/hermes-harness/source",
+        "python": "/home/runner/work/neuromorph-agent-os/neuromorph-agent-os/runtime/hermes-harness/venv/bin/python",
+        "model_calls": 0,
+        "install_mode": "core_editable_frozen_no_extras",
+        "uv_lock_sha256": "5b3798f326209475abca8ef7cbf7c9406f12e687c28c0b540dfe597466f48590",
+        "commands": [
+          {
+            "status": "ok",
+            "returncode": 0,
+            "output_bytes": 716,
+            "output_sha256": "3a699fea51088b1def1a991004b5496a3d2237fb59978f3fc90f4410e6d78a9c",
+            "output": "hint: Using 'master' as the name for the initial branch. This default branch name\nhint: will change to \"main\" in Git 3.0. To configure the initial branch name\nhint: to use in all of your new repositories, which will suppress this warning,\nhint: call:\nhint:\nhint: \tgit config --global init.defaultBranch <name>\nhint:\nhint: Names commonly chosen instead of 'master' are 'main', 'trunk' and\nhint: 'development'. The just-created branch can be renamed via this command:\nhint:\nhint: \tgit branch -m <name>\nhint:\nhint: Disable this message with \"git config set advice.defaultBranchName false\"\nInitialized empty Git repository in /home/runner/work/neuromorph-agent-os/neuromorph-agent-os/runtime/hermes-harness/source/.git/\n"
+          },
+          {
+            "status": "ok",
+            "returncode": 0,
+            "output_bytes": 126,
+            "output_sha256": "e248224e91dce27767815ae1072701d8c78d7b813a089cd661cf29bf942b927f",
+            "output": "From https://github.com/NousResearch/hermes-agent\n * branch            f97608f178d1ffeca59860195ab7da295f7c8e5f -> FETCH_HEAD\n"
+          },
+          {
+            "status": "ok",
+            "returncode": 0,
+            "output_bytes": 58,
+            "output_sha256": "52a3cbc466f8ba25e404ae5ce4a9be6684dc4e30e6fbfe928d5643eee2d2cb00",
+            "output": "HEAD is now at f97608f chore: release v0.21.5 (2026.9.24)\n"
+          },
+          {
+            "status": "ok",
+            "returncode": 0,
+            "output_bytes": 41,
+            "output_sha256": "fcd778aec946de91f462d736f12fd469b350e3a0eb57b0ff9b0340fa1fe8bbf2",
+            "output": "f97608f178d1ffeca59860195ab7da295f7c8e5f\n"
+          },
+          {
+            "status": "ok",
+            "returncode": 0,
+            "output_bytes": 1942,
+            "output_sha256": "4e96a11f7a46a3f33d01cbcea3cff4da8c73556eca5193698bf4a6d075d88783",
+            "output": "Using CPython 3.12.3 interpreter at: /usr/bin/python3\nCreating virtual environment at: /home/runner/work/neuromorph-agent-os/neuromorph-agent-os/runtime/hermes-harness/venv\nDownloading pydantic-core (2.0MiB)\nDownloading pygments (1.2MiB)\nDownloading openai (1.1MiB)\nDownloading cryptography (4.5MiB)\nDownloading nemo-relay (9.3MiB)\nDownloading pillow (6.6MiB)\nDownloading firecrawl-anydoc (3.3MiB)\nDownloading pillow-heif (5.3MiB)\n Downloaded openai\n Downloaded pygments\n Downloaded pydantic-core\n Downloaded firecrawl-anydoc\n Downloaded cryptography\n Downloaded pillow-heif\n Downloaded pillow\n Downloaded nemo-relay\nPrepared 62 packages in 1.18s\nInstalled 62 packages in 54ms\n + annotated-doc==0.0.4\n + annotated-types==0.7.0\n + anyio==4.12.1\n + certifi==2026.5.20\n + cffi==2.0.0\n + charset-normalizer==3.4.4\n + click==8.4.2\n + croniter==6.0.0\n + cryptography==50.0.0\n + distro==1.9.0\n + fastapi==0.133.1\n + fire==0.7.1\n + firecrawl-anydoc==0.2.4\n + h11==0.16.0\n + httpcore==1.0.9\n + httptools==0.7.1\n + httpx==0.28.1\n + idna==3.18\n + jinja2==3.1.6\n + jiter==0.13.0\n + markdown==3.10.2\n + markdown-it-py==4.0.0\n + markupsafe==3.0.3\n + mdurl==0.1.2\n + nemo-relay==0.8.3\n + openai==2.24.0\n + packaging==26.0\n + pathspec==1.1.1\n + pillow==12.3.0\n + pillow-heif==1.5.0\n + prompt-toolkit==3.0.52\n + psutil==7.2.2\n + ptyprocess==0.7.0\n + pycparser==3.0\n + pydantic==2.13.4\n + pydantic-core==2.46.4\n + pygments==2.20.0\n + pyjwt==2.13.0\n + python-dateutil==2.9.0.post0\n + python-dotenv==1.2.2\n + python-multipart==0.0.32\n + pytz==2025.2\n + pyyaml==6.0.3\n + requests==2.33.0\n + rich==14.3.3\n + ruamel-yaml==0.18.17\n + ruamel-yaml-clib==0.2.15\n + six==1.17.0\n + sniffio==1.3.1\n + snowballstemmer==3.1.1\n + socksio==1.0.0\n + starlette==1.3.1\n + tenacity==9.1.4\n + termcolor==3.3.0\n + tqdm==4.67.3\n + typing-extensions==4.15.0\n + typing-inspection==0.4.2\n + urllib3==2.7.0\n + uvicorn==0.41.0\n + watchfiles==1.1.1\n + wcwidth==0.6.0\n + websockets==15.0.1\n"
+          },
+          {
+            "status": "ok",
+            "returncode": 0,
+            "output_bytes": 573,
+            "output_sha256": "dab2c1652d1914dc233265a4fccbf492ae50e8d618a2f4ffdd5ecca40e821c7c",
+            "output": "Using Python 3.12.3 environment at: /home/runner/work/neuromorph-agent-os/neuromorph-agent-os/runtime/hermes-harness/venv\nResolved 1 package in 2ms\n   Building hermes-agent @ file:///home/runner/work/neuromorph-agent-os/neuromorph-agent-os/runtime/hermes-harness/source\n      Built hermes-agent @ file:///home/runner/work/neuromorph-agent-os/neuromorph-agent-os/runtime/hermes-harness/source\nPrepared 1 package in 2.22s\nInstalled 1 package in 1ms\n + hermes-agent==0.21.5 (from file:///home/runner/work/neuromorph-agent-os/neuromorph-agent-os/runtime/hermes-harness/source)\n"
+          },
+          {
+            "status": "ok",
+            "returncode": 0,
+            "output_bytes": 0,
+            "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "output": ""
+          }
+        ],
+        "install_model_calls": 0,
+        "sdk_fixture": "not_run",
+        "source_files": {
+          "pyproject.toml": "6f969b9fdff95e7269ec808361e3ae8be5357036e6257e53a3306878cf8c41dd",
+          "uv.lock": "5b3798f326209475abca8ef7cbf7c9406f12e687c28c0b540dfe597466f48590",
+          "run_agent.py": "244da863d3c21591a3b5326dc14c2962d4e31131dda52df628502cd9fcbfea33",
+          "model_tools.py": "5d5a947d84f31f1ba4ef5267e28154b819e8f957a0b378739696f1ac305e1509",
+          "agent/agent_init.py": "ce93f1d5acd4727d0005b46d7054d8892a55c820be40ebc7f594695f576b4d81",
+          "hermes_cli/config_defaults.py": "2af916849856bfa39b4903c660301f968a4cec87410cd7023c89ee7b3f3fdc68",
+          "hermes_cli/main.py": "3b89b46e67f35398ba0af6b3441172490469702cd0e4e0381ff7e45ea78b2eef",
+          "setup.py": "d476dd1c28d707acd72f1d0551d7178123832ae18b6e201ca1ac48cd040653ae"
+        },
+        "build_constraints": [
+          "setuptools==83.0.0",
+          "wheel==0.48.0",
+          "packaging==26.0"
+        ],
+        "uv_sha256": "a63d18a0aa38ee9f21a5406afbbaeb41303bcd954be9d6b7c1b95ac275e53958",
+        "limitations": [
+          "editable source checkout; build code executes on disposable cloud",
+          "uv.lock pins runtime graph; build constraints are separately pinned",
+          "no model, help or SDK inference executed by installer"
+        ]
+      }
+    },
+    {
+      "path": "runtime/hermes-fixture/receipt.json",
+      "receipt": {
+        "status": "protocol_fixture_received",
+        "text": "Hermes protocol fixture. No remote model was called.",
+        "harness_receipt": {
+          "harness": "hermes-agent",
+          "model": "qwen3-235b-a22b",
+          "harness_requests": 1,
+          "provider_adapter_calls": 0,
+          "status": "protocol_fixture_received",
+          "live": false,
+          "tools": [],
+          "paid_fallback": false,
+          "prompt_sha256": "b49f7ed635a2c0fb7547c17c899eac9b0c35b22da5cb9c80e1dd9695bbc070e3",
+          "output_sha256": "ec80f3c06fea7538822e2a4c80b82978f6888aac350bb1da578e2b3c0bbe9aa7",
+          "process": {
+            "status": "exited",
+            "returncode": 0
+          },
+          "accepted": true
+        }
+      }
+    }
+  ],
+  "instinct": {
+    "status": "fixture_completed",
+    "package": "instinct-ai",
+    "version": "0.2.0",
+    "wheel_sha256": "b0f84e23a3525cddc04afb43bdccd204d6b6354410b4892e8cd86d4b8d220a4c",
+    "backend": "explicit_local_heuristic",
+    "loaded_modules": [
+      "reflex.primitives",
+      "reflex.backends.base",
+      "reflex.backends.local"
+    ],
+    "remote_model_calls": 0,
+    "credentials_used": false,
+    "automatic_routing": false,
+    "scientific_validation": false,
+    "cases": [
+      {
+        "id": "literal_route",
+        "input": "code change",
+        "expected_fixture_label": "code",
+        "local_heuristic": "code",
+        "reference": "code"
+      },
+      {
+        "id": "synonym_route",
+        "input": "git commit",
+        "expected_fixture_label": "code",
+        "local_heuristic": "code",
+        "reference": "abstain"
+      },
+      {
+        "id": "search_route",
+        "input": "web search",
+        "expected_fixture_label": "search",
+        "local_heuristic": "search",
+        "reference": "search"
+      },
+      {
+        "id": "negated_request",
+        "input": "Do not execute code; only search",
+        "expected_fixture_label": "search",
+        "local_heuristic": "code",
+        "reference": "abstain"
+      },
+      {
+        "id": "russian_request",
+        "input": "Найди научные статьи в интернете",
+        "expected_fixture_label": "search",
+        "local_heuristic": "code",
+        "reference": "abstain"
+      },
+      {
+        "id": "no_route_evidence",
+        "input": "hello",
+        "expected_fixture_label": "abstain",
+        "local_heuristic": "code",
+        "reference": "abstain"
+      }
+    ],
+    "case_count": 6,
+    "local_matches": 3,
+    "reference_matches": 3
+  },
+  "live_inference": "not_performed_by_this_fixture",
+  "limitations": [
+    "Instinct subset is an unrelated heuristic library, not the cloud service SDK",
+    "Fixture success does not prove model availability or scientific quality"
+  ]
+}

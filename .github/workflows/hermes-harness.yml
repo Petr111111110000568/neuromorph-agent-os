@@ -1,0 +1,82 @@
+name: Hermes pinned installation and protocol
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/bootstrap_hermes.py'
+      - 'scripts/hermes_no_tools.py'
+      - 'config/hermes_harness.json'
+      - 'scripts/instinct_local_probe.py'
+      - 'config/instinct_harness.json'
+      - 'workbench/harnesses/**'
+      - '.github/workflows/hermes-harness.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/bootstrap_hermes.py'
+      - 'scripts/hermes_no_tools.py'
+      - 'config/hermes_harness.json'
+      - 'scripts/instinct_local_probe.py'
+      - 'config/instinct_harness.json'
+      - 'workbench/harnesses/**'
+      - '.github/workflows/hermes-harness.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hermes-fixture-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  instinct-local-probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - name: Compare pinned Instinct local component without models or credentials
+        run: env -i PATH="$PATH" LANG=C.UTF-8 GITHUB_ACTIONS=true python3 scripts/instinct_local_probe.py --execute --output-dir runtime/instinct-probe
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: instinct-local-${{ github.run_id }}
+          path: runtime/instinct-probe/receipt.json
+          retention-days: 7
+          if-no-files-found: warn
+  hermes-protocol:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - name: Install pinned official Hermes core without credentials
+        run: env -i PATH="$PATH" LANG=C.UTF-8 GITHUB_ACTIONS=true python3 scripts/bootstrap_hermes.py --execute --output-dir runtime/hermes-harness
+      - name: Actual no-tools SDK against fixture with zero inference
+        run: env -i PATH="$PATH" LANG=C.UTF-8 GITHUB_ACTIONS=true python3 -m workbench.harnesses.hermes_qwen
+      - name: Print public receipts
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json, pathlib
+          for name in ('runtime/hermes-harness/receipt.json', 'runtime/hermes-fixture/receipt.json'):
+              path = pathlib.Path(name)
+              if path.is_file():
+                  print('HERMES_CLOUD_RECEIPT=' + json.dumps({'path': name, 'receipt': json.loads(path.read_text())}))
+          path = pathlib.Path('runtime/hermes-fixture/harness.log')
+          if path.is_file():
+              print('HERMES_PROTOCOL_LOG=' + path.read_text()[-16000:])
+          PY
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: hermes-protocol-${{ github.run_id }}
+          path: |
+            runtime/hermes-harness/receipt.json
+            runtime/hermes-fixture/receipt.json
+            runtime/hermes-fixture/harness.log
+          retention-days: 7
+          if-no-files-found: warn

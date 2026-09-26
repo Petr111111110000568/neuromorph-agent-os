@@ -137,7 +137,7 @@ class OneShot:
             return text
 
 
-def server_for(guard):
+def server_for(guard, model=MODEL):
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *args):
             pass
@@ -160,7 +160,7 @@ def server_for(guard):
                     raise ValueError('input_limit')
                 payload = json_load(self.rfile.read(length))
                 text = guard.complete(payload)
-                common = {'id': 'neuromorph-review', 'created': int(time.time()), 'model': MODEL}
+                common = {'id': 'neuromorph-review', 'created': int(time.time()), 'model': model}
                 if payload.get('stream'):
                     chunks = [dict(common, object='chat.completion.chunk', choices=[{
                         'index': 0, 'delta': {'role': 'assistant', 'content': text}, 'finish_reason': None}]),
