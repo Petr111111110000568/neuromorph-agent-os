@@ -1,5 +1,7 @@
 # Meta-Harness Research System 0.10.0
 
+26.09.2026: [облачные harness и проверяемая интеграция](docs/HARNESS_PLATFORM_INTEGRATION_2026-09-26_RU.md) добавляют закреплённые DSH, Qwen Code, Gemini CLI и OpenCode. [Colab notebook](https://colab.research.google.com/github/Petr111111110000568/neuromorph-agent-os/blob/main/notebooks/cloud_harnesses_colab.ipynb) выполняет конечную CPU-проверку и одну явно выделенную попытку бесплатного обзора. [Cloud receipts](docs/contributions/cloud-harnesses-2026-09-26.json) различают установку CLI, протокольный тест и ответ внешней модели. Это не постоянный мост нативных чатов.
+
 26.09.2026, раунд 5: [реальная рецензия Claude и DeepSeek](docs/contributions/council-2026-09-26-round-5.md) связана с исправлением потери admission receipt и [синтетическим экспериментом памяти M03](docs/EVIDENCE_MEMORY_EXPERIMENT_RU.md). Конечный облачный workflow сравнивает membership, scope-only и provenance-aware retrieval, сохраняет метрики и evidence pack без LLM/API-ключей. Это инженерная проверка на фиксированном наборе; целостность данных не доказывает истинность утверждения или работу общей сети нативных чатов.
 
 26.09.2026, раунд 4: [независимый аудит Claude и DeepSeek](docs/contributions/council-2026-09-26-round-4.md) привёл к [допуску публичного брифа](docs/COUNCIL_BRIEF_ADMISSION_RU.md) перед передачей Qwen. Данные сверяются с отдельно заданным registry/policy; отвергнутый пакет не включается в prompt, а фиксированная причина сохраняется в квитанции. Корень доверия — принятый checkout, а не самоотчёт модели.
