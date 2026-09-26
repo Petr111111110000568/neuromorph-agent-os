@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-09-26",
+  "repository": "https://github.com/NousResearch/hermes-agent.git",
+  "release": "v2026.9.24",
+  "version": "0.21.5",
+  "commit": "f97608f178d1ffeca59860195ab7da295f7c8e5f",
+  "python": ">=3.11,<3.14",
+  "license": "MIT",
+  "model": "qwen3-235b-a22b",
+  "install_inference_calls": 0,
+  "files": {
+    "pyproject.toml": "6f969b9fdff95e7269ec808361e3ae8be5357036e6257e53a3306878cf8c41dd",
+    "uv.lock": "5b3798f326209475abca8ef7cbf7c9406f12e687c28c0b540dfe597466f48590",
+    "run_agent.py": "244da863d3c21591a3b5326dc14c2962d4e31131dda52df628502cd9fcbfea33",
+    "model_tools.py": "5d5a947d84f31f1ba4ef5267e28154b819e8f957a0b378739696f1ac305e1509",
+    "agent/agent_init.py": "ce93f1d5acd4727d0005b46d7054d8892a55c820be40ebc7f594695f576b4d81",
+    "hermes_cli/config_defaults.py": "2af916849856bfa39b4903c660301f968a4cec87410cd7023c89ee7b3f3fdc68",
+    "hermes_cli/main.py": "3b89b46e67f35398ba0af6b3441172490469702cd0e4e0381ff7e45ea78b2eef",
+    "setup.py": "d476dd1c28d707acd72f1d0551d7178123832ae18b6e201ca1ac48cd040653ae"
+  },
+  "uv": {
+    "version": "0.12.19",
+    "url": "https://files.pythonhosted.org/packages/76/71/b47cec536d8ee7b09017c1d9db211dfc2e7ce5c87d0482918d8b3411ec48/uv-0.12.19-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+    "sha256": "a63d18a0aa38ee9f21a5406afbbaeb41303bcd954be9d6b7c1b95ac275e53958",
+    "size": 20478749
+  },
+  "build_constraints": ["setuptools==83.0.0", "wheel==0.48.0", "packaging==26.0"]
+}

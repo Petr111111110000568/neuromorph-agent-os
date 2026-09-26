@@ -662,7 +662,13 @@ def perform():
             'base_commit': state['pending']['base_commit'], 'provider_contract': dict(PROVIDER_CONTRACT)}}
     # Prepared input is not proof of delivery; an interrupted call stays no_result.
     write_json(OUT / 'result.json', record)
-    result = qwen_space.call_qwen_space(prompt)
+    if os.environ.get('NEUROMORPH_HARNESS') == 'hermes':
+        from ..harnesses.hermes_qwen import run as run_hermes
+        result = run_hermes(prompt, provider=qwen_space.call_qwen_space,
+                            output_dir=OUT / 'hermes')
+        record['harness_receipt'] = result.get('harness_receipt')
+    else:
+        result = qwen_space.call_qwen_space(prompt)
     status = result.get('status', 'failed')
     record['status'] = status
     if status == 'response_received':
