@@ -35,6 +35,8 @@ class OfflineControl:
         _safe_path(self.folder, directory=True)
         self.lock = threading.Lock()
         self.thread = None
+        self.current_folder = None
+        self.closed = False
         self.runner = runner
 
     def snapshot(self):
@@ -78,6 +80,8 @@ class OfflineControl:
         folder=self.folder/job
         request={'question':question,'request_id':key,'public_data_confirmed':True}
         with self.lock, _admission_lock(self.folder/'admission.lock'):
+            if self.closed:
+                raise ServiceError('Offline controller is closed','offline_closed',409)
             _safe_path(folder,directory=True)
             if folder.exists():
                 if self._read(folder/'request.json')!=request:
@@ -98,6 +102,7 @@ class OfflineControl:
             try:
                 folder.mkdir()
                 _save_proposal(folder/'request.json',request)
+                self.current_folder=folder
                 self.thread=threading.Thread(target=self._run,args=(folder,question,job,process_lock),daemon=True)
                 self.thread.start()
             except Exception:
@@ -134,3 +139,19 @@ class OfflineControl:
                     if not stop.exists():
                         stop.write_text('stop',encoding='utf-8')
         return {'stop_requested':True}
+
+    def close(self):
+        """Stop only work launched by this controller, then bound shutdown wait.
+
+        A status-only MCP session must not stop an independent UI controller's
+        job. Explicit stop() remains the operator's data-directory-wide action.
+        """
+        with self.lock:
+            self.closed = True
+            thread = self.thread
+            if thread is not None and thread.is_alive() and self.current_folder is not None:
+                stop = _safe_path(self.current_folder / 'STOP')
+                if not stop.exists():
+                    stop.write_text('stop', encoding='utf-8')
+        if thread is not None and thread.ident is not None and thread is not threading.current_thread():
+            thread.join(timeout=6)

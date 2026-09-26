@@ -118,7 +118,32 @@ DESCRIPTIONS.update({
 })
 
 
-def serve_stdio(service, reader=None, writer=None):
+OFFLINE_COUNCIL_TOOLS = frozenset({
+    "offline_council_status", "offline_council_start", "offline_council_stop",
+})
+SCHEMAS.update({
+    "offline_council_status": {"type": "object", "properties": {}, "additionalProperties": False},
+    "offline_council_start": {"type": "object", "properties": {
+        "question": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "request_id": {"type": "string", "minLength": 1, "maxLength": 80},
+        "public_data_confirmed": {"type": "boolean", "enum": [True]}},
+        "required": ["question", "request_id", "public_data_confirmed"], "additionalProperties": False},
+    "offline_council_stop": {"type": "object", "properties": {}, "additionalProperties": False},
+})
+DESCRIPTIONS.update({
+    "offline_council_status": "Local-only: inspect saved offline council receipts and this controller's running state. Does not run a model; model files present is not proof of integrity or a completed run.",
+    "offline_council_start": "Local-only: reserve one finite council using the installed pinned local model. Requires explicit public-data confirmation and a stable request_id (letters, digits or hyphens). Repeating the same ID never reruns it. No external API, tools, downloads or generated-code execution; three roles are one model, and output is unverified.",
+    "offline_council_stop": "Local-only: request cooperative stop of pending councils in this configured data directory. Does not delete history, reset deduplication or stop unrelated processes. Inspect status for actual completion.",
+})
+
+
+def serve_stdio(service, reader=None, writer=None, *, allowed_tools=None):
+    # Enforce the same explicit capability set at discovery AND invocation.
+    # None retains the existing full local interface for established clients.
+    if allowed_tools is not None and (not isinstance(allowed_tools, (set, frozenset))
+                                     or any(not isinstance(name, str) or name not in SCHEMAS for name in allowed_tools)):
+        raise ValueError("Invalid MCP tool allowlist")
+    enabled_tools = frozenset(SCHEMAS) if allowed_tools is None else frozenset(allowed_tools)
     # MCP uses UTF-8 independently of the host locale. Reconfigure only our
     # default streams; caller-provided text streams keep their own lifecycle.
     if reader is None:
@@ -174,9 +199,11 @@ def serve_stdio(service, reader=None, writer=None):
                     raise ServiceError("Initialize and send notifications/initialized first", "not_initialized")
                 elif method == "tools/list":
                     result = {"tools": [{"name": name, "description": DESCRIPTIONS[name], "inputSchema": schema}
-                                        for name, schema in SCHEMAS.items()]}
+                                        for name, schema in SCHEMAS.items() if name in enabled_tools]}
                 elif method == "tools/call":
                     name = params.get("name")
+                    if not isinstance(name, str) or name not in enabled_tools:
+                        raise ServiceError("Unknown or unavailable tool")
                     args = object_field(params.get("arguments", {}), "arguments")
                     operations = {"list_sources": lambda: service.sources(args.get("q", "")),
                       "list_plugins": service.plugins, "run_plugin": lambda: service.run(args),
@@ -190,6 +217,9 @@ def serve_stdio(service, reader=None, writer=None):
                       "cancel_campaign": lambda: service.network_call("cancel_campaign", args),
                       "discover_resources": lambda: service.network_call("discover", args)}
                     operations.update({
+                      'offline_council_status': lambda: service.offline.snapshot(),
+                      'offline_council_start': lambda: service.offline.start(args),
+                      'offline_council_stop': lambda: service.offline.stop(),
                       'harness_status': service.harnesses_status,
                       'harness_runs': service.harnesses_runs,
                       'run_harness_task': lambda: service.harnesses_run(args),

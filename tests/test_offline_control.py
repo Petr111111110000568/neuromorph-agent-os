@@ -79,6 +79,63 @@ class OfflineControlTests(unittest.TestCase):
         self.assertEqual(caught.exception.code, code)
         self.assertEqual(caught.exception.status, status)
 
+    def test_status_only_close_does_not_stop_another_controllers_job(self):
+        response = self.start_blocked()
+        observer = self.make_control(Mock(side_effect=AssertionError("Observer cannot run")))
+        self.assertEqual(len(observer.snapshot()["jobs"]), 1)
+        observer.close()
+        self.assertFalse((self.control.folder / response["id"] / "STOP").exists())
+        self.assertTrue(self.control.thread.is_alive())
+
+    def test_close_stops_own_job_and_joins_worker(self):
+        finished = threading.Event()
+
+        def cooperative_runner(question, **options):
+            self.entered.set()
+            for _ in range(500):
+                if options["stop_file"].exists():
+                    finished.set()
+                    return {"schema_version": 1, "status": "stopped"}
+                finished.wait(0.01)
+            raise AssertionError("Owned STOP was not created")
+
+        self.control.runner = cooperative_runner
+        response = self.control.start(self.request)
+        self.assertTrue(self.entered.wait(timeout=5))
+        self.control.close()
+        self.assertTrue(finished.is_set())
+        self.assertFalse(self.control.thread.is_alive())
+        self.assertTrue((self.control.folder / response["id"] / "STOP").is_file())
+        self.assertEqual(self.control.snapshot()["jobs"][0]["status"], "stopped")
+        self.control.close()
+
+    def test_finished_owners_close_does_not_stop_new_controller(self):
+        self.start_blocked()
+        self.join_finished()
+        self.release.clear()
+        self.entered.clear()
+        successor = self.make_control(self.fake_runner)
+        response = successor.start({**self.request, "request_id": "successor-job"})
+        self.assertTrue(self.entered.wait(timeout=5))
+        self.control.close()
+        self.assertFalse((self.control.folder / response["id"] / "STOP").exists())
+        self.assertTrue(successor.thread.is_alive())
+
+    def test_close_has_bounded_join_and_rejects_new_work(self):
+        thread = Mock(spec=["is_alive", "join", "ident"])
+        thread.ident = 123
+        thread.is_alive.return_value = True
+        self.control.thread = thread
+        owned = self.control.folder / ("d" * 64)
+        owned.mkdir()
+        self.control.current_folder = owned
+        self.control.close()
+        thread.join.assert_called_once_with(timeout=6)
+        self.assertTrue((owned / "STOP").exists())
+        self.assert_error(lambda: self.control.start(self.request), "offline_closed", 409)
+        self.assertEqual(self.calls, [])
+        self.control.thread = None
+
     def test_request_is_persisted_before_runner_and_paths_are_fixed(self):
         response = self.start_blocked()
         job = hashlib.sha256(self.request["request_id"].encode()).hexdigest()

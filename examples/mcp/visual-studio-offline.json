@@ -1,0 +1,19 @@
+{
+  "servers": {
+    "neuromorph-offline-council": {
+      "type": "stdio",
+      "command": "<PATH_TO_RUNTIME_VENV_PYTHON>",
+      "args": [
+        "-I",
+        "<PATH_TO_VERIFIED_REPO>/scripts/run_offline_mcp.py",
+        "--data-dir",
+        "<PATH_TO_SHARED_LOCAL_STATE>"
+      ],
+      "env": {
+        "AUTONOMY_ALLOW_MODEL_CALLS": "false",
+        "HF_HUB_OFFLINE": "1",
+        "PYTHONUTF8": "1"
+      }
+    }
+  }
+}

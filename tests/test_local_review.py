@@ -233,6 +233,111 @@ class LocalReviewTests(unittest.TestCase):
         self.assertNotIn("OPENAI_API_KEY", popen.call_args.kwargs["env"])
         self.assertNotIn("LLAMA_ARG_MODEL", popen.call_args.kwargs["env"])
         self.assertFalse(Path(popen.call_args.kwargs["cwd"]).exists())
+        self.assertIn("-o", command)
+        self.assertIn("--no-escape", command)
+        self.assertEqual(command[command.index("--reasoning") + 1], "off")
+        self.assertEqual(command[command.index("--color") + 1], "off")
+        self.assertNotIn("--server-base", command)
+
+    @staticmethod
+    def transcript(prompt, answer, *, windows=False):
+        supplied = prompt[:-1] if prompt.endswith("\n") else prompt
+        text = "User:\n" + supplied + "\n\nAssistant:\n" + answer
+        if not text.endswith("\n"):
+            text += "\n"
+        text += "\n"
+        if windows:
+            text = text.replace("\n", "\r\n")
+        return text.encode("utf-8")
+
+    def test_output_file_parser_exact_prompt_and_windows_newlines(self):
+        prompt = "Public question with a literal \\n sequence\n/no_think\n"
+        answer = "Гипотеза не подтверждена.\nНужен контроль."
+        for windows in (False, True):
+            with self.subTest(windows=windows):
+                raw = self.transcript(prompt, answer, windows=windows)
+                self.assertEqual(review.parse_cli_output(raw, prompt), answer)
+        # A CRLF inside the supplied string survives ofstream's LF translation.
+        prompt = "Public\r\nquestion\n"
+        self.assertEqual(review.parse_cli_output(self.transcript(prompt, answer, windows=True), prompt), answer)
+
+    def test_output_file_parser_rejects_banner_ambiguous_reasoning_and_truncation(self):
+        prompt = "Public question\n"
+        valid = self.transcript(prompt, "Answer")
+        invalid = [b"Loading model... C:\\PRIVATE\\model.gguf\n" + valid,
+            self.transcript("different question", "Answer"), valid[:-1],
+            self.transcript(prompt, ""), self.transcript(prompt, "Answer\nAssistant:\nAnother answer"),
+            self.transcript(prompt, "Answer\nUser:\nAnother user"),
+            self.transcript(prompt, "[Start thinking]\nprivate reasoning\n[End thinking]\nAnswer"),
+            self.transcript(prompt, "<think>reasoning</think>Answer"),
+            self.transcript(prompt, "Answer\x1b[0m"), b"\xff",
+            b"x" * (review.MAX_TRANSCRIPT + 1), self.transcript(prompt, "x" * (review.MAX_OUTPUT + 1))]
+        for raw in invalid:
+            with self.subTest(size=len(raw)), self.assertRaises((ValueError, UnicodeError)):
+                review.parse_cli_output(raw, prompt)
+
+    def test_output_file_parser_rejects_private_runtime_path_echo(self):
+        prompt = "Public question"
+        with self.assertRaisesRegex(ValueError, "runtime path"):
+            review.parse_cli_output(self.transcript(prompt, "Model C:/PRIVATE/weights.gguf"), prompt,
+                                    private_paths=("c:\\private\\weights.gguf",))
+
+    def test_runner_returns_output_file_answer_not_stdout_banner_or_paths(self):
+        prompt = "Public question\n"
+        child = Mock(returncode=0)
+        child.poll.return_value = 0
+        def fake_launch(command, **options):
+            Path(command[command.index("-o") + 1]).write_bytes(self.transcript(prompt, "Чистый ответ", windows=True))
+            options["stdout"].write(b"Loading model... C:\\PRIVATE\\model.gguf\navailable commands:\n/read <file>\n")
+            options["stderr"].write(b"runtime diagnostics PRIVATE-STDERR")
+            return child
+        with patch.object(review.subprocess, "Popen", side_effect=fake_launch) as popen:
+            result = review._run_local(self.exe, self.model, prompt, max_tokens=128, timeout=20, stop_file=self.stop)
+        self.assertEqual(result["status"], "unverified_proposal")
+        self.assertEqual(result["text"], "Чистый ответ")
+        self.assertFalse(result["stdout_published"])
+        self.assertEqual(result["output_format"], review.OUTPUT_FORMAT)
+        self.assertNotIn("PRIVATE", json.dumps(result))
+        self.assertFalse(Path(popen.call_args.kwargs["cwd"]).exists())
+        child.kill.assert_not_called()
+        child.wait.assert_called_once()
+
+    def test_runner_rejects_missing_output_file_and_stream_error_even_on_exit_zero(self):
+        prompt = "Public question\n"
+        child = Mock(returncode=0)
+        child.poll.return_value = 0
+        for mode in ("missing", "stderr_error", "stdout_error", "wrong_prompt", "empty_answer"):
+            def fake_launch(command, **options):
+                if mode != "missing":
+                    raw = self.transcript("wrong" if mode == "wrong_prompt" else prompt,
+                        "" if mode == "empty_answer" else "Partial answer")
+                    Path(command[command.index("-o") + 1]).write_bytes(raw)
+                options["stdout"].write(b"A plausible answer that must never be used as fallback")
+                if mode.endswith("_error"):
+                    options[mode.split("_")[0]].write(b"Error: PRIVATE-STREAM-FAILURE")
+                return child
+            with self.subTest(mode=mode), patch.object(review.subprocess, "Popen", side_effect=fake_launch):
+                result = review._run_local(self.exe, self.model, prompt, max_tokens=128, timeout=20, stop_file=self.stop)
+            self.assertEqual(result, {"status": "failed"})
+
+    def test_runner_output_file_bound_kills_and_waits(self):
+        child = Mock(returncode=-1)
+        child.poll.side_effect = [None, 0]
+        def fake_launch(command, **options):
+            Path(command[command.index("-o") + 1]).write_bytes(b"x" * (review.MAX_TRANSCRIPT + 1))
+            return child
+        with patch.object(review.subprocess, "Popen", side_effect=fake_launch):
+            result = review._run_local(self.exe, self.model, "Public question", max_tokens=128, timeout=20, stop_file=self.stop)
+        self.assertEqual(result, {"status": "failed"})
+        child.kill.assert_called_once()
+        child.wait.assert_called_once()
+
+    def test_runner_rejects_cli_commands_and_large_prompt_before_launch(self):
+        for prompt in ("/read C:/PRIVATE/secret.txt", "", "\x00", "x" * (review.MAX_PROMPT + 1)):
+            with self.subTest(size=len(prompt)), patch.object(review.subprocess, "Popen") as popen:
+                self.assertEqual(review._run_local(self.exe, self.model, prompt,
+                    max_tokens=128, timeout=20, stop_file=self.stop), {"status": "failed"})
+                popen.assert_not_called()
 
     def test_existing_proposal_is_not_overwritten(self):
         previous = self.output / "review-001.json"

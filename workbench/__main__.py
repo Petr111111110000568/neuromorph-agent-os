@@ -23,7 +23,8 @@ def main(argv=None):
     run = commands.add_parser("run", help="Run a registered numerical demonstration")
     run.add_argument("plugin_id")
     run.add_argument("--parameters", default="{}", help="JSON object")
-    commands.add_parser("mcp", help="Start bounded MCP stdio subset")
+    mcp = commands.add_parser("mcp", help="Start bounded MCP stdio subset")
+    mcp.add_argument("--offline-only", action="store_true", help="Expose only the three local offline council tools")
     hub = commands.add_parser("hub", help="Start authenticated worker transport; TLS required outside loopback")
     hub.add_argument("--host", default="127.0.0.1")
     hub.add_argument("--port", type=int, default=8766)
@@ -76,8 +77,8 @@ def main(argv=None):
             print(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False))
             return 0 if result["status"] == "completed" else 1
         elif args.command == "mcp":
-            from .mcp_server import serve_stdio
-            serve_stdio(service)
+            from .mcp_server import OFFLINE_COUNCIL_TOOLS, serve_stdio
+            serve_stdio(service, allowed_tools=OFFLINE_COUNCIL_TOOLS if args.offline_only else None)
         elif args.command == "federation-gateway":
             from .federation.transport import make_gateway
             server = make_gateway(service.federation.exchange, host=args.host, port=args.port,

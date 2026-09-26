@@ -7,6 +7,8 @@ on:
       - 'workbench/**'
       - 'scripts/offline_bundle.py'
       - 'scripts/download_kimi_weights.py'
+      - 'scripts/run_offline_mcp.py'
+      - 'scripts/install_windows_bundle.ps1'
       - 'tests/test_offline_*.py'
       - 'tests/test_kimi_weight_download.py'
       - 'config/**'
@@ -17,6 +19,8 @@ on:
       - 'workbench/**'
       - 'scripts/offline_bundle.py'
       - 'scripts/download_kimi_weights.py'
+      - 'scripts/run_offline_mcp.py'
+      - 'scripts/install_windows_bundle.ps1'
       - 'tests/test_offline_*.py'
       - 'tests/test_kimi_weight_download.py'
       - 'config/**'
@@ -75,6 +79,8 @@ jobs:
               "test_offline_council.py",
               "test_offline_control.py",
               "test_offline_http.py",
+              "test_offline_mcp.py",
+              "test_local_review.py",
               "test_kimi_weight_download.py",
           )
           suite = unittest.TestSuite()
@@ -87,6 +93,13 @@ jobs:
           print("Fixture tests:", suite.countTestCases(), "Python:", sys.version, flush=True)
           result = unittest.TextTestRunner(verbosity=2).run(suite)
           raise SystemExit(0 if result.wasSuccessful() else 1)
+      - name: Windows bootstrap syntax
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $tokens=$null; $errors=$null
+          [System.Management.Automation.Language.Parser]::ParseFile((Join-Path (Get-Location) 'scripts/install_windows_bundle.ps1'),[ref]$tokens,[ref]$errors) | Out-Null
+          if($errors.Count) { $errors | Format-List; exit 1 }
       - name: Doctor (builtin integrity and SQLite only)
         if: ${{ !cancelled() }}
         shell: python

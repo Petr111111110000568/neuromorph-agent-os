@@ -268,6 +268,8 @@ class Service:
             raise ServiceError(str(exc), "invalid_request", 400) from exc
 
     def close(self):
+        if self._offline is not None:
+            self._offline.close()
         if self._brain is not None:
             self._brain.close()
         if self._federation is not None:

@@ -30,6 +30,14 @@ python CLEAN_SOURCE/scripts/offline_bundle.py build --source CLEAN_SOURCE --outp
 
 ## Проверка и установка
 
+Для Windows-комплекта с включённым Python отдельный Python на целевом ПК не нужен. Скопируйте также `scripts/install_windows_bundle.ps1` и независимо полученный SHA-256 архива:
+
+```powershell
+.\install_windows_bundle.ps1 -Bundle .\NeuroMorf-offline.zip -Destination C:\NeuroMorf-release -ExpectedSha256 ARCHIVE_SHA256
+```
+
+Bootstrap сначала проверяет SHA-256 всего архива, удерживая файл открытым без разрешения записи, затем извлекает только закреплённый Python и проверяющий установщик во временный каталог. Установщик проверяет все файлы перед установкой; приложение автоматически не запускается. Политики безопасности PowerShell не изменяются.
+
 Скопируйте проверенный `offline_bundle.py`, архив и отдельно полученный SHA-256 на целевой ПК. Для проверки и установки нужен Python 3.11+; включённый внутрь ZIP Python не исполняется установщиком до проверки.
 
 ```powershell
