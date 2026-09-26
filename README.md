@@ -1,3 +1,9 @@
+# Локальная консоль и наблюдение облака — 26.09.2026
+
+[Windows deployment](docs/WINDOWS_LOCAL_DEPLOYMENT_RU.md) использует отдельный checkout, venv, SQLite и Job Object; GUI доступен только на localhost. Новая `/cloud.html` читает публичный cloud ledger без модельных вызовов. Историческая проверка среды отделена от actual runtime.
+
+[Раунд 7 и реальный отказ Qwen](docs/contributions/council-2026-09-26-round-7.md): Hermes установлен, но live run36221395344 получил HTTP503; старый успех не является новым ответом. [Сравнение исследовательских платформ и UI](docs/RESEARCH_PLATFORMS_AND_UI_RU.md) объясняет доступные реализации и границы бесплатного доступа.
+
 # Hermes и Instinct — облачная интеграция 26.09.2026
 
 [Hermes research profile](docs/HERMES_AND_INSTINCT_RU.md) подключает настоящий SDK к существующей общей Qwen-квоте. Ежечасный планировщик проверяет допуск; модель вызывается не чаще чем через6ч, максимум4попытки/24ч. [Результаты](docs/contributions/hermes-instinct-2026-09-26.json): SDK fixture и601 облачный тест прошли. [Instinct comparison](docs/INSTINCT_COMPARISON_RU.md): открытый эвристический компонент показал3/6 на шести примерах и оставлен в исследовательском стенде. Это не SDK облачного instinct.com. [Colab notebook](notebooks/hermes_instinct_colab.ipynb) подготовлен для конечной проверки без внешних генераций.

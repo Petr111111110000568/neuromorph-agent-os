@@ -211,6 +211,15 @@
   function renderEnvironment(env) {
     $("environment-raw").textContent = printable(env);
     const target = clear($("environment-content"));
+    if (env.snapshot_kind === "historical_build_report") {
+      target.append(environmentCard("Текущая среда", env.live_runtime));
+      const historical = el("details", "panel environment-card");
+      historical.append(el("summary", "", "Архивная проверка сборки — не состояние этого ПК"));
+      historical.append(el("p", "", env.notice));
+      const report = el("pre"); report.textContent = printable(env.historical_snapshot);
+      historical.append(report); target.append(historical);
+      return;
+    }
     if (env.packages && env.programs && env.runtime) {
       target.append(environmentCard("Локальная среда", {python: env.python, checked_at: env.checked_at, ...env.runtime}));
       target.append(environmentCard("Изоляция вычислений", {namespace_isolation_available: env.namespace_isolation_available, description: env.namespace_isolation_available ? "Сведения о доступности изоляции приведены в проверке окружения." : "Отдельный процесс ограничивает выполнение, но не является защищённой песочницей. Запуск недоверенных модулей требует отдельной среды."}));

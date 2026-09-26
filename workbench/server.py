@@ -114,7 +114,8 @@ def make_server(service, host="127.0.0.1", port=8765):
             routes = {"/api/status": service.status, "/api/plugins": service.plugins,
               "/api/runs": service.runs, "/api/advisors": service.advisors,
               "/api/council": service.councils, "/api/workflows": service.workflows,
-              "/api/environment": service.environment, "/api/roadmap": service.roadmap,
+              "/api/environment": service.environment, "/api/cloud-status": service.cloud_status,
+              "/api/roadmap": service.roadmap,
               "/api/audit": service.audit}
             if path == "/api/sources":
                 return self.response(service.sources(query.get("q", [""])[0]))
