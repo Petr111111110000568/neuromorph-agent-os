@@ -646,20 +646,25 @@ def perform():
     catalog = plugins.catalogue(ROOT)
     _profile_state(state, catalog)
     council_brief, brief_receipt = admit_council_brief(ROOT, brief_now())
+    # Finalize can retain this decision even if prompt preparation fails.
+    write_json(OUT / 'result.json', {'status': 'no_result', 'brief_admission': brief_receipt})
     try:
         cards = public_metadata(OUT / 'discovery/cycle.json')
     except (OSError, ValueError):
         cards = []
     # A missing external catalog does not erase the shared previous contribution.
     prompt = make_prompt(state, cards, plugin_catalog=catalog, council_brief=council_brief)
-    result = qwen_space.call_qwen_space(prompt)
-    status = result.get('status', 'failed')
-    record = {'status': status, 'prompt_sha256': hashlib.sha256(prompt.encode()).hexdigest(),
+    record = {'status': 'no_result', 'prompt_sha256': hashlib.sha256(prompt.encode()).hexdigest(),
         'message': None, 'code_executed': False, 'validated': False, 'brief_admission': brief_receipt,
         'public_source_count': len(json_load(prompt.split('\n', 1)[1])['public_cards']),
         'base_commit': state['pending']['base_commit'],
         'input': {'prompt': prompt, 'prompt_sha256': hashlib.sha256(prompt.encode()).hexdigest(),
             'base_commit': state['pending']['base_commit'], 'provider_contract': dict(PROVIDER_CONTRACT)}}
+    # Prepared input is not proof of delivery; an interrupted call stays no_result.
+    write_json(OUT / 'result.json', record)
+    result = qwen_space.call_qwen_space(prompt)
+    status = result.get('status', 'failed')
+    record['status'] = status
     if status == 'response_received':
         try:
             text = result['text'].strip()
@@ -721,4 +726,3 @@ def main(argv=None):
 
 if __name__ == '__main__':
     raise SystemExit(main())
-
