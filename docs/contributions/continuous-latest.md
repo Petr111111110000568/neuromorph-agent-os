@@ -19,14 +19,14 @@ Next question: How can we implement a context-memory provenance tracker using Py
 ## Plugin profiles: configuration only, no plugin execution
 
 ```json
-{"profiles": {"author": ["regression_benchmark"], "reviewer": ["legacy_topology"], "reviser": ["cortical_sequence"]}, "receipt": null}
+{"profiles": {"author": ["regression_benchmark"], "reviewer": ["legacy_topology"], "reviser": ["cortical_sequence"]}, "receipt": {"execution_allowed": false, "mode": "profile_configuration", "plan_sha256": null, "profile_revision": 0, "status": "not_requested"}}
 ```
 
 
 ## Logical council: same fixed Qwen backend, no new accounts
 
 ```json
-{"receipt": null, "members": ["author", "reviewer", "reviser"], "pending_ids": []}
+{"receipt": {"mode": "logical_roles_same_qwen", "status": "not_requested", "revision": 0, "proposal_id": null, "member_count": 3, "execution_allowed": false}, "members": ["author", "reviewer", "reviser"], "pending_ids": []}
 ```
 
 
@@ -43,6 +43,16 @@ Next question: How can we implement a context-memory provenance tracker using Py
     "role": "author",
     "run_id": "36181819041",
     "status": "response_received"
+  },
+  {
+    "attempt": 2,
+    "run_id": "36221395344",
+    "at": 1790401135,
+    "role": "reviewer",
+    "status": "provider_unavailable",
+    "output_sha256": null,
+    "base_commit": "15e88f45603bb5324335f341d48584203df28c99",
+    "input_sha256": "5daf9f8305d58301a4cf85aeb3db13e9011534c4feb78a47d99d71a367b100e8"
   }
 ]
 ```
