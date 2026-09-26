@@ -442,7 +442,19 @@ class Service:
         return {"items": self.store.list("workflow")}
 
     def environment(self):
-        return self.read_data("environment_status.json", {"status": "not_configured"})
+        snapshot = self.read_data("environment_status.json", {"status": "not_configured"})
+        return {"snapshot_kind": "historical_build_report", "historical_snapshot": snapshot,
+                "live_runtime": self.status()["environment"],
+                "notice": "Архивная проверка сборки и текущее окружение показаны отдельно."}
+
+    def cloud_status(self):
+        from .cloud_observer import CloudObserver
+        # Store's lock provides one shared observer/cache across HTTP threads.
+        with self.store.lock:
+            if not hasattr(self, '_cloud_observer'):
+                self._cloud_observer = CloudObserver()
+            observer = self._cloud_observer
+        return observer.get()
 
     def roadmap(self):
         return self.read_data("roadmap.json", {"items": []})

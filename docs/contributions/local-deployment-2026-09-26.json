@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "tested_code_commit": "c6853e26921dd20846c3aea00301926f0af23de1",
+  "cloud_ci": {
+    "run_id": 36222295744,
+    "job_id": 108349704077,
+    "tests": 615,
+    "seconds": 46.614,
+    "conclusion": "success",
+    "doctor": "success",
+    "plugin_bootstrap_twice": "success"
+  },
+  "windows": {
+    "python": "3.12.14",
+    "sqlite": "3.53.1",
+    "venv": true,
+    "third_party_core_dependencies": 0,
+    "raw_git_blob_files_checked": 373,
+    "raw_git_blob_mismatches": 0,
+    "loopback_listeners": [8765, 8766, 8767],
+    "current_workers_with_fresh_heartbeat": 2,
+    "old_worker_registrations_are_historical": true,
+    "stop_status": "stopped",
+    "job_active_processes_after_stop": 0,
+    "remaining_known_processes_after_stop": 0,
+    "remaining_listeners_after_stop": 0,
+    "model_calls_enabled": false,
+    "additional_spend": 0,
+    "filesystem_network_sandbox": false
+  },
+  "calculation": {
+    "source_commit": "15e88f45603bb5324335f341d48584203df28c99",
+    "module": "quantum_circuit",
+    "backend": "classical_exact",
+    "status": "completed",
+    "shots": 100,
+    "seed": 42,
+    "counts": {"00": 50, "01": 0, "10": 0, "11": 50},
+    "input_sha256": "2f0518406a45e4e09e72c3c3ed8a1bc9a1dc9547649d0b0ad21b78ffee068e4e",
+    "output_sha256": "5670e343e1dd76e215648aa87a9b6e0e276d27502d59a4e37890031c85f26e6f",
+    "persisted_after_restart": true,
+    "qpu_used": false
+  },
+  "ui": {
+    "browser": "Codex in-app browser",
+    "cloud_panel_visually_checked": true,
+    "latest_failure_separate_from_retained_success": true,
+    "current_win32_separate_from_historical_linux": true,
+    "source_saved_through_form": true,
+    "source_count_after_save": 153,
+    "edge_local_navigation": "ERR_BLOCKED_BY_CLIENT; protections unchanged",
+    "public_cloud_backend": false
+  },
+  "cloud_observation": {
+    "ledger_commit": "37b7678a51c0593ea8cfdbe9ad20415516904c14",
+    "latest_run": 36221395344,
+    "latest_status": "provider_unavailable",
+    "latest_http_status_from_run_receipt": 503,
+    "attempts": 2,
+    "successes": 1,
+    "next_due_utc": "2026-09-27T05:38:55Z",
+    "observation_model_calls": 0
+  },
+  "limitations": [
+    "Local GUI requires this PC and its Python supervisor; no OS boot autostart was installed.",
+    "Venv and Windows Job Object do not isolate filesystem or network permissions.",
+    "The last cloud provider attempt failed; old saved model text is not a fresh answer.",
+    "Only the listed finite checks ran; native platform chats do not have an autonomous cloud bridge."
+  ]
+}
+

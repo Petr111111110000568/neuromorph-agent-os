@@ -1,0 +1,5 @@
+#notice{padding:18px 22px;margin-bottom:22px}
+#last-status.warning{color:#8e3826}
+#commit,#answer-title,#answer-text{overflow-wrap:anywhere}
+#answer-text{white-space:pre-wrap;line-height:1.7}
+.overview-grid .panel p{line-height:1.6}
