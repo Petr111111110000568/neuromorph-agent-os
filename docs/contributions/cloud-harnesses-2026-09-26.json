@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "checked_source_commit": "73d5819a0d72efa94d6d1f611710e801eb24bd48",
+  "pull_request": 12,
+  "github": {
+    "run_id": 36218892892,
+    "core_run_id": 36218892834,
+    "actual_checkout": "99f9674e5af8ac0b05ce8283442d7f948c99552a",
+    "tests": 567,
+    "test_seconds": 38.147,
+    "conclusion": "success",
+    "installation": {
+      "schema_version": 1,
+      "status": "completed",
+      "model_calls": 0,
+      "authentication_performed": false,
+      "package_scripts_enabled": false,
+      "packages": [
+        {
+          "id": "dsh",
+          "name": "@deepseek-ai/dsh",
+          "version": "0.1.7-rc.2",
+          "integrity": "sha512-SQFhriLvza8GnFApnC5/32AgpcyKxrWnYXhvwDOLJdgWpkCX2EexyR9c8kCkMITJXnFLEN3Qb2CEh0W36vkLyw==",
+          "status": "installed_smoke_passed",
+          "model_calls": 0,
+          "archive": {
+            "download_bytes": 23335,
+            "unpacked_bytes": 69869,
+            "files": 20
+          },
+          "install": {
+            "status": "ok",
+            "returncode": 0,
+            "output_bytes": 120,
+            "output_sha256": "7fd16d5ddad3f4ea693ea5c8a80ef7d8f648791baeb4c3944a644fd1fe65b05c",
+            "output": "npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead\n\nadded 593 packages in 50s\n"
+          },
+          "lock_sha256": "dbe7e8f6abc3bceb7225f840caf245ed471bef6f294300e2734f2658b2424ab9",
+          "resolved_package_count": 594,
+          "entry_path": "/home/runner/work/neuromorph-agent-os/neuromorph-agent-os/runtime/cloud-harnesses/packages/dsh/node_modules/@deepseek-ai/dsh/lib/bin.js",
+          "entry_sha256": "935e95d05f4dc70a8a013eea59da80028946b5c139e45c6351dcaf2810ca00a1",
+          "smoke": [
+            {
+              "flag": "--version",
+              "status": "ok",
+              "returncode": 0,
+              "output_bytes": 11,
+              "output_sha256": "67215adf0ee1dda0045b3a1f5036e2b51c1b111640d91c8b81587789fe9d947a",
+              "output": "0.1.7-rc.2\n"
+            },
+            {
+              "flag": "--help",
+              "status": "ok",
+              "returncode": 0,
+              "output_bytes": 1809,
+              "output_sha256": "cb3a6993d7644a904243f5575b48160c123a85c85e3f7a6dbae53b49aa3dad41",
+              "output": "Usage: dsh [--profile] <name> [options] [app-args...]\n       dsh plugin --profile <name> <pnpm-args...>\n\ndsh: boot a DeepSeek Harness profile — an ordered stack of plugin-bundle patch\nlayers under your own overrides.\n\nArguments:\n  args                           arguments for the booted profile's app (see:\n                                 dsh --profile <name> --help)\n\nOptions:\n  -V, --version                  output the version number\n  --profile <name>               the profile under $DSH_HOME/profiles to boot\n  --from-default-profile <name>  initialize a new custom profile from a shipped\n                                 profile template\n  --patch <path>                 extra patch-list overlay applied after the\n                                 profile layer (repeatable)\n  --dump-config                  print the composed profile tree and exit\n  --dump-config-schema           print JSON Schema for profile entries and\n                                 patches without mounting\n  --dump-default-config          print the profile tree without its user layer\n                                 or --patch overlays and exit\n\nExamples:\n  dsh web                                   boot the web profile (same as: dsh --profile web)\n  dsh rescue --from-default-profile web\n                                            create rescue from the shipped web template, then boot it\n  dsh headless \"run the tests\"              answer one task, print the result, and exit\n  dsh tui --patch ./extra.yml               boot a custom profile with one extra overlay\n  dsh tui --resume <session>                arguments after the launcher flags reach the app\n  dsh web --help                            the web app's own flags and help\n  dsh plugin --profile tui add <package>    install a plugin into the tui profile\n\n"
+            }
+          ]
+        },
+        {
+          "id": "qwen",
+          "name": "@qwen-code/qwen-code",
+          "version": "0.23.0",
+          "integrity": "sha512-foznQtmptzM7DtYGPALZVtwUBVTsANYc6ytWOfGisXB7FgpzNmYT6xIHzh+26RJD9Kl+qzRW0gFp/AkqRouhnQ==",
+          "status": "installed_smoke_passed",
+          "model_calls": 0,
+          "archive": {
+            "download_bytes": 26987337,
+            "unpacked_bytes": 102034799,
+            "files": 1023
+          },
+          "install": {
+            "status": "ok",
+            "returncode": 0,
+            "output_bytes": 25,
+            "output_sha256": "1236c68c8555d4edf4d38b6aa2dc7b41cbf1ac467b77f419ae5d47e63b89b6d5",
+            "output": "\nadded 49 packages in 2s\n"
+          },
+          "lock_sha256": "e5f2b0f0cabc3a4c32ef4d851da3858d4e9d5f76983eb46276f1d3e0b85e4791",
+          "resolved_package_count": 50,
+          "entry_path": "/home/runner/work/neuromorph-agent-os/neuromorph-agent-os/runtime/cloud-harnesses/packages/qwen/node_modules/@qwen-code/qwen-code/cli-entry.js",
+          "entry_sha256": "68cb29eb7ccc936d78ece5564ef55cae41a55b630e6657dc417c1f2e561cf4c9",
+          "smoke": [
+            {
+              "flag": "--version",
+              "status": "ok",
+              "returncode": 0,
+              "output_bytes": 7,
+              "output_sha256": "d1994e4942b06ec398ed7d9fa91ecce4079cd3f85ffe9e04588866291263149c",
+              "output": "0.23.0\n"
+            },
+            {
+              "flag": "--help",
+              "status": "ok",
+              "returncode": 0,
+              "output_bytes": 11251,
+              "output_sha256": "05225d59df4670f23d036d44049788962baa1a177bd36cda33427c0c0ec0e46a",
+              "output": "Usage: qwen [options] [command]\n\nQwen Code - Launch an interactive CLI, use -p/--prompt for non-interactive mode\n\nCommands:\n  qwen [query..]             Launch Qwen Code CLI  [default]\n  qwen auth                  Configure authentication (removed)\n  qwen channel <command>     Manage messaging channels (Telegram, Discord, etc.)\n  qwen extensions <command>  Manage Qwen Code extensions.\n  qwen hooks                 Manage Qwen Code hooks (use /hooks in interactive mode).\n  qwen mcp                   Manage MCP servers\n  qwen review <command>      Run a review non-interactively (`run`), plus the internal helpers used by the /review skill (PR worktree setup, context fetch, rules loading, presubmit checks, cleanup)\n  qwen serve                 Run Qwen Code as a local HTTP daemon (Stage 1 experimental: --http-bridge)\n  qwen sessions <command>    Manage Qwen Code sessions\n  qwen update                Check for Qwen Code updates and install if available\n\nPositionals:\n  query  Positional prompt. Defaults to one-shot; use -i/--prompt-interactive for interactive.\n\nOptions:\n      --telemetry                       Enable telemetry? This flag specifically controls if telemetry is sent. Other --telemetry-* flags set specific values but do not enable telemetry on their own.  [deprecated: Use the \"telemetry.enabled\" setting in settings.json instead. This flag will be removed in a future version.] [boolean]\n      --telemetry-target                Set the telemetry target (local or gcp). Overrides settings files.  [deprecated: Use the \"telemetry.target\" setting in settings.json instead. This flag will be removed in a future version.] [string] [choices: \"local\", \"gcp\"]\n      --telemetry-otlp-endpoint         Set the OTLP endpoint for telemetry. Overrides environment variables and settings files.  [deprecated: Use the \"telemetry.otlpEndpoint\" setting in settings.json instead. This flag will be removed in a future version.] [string]\n      --telemetry-otlp-protocol         Set the OTLP protocol for telemetry (grpc or http). Overrides settings files.  [deprecated: Use the \"telemetry.otlpProtocol\" setting in settings.json instead. This flag will be removed in a future version.] [string] [choices: \"grpc\", \"http\"]\n      --telemetry-log-prompts           Enable or disable logging of user prompts for telemetry. Overrides settings files.  [deprecated: Use the \"telemetry.logPrompts\" setting in settings.json instead. This flag will be removed in a future version.] [boolean]\n      --telemetry-outfile               Redirect all telemetry output to the specified file.  [deprecated: Use the \"telemetry.outfile\" setting in settings.json instead. This flag will be removed in a future version.] [string]\n  -d, --debug                           Run in debug mode?  [boolean] [default: false]\n      --bare                            Minimal mode: skip implicit startup auto-discovery and only honor explicitly provided CLI inputs.  [boolean] [default: false]\n      --safe-mode                       Disable all customizations (context files, hooks, extensions, skills, MCP servers) for troubleshooting.  [boolean]\n      --proxy                           Proxy for Qwen Code, like ***host:port  [deprecated: Use the \"proxy\" setting in settings.json instead. This flag will be removed in a future version.] [string]\n      --insecure                        Skip TLS certificate verification for API connections (for self-signed certs in trusted/lab environments). Equivalent to setting QWEN_TLS_INSECURE=1. WARNING: removes protection against man-in-the-middle attacks.  [boolean] [default: false]\n      --chat-recording                  Enable chat recording to disk. If false, chat history is not saved and --continue/--resume will not work.  [boolean]\n  -m, --model                           Model  [string]\n      --fallback-model                  Fallback model(s) for capacity errors (429/503/529), repeatable or comma-separated (max 3)  [array]\n  -p, --prompt                          Prompt. Appended to input on stdin (if any).  [deprecated: Use the positional prompt instead. This flag will be removed in a future version.] [string]\n  -i, --prompt-interactive              Execute the provided prompt and continue in interactive mode  [string]\n      --system-prompt                   Override the main session system prompt for this run. Can be combined with --append-system-prompt.  [string]\n      --append-system-prompt            Append instructions to the main session system prompt for this run. Can be combined with --system-prompt.  [string]\n      --output-style                    Output style for this run, for example \"Concise\" or \"Explanatory\". Overrides the general.outputStyle setting; \"default\" selects no style.  [string]\n  -s, --sandbox                         Run in sandbox?  [boolean]\n      --sandbox-image                   Sandbox image URI.  [deprecated: Use the \"tools.sandboxImage\" setting in settings.json instead. This flag will be removed in a future version.] [string]\n  -y, --yolo                            Automatically accept all actions (aka YOLO mode, see https://www.youtube.com/watch?v=xvFZjo5PgG0 for more details)?  [boolean] [default: false]\n      --approval-mode                   Set the approval mode: plan (Analyze only, do not modify files or execute commands), default (Require approval for file edits or shell commands), auto-edit (Automatically approve file edits), auto (LLM classifier auto-approves safe actions, blocks risky ones), yolo (Automatically approve all tools)  [string] [choices: \"plan\", \"default\", \"auto-edit\", \"auto\", \"yolo\"]\n      --acp                             Starts the agent in ACP mode  [boolean]\n      --experimental-lsp                Enable experimental LSP (Language Server Protocol) feature for code intelligence  [boolean] [default: false]\n      --restore-ask-user-question       On daemon session load/resume, re-hang a trailing unanswered ask_user_question instead of synthesizing a failed tool result  [boolean] [default: false]\n      --channel                         Channel identifier (VSCode, ACP, SDK, CI, desktop, daemon)  [string] [choices: \"VSCode\", \"ACP\", \"SDK\", \"CI\", \"desktop\", \"daemon\"]\n      --allowed-mcp-server-names        Allowed MCP server names  [array]\n      --mcp-config                      MCP server configuration as JSON string or file path. Can be a path to a JSON file or inline JSON with {\"mcpServers\": {...}} format.  [string]\n      --allowed-tools                   Tools to allow, will bypass confirmation  [array]\n  -e, --extensions                      A list of extensions to use. If not provided, all extensions are used.  [array]\n  -l, --list-extensions                 List all available extensions and exit.  [boolean]\n      --include-directories, --add-dir  Additional directories to include in the workspace (comma-separated or multiple --include-directories)  [array]\n      --openai-logging                  Enable logging of OpenAI API calls for debugging and analysis  [boolean]\n      --openai-logging-dir              Custom directory path for OpenAI API logs. Overrides settings files.  [string]\n      --openai-api-key                  OpenAI API key to use for authentication  [string]\n      --openai-base-url                 OpenAI base URL (for custom endpoints)  [string]\n      --screen-reader                   Enable screen reader mode for accessibility.  [boolean]\n      --input-format                    The format consumed from standard input.  [string] [choices: \"text\", \"stream-json\"] [default: \"text\"]\n  -o, --output-format                   The format of the CLI output.  [string] [choices: \"text\", \"json\", \"stream-json\"]\n      --include-partial-messages        Include partial assistant messages when using stream-json output.  [boolean] [default: false]\n      --json-fd                         File descriptor for structured JSON event output (dual output mode). The TUI renders normally on stdout while JSON events are written to this fd. The caller must provide this fd via spawn stdio configuration.  [number]\n      --json-file                       File path for structured JSON event output (dual output mode). C"
+            }
+          ]
+        },
+        {
+          "id": "gemini",
+          "name": "@google/gemini-cli",
+          "version": "0.58.0",
+          "integrity": "sha512-++LtUYMcLE8dVxMcuwv6kIp8+h6z+std/7iVE+vSunkrwNDaWMFkWw/psv2RSySWjr2A1SsEEIGCK0xULWY2sA==",
+          "status": "installed_smoke_passed",
+          "model_calls": 0,
+          "archive": {
+            "download_bytes": 20720999,
+            "unpacked_bytes": 97987180,
+            "files": 449
+          },
+          "install": {
+            "status": "ok",
+            "returncode": 0,
+            "output_bytes": 25,
+            "output_sha256": "32f4f5de096f8b94c2c3260417f7fc9b1d4106774c57ac17b64336afb09ce6a8",
+            "output": "\nadded 12 packages in 2s\n"
+          },
+          "lock_sha256": "18b0615fe471af7e313950f87b7c97fb19ea5b5aad97b7c171a22d65bc0a47c2",
+          "resolved_package_count": 13,
+          "entry_path": "/home/runner/work/neuromorph-agent-os/neuromorph-agent-os/runtime/cloud-harnesses/packages/gemini/node_modules/@google/gemini-cli/bundle/gemini.js",
+          "entry_sha256": "25f087a42f4484891aa73e6e36cc2790e69a3c023cc44fd244adf44a091eebd7",
+          "smoke": [
+            {
+              "flag": "--version",
+              "status": "ok",
+              "returncode": 0,
+              "output_bytes": 7,
+              "output_sha256": "f8de3de8a138497bc14999472efa9f096f64fa424a84665266a1f800f6ff5515",
+              "output": "0.58.0\n"
+            },
+            {
+              "flag": "--help",
+              "status": "ok",
+              "returncode": 0,
+              "output_bytes": 3989,
+              "output_sha256": "b5c6e1af180f48adb3700982e7b06e905f29d2965f047eaeebd0b5c4f676b632",
+              "output": "Usage: gemini [options] [command]\n\nGemini CLI - Defaults to interactive mode. Use -p/--prompt for non-interactive (headless) mode.\n\nCommands:\n  gemini mcp                   Manage MCP servers\n  gemini extensions <command>  Manage Gemini CLI extensions.  [aliases: extension]\n  gemini skills <command>      Manage agent skills.  [aliases: skill]\n  gemini hooks <command>       Manage Gemini CLI hooks.  [aliases: hook]\n  gemini gemma                 Manage local Gemma model routing\n  gemini [query..]             Launch Gemini CLI  [default]\n\nPositionals:\n  query  Initial prompt. Runs in interactive mode by default; use -p/--prompt for non-interactive.\n\nOptions:\n  -d, --debug                     Run in debug mode (open debug console with F12)  [boolean] [default: false]\n  -m, --model                     Model  [string]\n  -p, --prompt                    Run in non-interactive (headless) mode with the given prompt. Appended to input on stdin (if any).  [string]\n  -i, --prompt-interactive        Execute the provided prompt and continue in interactive mode  [string]\n      --skip-trust                Trust the current workspace for this session.  [boolean] [default: false]\n  -w, --worktree                  Start Gemini in a new git worktree. If no name is provided, one is generated automatically.  [string]\n  -s, --sandbox                   Run in sandbox?  [boolean]\n  -y, --yolo                      Automatically accept all actions (aka YOLO mode, see https://www.youtube.com/watch?v=xvFZjo5PgG0 for more details)?  [boolean] [default: false]\n      --approval-mode             Set the approval mode: default (prompt for approval), auto_edit (auto-approve edit tools), yolo (auto-approve all tools), plan (read-only mode)  [string] [choices: \"default\", \"auto_edit\", \"yolo\", \"plan\"]\n      --policy                    Additional policy files or directories to load (comma-separated or multiple --policy)  [array]\n      --admin-policy              Additional admin policy files or directories to load (comma-separated or multiple --admin-policy)  [array]\n      --acp                       Starts the agent in ACP mode  [boolean]\n      --experimental-acp          Starts the agent in ACP mode (deprecated, use --acp instead)  [boolean]\n      --allowed-mcp-server-names  Allowed MCP server names  [array]\n      --allowed-tools             [DEPRECATED: Use Policy Engine instead See https://geminicli.com/docs/core/policy-engine] Tools that are allowed to run without confirmation  [array]\n  -e, --extensions                A list of extensions to use. If not provided, all extensions are used.  [array]\n  -l, --list-extensions           List all available extensions and exit.  [boolean]\n  -r, --resume                    Resume a previous session. Use \"latest\" for most recent or index number (e.g. --resume 5)  [string]\n      --session-file              Load a session from a JSON file  [string]\n      --session-id                Start a new session with a manually provided UUID.  [string]\n      --list-sessions             List available sessions for the current project and exit.  [boolean]\n      --delete-session            Delete a session by index number (use --list-sessions to see available sessions).  [string]\n      --include-directories       Additional directories to include in the workspace (comma-separated or multiple --include-directories)  [array]\n      --screen-reader             Enable screen reader mode for accessibility.  [boolean]\n  -o, --output-format             The format of the CLI output.  [string] [choices: \"text\", \"json\", \"stream-json\"]\n      --raw-output                Disable sanitization of model output (e.g. allow ANSI escape sequences). WARNING: This can be a security risk if the model output is untrusted.  [boolean]\n      --accept-raw-output-risk    Suppress the security warning when using --raw-output.  [boolean]\n  -v, --version                   Show version number  [boolean]\n  -h, --help                      Show help  [boolean]\n"
+            }
+          ]
+        },
+        {
+          "id": "opencode",
+          "name": "opencode-linux-x64",
+          "version": "1.18.27",
+          "integrity": "sha512-hxoPQCv6z/iYh3f8ZlAhJQ0RgzfJZQNOM1ZLRkx7juiZBmtLQLgFtDRiFNhqOKlKgDWsg131fOEEWwsT778aWA==",
+          "status": "installed_smoke_passed",
+          "model_calls": 0,
+          "archive": {
+            "download_bytes": 60168253,
+            "unpacked_bytes": 184633610,
+            "files": 2
+          },
+          "install": {
+            "status": "ok",
+            "returncode": 0,
+            "output_bytes": 23,
+            "output_sha256": "da13ab9d025b19c91553bc7d4c450975d3e4e36dd7c5fef6f223f8008ba39547",
+            "output": "\nadded 1 package in 2s\n"
+          },
+          "lock_sha256": "a3624c7050c7137558a7b50cbabaf770bb6bccd31301fec1ef3076accdeca653",
+          "resolved_package_count": 2,
+          "entry_path": "/home/runner/work/neuromorph-agent-os/neuromorph-agent-os/runtime/cloud-harnesses/packages/opencode/node_modules/opencode-linux-x64/bin/opencode",
+          "entry_sha256": "bddf894e5c2bc3d8cf452bd6e5ab2273bbe4a37eeeb9aec848d3d7d20db1f256",
+          "smoke": [
+            {
+              "flag": "--version",
+              "status": "ok",
+              "returncode": 0,
+              "output_bytes": 8,
+              "output_sha256": "48edeb78398802dc67e215a817643611307042b0ba8ca0aa3c241e50eed2eef8",
+              "output": "1.18.27\n"
+            },
+            {
+              "flag": "--help",
+              "status": "ok",
+              "returncode": 0,
+              "output_bytes": 4285,
+              "output_sha256": "b594ad32674bf8008017157833ab87316170523ed23dbd10c37ae9931d2ba178",
+              "output": "⠀                                ▄     \n█▀▀█ █▀▀█ █▀▀█ █▀▀▄ █▀▀▀ █▀▀█ █▀▀█ █▀▀█\n█  █ █  █ █▀▀▀ █  █ █    █  █ █  █ █▀▀▀\n▀▀▀▀ █▀▀▀ ▀▀▀▀ ▀  ▀ ▀▀▀▀ ▀▀▀▀ ▀▀▀▀ ▀▀▀▀\n\nCommands:\n  opencode completion          generate shell completion script\n  opencode acp                 start ACP (Agent Client Protocol) server\n  opencode mcp                 manage MCP (Model Context Protocol) servers\n  opencode [project]           start opencode tui                                          [default]\n  opencode attach <url>        attach to a running opencode server\n  opencode run [message..]     run opencode with a message\n  opencode debug               debugging and troubleshooting tools\n  opencode providers           manage AI providers and credentials                   [aliases: auth]\n  opencode agent               manage agents\n  opencode upgrade [target]    upgrade opencode to the latest or a specific version\n  opencode uninstall           uninstall opencode and remove all related files\n  opencode serve               starts a headless opencode server\n  opencode web                 start opencode server and open web interface\n  opencode models [provider]   list all available models\n  opencode stats               show token usage and cost statistics\n  opencode export [sessionID]  export session data as JSON\n  opencode import <file>       import session data from JSON file or URL\n  opencode github              manage GitHub agent\n  opencode pr <number>         fetch and checkout a GitHub PR branch, then run opencode\n  opencode session             manage sessions\n  opencode plugin <module>     install plugin and update config                      [aliases: plug]\n  opencode db                  database tools\n\nPositionals:\n  project  path to start opencode in                                                        [string]\n\nOptions:\n  -h, --help          show help                                                            [boolean]\n  -v, --version       show version number                                                  [boolean]\n      --print-logs    print logs to stderr                                                 [boolean]\n      --log-level     log level                 [string] [choices: \"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]\n      --pure          run without external plugins                                         [boolean]\n      --port          port to listen on                                        [number] [default: 0]\n      --hostname      hostname to listen on                          [string] [default: \"127.0.0.1\"]\n      --mdns          enable mDNS service discovery (defaults hostname to 0.0.0.0)\n                                                                          [boolean] [default: false]\n      --mdns-domain   custom domain name for mDNS service (default: opencode.local)\n                                                                [string] [default: \"opencode.local\"]\n      --cors          additional domains to allow for CORS                     [array] [default: []]\n  -m, --model         model to use in the format of provider/model                          [string]\n  -c, --continue      continue the last session                                            [boolean]\n  -s, --session       session id to continue                                                [string]\n      --fork          fork the session when continuing (use with --continue or --session)  [boolean]\n      --prompt        prompt to use                                                         [string]\n      --agent         agent to use                                                          [string]\n      --auto          auto-approve permissions that are not explicitly denied (dangerous!)\n                                                                          [boolean] [default: false]\n      --mini          start the minimal interactive interface             [boolean] [default: false]\n      --no-replay     disable mini session history replay on resume and after resize       [boolean]\n      --replay-limit  cap visible mini replay to the newest N messages                      [number]\n"
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "root archives pinned; transitive dependencies resolved by npm at execution time",
+        "lockfile hash records resolution; does not retroactively establish a reviewed lock",
+        "isolated home/environment is not an OS sandbox or proof against malicious vendor code",
+        "help/version success is not authenticated model inference or scientific validation"
+      ],
+      "node_version": "v24.8.0"
+    },
+    "protocol": {
+      "task_id": "DSH-FREE-REVIEW-001",
+      "provider": "opencode_anonymous_free",
+      "model": "mimo-v2.5-free",
+      "endpoint": "https://opencode.ai/inference/openai/v1/chat/completions",
+      "live": false,
+      "upstream_requests": 0,
+      "harness_requests": 1,
+      "response_received": false,
+      "authentication_sent": false,
+      "automatic_retry": false,
+      "paid_fallback": false,
+      "status": "protocol_fixture_received",
+      "base_commit": "9b11d3a55d6072d9c516c0d485794074b91a9d36",
+      "profile_sha256": "4dafcfea073ab1c939dcfd59fd0811ea69542ad88567ee36353837edaae29461",
+      "tools": [],
+      "installation_receipt_sha256": "cc8aa432d08f231c9933906621ceb24990acaf8ccff04aebcab32cca3e608ed1",
+      "execution_scope": "finite_cloud_process_not_continuous_native_chat_bridge",
+      "input_sha256": "2508023ded3eaa80a5001d33c9aa712b60af932644c3ff6edfd775a32195f3b1",
+      "output_text": "Protocol fixture: DSH-FREE-REVIEW-001. No remote model was called.",
+      "output_sha256": "19d6bae1e5fa520f714e02013278c3189dd370136ea024660f471ecce38cbf08",
+      "harness_process": {
+        "status": "exited",
+        "returncode": 0
+      },
+      "elapsed_seconds": 0.803,
+      "model_claims_unverified": true,
+      "harness_log_sha256": "6e14199f1138d7849f1099110fe45d3fef102d333d8a9a2f79b1ee7a3d3ebac5"
+    }
+  },
+  "colab": {
+    "status": "installation_and_protocol_passed_live_denied",
+    "source_commit": "73d5819a0d72efa94d6d1f611710e801eb24bd48",
+    "observed_at": "2026-09-26T04:56:00Z",
+    "evidence": "visible_saved_notebook_output; private notebook address retained in local dashboard",
+    "installation": {
+      "status": "completed",
+      "exit_code": 0,
+      "packages": [
+        {
+          "id": "dsh",
+          "version": "0.1.7-rc.2",
+          "status": "installed_smoke_passed"
+        },
+        {
+          "id": "qwen",
+          "version": "0.23.0",
+          "status": "installed_smoke_passed"
+        },
+        {
+          "id": "gemini",
+          "version": "0.58.0",
+          "status": "installed_smoke_passed"
+        },
+        {
+          "id": "opencode",
+          "version": "1.18.27",
+          "status": "installed_smoke_passed"
+        }
+      ],
+      "receipt_sha256": "ecce0c63fe0d093bf999f0f5a188265a7ab7ae7955523f227921d06402f72e5f"
+    },
+    "protocol": {
+      "status": "protocol_fixture_received",
+      "harness_requests": 1,
+      "upstream_requests": 0,
+      "response_received": false,
+      "exit_code": 0,
+      "profile_sha256": "a19b649b80ff8e9f600cfb29b6227d1b4bb197ee9d6038faffbc95b5d0e0a8f5",
+      "elapsed_seconds": 1.418,
+      "harness_log_sha256": "4d254b16112375988855dcaa40ac564a0115e18efd01617a0a8cb02a53069775"
+    },
+    "live": {
+      "task_id": "DSH-FREE-REVIEW-001",
+      "provider": "opencode_anonymous_free",
+      "model": "mimo-v2.5-free",
+      "endpoint": "https://opencode.ai/inference/openai/v1/chat/completions",
+      "live": true,
+      "upstream_requests": 1,
+      "harness_requests": 1,
+      "response_received": false,
+      "authentication_sent": false,
+      "automatic_retry": false,
+      "paid_fallback": false,
+      "status": "remote_http_403",
+      "base_commit": "9b11d3a55d6072d9c516c0d485794074b91a9d36",
+      "profile_sha256": "60a80bd6912cb517e9e4c5e5c6569fd8c26e751e89a883c052b4bef8dd5ec10b",
+      "tools": [],
+      "installation_receipt_sha256": "ecce0c63fe0d093bf999f0f5a188265a7ab7ae7955523f227921d06402f72e5f",
+      "execution_scope": "finite_cloud_process_not_continuous_native_chat_bridge",
+      "input_sha256": "2508023ded3eaa80a5001d33c9aa712b60af932644c3ff6edfd775a32195f3b1",
+      "harness_process": {
+        "status": "exited",
+        "returncode": 1
+      },
+      "elapsed_seconds": 1.911,
+      "model_claims_unverified": true,
+      "harness_log_sha256": "607387379c59ae46cb5949adb76128d6a94e58f8ef42a61e6f89dc8ca23de89f"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-09-26",
+  "node_minimum": "22.19.0",
+  "platform": "linux-x64",
+  "model_calls_allowed": false,
+  "packages": [
+    {
+      "id": "dsh",
+      "name": "@deepseek-ai/dsh",
+      "version": "0.1.7-rc.2",
+      "tarball": "https://registry.npmjs.org/@deepseek-ai/dsh/-/dsh-0.1.7-rc.2.tgz",
+      "integrity": "sha512-SQFhriLvza8GnFApnC5/32AgpcyKxrWnYXhvwDOLJdgWpkCX2EexyR9c8kCkMITJXnFLEN3Qb2CEh0W36vkLyw==",
+      "entry": "lib/bin.js",
+      "kind": "node",
+      "free_inference": "not_enabled; CLI installation is free; provider billing is separate"
+    },
+    {
+      "id": "qwen",
+      "name": "@qwen-code/qwen-code",
+      "version": "0.23.0",
+      "tarball": "https://registry.npmjs.org/@qwen-code/qwen-code/-/qwen-code-0.23.0.tgz",
+      "integrity": "sha512-foznQtmptzM7DtYGPALZVtwUBVTsANYc6ytWOfGisXB7FgpzNmYT6xIHzh+26RJD9Kl+qzRW0gFp/AkqRouhnQ==",
+      "entry": "cli-entry.js",
+      "kind": "node",
+      "free_inference": "not_enabled; CLI installation is free; provider billing is separate"
+    },
+    {
+      "id": "gemini",
+      "name": "@google/gemini-cli",
+      "version": "0.58.0",
+      "tarball": "https://registry.npmjs.org/@google/gemini-cli/-/gemini-cli-0.58.0.tgz",
+      "integrity": "sha512-++LtUYMcLE8dVxMcuwv6kIp8+h6z+std/7iVE+vSunkrwNDaWMFkWw/psv2RSySWjr2A1SsEEIGCK0xULWY2sA==",
+      "entry": "bundle/gemini.js",
+      "kind": "node",
+      "free_inference": "not_enabled; individual Google auth has a free quota; no auth performed"
+    },
+    {
+      "id": "opencode",
+      "name": "opencode-linux-x64",
+      "version": "1.18.27",
+      "tarball": "https://registry.npmjs.org/opencode-linux-x64/-/opencode-linux-x64-1.18.27.tgz",
+      "integrity": "sha512-hxoPQCv6z/iYh3f8ZlAhJQ0RgzfJZQNOM1ZLRkx7juiZBmtLQLgFtDRiFNhqOKlKgDWsg131fOEEWwsT778aWA==",
+      "entry": "bin/opencode",
+      "kind": "native",
+      "free_inference": "not_enabled; official Console documents unauthenticated free chat models"
+    }
+  ]
+}

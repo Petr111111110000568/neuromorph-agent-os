@@ -1,0 +1,69 @@
+name: Cloud harness installation and DSH protocol
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/bootstrap_cloud_harnesses.py'
+      - 'scripts/dsh_profile.py'
+      - 'scripts/run_dsh_free_review.py'
+      - 'config/cloud_harnesses.json'
+      - 'workbench/harnesses/free_gateway.py'
+      - '.github/workflows/cloud-harnesses.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/bootstrap_cloud_harnesses.py'
+      - 'scripts/dsh_profile.py'
+      - 'scripts/run_dsh_free_review.py'
+      - 'config/cloud_harnesses.json'
+      - 'workbench/harnesses/free_gateway.py'
+      - '.github/workflows/cloud-harnesses.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloud-harnesses-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  install-and-protocol:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24.8.0'
+      - name: Install pinned optional CLIs and verify their entry points
+        run: env -i PATH="$PATH" LANG=C.UTF-8 GITHUB_ACTIONS=true python3 scripts/bootstrap_cloud_harnesses.py --execute --output-dir runtime/cloud-harnesses
+      - name: Run actual DSH against a one-shot loopback fixture
+        if: always()
+        run: env -i PATH="$PATH" LANG=C.UTF-8 GITHUB_ACTIONS=true python3 scripts/run_dsh_free_review.py --execute
+      - name: Print public evidence
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json, pathlib
+          for name in ('runtime/cloud-harnesses/receipt.json', 'runtime/dsh-fixture/receipt.json'):
+              p = pathlib.Path(name)
+              if p.is_file():
+                  print('CLOUD_HARNESS_RECEIPT=' + json.dumps({'path': name, 'receipt': json.loads(p.read_text())}))
+          p = pathlib.Path('runtime/dsh-fixture/harness.log')
+          if p.is_file():
+              print('DSH_PROTOCOL_LOG=' + p.read_text()[-16000:])
+          PY
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: cloud-harnesses-${{ github.run_id }}
+          path: |
+            runtime/cloud-harnesses/receipt.json
+            runtime/cloud-harnesses/packages/*/package-lock.json
+            runtime/dsh-fixture/receipt.json
+            runtime/dsh-fixture/harness.log
+          retention-days: 7
+          if-no-files-found: warn
