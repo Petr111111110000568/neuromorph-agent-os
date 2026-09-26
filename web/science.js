@@ -73,7 +73,7 @@ if (typeof document !== 'undefined') (() => {
       if (response.status === 401) { session = null; $('login-link').hidden = false; $('session-label').textContent = 'Требуется вход'; buttons(); }
       let result; try { result = await response.json(); } catch { throw new Error('Не удалось прочитать ответ сервера. Сохранение, если оно отправлено, требует подтверждения повтором.'); }
       if (!response.ok) {
-        const error = new Error(response.status === 401 ? 'Сеанс завершён. Войдите, затем обновите страницу данных кнопкой «Обновить». Черновик можно скачать.' : response.status === 403 ? 'Сервер отклонил доступ. Обновите сеанс перед повтором.' : asText(result?.error?.message || result?.error || 'Запрос отклонён сервером.'));
+        const error = new Error(response.status === 401 ? 'Сеанс завершён. Откройте вход в новой вкладке, затем вернитесь сюда и нажмите «Обновить». Не перезагружайте эту вкладку: в ней хранится черновик. Его можно скачать.' : response.status === 403 ? 'Сервер отклонил доступ. Обновите сеанс перед повтором.' : asText(result?.error?.message || result?.error || 'Запрос отклонён сервером.'));
         error.status = response.status; throw error;
       }
       return result;
