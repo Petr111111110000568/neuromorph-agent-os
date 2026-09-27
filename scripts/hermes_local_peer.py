@@ -502,6 +502,14 @@ def run_sdk(prompt, base_url, home, factory, *, token):
         # model.streaming=false to this per-session flag. request_overrides
         # alone does NOT select non-streaming in turn_api_call._should_stream.
         agent._disable_streaming = True
+        # The local gateway accepts the bounded OpenAI text schema only.  Hermes
+        # may infer a Qwen reasoning extension from the model name and add a
+        # top-level ``reasoning`` field; the local llama runner already receives
+        # the explicit /no_think directive in the harness prompt, so forwarding
+        # that provider-specific metadata would only make the request invalid.
+        supports_reasoning = getattr(agent, "_supports_reasoning_extra_body", None)
+        if callable(supports_reasoning):
+            agent._supports_reasoning_extra_body = lambda: False
         api_errors = []
         api_exception_chains = []
         def observe_call(original):
@@ -673,3 +681,4 @@ def main(argv=None):
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
