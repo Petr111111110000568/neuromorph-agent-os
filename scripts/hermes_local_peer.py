@@ -271,7 +271,7 @@ def verify_source(source, env):
     return manifest
 
 
-def audit_guard(port, *, home, source, output, read_roots=(), diagnostics=None):
+def audit_guard(port, *, home, source, output, read_roots=(), diagnostics=None, path_scopes=None):
     """Restricted Python I/O only; native extensions are not OS-sandboxed."""
     home, source, output = (Path(p).resolve() for p in (home, source, output))
     roots = (home, source, *(Path(p).resolve() for p in read_roots))
@@ -339,6 +339,16 @@ def audit_guard(port, *, home, source, output, read_roots=(), diagnostics=None):
               and not (path.suffix.lower() in trusted_dependency_suffixes
                        and any(part.lower() in {"site-packages", "dist-packages"}
                                for part in resolved.parts))):
+            if path_scopes is not None:
+                text = str(resolved).replace("\\", "/").lower()
+                scope = ("etc" if text.startswith("/etc/") else
+                         "usr" if text.startswith("/usr/") else
+                         "opt" if text.startswith("/opt/") else
+                         "home_cache" if "/.cache/" in text else
+                         "tmp" if text.startswith("/tmp/") else
+                         "proc" if text.startswith("/proc/") else
+                         "dev" if text.startswith("/dev/") else "other")
+                path_scopes[scope] = min(path_scopes.get(scope, 0) + 1, 1000)
             raise PermissionError("external_file_read_blocked")
 
     def guard(event, args):
@@ -580,8 +590,10 @@ def execute(source_root, base_url, prompt_file, output_file, home_dir, stop_file
     sys.path[:] = [str(source), *safe_paths]
     sys.dont_write_bytecode = True
     audit_denials = {}
+    audit_path_scopes = {}
     sys.addaudithook(audit_guard(port, home=home, source=source, output=output,
-                                read_roots=(*prefixes, *import_roots), diagnostics=audit_denials))
+                                read_roots=(*prefixes, *import_roots), diagnostics=audit_denials,
+                                path_scopes=audit_path_scopes))
     done = threading.Event()
     monitor = threading.Thread(target=_watchdog, args=(done, stop), daemon=True)
     monitor.start()
@@ -602,6 +614,7 @@ def execute(source_root, base_url, prompt_file, output_file, home_dir, stop_file
     result["sdk_log_bytes"] = sink.count
     result["audit_denials"] = [{"event": event, "reason": reason, "count": count}
                               for (event, reason), count in sorted(audit_denials.items())]
+    result["audit_path_scopes"] = dict(sorted(audit_path_scopes.items()))
     result["source_manifest_sha256"] = MANIFEST_SHA256
     with output.open("x", encoding="utf-8") as target:
         target.write(json.dumps(result, ensure_ascii=False) + "\n")
