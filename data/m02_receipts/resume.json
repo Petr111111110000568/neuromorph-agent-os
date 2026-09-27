@@ -1,0 +1,513 @@
+{
+  "additional_spend_usd": 0,
+  "identity": {
+    "branch": "main",
+    "commit": "ceae671452365a84dcff2787b4ac66d7372a4f13",
+    "repository": "Petr111111110000568/neuromorph-agent-os",
+    "run_id": "36277674850",
+    "workflow_id": ".github/workflows/m02-checkpoint.yml"
+  },
+  "initial_state": {
+    "budget": {
+      "actual_attempts": 1,
+      "max_reserved_attempts": 8,
+      "reserved_attempts": 4
+    },
+    "counts": {
+      "duplicate_suppression": 0,
+      "promotions": 1,
+      "stale_rejections": 0
+    },
+    "jobs": [
+      {
+        "attempts": 0,
+        "id": "job_31194b0eeaac43eba24884ba6d5e313e",
+        "max_attempts": 2,
+        "status": "queued"
+      },
+      {
+        "attempts": 1,
+        "id": "job_f3f9d30563f44590b23a4e8857870dea",
+        "max_attempts": 2,
+        "status": "completed"
+      }
+    ],
+    "reviews": [
+      {
+        "decision": "accepted",
+        "handoff_id": "m02-alpha-r1",
+        "note": "Synthetic fixture matches fixed expected result.",
+        "result_sha256": "1e1feab5a8a0d70e4d3a444f204d449031d63f6a8511ea684a0ab174e633ac0b",
+        "revision": 1,
+        "task_id": "m02-alpha-evidence"
+      }
+    ],
+    "tasks": [
+      {
+        "current_result_sha256": "1e1feab5a8a0d70e4d3a444f204d449031d63f6a8511ea684a0ab174e633ac0b",
+        "handoff_id": "m02-alpha-r1",
+        "input_sha256": "7b4253eba277e3fe27d2f36805d1e1e438ab272cc5c8fa2c9ec7b7045e02f700",
+        "parent_handoff": null,
+        "project_id": "m02-alpha",
+        "queue_job_id": "job_f3f9d30563f44590b23a4e8857870dea",
+        "revision": 1,
+        "status": "accepted",
+        "task_id": "m02-alpha-evidence"
+      },
+      {
+        "current_result_sha256": null,
+        "handoff_id": "m02-beta-r1",
+        "input_sha256": "fb8368121fb7d5fb65237269dc6d83db057dfaa5a317f6491c1b129bd7cdb03a",
+        "parent_handoff": null,
+        "project_id": "m02-beta",
+        "queue_job_id": "job_31194b0eeaac43eba24884ba6d5e313e",
+        "revision": 1,
+        "status": "dispatched",
+        "task_id": "m02-beta-evidence"
+      }
+    ],
+    "transitions": [
+      {
+        "details": {
+          "channel_available": true,
+          "dependencies": [],
+          "reason": "dependencies_accepted_channel_available_budget_reserved",
+          "reserved_attempts": 2,
+          "total_reserved_attempts": 2
+        },
+        "event_id": "m02-event:6ec96cccfccae1505efa7f964a1bcf3ecd55bb2c89182313fecc4e5ff8b745f8",
+        "handoff_id": "m02-alpha-r1",
+        "kind": "reserved",
+        "project_id": "m02-alpha",
+        "revision": 1,
+        "sequence": 1,
+        "task_id": "m02-alpha-evidence"
+      },
+      {
+        "details": {
+          "queue_job_id": "job_f3f9d30563f44590b23a4e8857870dea",
+          "recovered": false
+        },
+        "event_id": "m02-event:dd73bd9e590e20148754b542e846f1c106ded13a1998d125e3c969ac2c69dc6d",
+        "handoff_id": "m02-alpha-r1",
+        "kind": "queue_bound",
+        "project_id": "m02-alpha",
+        "revision": 1,
+        "sequence": 2,
+        "task_id": "m02-alpha-evidence"
+      },
+      {
+        "details": {
+          "queue_job_id": "job_f3f9d30563f44590b23a4e8857870dea",
+          "result_sha256": "1e1feab5a8a0d70e4d3a444f204d449031d63f6a8511ea684a0ab174e633ac0b"
+        },
+        "event_id": "m02-event:12283c5082dae1a113411062f50b663ead3db0f214f50efcef54717ba4e39374",
+        "handoff_id": "m02-alpha-r1",
+        "kind": "promoted",
+        "project_id": "m02-alpha",
+        "revision": 1,
+        "sequence": 3,
+        "task_id": "m02-alpha-evidence"
+      },
+      {
+        "details": {
+          "channel_available": true,
+          "dependencies": [],
+          "reason": "dependencies_accepted_channel_available_budget_reserved",
+          "reserved_attempts": 2,
+          "total_reserved_attempts": 4
+        },
+        "event_id": "m02-event:c32c0fecb483af51defb157f7b09f79b7f28017a46e2c56abfdab4ed24590186",
+        "handoff_id": "m02-beta-r1",
+        "kind": "reserved",
+        "project_id": "m02-beta",
+        "revision": 1,
+        "sequence": 4,
+        "task_id": "m02-beta-evidence"
+      },
+      {
+        "details": {
+          "queue_job_id": "job_31194b0eeaac43eba24884ba6d5e313e",
+          "recovered": false
+        },
+        "event_id": "m02-event:1c640ba77d48e3cb989e0b09c4432360e2d5891bcf28bea8b28b8b2be96176a1",
+        "handoff_id": "m02-beta-r1",
+        "kind": "queue_bound",
+        "project_id": "m02-beta",
+        "revision": 1,
+        "sequence": 5,
+        "task_id": "m02-beta-evidence"
+      },
+      {
+        "details": {
+          "decision": "accepted",
+          "note": "Synthetic fixture matches fixed expected result.",
+          "result_sha256": "1e1feab5a8a0d70e4d3a444f204d449031d63f6a8511ea684a0ab174e633ac0b"
+        },
+        "event_id": "m02-event:9d7c53f6f5569aa8d90cb8c6e13dd044b0390328a1b01a2bb06fbabc8d5f849a",
+        "handoff_id": "m02-alpha-r1",
+        "kind": "review",
+        "project_id": "m02-alpha",
+        "revision": 1,
+        "sequence": 6,
+        "task_id": "m02-alpha-evidence"
+      }
+    ]
+  },
+  "input_sha256": "4fbeb1c15a9782601e08be59facdae5d8c103d8ef74ffa954af979ba9da25360",
+  "limitations": [
+    "Synthetic fixed fixtures, not model research or scientific validation.",
+    "One local coordinator, not a shared SQLite LAN database.",
+    "Queue delivery is at-least-once; no exactly-once remote effect claim.",
+    "Immutable local receipts; no external mutable publication pointer.",
+    "Artifact retention is finite; missing checkpoint never resets budget."
+  ],
+  "model_calls": 0,
+  "phase": "resume",
+  "previous_manifest_sha256": "e6d0eabc589a78826d38fd36daf389c227041820179ab2a2b2f7bd949bd8e757",
+  "previous_run_id": "36277624672",
+  "restored_file_hashes": {
+    "control.sqlite": {
+      "bytes": 110592,
+      "sha256": "257e9e01a797e2cfabd4d67f7d39c81771faa4460a51fca260e459f4d906f06f"
+    },
+    "queue.sqlite": {
+      "bytes": 36864,
+      "sha256": "37305399dfa3533875c73b8e515bac4dfc0f96736d1360cda248fb820d8e41ad"
+    },
+    "seed-receipt.json": {
+      "bytes": 4288,
+      "sha256": "142b0f99888fa3b6f8d3746534fffd74542acb284a6952ccc9ee04d8ed9e5b02"
+    }
+  },
+  "schema_version": 1,
+  "state": {
+    "budget": {
+      "actual_attempts": 3,
+      "max_reserved_attempts": 8,
+      "reserved_attempts": 6
+    },
+    "counts": {
+      "duplicate_suppression": 0,
+      "promotions": 3,
+      "stale_rejections": 0
+    },
+    "jobs": [
+      {
+        "attempts": 1,
+        "id": "job_31194b0eeaac43eba24884ba6d5e313e",
+        "max_attempts": 2,
+        "status": "completed"
+      },
+      {
+        "attempts": 1,
+        "id": "job_84048a4f0c7e4679a59275a9a843b84b",
+        "max_attempts": 2,
+        "status": "completed"
+      },
+      {
+        "attempts": 1,
+        "id": "job_f3f9d30563f44590b23a4e8857870dea",
+        "max_attempts": 2,
+        "status": "completed"
+      }
+    ],
+    "reviews": [
+      {
+        "decision": "accepted",
+        "handoff_id": "m02-alpha-r1",
+        "note": "Synthetic fixture matches fixed expected result.",
+        "result_sha256": "1e1feab5a8a0d70e4d3a444f204d449031d63f6a8511ea684a0ab174e633ac0b",
+        "revision": 1,
+        "task_id": "m02-alpha-evidence"
+      },
+      {
+        "decision": "rejected",
+        "handoff_id": "m02-beta-r1",
+        "note": "Synthetic review requests one bounded revision; no scientific acceptance implied.",
+        "result_sha256": "54d57ec8cc579b9a493da16cae5c8bf5e872493e1677df40838444d0d3b41d88",
+        "revision": 1,
+        "task_id": "m02-beta-evidence"
+      },
+      {
+        "decision": "accepted",
+        "handoff_id": "rework:34862242d46c79184e659057fdedec477672e1aec68d2308f2368cf4cfdaee78",
+        "note": "Fixed synthetic rework completed and lineage retained.",
+        "result_sha256": "f32763791f0b95cd876afff9733c4cf3fd0a7a2138ca15560797739c9f367ef7",
+        "revision": 2,
+        "task_id": "m02-beta-evidence"
+      }
+    ],
+    "tasks": [
+      {
+        "current_result_sha256": "1e1feab5a8a0d70e4d3a444f204d449031d63f6a8511ea684a0ab174e633ac0b",
+        "handoff_id": "m02-alpha-r1",
+        "input_sha256": "7b4253eba277e3fe27d2f36805d1e1e438ab272cc5c8fa2c9ec7b7045e02f700",
+        "parent_handoff": null,
+        "project_id": "m02-alpha",
+        "queue_job_id": "job_f3f9d30563f44590b23a4e8857870dea",
+        "revision": 1,
+        "status": "accepted",
+        "task_id": "m02-alpha-evidence"
+      },
+      {
+        "current_result_sha256": "f32763791f0b95cd876afff9733c4cf3fd0a7a2138ca15560797739c9f367ef7",
+        "handoff_id": "rework:34862242d46c79184e659057fdedec477672e1aec68d2308f2368cf4cfdaee78",
+        "input_sha256": "80f4faaccd8225a8ecba413fa93357e091d29a7e8079ff76be5eb485d219c013",
+        "parent_handoff": "m02-beta-r1",
+        "project_id": "m02-beta",
+        "queue_job_id": "job_84048a4f0c7e4679a59275a9a843b84b",
+        "revision": 2,
+        "status": "accepted",
+        "task_id": "m02-beta-evidence"
+      }
+    ],
+    "transitions": [
+      {
+        "details": {
+          "channel_available": true,
+          "dependencies": [],
+          "reason": "dependencies_accepted_channel_available_budget_reserved",
+          "reserved_attempts": 2,
+          "total_reserved_attempts": 2
+        },
+        "event_id": "m02-event:6ec96cccfccae1505efa7f964a1bcf3ecd55bb2c89182313fecc4e5ff8b745f8",
+        "handoff_id": "m02-alpha-r1",
+        "kind": "reserved",
+        "project_id": "m02-alpha",
+        "revision": 1,
+        "sequence": 1,
+        "task_id": "m02-alpha-evidence"
+      },
+      {
+        "details": {
+          "queue_job_id": "job_f3f9d30563f44590b23a4e8857870dea",
+          "recovered": false
+        },
+        "event_id": "m02-event:dd73bd9e590e20148754b542e846f1c106ded13a1998d125e3c969ac2c69dc6d",
+        "handoff_id": "m02-alpha-r1",
+        "kind": "queue_bound",
+        "project_id": "m02-alpha",
+        "revision": 1,
+        "sequence": 2,
+        "task_id": "m02-alpha-evidence"
+      },
+      {
+        "details": {
+          "queue_job_id": "job_f3f9d30563f44590b23a4e8857870dea",
+          "result_sha256": "1e1feab5a8a0d70e4d3a444f204d449031d63f6a8511ea684a0ab174e633ac0b"
+        },
+        "event_id": "m02-event:12283c5082dae1a113411062f50b663ead3db0f214f50efcef54717ba4e39374",
+        "handoff_id": "m02-alpha-r1",
+        "kind": "promoted",
+        "project_id": "m02-alpha",
+        "revision": 1,
+        "sequence": 3,
+        "task_id": "m02-alpha-evidence"
+      },
+      {
+        "details": {
+          "channel_available": true,
+          "dependencies": [],
+          "reason": "dependencies_accepted_channel_available_budget_reserved",
+          "reserved_attempts": 2,
+          "total_reserved_attempts": 4
+        },
+        "event_id": "m02-event:c32c0fecb483af51defb157f7b09f79b7f28017a46e2c56abfdab4ed24590186",
+        "handoff_id": "m02-beta-r1",
+        "kind": "reserved",
+        "project_id": "m02-beta",
+        "revision": 1,
+        "sequence": 4,
+        "task_id": "m02-beta-evidence"
+      },
+      {
+        "details": {
+          "queue_job_id": "job_31194b0eeaac43eba24884ba6d5e313e",
+          "recovered": false
+        },
+        "event_id": "m02-event:1c640ba77d48e3cb989e0b09c4432360e2d5891bcf28bea8b28b8b2be96176a1",
+        "handoff_id": "m02-beta-r1",
+        "kind": "queue_bound",
+        "project_id": "m02-beta",
+        "revision": 1,
+        "sequence": 5,
+        "task_id": "m02-beta-evidence"
+      },
+      {
+        "details": {
+          "decision": "accepted",
+          "note": "Synthetic fixture matches fixed expected result.",
+          "result_sha256": "1e1feab5a8a0d70e4d3a444f204d449031d63f6a8511ea684a0ab174e633ac0b"
+        },
+        "event_id": "m02-event:9d7c53f6f5569aa8d90cb8c6e13dd044b0390328a1b01a2bb06fbabc8d5f849a",
+        "handoff_id": "m02-alpha-r1",
+        "kind": "review",
+        "project_id": "m02-alpha",
+        "revision": 1,
+        "sequence": 6,
+        "task_id": "m02-alpha-evidence"
+      },
+      {
+        "details": {
+          "queue_job_id": "job_31194b0eeaac43eba24884ba6d5e313e",
+          "result_sha256": "54d57ec8cc579b9a493da16cae5c8bf5e872493e1677df40838444d0d3b41d88"
+        },
+        "event_id": "m02-event:b83cdecf267f95837c89e5345037fb07a866b7ce3ff6615fbd2201de75c3deaf",
+        "handoff_id": "m02-beta-r1",
+        "kind": "promoted",
+        "project_id": "m02-beta",
+        "revision": 1,
+        "sequence": 7,
+        "task_id": "m02-beta-evidence"
+      },
+      {
+        "details": {
+          "decision": "rejected",
+          "note": "Synthetic review requests one bounded revision; no scientific acceptance implied.",
+          "result_sha256": "54d57ec8cc579b9a493da16cae5c8bf5e872493e1677df40838444d0d3b41d88"
+        },
+        "event_id": "m02-event:4c5018c61ac30734c499bfba476bf56e178df07b7301bc8d88630a14782574e9",
+        "handoff_id": "m02-beta-r1",
+        "kind": "review",
+        "project_id": "m02-beta",
+        "revision": 1,
+        "sequence": 8,
+        "task_id": "m02-beta-evidence"
+      },
+      {
+        "details": {
+          "reason": "Synthetic review requests one bounded revision; no scientific acceptance implied."
+        },
+        "event_id": "m02-event:d4810c155ac04157398c001de6351e030e4e441fe0a080fc03eda91aec663ea6",
+        "handoff_id": "m02-beta-r1",
+        "kind": "cancel_intent",
+        "project_id": "m02-beta",
+        "revision": 1,
+        "sequence": 9,
+        "task_id": "m02-beta-evidence"
+      },
+      {
+        "details": {
+          "input_sha256": "80f4faaccd8225a8ecba413fa93357e091d29a7e8079ff76be5eb485d219c013",
+          "parent_handoff": "m02-beta-r1",
+          "reason": "Synthetic review requests one bounded revision; no scientific acceptance implied."
+        },
+        "event_id": "m02-event:13b5f7ba41d35aa762740c539a4923a108d3a7f445cee51b9fb03f0f3adec949",
+        "handoff_id": "rework:34862242d46c79184e659057fdedec477672e1aec68d2308f2368cf4cfdaee78",
+        "kind": "revised",
+        "project_id": "m02-beta",
+        "revision": 2,
+        "sequence": 10,
+        "task_id": "m02-beta-evidence"
+      },
+      {
+        "details": {
+          "queue_job_id": "job_31194b0eeaac43eba24884ba6d5e313e"
+        },
+        "event_id": "m02-event:63b1e2fe36f56e6db83696b06d87881876f0546bc5b35cad68d38077d7f2d494",
+        "handoff_id": "m02-beta-r1",
+        "kind": "cancellation_confirmed",
+        "project_id": "m02-beta",
+        "revision": 1,
+        "sequence": 11,
+        "task_id": "m02-beta-evidence"
+      },
+      {
+        "details": {
+          "channel_available": true,
+          "dependencies": [],
+          "reason": "dependencies_accepted_channel_available_budget_reserved",
+          "reserved_attempts": 2,
+          "total_reserved_attempts": 6
+        },
+        "event_id": "m02-event:1f147dd12e187f170577e58ed5a310d4e4f02fca7f169bb9402e70fbb6464482",
+        "handoff_id": "rework:34862242d46c79184e659057fdedec477672e1aec68d2308f2368cf4cfdaee78",
+        "kind": "reserved",
+        "project_id": "m02-beta",
+        "revision": 2,
+        "sequence": 12,
+        "task_id": "m02-beta-evidence"
+      },
+      {
+        "details": {
+          "queue_job_id": "job_84048a4f0c7e4679a59275a9a843b84b",
+          "recovered": false
+        },
+        "event_id": "m02-event:8e3ea164fff4d3700762ab6d178c20e24e0d0c9db52cd482db05ff7e4ee7e4ee",
+        "handoff_id": "rework:34862242d46c79184e659057fdedec477672e1aec68d2308f2368cf4cfdaee78",
+        "kind": "queue_bound",
+        "project_id": "m02-beta",
+        "revision": 2,
+        "sequence": 13,
+        "task_id": "m02-beta-evidence"
+      },
+      {
+        "details": {
+          "queue_job_id": "job_84048a4f0c7e4679a59275a9a843b84b",
+          "result_sha256": "f32763791f0b95cd876afff9733c4cf3fd0a7a2138ca15560797739c9f367ef7"
+        },
+        "event_id": "m02-event:36cec19bd62bda578497f9e53cc6542fdff2a360f2a6539d1ebc6545098f3906",
+        "handoff_id": "rework:34862242d46c79184e659057fdedec477672e1aec68d2308f2368cf4cfdaee78",
+        "kind": "promoted",
+        "project_id": "m02-beta",
+        "revision": 2,
+        "sequence": 14,
+        "task_id": "m02-beta-evidence"
+      },
+      {
+        "details": {
+          "decision": "accepted",
+          "note": "Fixed synthetic rework completed and lineage retained.",
+          "result_sha256": "f32763791f0b95cd876afff9733c4cf3fd0a7a2138ca15560797739c9f367ef7"
+        },
+        "event_id": "m02-event:9dcb9f4cc01eeca94cadc95213761a9e7ec48f34bd583e057043f71816cdb1a9",
+        "handoff_id": "rework:34862242d46c79184e659057fdedec477672e1aec68d2308f2368cf4cfdaee78",
+        "kind": "review",
+        "project_id": "m02-beta",
+        "revision": 2,
+        "sequence": 15,
+        "task_id": "m02-beta-evidence"
+      },
+      {
+        "details": {
+          "publication_event_id": "m02-publication:367dd3b93eea148513858385c78cbb6454dc079ab45b3fb5adca72ba86205ca1",
+          "result_sha256": "54d57ec8cc579b9a493da16cae5c8bf5e872493e1677df40838444d0d3b41d88"
+        },
+        "event_id": "m02-event:ffceec59c7bc30657b3baff2a14fa07d3d3ae2e176e9f9b96478d8a9250595de",
+        "handoff_id": "m02-beta-r1",
+        "kind": "outbox_superseded",
+        "project_id": "m02-beta",
+        "revision": 1,
+        "sequence": 16,
+        "task_id": "m02-beta-evidence"
+      },
+      {
+        "details": {
+          "publication_event_id": "m02-publication:58f7827b45b4eecd4dd68e8f35dccc1b9f4aedce1ae6c8c840d88f9526024b20",
+          "result_sha256": "f32763791f0b95cd876afff9733c4cf3fd0a7a2138ca15560797739c9f367ef7"
+        },
+        "event_id": "m02-event:7eb56a7beaefb0bedce49ffb4aeb06afb44a29b9a9522fe618ee920474769d54",
+        "handoff_id": "rework:34862242d46c79184e659057fdedec477672e1aec68d2308f2368cf4cfdaee78",
+        "kind": "outbox_delivered",
+        "project_id": "m02-beta",
+        "revision": 2,
+        "sequence": 17,
+        "task_id": "m02-beta-evidence"
+      },
+      {
+        "details": {
+          "publication_event_id": "m02-publication:69249965b8565a6f4010d8bef866b829c9599c7e4c2da959596abaedaa4cbe6d",
+          "result_sha256": "1e1feab5a8a0d70e4d3a444f204d449031d63f6a8511ea684a0ab174e633ac0b"
+        },
+        "event_id": "m02-event:5c2e5d0da4727b64b33cd30fda8ee00069fe51a7d51ef9c3e499a5c6e742be16",
+        "handoff_id": "m02-alpha-r1",
+        "kind": "outbox_delivered",
+        "project_id": "m02-alpha",
+        "revision": 1,
+        "sequence": 18,
+        "task_id": "m02-alpha-evidence"
+      }
+    ]
+  }
+}

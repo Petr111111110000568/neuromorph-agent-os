@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#153b3d">
+  <meta name="description" content="Подтверждённые исторические результаты облачного эксперимента M02 и их сохранение в проекты NeuroMorf.">
+  <title>Облачные результаты · NeuroMorf</title>
+  <link rel="stylesheet" href="/studio.css">
+  <link rel="stylesheet" href="/runs.css">
+  <script src="/runs.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">К содержимому</a>
+  <header class="app-header">
+    <a class="brand" href="/studio.html"><span class="brand-mark" aria-hidden="true">N<span>M</span></span><span>NeuroMorf<small>Исследовательская студия</small></span></a>
+    <nav class="header-links" aria-label="Разделы приложения"><a href="/studio.html">Проекты</a><a href="/science.html">Научные инструменты</a><a href="/cloud.html">Облачный журнал</a></nav>
+    <div class="session-area"><span id="session-label">Проверяем сеанс…</span><a id="login-link" class="button small" href="/auth/login" target="_blank" rel="noopener noreferrer" hidden>Войти</a></div>
+  </header>
+  <main id="main" tabindex="-1">
+    <section class="intro" aria-labelledby="page-title">
+      <div><p class="eyebrow">M02 / СОХРАНЁННЫЕ ОБЛАЧНЫЕ ЭКСПЕРИМЕНТЫ</p><h1 id="page-title">Облачные результаты</h1><p class="lead">Просмотрите исходный запуск и восстановление из его контрольной точки. Сохраните проверенную квитанцию в своём исследовательском проекте.</p></div>
+      <div class="intro-actions"><button id="refresh" class="button" type="button">Обновить данные</button><a class="button" href="/studio.html">В студию →</a></div>
+    </section>
+    <div id="notice" class="notice" role="status" aria-live="polite">Загружаем квитанции и ваши проекты…</div>
+    <section class="evidence-scope" aria-labelledby="scope-title">
+      <div><span class="badge neutral">Исторические результаты</span><h2 id="scope-title">Инженерная проверка восстановления</h2><p>Эксперимент использует фиксированные синтетические данные и не вызывает модели. Его результат показывает сохранение очереди, попыток и решений рецензента. Научные выводы и доступность внешних AI-провайдеров этим не подтверждаются.</p></div>
+      <div class="scope-aside"><strong id="receipt-count">—</strong><span>квитанций в проверенном наборе</span><p id="catalog-status">Сверка с закреплёнными SHA ещё не получена.</p></div>
+    </section>
+    <section class="run-lineage" aria-labelledby="lineage-title">
+      <div class="section-heading"><div><h2 id="lineage-title">Один эксперимент, два запуска</h2><p>Восстановление связано с конкретным исходным запуском и SHA его manifest.</p></div></div>
+      <ol id="lineage" class="lineage-list"><li class="empty-state">Связь запусков появится после проверки набора.</li></ol>
+      <p id="lineage-status" class="section-note">Обновление страницы перечитывает сохранённые данные. Новый эксперимент не запускается.</p>
+    </section>
+    <div class="runs-workspace">
+      <section class="receipts-section" aria-labelledby="receipts-title">
+        <div class="section-heading"><div><h2 id="receipts-title">Квитанции выполнения</h2><p>Выберите один результат для сохранения. Подробности происхождения доступны в каждой карточке.</p></div></div>
+        <fieldset class="receipt-choice"><legend class="visually-hidden">Квитанция для импорта</legend><div id="receipts" class="receipt-list"><p class="empty-state">Загружаем результаты…</p></div></fieldset>
+      </section>
+      <aside class="import-panel panel" aria-labelledby="import-title">
+        <p class="eyebrow">В ВАШ ПРОЕКТ</p><h2 id="import-title">Сохранить результат</h2>
+        <form id="import-form">
+          <label for="project">Проект</label><select id="project" required disabled><option value="">Загружаем проекты…</option></select>
+          <p class="form-help">Нет подходящего проекта? <a href="/studio.html" target="_blank" rel="noopener noreferrer">Создайте его в студии</a>, затем обновите данные здесь.</p>
+          <div class="selected-receipt"><span>Выбранная квитанция</span><strong id="selected-receipt">Выберите карточку результата</strong></div>
+          <p id="import-status" class="notice" role="status" aria-live="polite">Квитанция привязывается к проекту с её происхождением и ограничениями. Выполнение задачи не возобновляется.</p>
+          <button id="import-button" class="button primary" type="submit" disabled>Сохранить в проект</button>
+          <button id="next-import" class="text-button" type="button" hidden>Выбрать другой результат или проект</button>
+          <p class="form-help pending-help">Если ответ потеряется, повтор использует тот же запрос и ключ. До подтверждения выбор зафиксирован. Не закрывайте эту вкладку: незавершённый запрос хранится только в её памяти.</p>
+        </form>
+        <p class="section-note">Ссылки и файлы извне здесь не принимаются. Импорт доступен только для закреплённых квитанций и ваших проектов.</p>
+      </aside>
+    </div>
+    <section class="imports-section" aria-labelledby="imports-title">
+      <div class="section-heading"><div><h2 id="imports-title">Сохранено в ваших проектах</h2><p>Записи текущего владельца. Импорт фиксирует исторический результат, а не новый успешный запуск.</p></div></div>
+      <div id="imports" class="import-history"><p class="empty-state">История импорта ещё не получена.</p></div>
+    </section>
+    <footer><span>NeuroMorf · облачные результаты M02</span><span>Без автоматического запуска · дополнительных расходов нет</span></footer>
+  </main>
+  <noscript><p class="no-script">Для просмотра квитанций и их сохранения нужен JavaScript. <a href="/studio.html">Вернуться в студию</a>.</p></noscript>
+</body>
+</html>

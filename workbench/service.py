@@ -107,6 +107,8 @@ class Service:
         self.store = Store(db_path or self.root / "state" / "workbench.sqlite3")
         from .studio import StudioWorkspace
         self.studio = StudioWorkspace(self.store)
+        from .m02_receipts import M02ReceiptLibrary
+        self.m02_receipts = M02ReceiptLibrary(self.store, self.root)
         self.timeout = timeout
         self.slots = threading.BoundedSemaphore(2)
         self._network = None
