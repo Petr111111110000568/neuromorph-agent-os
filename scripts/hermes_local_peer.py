@@ -560,13 +560,24 @@ def execute(source_root, base_url, prompt_file, output_file, home_dir, stop_file
     os.chdir(home / "work")
     # Keep only interpreter/stdlib/venv search roots, never a caller's work directory.
     prefixes = [Path(sys.prefix).resolve(), Path(sys.base_prefix).resolve()]
+    # uv may expose a lexical venv site-packages entry whose resolved target is
+    # in its immutable package cache. Keep that exact resolved import root in
+    # the read set; do not admit arbitrary cwd/user paths.
+    import_roots = []
+    for value in tuple(sys.path):
+        if not value:
+            continue
+        candidate = Path(value).resolve()
+        if candidate.is_dir() and ("site-packages" in value or "python" in value.lower()
+                                   or any(candidate == root or root in candidate.parents for root in prefixes)):
+            import_roots.append(candidate)
     safe_paths = [p for p in sys.path if p and any(Path(p).resolve() == x
                   or x in Path(p).resolve().parents for x in prefixes)]
     sys.path[:] = [str(source), *safe_paths]
     sys.dont_write_bytecode = True
     audit_denials = {}
     sys.addaudithook(audit_guard(port, home=home, source=source, output=output,
-                                read_roots=prefixes, diagnostics=audit_denials))
+                                read_roots=(*prefixes, *import_roots), diagnostics=audit_denials))
     done = threading.Event()
     monitor = threading.Thread(target=_watchdog, args=(done, stop), daemon=True)
     monitor.start()
