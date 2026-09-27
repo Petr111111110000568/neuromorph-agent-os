@@ -7,6 +7,7 @@ Signed redirect URLs and remote error bodies are never written to logs/state.
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
@@ -20,10 +21,11 @@ import shutil
 import ssl
 import stat
 import sys
+import threading
 import time
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
-from urllib.request import HTTPRedirectHandler, HTTPSHandler, ProxyHandler, Request, build_opener
+from urllib.request import BaseHandler, HTTPRedirectHandler, HTTPSHandler, ProxyHandler, Request, build_opener
 import uuid
 
 REPOSITORY = "moonshotai/Kimi-K3"
@@ -175,11 +177,26 @@ class FixedRedirect(HTTPRedirectHandler):
         return super().redirect_request(request, fp, code, message, headers, newurl)
 
 
-def make_opener():
+class RequestGate(BaseHandler):
+    handler_order = 0
+
+    def __init__(self, check):
+        self.check = check
+
+    def https_request(self, request):
+        # Also invoked for each redirected request, not just the first HF URL.
+        self.check()
+        return request
+
+
+def make_opener(request_gate=None):
     context = ssl.create_default_context()
     context.minimum_version = ssl.TLSVersion.TLSv1_2
     # No implicit proxies, cookies, auth handlers, Hugging Face cache or tokens.
-    return build_opener(ProxyHandler({}), FixedRedirect(), HTTPSHandler(context=context))
+    handlers = [ProxyHandler({}), FixedRedirect(), HTTPSHandler(context=context)]
+    if request_gate is not None:
+        handlers.append(RequestGate(request_gate))
+    return build_opener(*handlers)
 
 
 def range_headers(response, offset, end, total):
@@ -201,12 +218,14 @@ def stop_requested(stop_file):
         raise Stopped()
 
 
-def hash_file(path, stop_file, progress=None):
+def hash_file(path, stop_file, progress=None, *, cancel=None):
     digest = hashlib.sha256()
     read = 0
     with safe_path(path, allow_missing=False).open("rb") as stream:
         while True:
             stop_requested(stop_file)
+            if cancel is not None and cancel.is_set():
+                raise Stopped()
             chunk = stream.read(READ_BYTES)
             if not chunk:
                 break
@@ -254,6 +273,12 @@ def retry_delay(headers, attempt, now):
 
 class State:
     def __init__(self, root, filenames):
+        self.lock = threading.RLock()
+        self.request_lock = threading.RLock()
+        self.disk_lock = threading.RLock()
+        self.cancel = threading.Event()
+        self.first_error = None
+        self.writers = set()
         self.path = safe_path(root / "download-state.json")
         self.filenames = set(filenames)
         self.last_progress = 0.0
@@ -273,29 +298,142 @@ class State:
                     or not isinstance(value.get("verified"), list) or set(value["verified"]) - self.filenames
                     or len(value["verified"]) != len(set(value["verified"]))):
                 raise DownloadError("invalid_download_state")
+            gate = value.get("global_retry_at", max(value["retry_at"].values(), default=0))
+            if type(gate) not in (int, float) or not 0 <= gate <= 32503680000:
+                raise DownloadError("invalid_download_state")
             # Never preserve arbitrary strings from a previous modified state.
             self.value = {"schema_version": 1, "revision": REVISION, "manifest_sha256": MANIFEST_SHA256,
-                "retries": value["retries"], "retry_at": value["retry_at"], "verified": value["verified"], "history": []}
+                "retries": value["retries"], "retry_at": value["retry_at"], "verified": value["verified"],
+                "global_retry_at": gate, "history": []}
         else:
             self.value = {"schema_version": 1, "revision": REVISION, "manifest_sha256": MANIFEST_SHA256,
-                "retries": {}, "retry_at": {}, "verified": [], "history": []}
+                "retries": {}, "retry_at": {}, "verified": [], "global_retry_at": 0, "history": []}
+        self.value.update(active_files={}, verified_this_run=[], workers=1)
 
     def update(self, status, filename=None, *, offset=None, force=False):
-        now = time.time()
-        self.value.update(status=status, updated_at=datetime.fromtimestamp(now, timezone.utc).isoformat())
-        if filename is not None:
-            if filename not in self.filenames:
-                raise DownloadError("invalid_progress_identity")
-            self.value["current_file"] = filename
-        if offset is not None:
-            self.value["current_file_bytes"] = offset
-        if force or time.monotonic() - self.last_progress >= 3:
-            atomic_json(self.path, self.value)
-            self.last_progress = time.monotonic()
+        with self.lock:
+            now = time.time()
+            self.value.update(status=status, updated_at=datetime.fromtimestamp(now, timezone.utc).isoformat())
+            if filename is not None:
+                if filename not in self.filenames:
+                    raise DownloadError("invalid_progress_identity")
+                self.value["current_file"] = filename
+                if filename in self.writers:
+                    active = self.value["active_files"].setdefault(filename, {"status": status, "bytes": 0})
+                    active["status"] = status
+                    if offset is not None:
+                        active["bytes"] = offset
+            if offset is not None:
+                self.value["current_file_bytes"] = offset
+            if force or time.monotonic() - self.last_progress >= 3:
+                atomic_json(self.path, self.value)
+                self.last_progress = time.monotonic()
 
     def event(self, code, filename=None):
-        self.value["history"] = (self.value["history"] + [{"code": code, "file": filename}])[-20:]
-        self.update(code, filename, force=True)
+        with self.lock:
+            self.value["history"] = (self.value["history"] + [{"code": code, "file": filename}])[-20:]
+            self.update(code, filename, force=True)
+
+    def snapshot(self):
+        with self.lock:
+            return json.loads(json.dumps(self.value, allow_nan=False))
+
+    def check_stop(self, stop_file):
+        if self.cancel.is_set():
+            raise Stopped()
+        stop_requested(stop_file)
+
+    def fail(self, error):
+        with self.lock:
+            if self.first_error is None:
+                self.first_error = error
+            self.cancel.set()
+
+    def start_file(self, name):
+        with self.lock:
+            if name not in self.filenames or name in self.writers:
+                raise DownloadError("duplicate_or_unknown_shard_writer")
+            self.writers.add(name)
+            try:
+                self.update("starting_shard", name, offset=0, force=True)
+            except BaseException:
+                self.writers.discard(name)
+                self.value["active_files"].pop(name, None)
+                raise
+
+    def end_file(self, name):
+        with self.lock:
+            self.writers.discard(name)
+            self.value["active_files"].pop(name, None)
+            self.update(self.value.get("status", "idle"), force=True)
+
+    def verified(self, name, total):
+        with self.lock:
+            for key in ("verified", "verified_this_run"):
+                if name not in self.value[key]:
+                    self.value[key].append(name)
+            self.update("shard_verified", name, offset=total, force=True)
+            self.event("shard_verified", name)
+
+    def retry_count(self, name):
+        with self.lock:
+            return self.value["retries"].get(name, 0)
+
+    def wait_ready(self, name, stop_file, clock=time.time, sleep=time.sleep):
+        while True:
+            self.check_stop(stop_file)
+            with self.lock:
+                if self.value["retries"].get(name, 0) > MAX_RETRIES:
+                    raise DownloadError("file_retry_limit_reached")
+                until = max(self.value["global_retry_at"], self.value["retry_at"].get(name, 0))
+            delay = until - clock()
+            if delay > MAX_WAIT_SECONDS:
+                raise DownloadError("retry_later")
+            if delay <= 0:
+                return
+            sleep(min(1, delay))
+
+    def global_backoff(self, headers, attempt, clock):
+        with self.lock:
+            deadline = clock() + retry_delay(headers, attempt, clock())
+            if deadline > 32503680000:
+                raise DownloadError("invalid_retry_deadline")
+            self.value["global_retry_at"] = max(self.value["global_retry_at"], deadline)
+            self.event("global_rate_limit_wait")
+
+    def retry(self, name, headers, code, clock):
+        with self.lock:
+            used = self.value["retries"].get(name, 0)
+            if used >= MAX_RETRIES:
+                self.value["retries"][name] = MAX_RETRIES + 1
+                self.event("file_retry_limit_reached", name)
+                raise DownloadError("file_retry_limit_reached")
+            deadline = clock() + retry_delay(headers, used + 1, clock())
+            if deadline > 32503680000:
+                raise DownloadError("invalid_retry_deadline")
+            self.value["retries"][name] = used + 1
+            self.value["retry_at"][name] = deadline
+            self.event(code, name)
+
+    def clear_retry_at(self, name):
+        with self.lock:
+            self.value["retry_at"].pop(name, None)
+
+    def open_request(self, name, stop_file, opener, request, clock, sleep):
+        # Serialize request admission and response headers only, not body streaming.
+        # A 429 gate is durable before the next worker can admit a fresh request.
+        with self.request_lock:
+            self.wait_ready(name, stop_file, clock, sleep)
+            try:
+                return opener.open(request, timeout=TIMEOUT)
+            except HTTPError as error:
+                if error.code == 429 or (error.headers and error.headers.get("Retry-After")):
+                    try:
+                        self.global_backoff(error.headers, self.retry_count(name) + 1, clock)
+                    except BaseException:
+                        error.close()
+                        raise
+                raise
 
 
 def wait_until(until, stop_file, clock=time.time, sleep=time.sleep):
@@ -309,6 +447,17 @@ def wait_until(until, stop_file, clock=time.time, sleep=time.sleep):
 def download_file(entry, root, state, stop_file, opener, *, disk_check=lambda: None,
                   clock=time.time, sleep=time.sleep):
     """Streaming helper; caller holds the exclusive download directory lock."""
+    state.check_stop(stop_file)
+    name = entry["path"]
+    state.start_file(name)
+    try:
+        return _download_file(entry, root, state, stop_file, opener,
+                              disk_check=disk_check, clock=clock, sleep=sleep)
+    finally:
+        state.end_file(name)
+
+
+def _download_file(entry, root, state, stop_file, opener, *, disk_check, clock, sleep):
     name, total = entry["path"], entry["bytes"]
     if not isinstance(name, str) or not _NAME.fullmatch(name):
         raise DownloadError("invalid_weight_name")
@@ -316,12 +465,12 @@ def download_file(entry, root, state, stop_file, opener, *, disk_check=lambda: N
     partial = safe_path(root / (name + ".part"))
     if final.exists() and partial.exists():
         raise DownloadError("conflicting_weight_files")
-    stop_requested(stop_file)
+    state.check_stop(stop_file)
     if final.exists():
         if final.stat().st_size != total:
             raise DownloadError("weight_size_mismatch")
         state.update("verifying_existing", name, offset=0, force=True)
-        digest = hash_file(final, stop_file, lambda n: state.update("verifying_existing", name, offset=n))
+        digest = hash_file(final, stop_file, lambda n: state.update("verifying_existing", name, offset=n), cancel=state.cancel)
         if digest.hexdigest() != entry["sha256"]:
             raise DownloadError("existing_weight_hash_mismatch")
     else:
@@ -329,14 +478,13 @@ def download_file(entry, root, state, stop_file, opener, *, disk_check=lambda: N
         if offset > total:
             raise DownloadError("partial_size_exceeds_manifest")
         state.update("hashing_partial", name, offset=0, force=True)
-        digest = hash_file(partial, stop_file, lambda n: state.update("hashing_partial", name, offset=n)) if offset else hashlib.sha256()
+        digest = hash_file(partial, stop_file, lambda n: state.update("hashing_partial", name, offset=n), cancel=state.cancel) if offset else hashlib.sha256()
         url = f"https://huggingface.co/{REPOSITORY}/resolve/{REVISION}/{name}"
         while offset < total:
-            stop_requested(stop_file)
-            if state.value["retries"].get(name, 0) > MAX_RETRIES:
-                raise DownloadError("file_retry_limit_reached")
-            wait_until(state.value["retry_at"].get(name, 0), stop_file, clock, sleep)
-            disk_check()
+            state.wait_ready(name, stop_file, clock, sleep)
+            # Keep path enumeration coherent with another shard's atomic promotion.
+            with state.disk_lock:
+                disk_check()
             end = min(total - 1, offset + RANGE_BYTES - 1)
             request = Request(url, headers={"Range": f"bytes={offset}-{end}", "Accept-Encoding": "identity",
                 "User-Agent": "NeuroMorf-Pinned-Weights/1", "Accept": "application/octet-stream"})
@@ -344,7 +492,7 @@ def download_file(entry, root, state, stop_file, opener, *, disk_check=lambda: N
             retry_code = None
             state.update("downloading", name, offset=offset, force=True)
             try:
-                with opener.open(request, timeout=TIMEOUT) as response:
+                with state.open_request(name, stop_file, opener, request, clock, sleep) as response:
                     range_headers(response, offset, end, total)
                     # Headers have been validated BEFORE opening the file for append.
                     safe_path(partial)
@@ -353,7 +501,7 @@ def download_file(entry, root, state, stop_file, opener, *, disk_check=lambda: N
                             raise DownloadError("partial_changed_during_download")
                         remaining = end - offset + 1
                         while remaining:
-                            stop_requested(stop_file)
+                            state.check_stop(stop_file)
                             chunk = response.read(min(READ_BYTES, remaining))
                             if not chunk:
                                 raise http.client.IncompleteRead(b"", remaining)
@@ -364,7 +512,7 @@ def download_file(entry, root, state, stop_file, opener, *, disk_check=lambda: N
                             state.update("downloading", name, offset=offset)
                         stream.flush()
                         os.fsync(stream.fileno())
-                state.value["retry_at"].pop(name, None)
+                state.clear_retry_at(name)
                 state.update("downloading", name, offset=offset, force=True)
                 continue
             except HTTPError as error:
@@ -379,26 +527,83 @@ def download_file(entry, root, state, stop_file, opener, *, disk_check=lambda: N
             except OSError:
                 # Disk/write failures are terminal, not retried as network failures.
                 raise DownloadError("local_io_failure") from None
-            used = state.value["retries"].get(name, 0)
-            if used >= MAX_RETRIES:
-                state.value["retries"][name] = MAX_RETRIES + 1
-                state.event("file_retry_limit_reached", name)
-                raise DownloadError("file_retry_limit_reached")
-            state.value["retries"][name] = used + 1
-            state.value["retry_at"][name] = clock() + retry_delay(retry_headers, used + 1, clock())
-            state.event(retry_code, name)
-            wait_until(state.value["retry_at"][name], stop_file, clock, sleep)
+            state.retry(name, retry_headers, retry_code, clock)
+            state.wait_ready(name, stop_file, clock, sleep)
         if digest.hexdigest() != entry["sha256"]:
             raise DownloadError("downloaded_weight_hash_mismatch")
-        if partial.stat().st_size != total or final.exists():
-            raise DownloadError("weight_promotion_conflict")
-        safe_path(final)
-        safe_path(partial)
-        os.replace(partial, final)  # Only fully SHA256-verified bytes acquire final name.
-    if name not in state.value["verified"]:
-        state.value["verified"].append(name)
-    state.update("shard_verified", name, offset=total, force=True)
-    state.event("shard_verified", name)
+        with state.disk_lock:
+            state.check_stop(stop_file)
+            if partial.stat().st_size != total or final.exists():
+                raise DownloadError("weight_promotion_conflict")
+            safe_path(final)
+            safe_path(partial)
+            os.replace(partial, final)  # Only fully SHA256-verified bytes acquire final name.
+    state.verified(name, total)
+
+
+def download_files(entries, root, state, stop_file, *, workers=2, opener_factory=None,
+                   disk_check=lambda: None, clock=time.time, sleep=time.sleep):
+    """Bounded parallel shards, one writer/opener per shard and no shared body.
+
+    Pending shards run before existing finals are rehashed. All selected entries
+    must pass SHA verification in this process before the call can succeed.
+    The caller holds the single OS directory lock for the complete operation.
+    """
+    if type(workers) is not int or not 1 <= workers <= 4:
+        raise DownloadError("invalid_workers")
+    if not isinstance(entries, list) or not 1 <= len(entries) <= 96:
+        raise DownloadError("invalid_download_batch")
+    names = [entry["path"] for entry in entries]
+    if (any(not isinstance(name, str) or not _NAME.fullmatch(name) or name not in state.filenames for name in names)
+            or len(names) != len(set(names))):
+        raise DownloadError("duplicate_or_unknown_shard_writer")
+    state.check_stop(stop_file)
+    with state.lock:
+        if state.writers:
+            raise DownloadError("download_batch_already_running")
+        state.value["workers"] = workers
+        state.update("parallel_batch_started", force=True)
+    pending, existing = [], []
+    for entry in entries:
+        (existing if safe_path(root / entry["path"]).exists() else pending).append(entry)
+    # A previously exhausted shard is a terminal batch condition, even when its
+    # partial is large; do not start other network requests while rehashing it.
+    if any(state.retry_count(entry["path"]) > MAX_RETRIES for entry in pending):
+        raise DownloadError("file_retry_limit_reached")
+
+    def perform(entry):
+        try:
+            state.check_stop(stop_file)
+            opener = opener_factory() if opener_factory is not None else make_opener(
+                lambda: state.wait_ready(entry["path"], stop_file, clock, sleep))
+            download_file(entry, root, state, stop_file, opener,
+                          disk_check=disk_check, clock=clock, sleep=sleep)
+            return entry["path"]
+        except BaseException as error:
+            state.fail(error)
+            raise
+
+    verified = []
+    pool = ThreadPoolExecutor(max_workers=workers, thread_name_prefix="kimi-shard")
+    futures = []
+    try:
+        # Existing finals do not occupy a worker until pending network work ends.
+        futures = [pool.submit(perform, entry) for entry in pending]
+        for future in as_completed(futures):
+            verified.append(future.result())
+        # Sequential rehash avoids parallel full-file seeks on the target HDD.
+        for entry in existing:
+            verified.append(perform(entry))
+    except BaseException as error:
+        state.fail(error)
+        for future in futures:
+            future.cancel()
+        raise state.first_error
+    finally:
+        # Active response reads are timeout-bounded and check cancel per chunk.
+        # The OS directory lock remains held while all cooperative writers exit.
+        pool.shutdown(wait=True, cancel_futures=True)
+    return {"workers": workers, "processed_files": len(verified), "verified_files": sorted(verified)}
 
 
 def main(argv=None):
@@ -406,6 +611,7 @@ def main(argv=None):
     parser.add_argument("--manifest", default=str(Path(__file__).resolve().parents[1] / "config" / "kimi_weights_manifest.json"))
     parser.add_argument("--destination", default=TARGET)
     parser.add_argument("--max-files", type=int, default=96)
+    parser.add_argument("--workers", type=int, default=2, help="Parallel shards (1-4); each has one append writer")
     args = parser.parse_args(argv)
     state = None
     try:
@@ -413,6 +619,8 @@ def main(argv=None):
             raise DownloadError("unsupported_or_unauthorized_destination")
         if not 1 <= args.max_files <= 96:
             raise DownloadError("invalid_max_files")
+        if not 1 <= args.workers <= 4:
+            raise DownloadError("invalid_workers")
         manifest = load_manifest(args.manifest)
         root = safe_path(args.destination, directory=True)
         root.mkdir(parents=True, exist_ok=True)
@@ -424,13 +632,14 @@ def main(argv=None):
                 stop_requested(stop)
                 check_disk(root, manifest["files"])
                 state.event("started")
-                opener = make_opener()
-                for entry in manifest["files"][:args.max_files]:
-                    download_file(entry, root, state, stop, opener,
-                        disk_check=lambda: check_disk(root, manifest["files"]))
-                completed = args.max_files == 96 and len(state.value["verified"]) == 96
+                batch = download_files(manifest["files"][:args.max_files], root, state, stop,
+                    workers=args.workers, disk_check=lambda: check_disk(root, manifest["files"]))
+                current = state.snapshot()
+                completed = args.max_files == 96 and batch["processed_files"] == 96 and len(current["verified_this_run"]) == 96
                 state.event("complete" if completed else "bounded_batch_complete")
-                print(json.dumps({"status": state.value["status"], "verified_shards": len(state.value["verified"]),
+                current = state.snapshot()
+                print(json.dumps({"status": current["status"], "verified_shards": len(current["verified"]),
+                    "verified_this_run": len(current["verified_this_run"]), "workers": args.workers,
                     "total_shards": 96, "manifest_sha256": MANIFEST_SHA256}))
                 return 0
             except BaseException as error:
@@ -445,7 +654,9 @@ def main(argv=None):
         code = "interrupted"
     except DownloadError as error:
         code = error.code
-    except (OSError, ValueError, TypeError, KeyError, OverflowError, RecursionError):
+    except Exception:
+        # Includes unexpected thread/transport failures; exception text may
+        # contain a signed URL and must never become an unhandled traceback.
         code = "invalid_state_or_local_io"
     print(json.dumps({"status": code, "weights_only": True, "model_execution": False}))
     return 75 if code == "retry_later" else 2
