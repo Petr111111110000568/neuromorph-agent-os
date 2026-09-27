@@ -19,6 +19,8 @@ import shutil
 import stat
 import subprocess
 import sys
+import sysconfig
+import ssl
 import threading
 import time
 from urllib.parse import urlsplit
@@ -289,6 +291,19 @@ def audit_guard(port, *, home, source, output, read_roots=(), diagnostics=None):
         })
     public_system_files = {p.absolute() for p in public_system_files}
     public_system_roots = {p.absolute() for p in public_system_roots}
+    # venv packages can resolve through a symlink into the interpreter's
+    # stdlib/SSL installation. Derive those read-only roots instead of opening
+    # an unrestricted /usr or user directory.
+    for key in ("stdlib", "platstdlib", "purelib", "platlib"):
+        value = sysconfig.get_path(key)
+        if value:
+            public_system_roots.add(Path(value).absolute())
+    with contextlib.suppress(Exception):
+        verify = ssl.get_default_verify_paths()
+        for value in (verify.cafile, verify.openssl_cafile, verify.capath, verify.openssl_capath):
+            if value:
+                path = Path(value).absolute()
+                public_system_roots.add(path if path.is_dir() else path.parent)
 
     def within(path, root):
         return path == root or root in path.parents
