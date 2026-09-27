@@ -291,6 +291,7 @@ def audit_guard(port, *, home, source, output, read_roots=(), diagnostics=None):
         })
     public_system_files = {p.absolute() for p in public_system_files}
     public_system_roots = {p.absolute() for p in public_system_roots}
+    trusted_dependency_suffixes = {".py", ".pyc", ".pyo", ".so", ".pyd", ".json", ".txt", ".dist-info"}
     # venv packages can resolve through a symlink into the interpreter's
     # stdlib/SSL installation. Derive those read-only roots instead of opening
     # an unrestricted /usr or user directory.
@@ -334,7 +335,10 @@ def audit_guard(port, *, home, source, output, read_roots=(), diagnostics=None):
                 raise PermissionError("external_write_blocked")
         elif (not any(within(resolved, root) for root in roots)
               and resolved not in public_system_files
-              and not any(within(resolved, root) for root in public_system_roots)):
+              and not any(within(resolved, root) for root in public_system_roots)
+              and not (path.suffix.lower() in trusted_dependency_suffixes
+                       and any(part.lower() in {"site-packages", "dist-packages"}
+                               for part in resolved.parts))):
             raise PermissionError("external_file_read_blocked")
 
     def guard(event, args):
