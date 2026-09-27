@@ -1,0 +1,78 @@
+name: OpenClaw Hermes tandem protocol
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'workbench/tandem.py'
+      - 'workbench/autonomy/local_review.py'
+      - 'scripts/*local_peer.py'
+      - 'scripts/run_local_tandem.py'
+      - 'scripts/tandem_harness_fixture.py'
+      - 'config/hermes_local_peer.json'
+      - 'config/openclaw-local/**'
+      - '.github/workflows/tandem-harness.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'workbench/tandem.py'
+      - 'scripts/*local_peer.py'
+      - 'scripts/run_local_tandem.py'
+      - 'scripts/tandem_harness_fixture.py'
+      - 'config/hermes_local_peer.json'
+      - 'config/openclaw-local/**'
+      - '.github/workflows/tandem-harness.yml'
+permissions:
+  contents: read
+concurrency:
+  group: tandem-protocol-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  actual-harness-fixture:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.14'
+          check-latest: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24.19.0'
+      - name: Install exact OpenClaw package graph without lifecycle scripts
+        run: npm ci --prefix config/openclaw-local --ignore-scripts --no-audit --no-fund
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          repository: NousResearch/hermes-agent
+          ref: 54fb5a42e8ecf2bf0326f7bd829a292ee0965451
+          path: runtime/hermes-sdk
+          persist-credentials: false
+      - name: Prepare source-pinned Hermes from its locked dependencies
+        run: |
+          python -m pip install --disable-pip-version-check uv==0.12.3
+          uv sync --frozen --no-dev --project runtime/hermes-sdk --python "$(command -v python)"
+      - name: Actual installed harnesses against local deterministic transport fixture
+        run: |
+          env -i PATH="$PATH" LANG=C.UTF-8 GITHUB_ACTIONS=true python scripts/tandem_harness_fixture.py \
+            --openclaw-package config/openclaw-local/node_modules/openclaw \
+            --node "$(command -v node)" \
+            --hermes-python "$PWD/runtime/hermes-sdk/.venv/bin/python" \
+            --hermes-source "$PWD/runtime/hermes-sdk" \
+            --output-dir runtime/tandem-fixture
+      - name: Print public protocol receipt
+        if: always()
+        run: |
+          python - <<'PY'
+          import pathlib
+          path = pathlib.Path('runtime/tandem-fixture/fixture-receipt.json')
+          if path.is_file(): print(path.read_text())
+          PY
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: tandem-protocol-${{ github.run_id }}
+          path: runtime/tandem-fixture/fixture-receipt.json
+          retention-days: 14
+          if-no-files-found: warn

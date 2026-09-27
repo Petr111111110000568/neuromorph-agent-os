@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "source_repository": "https://github.com/NousResearch/hermes-agent",
+  "source_commit": "54fb5a42e8ecf2bf0326f7bd829a292ee0965451",
+  "declared_package_version": "0.0.0",
+  "required_python": "3.14",
+  "model": "Qwen3-14B-Q4_K_M",
+  "transport": "loopback_openai_chat_completions",
+  "context_tokens": 8192,
+  "max_output_tokens": 512,
+  "maximum_sdk_api_calls": 1,
+  "tools": [],
+  "adapter_policy": [
+    "dotenv_loading_disabled",
+    "isolated_profile",
+    "no_tools_context_8192"
+  ],
+  "os_sandbox": false,
+  "file_sha256": {
+    "pyproject.toml": "a6d0b40bfab34227934430c797eded0883d343b3891123375e9067edae1792d6",
+    "uv.lock": "bd27ac91236fa57f9eeffea8d4a324f3ca7f9b218525d74bec14a67fc1163887",
+    "run_agent.py": "72f2fe8a2c6113e6c1033f920f00036bc6d757d4f566b376ab8c1a557b70ae1e",
+    "model_tools.py": "5d5a947d84f31f1ba4ef5267e28154b819e8f957a0b378739696f1ac305e1509",
+    "hermes_bootstrap.py": "c4ee07362ec5267da96ce842f51b70d6446e8ac608a6f437623f07b7779c8b44",
+    "hermes_constants.py": "c4c05cf7b39676cad069bf924418cef7d37b4f11495a8e13f4b2e148f1b445fe",
+    "hermes_cli/env_loader.py": "0169b2fe666ed83511070536fe7893537dc6a6b0ed7bd614278432de79e1d156",
+    "hermes_cli/config.py": "752b6bfa3bd14243196db32ec88565c6bfe466e78307f281bb97af105d1ee8bb",
+    "hermes_cli/config_defaults.py": "67654a7585a6ffa98820f5ff2018ab7fb1ef9ba8f047b1f0e84ff076b7fd7686",
+    "hermes_cli/managed_scope.py": "830483c7cf2267bc30ae1e09910a1b768536e7ad5418b73dd8303e5e27ac6448",
+    "hermes_cli/plugins.py": "70a1bfd5f1497e23c853f6d1e376b1b4213553186d803c863c23feb1a5042b68",
+    "agent/agent_init.py": "7b3a4a9f0bbc416223bb9db32b169222c754eb5734624ec1d647c3db05cce630",
+    "agent/model_metadata.py": "39cbdb61491e248fd0e955fa6f270b8edefddd9307deddcb3ccef140d3534382",
+    "agent/process_bootstrap.py": "32c754f552ad6e043267c6284e91677e2fa69d71e404e9c620c09ca51bb2da40",
+    "agent/turn_facade.py": "09675cbc96c72d8f01a2a44712da2b508b2fda5d35c1b6f004edc781a588f38c",
+    "agent/conversation_loop.py": "aef211c0b9bfc3cc1ae212e99c39e4b9811779e4f1d2c9ef005bb566c7aa3ffe",
+    "agent/client_lifecycle.py": "5333b2dd5c96427996f060e9c01f6ca86d882cb89a59f60482e2281de8b66d5f",
+    "agent/api_request_hooks.py": "0f205b08a859eeca2d433dc619897c3eaba7f92a196b6e8cbae36c37633b5abd"
+  }
+}

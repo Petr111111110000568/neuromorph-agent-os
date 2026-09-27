@@ -10,7 +10,7 @@ on:
       - 'scripts/run_offline_mcp.py'
       - 'scripts/install_windows_bundle.ps1'
       - 'tests/test_offline_*.py'
-      - 'tests/test_kimi_*download.py'
+      - 'tests/test_kimi_weight_download.py'
       - 'tests/test_project_dispatcher.py'
       - 'tests/test_m02_*.py'
       - 'scripts/m02_experiment.py'
@@ -25,7 +25,7 @@ on:
       - 'scripts/run_offline_mcp.py'
       - 'scripts/install_windows_bundle.ps1'
       - 'tests/test_offline_*.py'
-      - 'tests/test_kimi_*download.py'
+      - 'tests/test_kimi_weight_download.py'
       - 'tests/test_project_dispatcher.py'
       - 'tests/test_m02_*.py'
       - 'scripts/m02_experiment.py'
@@ -87,8 +87,10 @@ jobs:
                   "test_offline_http.py",
                   "test_offline_mcp.py",
                   "test_local_review.py",
+                  "test_tandem.py",
+                  "test_openclaw_local_peer.py",
+                  "test_hermes_local_peer.py",
                   "test_kimi_weight_download.py",
-                  "test_kimi_parallel_download.py",
                   "test_project_dispatcher.py",
                   "test_m02_checkpoint.py",
                   "test_m02_experiment.py",
