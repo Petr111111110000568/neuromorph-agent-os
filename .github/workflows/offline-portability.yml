@@ -91,6 +91,8 @@ jobs:
                   "test_project_dispatcher.py",
                   "test_m02_checkpoint.py",
                   "test_m02_experiment.py",
+                  "test_m02_receipts.py",
+                  "test_m02_receipts_http.py",
               )
               suite = unittest.TestSuite()
               loader = unittest.TestLoader()

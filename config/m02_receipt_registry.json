@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "registry_id": "m02-cloud-receipts-pr18-v1",
+  "receipts": [
+    {
+      "receipt_id": "m02-seed-36277624672",
+      "path": "data/m02_receipts/seed.json",
+      "phase": "seed",
+      "identity": {
+        "branch": "main",
+        "commit": "ceae671452365a84dcff2787b4ac66d7372a4f13",
+        "repository": "Petr111111110000568/neuromorph-agent-os",
+        "run_id": "36277624672",
+        "workflow_id": ".github/workflows/m02-checkpoint.yml"
+      },
+      "canonical_sha256": "a9af1d917bd6e616e9ce44ed6637724ea701686c83abdf7a21e6b1f5d4ab7bbc",
+      "previous_run_id": null,
+      "previous_manifest_sha256": null
+    },
+    {
+      "receipt_id": "m02-resume-36277674850",
+      "path": "data/m02_receipts/resume.json",
+      "phase": "resume",
+      "identity": {
+        "branch": "main",
+        "commit": "ceae671452365a84dcff2787b4ac66d7372a4f13",
+        "repository": "Petr111111110000568/neuromorph-agent-os",
+        "run_id": "36277674850",
+        "workflow_id": ".github/workflows/m02-checkpoint.yml"
+      },
+      "canonical_sha256": "02050443fed052fb8e1f4d4030c80e8d23e11bcb57b27f5c5b05aa4382869a9c",
+      "previous_run_id": "36277624672",
+      "previous_manifest_sha256": "e6d0eabc589a78826d38fd36daf389c227041820179ab2a2b2f7bd949bd8e757"
+    }
+  ]
+}

@@ -105,6 +105,8 @@ def make_server(service, host="127.0.0.1", port=8765, cloud_auth=None):
                 return self.response(service.offline.snapshot())
             if path in ('/api/studio', '/api/studio/export'):
                 return self.response(service.studio.snapshot(self.owner), download='neuromorph-workspace.json' if path.endswith('/export') else None)
+            if path == '/api/studio/m02':
+                return self.response(service.m02_receipts.snapshot(self.owner))
             if path == '/api/harnesses':
                 return self.response(service.harnesses_status())
             if path == '/api/harnesses/runs':
@@ -201,6 +203,8 @@ def make_server(service, host="127.0.0.1", port=8765, cloud_auth=None):
                     return self.dispatch_get(path, query)
                 if path == '/api/studio/save':
                     return self.response(service.studio.save(self.body(), self.owner))
+                if path == '/api/studio/m02/import':
+                    return self.response(service.m02_receipts.import_receipt(self.body(), self.owner))
                 if path == '/api/science/protocol':
                     from .science import protocol_task
                     return self.response(service.studio.save(protocol_task(self.body()), self.owner))
