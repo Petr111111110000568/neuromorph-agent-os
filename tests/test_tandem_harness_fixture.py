@@ -22,7 +22,8 @@ class TokenScanTests(unittest.TestCase):
             result = fixture.scan_ephemeral_token(stage, TOKEN)
             self.assertTrue(result["ephemeral_token_absent"])
             self.assertEqual(result["files_scanned"], 1)
-            self.assertEqual(set(result), {"ephemeral_token_absent", "files_scanned", "bytes_scanned"})
+            self.assertEqual(set(result), {"ephemeral_token_absent", "files_scanned", "bytes_scanned",
+                                           "internal_links_checked"})
 
     def test_detects_token_across_read_boundary_without_exposing_it(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -62,7 +63,37 @@ class TokenScanTests(unittest.TestCase):
                 (stage / "linked.txt").symlink_to(target)
             except OSError:
                 self.skipTest("OS does not permit test symlinks")
-            with self.assertRaisesRegex(fixture.FixtureError, "ephemeral_token_scan_link_rejected"):
+            with self.assertRaisesRegex(fixture.FixtureError, "ephemeral_token_scan_link_rejected") as raised:
+                fixture.scan_ephemeral_token(stage, TOKEN)
+            self.assertEqual(raised.exception.target_scope, "outside_stage")
+
+    def test_internal_state_alias_and_cycle_are_scanned_once(self):
+        with tempfile.TemporaryDirectory() as directory:
+            stage = Path(directory)
+            state = stage / "state"
+            state.mkdir()
+            (state / "history.json").write_text('{"safe":true}', encoding="utf-8")
+            try:
+                (stage / ".openclaw").symlink_to(state, target_is_directory=True)
+                (state / "back-to-stage").symlink_to(stage, target_is_directory=True)
+            except OSError:
+                self.skipTest("OS does not permit test symlinks")
+            result = fixture.scan_ephemeral_token(stage, TOKEN)
+            self.assertEqual(result["files_scanned"], 1)
+            self.assertEqual(result["internal_links_checked"], 2)
+            self.assertTrue(result["ephemeral_token_absent"])
+
+    def test_internal_alias_does_not_hide_a_persisted_token(self):
+        with tempfile.TemporaryDirectory() as directory:
+            stage = Path(directory)
+            state = stage / "state"
+            state.mkdir()
+            (state / "models.json").write_text(TOKEN, encoding="utf-8")
+            try:
+                (stage / ".openclaw").symlink_to(state, target_is_directory=True)
+            except OSError:
+                self.skipTest("OS does not permit test symlinks")
+            with self.assertRaisesRegex(fixture.FixtureError, "ephemeral_token_persisted"):
                 fixture.scan_ephemeral_token(stage, TOKEN)
 
 

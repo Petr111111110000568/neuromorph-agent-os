@@ -25,11 +25,17 @@ sys.path.insert(0, str(ROOT))
 class FixtureError(ValueError):
     """Fixed diagnostic code, never a generated path, token or file content."""
 
+    def __init__(self, code, *, link_kind=None, target_scope=None):
+        super().__init__(code)
+        self.link_kind = link_kind
+        self.target_scope = target_scope
+
 
 def scan_ephemeral_token(stage_dir, token):
     """Scan ONLY the freshly created SDK stage after its process has terminated.
 
-    No symlink/junction/special-file traversal. Limits are 2 MiB/file, 16 MiB
+    Links may resolve only inside this fresh stage, with canonical-path dedup.
+    External links and special files fail closed. Limits are 2 MiB/file, 16 MiB
     total, 1024 entries and depth 32. A limit means unverified, not a clean scan.
     No file path or matched bytes are returned, even on failure.
     """
@@ -37,8 +43,13 @@ def scan_ephemeral_token(stage_dir, token):
         raise FixtureError("invalid_ephemeral_token")
     needle = token.encode("ascii")
     root = Path(stage_dir).absolute()
+    root_info = root.lstat()
+    if stat.S_ISLNK(root_info.st_mode) or getattr(root_info, "st_file_attributes", 0) & 0x400:
+        raise FixtureError("ephemeral_token_scan_link_rejected", target_scope="root_is_link")
+    root = root.resolve(strict=True)
     maximum_file, maximum_total = 2 * 1024 * 1024, 16 * 1024 * 1024
-    entries, total, files = 0, 0, 0
+    entries, total, files, internal_links = 0, 0, 0, 0
+    visited = set()
     pending = [(root, 0)]
     try:
         while pending:
@@ -48,7 +59,24 @@ def scan_ephemeral_token(stage_dir, token):
                 raise FixtureError("ephemeral_token_scan_limit")
             info = path.lstat()
             if stat.S_ISLNK(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
-                raise FixtureError("ephemeral_token_scan_link_rejected")
+                kind = "symlink" if stat.S_ISLNK(info.st_mode) else "junction_or_reparse"
+                try:
+                    resolved = path.resolve(strict=True)
+                except (OSError, RuntimeError) as exc:
+                    raise FixtureError("ephemeral_token_scan_link_rejected", link_kind=kind,
+                                       target_scope="unresolvable") from exc
+                if resolved != root and root not in resolved.parents:
+                    raise FixtureError("ephemeral_token_scan_link_rejected", link_kind=kind,
+                                       target_scope="outside_stage")
+                internal_links += 1
+                path = resolved
+                info = path.lstat()
+            canonical = path.resolve(strict=True)
+            if canonical != root and root not in canonical.parents:
+                raise FixtureError("ephemeral_token_scan_link_rejected", target_scope="outside_stage")
+            if canonical in visited:
+                continue
+            visited.add(canonical)
             if stat.S_ISDIR(info.st_mode):
                 with os.scandir(path) as directory:
                     for item in directory:
@@ -76,7 +104,8 @@ def scan_ephemeral_token(stage_dir, token):
             files += 1
     except OSError as exc:
         raise FixtureError("ephemeral_token_scan_io_failure") from exc
-    return {"files_scanned": files, "bytes_scanned": total, "ephemeral_token_absent": True}
+    return {"files_scanned": files, "bytes_scanned": total, "ephemeral_token_absent": True,
+            "internal_links_checked": internal_links}
 
 
 def load_module(path, name):
@@ -203,12 +232,24 @@ def execute(openclaw_package, node, hermes_python, hermes_source, output_dir):
             observations.append(observation)
             try:
                 answer = actual_runner(stage, prompt, base_url, token, stage_dir)
-                observation["token_scan"] = scan_ephemeral_token(stage_dir, token)
             except Exception as exc:
                 observation.update(status="failed", failure_kind=type(exc).__name__)
                 if type(exc).__name__ in {'PeerError', 'FixtureError'} and re.fullmatch(r'[A-Za-z0-9_]{1,120}', str(exc)):
                     observation['reason'] = str(exc)
                 raise
+            try:
+                observation["token_scan"] = scan_ephemeral_token(stage_dir, token)
+            except (FixtureError, OSError) as exc:
+                # This cloud fixture has a deterministic fake model, never a
+                # live provider. Record the failure and exercise independent
+                # SDK stages with NEW ephemeral tokens; overall acceptance
+                # below remains fail-closed. This is not production admission.
+                observation["scan_error"] = (str(exc) if isinstance(exc, FixtureError)
+                                              else "ephemeral_token_scan_io_failure")
+                if isinstance(exc, FixtureError):
+                    observation["token_scan_link"] = {key: value for key, value in {
+                        "kind": exc.link_kind, "target_scope": exc.target_scope}.items()
+                        if value in {"symlink", "junction_or_reparse", "outside_stage", "unresolvable", "root_is_link"}}
             observation["status"] = "completed"
             return answer
 
@@ -233,6 +274,8 @@ def execute(openclaw_package, node, hermes_python, hermes_source, output_dir):
         replay = council.run(task, question, public_data_confirmed=True)
         if replay != result or len(calls) != 3:
             raise ValueError("Fixture replay repeated an inference or changed the receipt")
+        if any("scan_error" in observed for observed in observations):
+            raise FixtureError("ephemeral_token_scan_failed")
         receipt.update(status="success", deduplication_verified=True,
             responses_sha256=[a["output_sha256"] for a in result["answers"]],
             hermes_manifest_sha256=hash_file(ROOT / "config" / "hermes_local_peer.json"))
