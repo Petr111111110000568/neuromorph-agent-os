@@ -161,14 +161,15 @@ def parse_cli_output(raw, prompt, *, private_paths=()):
     return answer
 
 
-def _run_local(executable, model, prompt, *, max_tokens, timeout, stop_file):
+def _run_local(executable, model, prompt, *, max_tokens, timeout, stop_file, context_size=4096):
     """Fixed b11146 Vulkan0 profile; bounded transcript output, no shell.
 
     b11146 cli-server.h starts the loopback server in std::thread in THIS
     process, so killing/waiting on the process also terminates that server.
     The CLI's banner and truncated prompt echo are diagnostics, never answers.
     """
-    if (not isinstance(prompt, str) or not prompt.strip() or prompt.startswith("/") or "\x00" in prompt
+    if (type(context_size) is not int or context_size not in {4096, 8192, 16384}
+            or not isinstance(prompt, str) or not prompt.strip() or prompt.startswith("/") or "\x00" in prompt
             or len(prompt.encode("utf-8")) > MAX_PROMPT):
         return {"status": "failed"}
     with tempfile.TemporaryDirectory(prefix="local-review-") as temp:
@@ -178,7 +179,7 @@ def _run_local(executable, model, prompt, *, max_tokens, timeout, stop_file):
         command = [str(executable), "--offline", "-m", str(model), "-f", str(prompt_path),
             "-o", str(transcript_path), "--no-escape", "--reasoning", "off",
             "--color", "off", "--log-colors", "off", "--no-show-timings",
-            "-st", "--simple-io", "--no-display-prompt", "-n", str(max_tokens), "-c", "4096",
+            "-st", "--simple-io", "--no-display-prompt", "-n", str(max_tokens), "-c", str(context_size),
             "-ngl", "99", "--device", "Vulkan0", "-fa", "on", "--temp", "0.7",
             "--top-p", "0.8", "--top-k", "20", "--min-p", "0", "--presence-penalty", "1.5"]
         environment = {name: os.environ[name] for name in ("SystemRoot", "WINDIR") if name in os.environ}
