@@ -291,6 +291,8 @@ def audit_guard(port, *, home, source, output, read_roots=(), diagnostics=None, 
         Path("/etc/os-release"), Path("/etc/localtime"), Path("/etc/machine-id"),
     }
     public_system_roots = {Path("/etc/ssl/certs")}
+    public_system_roots.update({Path("/usr/lib/locale"), Path("/usr/share/locale"),
+                                Path("/usr/lib/ssl"), Path("/usr/share/zoneinfo")})
     if os.name == "nt":
         system_root = Path(os.environ.get("SystemRoot", r"C:\\Windows"))
         public_system_files.update({
@@ -338,6 +340,12 @@ def audit_guard(port, *, home, source, output, read_roots=(), diagnostics=None, 
         if within(path, source) and path.suffix.lower() in {".pyc", ".pyo"}:
             raise FileNotFoundError("source_bytecode_disabled")
         resolved = path.resolve()
+        # procfs access is limited to this adapter process' descriptors and
+        # status; never permit environ, other PIDs, or arbitrary proc nodes.
+        proc_self = str(path).replace("\\", "/")
+        if not writing and (proc_self in {"/proc/self/status", "/proc/self/stat", "/proc/self/cmdline"}
+                            or proc_self.startswith("/proc/self/fd/")):
+            return
         if writing:
             if not (within(resolved, home) or resolved == output):
                 raise PermissionError("external_write_blocked")
