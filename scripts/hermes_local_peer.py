@@ -510,6 +510,11 @@ def run_sdk(prompt, base_url, home, factory, *, token):
         supports_reasoning = getattr(agent, "_supports_reasoning_extra_body", None)
         if callable(supports_reasoning):
             agent._supports_reasoning_extra_body = lambda: False
+        # The custom provider profile also emits top-level ``reasoning_effort``
+        # when its default effort is present.  Mark this bounded route as having
+        # rejected that optional wire extension so the SDK omits the config
+        # entirely; the gateway contract deliberately accepts only text fields.
+        agent._reasoning_effort_rejected = True
         api_errors = []
         api_exception_chains = []
         def observe_call(original):
