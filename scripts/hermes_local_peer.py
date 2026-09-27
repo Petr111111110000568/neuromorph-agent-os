@@ -355,11 +355,14 @@ def audit_guard(port, *, home, source, output, read_roots=(), diagnostics=None, 
         proc_global_read = proc_self in {"/proc/cpuinfo", "/proc/meminfo", "/proc/stat",
                                          "/proc/uptime", "/proc/loadavg", "/proc/version",
                                          "/proc/mounts", "/proc/self/mounts", "/proc/self/mountinfo"}
+        proc_public_metadata = (proc_self.startswith("/proc/")
+                                and not any(part in {"environ", "mem", "kcore", "keys", "sysrq-trigger"}
+                                            for part in proc_parts))
         if not writing and (proc_self in {"/proc/self/status", "/proc/self/stat", "/proc/self/cmdline"}
                             or proc_self.startswith("/proc/self/fd/")
                             or proc_self in {current_proc + suffix for suffix in ("/status", "/stat", "/cmdline")}
                             or proc_self.startswith(current_proc + "/fd/")
-                            or proc_pid_read or proc_global_read):
+                            or proc_pid_read or proc_global_read or proc_public_metadata):
             return
         if writing:
             if not (within(resolved, home) or resolved == output):
