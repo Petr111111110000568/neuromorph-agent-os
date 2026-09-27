@@ -348,9 +348,13 @@ def audit_guard(port, *, home, source, output, read_roots=(), diagnostics=None, 
                          and proc_parts[2].isdigit()
                          and (proc_parts[3] in {"status", "stat", "statm", "cmdline", "io", "cgroup",
                                                 "limits", "sched", "schedstat", "comm", "smaps_rollup"}
-                              or proc_parts[3] == "fd"))
+                              or proc_parts[3] == "fd"
+                              or (proc_parts[3] == "task" and len(proc_parts) >= 6
+                                  and proc_parts[4].isdigit()
+                                  and proc_parts[5] in {"stat", "status", "comm"})))
         proc_global_read = proc_self in {"/proc/cpuinfo", "/proc/meminfo", "/proc/stat",
-                                         "/proc/uptime", "/proc/loadavg", "/proc/version"}
+                                         "/proc/uptime", "/proc/loadavg", "/proc/version",
+                                         "/proc/mounts", "/proc/self/mounts", "/proc/self/mountinfo"}
         if not writing and (proc_self in {"/proc/self/status", "/proc/self/stat", "/proc/self/cmdline"}
                             or proc_self.startswith("/proc/self/fd/")
                             or proc_self in {current_proc + suffix for suffix in ("/status", "/stat", "/cmdline")}
