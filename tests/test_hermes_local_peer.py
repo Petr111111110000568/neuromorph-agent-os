@@ -95,6 +95,7 @@ class LocalPeerTests(unittest.TestCase):
     def test_profile_no_tools_memory_fallback_and_honest_context(self):
         config = peer.profile(BASE_URL)
         self.assertEqual(config["model"]["context_length"], 8192)
+        self.assertFalse(config["model"]["streaming"])
         self.assertEqual(config["plugins"]["enabled"], [])
         self.assertEqual(config["toolsets"], [])
         self.assertEqual(config["mcp_servers"], {})
@@ -127,6 +128,7 @@ class LocalPeerTests(unittest.TestCase):
         self.assertEqual(agent.client.max_retries, 0)
         self.assertEqual(agent.client.timeout, peer.SDK_SECONDS)
         self.assertEqual(agent._client_kwargs["max_retries"], 0)
+        self.assertTrue(agent._disable_streaming)
         self.assertTrue(agent.closed)
         self.assertNotIn("isolated-home", json.dumps(result))
 
@@ -262,6 +264,27 @@ class LocalPeerTests(unittest.TestCase):
         self.assertNotIn(TOKEN, json.dumps(diagnostic))
         self.assertNotIn("messages", diagnostic["sdk_result"])
         self.assertNotIn("error_message", diagnostic["api_errors"][0])
+
+    def test_guard_denial_and_exception_chain_diagnostics_exclude_paths_and_messages(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            counters = {}
+            guard = peer.audit_guard(24567, home=root / "home", source=root / "source",
+                                     output=root / "result.json", diagnostics=counters)
+            try:
+                guard("open", (str(root / TOKEN), "r", os.O_RDONLY))
+            except PermissionError as denied:
+                outer = TimeoutError("private " + TOKEN)
+                outer.__cause__ = denied
+            chain = peer.bounded_exception_chains([peer.exception_chain(outer)])
+            self.assertEqual(chain, [[{"kind": "TimeoutError"}, {"kind": "PermissionError",
+                                      "guard_code": "external_file_read_blocked"}]])
+            self.assertEqual(counters, {("open", "external_file_read_blocked"): 1})
+            self.assertNotIn(TOKEN, json.dumps(chain))
+            self.assertEqual(peer.bounded_audit_denials([
+                {"event": "open", "reason": "external_file_read_blocked", "count": 1},
+                {"event": TOKEN, "reason": "external_file_read_blocked", "count": 1}]),
+                [{"event": "open", "reason": "external_file_read_blocked", "count": 1}])
 
 
 if __name__ == "__main__":

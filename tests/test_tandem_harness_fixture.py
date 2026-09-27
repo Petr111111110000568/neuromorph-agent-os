@@ -61,8 +61,10 @@ class TokenScanTests(unittest.TestCase):
             stage = Path(directory)
             with (stage / "large.log").open("wb") as target:
                 target.truncate(2 * 1024 * 1024 + 1)
-            with self.assertRaisesRegex(fixture.FixtureError, "ephemeral_token_scan_limit"):
+            with self.assertRaisesRegex(fixture.FixtureError, "ephemeral_token_scan_limit") as raised:
                 fixture.scan_ephemeral_token(stage, TOKEN)
+            self.assertEqual(raised.exception.limit_metadata,
+                             {"limit_kind": "file_bytes", "category": "other", "observed": 2 * 1024 * 1024 + 1})
 
     def test_total_budget_is_enforced_across_many_small_files(self):
         with tempfile.TemporaryDirectory() as directory:

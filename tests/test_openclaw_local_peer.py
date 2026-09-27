@@ -53,7 +53,8 @@ class OpenClawPeerTests(unittest.TestCase):
         params = dict(node=self.node, package_root=self.package, base_url="http://127.0.0.1:8768/v1",
                       prompt_file=self.prompt, output_file=self.root / "result.json",
                       home_dir=self.root / "isolated", token="private-test-token", runner=self.fake,
-                      ambient={"SystemRoot": "C:\\Windows", "OPENAI_API_KEY": "forbidden", "NODE_OPTIONS": "bad"})
+                      ambient={"SystemRoot": "C:\\Windows", "OPENAI_API_KEY": "forbidden", "NODE_OPTIONS": "bad",
+                               "NODE_COMPILE_CACHE": "outside-cache", "NODE_DISABLE_COMPILE_CACHE": "0"})
         params.update(changes)
         return peer.run_peer(**params)
 
@@ -66,6 +67,8 @@ class OpenClawPeerTests(unittest.TestCase):
         self.assertEqual(options["timeout"], 300)
         self.assertNotIn("OPENAI_API_KEY", options["env"])
         self.assertNotIn("NODE_OPTIONS", options["env"])
+        self.assertNotIn("NODE_COMPILE_CACHE", options["env"])
+        self.assertEqual(options["env"]["NODE_DISABLE_COMPILE_CACHE"], "1")
         self.assertEqual(result["sdk"]["toolSummary"]["calls"], 0)
         config_text = (self.root / "isolated" / "openclaw.json").read_text()
         self.assertNotIn("private-test-token", config_text)

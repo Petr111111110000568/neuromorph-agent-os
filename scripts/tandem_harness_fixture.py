@@ -25,10 +25,11 @@ sys.path.insert(0, str(ROOT))
 class FixtureError(ValueError):
     """Fixed diagnostic code, never a generated path, token or file content."""
 
-    def __init__(self, code, *, link_kind=None, target_scope=None):
+    def __init__(self, code, *, link_kind=None, target_scope=None, limit_metadata=None):
         super().__init__(code)
         self.link_kind = link_kind
         self.target_scope = target_scope
+        self.limit_metadata = limit_metadata
 
 
 def scan_ephemeral_token(stage_dir, token):
@@ -51,12 +52,20 @@ def scan_ephemeral_token(stage_dir, token):
     entries, total, files, internal_links = 0, 0, 0, 0
     visited = set()
     pending = [(root, 0)]
+    def limit(kind, path, size=0):
+        parts = {part.lower() for part in path.relative_to(root).parts}
+        category = ("node_compile_cache" if any("compile-cache" in part for part in parts)
+                    else "sqlite" if path.suffix in {".db", ".sqlite", ".sqlite3"}
+                    else "state" if "state" in parts else "other")
+        return FixtureError("ephemeral_token_scan_limit", limit_metadata={
+            "limit_kind": kind, "category": category, "observed": min(max(0, size), 2147483647)})
     try:
         while pending:
             path, depth = pending.pop()
             entries += 1
             if entries > 1024 or depth > 32:
-                raise FixtureError("ephemeral_token_scan_limit")
+                raise limit("entries" if entries > 1024 else "depth", path,
+                            entries if entries > 1024 else depth)
             info = path.lstat()
             if stat.S_ISLNK(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
                 kind = "symlink" if stat.S_ISLNK(info.st_mode) else "junction_or_reparse"
@@ -81,20 +90,22 @@ def scan_ephemeral_token(stage_dir, token):
                 with os.scandir(path) as directory:
                     for item in directory:
                         if entries + len(pending) >= 1024:
-                            raise FixtureError("ephemeral_token_scan_limit")
+                            raise limit("entries", path, entries + len(pending))
                         pending.append((path / item.name, depth + 1))
                 continue
             if not stat.S_ISREG(info.st_mode):
                 raise FixtureError("ephemeral_token_scan_special_file")
             if info.st_size > maximum_file or total + info.st_size > maximum_total:
-                raise FixtureError("ephemeral_token_scan_limit")
+                raise limit("file_bytes" if info.st_size > maximum_file else "total_bytes", path,
+                            info.st_size if info.st_size > maximum_file else total + info.st_size)
             consumed, overlap = 0, b""
             with path.open("rb") as stream:
                 while block := stream.read(65536):
                     consumed += len(block)
                     total += len(block)
                     if consumed > maximum_file or total > maximum_total:
-                        raise FixtureError("ephemeral_token_scan_limit")
+                        raise limit("file_bytes" if consumed > maximum_file else "total_bytes", path,
+                                    consumed if consumed > maximum_file else total)
                     data = overlap + block
                     if needle in data:
                         raise FixtureError("ephemeral_token_persisted")
@@ -180,6 +191,8 @@ def sanitized_hermes_diagnostic(data_dir):
             errors = value.get("api_errors", [])
             if type(errors) is list:
                 item["api_errors"] = [peer.bounded_api_error(e) for e in errors[:4] if type(e) is dict]
+            item["api_exception_chains"] = peer.bounded_exception_chains(value.get("api_exception_chains"))
+            item["audit_denials"] = peer.bounded_audit_denials(value.get("audit_denials"))
         result.append(item)
     return result
 
@@ -299,6 +312,8 @@ def execute(openclaw_package, node, hermes_python, hermes_source, output_dir):
                 observation["scan_error"] = (str(exc) if isinstance(exc, FixtureError)
                                               else "ephemeral_token_scan_io_failure")
                 if isinstance(exc, FixtureError):
+                    if exc.limit_metadata is not None:
+                        observation["token_scan_limit"] = exc.limit_metadata
                     observation["token_scan_link"] = {key: value for key, value in {
                         "kind": exc.link_kind, "target_scope": exc.target_scope}.items()
                         if value in {"symlink", "junction_or_reparse", "outside_stage", "unresolvable", "root_is_link"}}

@@ -33,14 +33,73 @@ SDK_SECONDS = 310
 WALL_SECONDS = 350
 MANIFEST_SHA256 = "a67ef5d83592af65a276cebf84a1bd0e042294eee541046e84451bc42248108b"
 MANIFEST = Path(__file__).resolve().parents[1] / "config" / "hermes_local_peer.json"
-ADAPTER_POLICY = ["dotenv_loading_disabled", "isolated_profile", "no_tools_context_8192"]
+ADAPTER_POLICY = ["dotenv_loading_disabled", "isolated_profile", "no_tools_context_8192",
+                  "supported_nonstreaming_profile"]
 
 
 class PeerError(ValueError):
-    def __init__(self, code, *, sdk_result=None, api_errors=()):
+    def __init__(self, code, *, sdk_result=None, api_errors=(), api_exception_chains=()):
         super().__init__(code)
         self.sdk_result = sdk_result
         self.api_errors = list(api_errors)[:4]
+        self.api_exception_chains = list(api_exception_chains)[:4]
+
+
+_AUDIT_CODES = frozenset({"credential_file_blocked", "external_file_read_blocked", "external_write_blocked",
+    "external_connection_blocked", "external_dns_blocked", "runtime_execution_blocked",
+    "filesystem_link_blocked", "source_bytecode_disabled", "path_type_blocked"})
+_AUDIT_EVENTS = frozenset({"open", "socket.connect", "socket.connect_ex", "socket.getaddrinfo",
+    "socket.bind", "socket.sendto", "subprocess.Popen", "os.system", "os.exec", "os.posix_spawn",
+    "pty.spawn", "os.mkdir", "os.remove", "os.rmdir", "os.chmod", "os.truncate", "os.utime",
+    "os.rename", "os.symlink", "os.link", "sqlite3.connect"})
+_EXCEPTION_KINDS = frozenset({"APITimeoutError", "APIConnectionError", "APIStatusError", "BadRequestError",
+    "PermissionError", "FileNotFoundError", "ReadTimeout", "WriteTimeout", "ConnectTimeout", "PoolTimeout",
+    "ReadError", "WriteError", "ConnectError", "RemoteProtocolError", "LocalProtocolError", "TimeoutError",
+    "RuntimeError", "ValueError", "TypeError", "OSError", "InterruptedError", "EmptyStreamError"})
+
+
+def exception_chain(exc):
+    """Types and fixed guard codes only; never exception text or request objects."""
+    result, seen = [], set()
+    while exc is not None and id(exc) not in seen and len(result) < 6:
+        seen.add(id(exc))
+        kind = type(exc).__name__
+        item = {"kind": kind if kind in _EXCEPTION_KINDS else "other"}
+        if type(exc) in (PermissionError, FileNotFoundError) and str(exc) in _AUDIT_CODES:
+            item["guard_code"] = str(exc)
+        result.append(item)
+        exc = exc.__cause__ if exc.__cause__ is not None else exc.__context__
+    return result
+
+
+def bounded_exception_chains(value):
+    if type(value) is not list:
+        return []
+    result = []
+    for chain in value[:4]:
+        if type(chain) is not list:
+            continue
+        items = []
+        for item in chain[:6]:
+            if (type(item) is not dict or type(item.get("kind")) is not str
+                    or item["kind"] not in _EXCEPTION_KINDS | {"other"}):
+                continue
+            clean = {"kind": item["kind"]}
+            if type(item.get("guard_code")) is str and item["guard_code"] in _AUDIT_CODES:
+                clean["guard_code"] = item["guard_code"]
+            items.append(clean)
+        result.append(items)
+    return result
+
+
+def bounded_audit_denials(value):
+    if type(value) is not list:
+        return []
+    return [{"event": item["event"], "reason": item["reason"], "count": item["count"]}
+        for item in value[:128] if type(item) is dict
+        and type(item.get("event")) is str and item["event"] in _AUDIT_EVENTS
+        and type(item.get("reason")) is str and item["reason"] in _AUDIT_CODES
+        and type(item.get("count")) is int and 1 <= item["count"] <= 1000]
 
 
 _ERROR_CODES = frozenset({"auth", "auth_permanent", "billing", "rate_limit", "upstream_rate_limit",
@@ -74,6 +133,8 @@ def bounded_sdk_result(value):
 
 def bounded_api_error(value):
     result = {}
+    if type(value.get("error_type")) is str and value["error_type"] in _EXCEPTION_KINDS:
+        result["error_type"] = value["error_type"]
     if isinstance(value.get("reason"), str) and value["reason"] in _ERROR_CODES:
         result["reason"] = value["reason"]
     if type(value.get("status_code")) is int and 100 <= value["status_code"] <= 599:
@@ -127,7 +188,8 @@ def profile(base_url):
     # This is the REAL local context, not the upstream 64K tool-calling default.
     return {
         "model": {"default": MODEL, "provider": "custom", "base_url": base_url,
-                  "api_key": "no-key-required", "context_length": CONTEXT_TOKENS},
+                  "api_key": "no-key-required", "context_length": CONTEXT_TOKENS,
+                  "streaming": False},
         "providers": {}, "fallback_providers": [], "mcp_servers": {}, "toolsets": [],
         "platform_toolsets": {"cli": []}, "plugins": {"enabled": []},
         "agent": {"max_turns": 1, "api_max_retries": 1, "auto_recovery_cycles": 0,
@@ -207,7 +269,7 @@ def verify_source(source, env):
     return manifest
 
 
-def audit_guard(port, *, home, source, output, read_roots=()):
+def audit_guard(port, *, home, source, output, read_roots=(), diagnostics=None):
     """Restricted Python I/O only; native extensions are not OS-sandboxed."""
     home, source, output = (Path(p).resolve() for p in (home, source, output))
     roots = (home, source, *(Path(p).resolve() for p in read_roots))
@@ -269,7 +331,16 @@ def audit_guard(port, *, home, source, output, read_roots=()):
             raise PermissionError("filesystem_link_blocked")
         elif event == "sqlite3.connect" and args[0] != ":memory:":
             checked_path(args[0], writing=True)
-    return guard
+    def observed_guard(event, args):
+        try:
+            guard(event, args)
+        except (PermissionError, FileNotFoundError) as exc:
+            code = str(exc)
+            if diagnostics is not None and code in _AUDIT_CODES:
+                key = (event, code)
+                diagnostics[key] = min(1000, diagnostics.get(key, 0) + 1)
+            raise
+    return observed_guard
 
 
 class BoundedSink(io.TextIOBase):
@@ -346,7 +417,25 @@ def run_sdk(prompt, base_url, home, factory, *, token):
         kwargs["max_retries"] = 0
         kwargs["timeout"] = SDK_SECONDS
         agent.suppress_status_output = True
+        # Pinned SDK agent_init._apply_display_config officially maps
+        # model.streaming=false to this per-session flag. request_overrides
+        # alone does NOT select non-streaming in turn_api_call._should_stream.
+        agent._disable_streaming = True
         api_errors = []
+        api_exception_chains = []
+        def observe_call(original):
+            def call(*args, **kwargs):
+                try:
+                    return original(*args, **kwargs)
+                except Exception as exc:
+                    if len(api_exception_chains) < 4:
+                        api_exception_chains.append(exception_chain(exc))
+                    raise
+            return call
+        for method in ("_interruptible_api_call", "_interruptible_streaming_api_call"):
+            original = getattr(agent, method, None)
+            if callable(original):
+                setattr(agent, method, observe_call(original))
         original_error_hook = getattr(agent, "_invoke_api_request_error_hook", None)
         if callable(original_error_hook):
             def error_hook(**details):
@@ -358,7 +447,8 @@ def run_sdk(prompt, base_url, home, factory, *, token):
         if not (type(result) is dict and result.get("completed") is True
                 and not result.get("interrupted") and not result.get("partial")
                 and not result.get("failed")):
-            raise PeerError("sdk_incomplete", sdk_result=bounded_sdk_result(result), api_errors=api_errors)
+            raise PeerError("sdk_incomplete", sdk_result=bounded_sdk_result(result), api_errors=api_errors,
+                            api_exception_chains=api_exception_chains)
         require(type(result.get("api_calls")) is int and result["api_calls"] == 1,
                 "sdk_call_count_rejected")
         text = result.get("final_response")
@@ -398,6 +488,7 @@ def safe_failure(exc, stage="preflight"):
     if type(exc) is PeerError and exc.sdk_result is not None:
         result["sdk_result"] = bounded_sdk_result(exc.sdk_result)
         result["api_errors"] = [bounded_api_error(item) for item in exc.api_errors if type(item) is dict][:4]
+        result["api_exception_chains"] = bounded_exception_chains(exc.api_exception_chains)
     return result
 
 
@@ -440,8 +531,9 @@ def execute(source_root, base_url, prompt_file, output_file, home_dir, stop_file
                   or x in Path(p).resolve().parents for x in prefixes)]
     sys.path[:] = [str(source), *safe_paths]
     sys.dont_write_bytecode = True
+    audit_denials = {}
     sys.addaudithook(audit_guard(port, home=home, source=source, output=output,
-                                read_roots=prefixes))
+                                read_roots=prefixes, diagnostics=audit_denials))
     done = threading.Event()
     monitor = threading.Thread(target=_watchdog, args=(done, stop), daemon=True)
     monitor.start()
@@ -460,6 +552,8 @@ def execute(source_root, base_url, prompt_file, output_file, home_dir, stop_file
         done.set()
         monitor.join(timeout=1)
     result["sdk_log_bytes"] = sink.count
+    result["audit_denials"] = [{"event": event, "reason": reason, "count": count}
+                              for (event, reason), count in sorted(audit_denials.items())]
     result["source_manifest_sha256"] = MANIFEST_SHA256
     with output.open("x", encoding="utf-8") as target:
         target.write(json.dumps(result, ensure_ascii=False) + "\n")

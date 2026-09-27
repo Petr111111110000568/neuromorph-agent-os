@@ -150,6 +150,9 @@ def build_environment(home, node, token, ambient=None):
         "OPENCLAW_CONFIG_PATH": str(home / "openclaw.json"),
         "OPENCLAW_WORKSPACE_DIR": str(home / "workspace"),
         "OPENCLAW_OFFLINE": "1", "OPENCLAW_LOAD_SHELL_ENV": "0",
+        # The npm launcher otherwise creates a large bytecode cache in TEMP.
+        # This documented Node/OpenClaw switch also prevents cache respawning.
+        "NODE_DISABLE_COMPILE_CACHE": "1",
         "NEUROMORPH_TANDEM_TOKEN": token, "NO_COLOR": "1", "CI": "1",
     })
     path = [str(Path(node).parent)]
