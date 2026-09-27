@@ -14,11 +14,69 @@ import os
 from pathlib import Path
 import re
 import shutil
+import stat
 import sys
 import time
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+
+
+class FixtureError(ValueError):
+    """Fixed diagnostic code, never a generated path, token or file content."""
+
+
+def scan_ephemeral_token(stage_dir, token):
+    """Scan ONLY the freshly created SDK stage after its process has terminated.
+
+    No symlink/junction/special-file traversal. Limits are 2 MiB/file, 16 MiB
+    total, 1024 entries and depth 32. A limit means unverified, not a clean scan.
+    No file path or matched bytes are returned, even on failure.
+    """
+    if not isinstance(token, str) or not re.fullmatch(r"[A-Za-z0-9_-]{32,256}", token):
+        raise FixtureError("invalid_ephemeral_token")
+    needle = token.encode("ascii")
+    root = Path(stage_dir).absolute()
+    maximum_file, maximum_total = 2 * 1024 * 1024, 16 * 1024 * 1024
+    entries, total, files = 0, 0, 0
+    pending = [(root, 0)]
+    try:
+        while pending:
+            path, depth = pending.pop()
+            entries += 1
+            if entries > 1024 or depth > 32:
+                raise FixtureError("ephemeral_token_scan_limit")
+            info = path.lstat()
+            if stat.S_ISLNK(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
+                raise FixtureError("ephemeral_token_scan_link_rejected")
+            if stat.S_ISDIR(info.st_mode):
+                with os.scandir(path) as directory:
+                    for item in directory:
+                        if entries + len(pending) >= 1024:
+                            raise FixtureError("ephemeral_token_scan_limit")
+                        pending.append((path / item.name, depth + 1))
+                continue
+            if not stat.S_ISREG(info.st_mode):
+                raise FixtureError("ephemeral_token_scan_special_file")
+            if info.st_size > maximum_file or total + info.st_size > maximum_total:
+                raise FixtureError("ephemeral_token_scan_limit")
+            consumed, overlap = 0, b""
+            with path.open("rb") as stream:
+                while block := stream.read(65536):
+                    consumed += len(block)
+                    total += len(block)
+                    if consumed > maximum_file or total > maximum_total:
+                        raise FixtureError("ephemeral_token_scan_limit")
+                    data = overlap + block
+                    if needle in data:
+                        raise FixtureError("ephemeral_token_persisted")
+                    overlap = data[-(len(needle) - 1):]
+            if consumed != info.st_size:
+                raise FixtureError("ephemeral_token_scan_file_changed")
+            files += 1
+    except OSError as exc:
+        raise FixtureError("ephemeral_token_scan_io_failure") from exc
+    return {"files_scanned": files, "bytes_scanned": total, "ephemeral_token_absent": True}
 
 
 def load_module(path, name):
@@ -111,8 +169,15 @@ def execute(openclaw_package, node, hermes_python, hermes_source, output_dir):
     data = output / "state"
     data.mkdir()
     try:
-        package, node_path, python_path, source = (Path(p).resolve(strict=True) for p in
-            (openclaw_package, node, hermes_python, hermes_source))
+        package, node_path, source = (Path(p).resolve(strict=True) for p in
+            (openclaw_package, node, hermes_source))
+        # POSIX venv/bin/python is a symlink to the base interpreter. Preserve
+        # its invocation path: resolving the last component drops the venv and
+        # therefore its installed SDK dependencies (e.g. python-dotenv).
+        python_input = Path(hermes_python).absolute()
+        python_path = python_input.parent.resolve(strict=True) / python_input.name
+        if not python_path.is_file():
+            raise ValueError("SDK venv interpreter missing")
         manifest = prepare_openclaw_manifest(node_path, package)
         receipt["openclaw_installation_manifest_sha256"] = hashlib.sha256(
             json.dumps(manifest, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
@@ -138,9 +203,10 @@ def execute(openclaw_package, node, hermes_python, hermes_source, output_dir):
             observations.append(observation)
             try:
                 answer = actual_runner(stage, prompt, base_url, token, stage_dir)
+                observation["token_scan"] = scan_ephemeral_token(stage_dir, token)
             except Exception as exc:
                 observation.update(status="failed", failure_kind=type(exc).__name__)
-                if type(exc).__name__ == 'PeerError' and re.fullmatch(r'[A-Za-z0-9_]{1,120}', str(exc)):
+                if type(exc).__name__ in {'PeerError', 'FixtureError'} and re.fullmatch(r'[A-Za-z0-9_]{1,120}', str(exc)):
                     observation['reason'] = str(exc)
                 raise
             observation["status"] = "completed"

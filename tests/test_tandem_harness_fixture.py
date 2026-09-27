@@ -1,0 +1,70 @@
+"""Fresh-file token scan contract; no SDK, model or network is executed."""
+import importlib.util
+from pathlib import Path
+import tempfile
+import unittest
+
+SPEC = importlib.util.spec_from_file_location("tandem_fixture_scan_tests",
+    Path(__file__).resolve().parents[1] / "scripts" / "tandem_harness_fixture.py")
+fixture = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(fixture)
+TOKEN = "test-token-" + "a" * 54
+
+
+class TokenScanTests(unittest.TestCase):
+    def test_checks_fresh_stage_only_and_reports_no_paths(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            stage = root / "new-stage"
+            stage.mkdir()
+            (root / "unrelated-profile.env").write_text(TOKEN, encoding="utf-8")
+            (stage / "config.json").write_text('{"apiKey":"${NEUROMORPH_TANDEM_TOKEN}"}', encoding="utf-8")
+            result = fixture.scan_ephemeral_token(stage, TOKEN)
+            self.assertTrue(result["ephemeral_token_absent"])
+            self.assertEqual(result["files_scanned"], 1)
+            self.assertEqual(set(result), {"ephemeral_token_absent", "files_scanned", "bytes_scanned"})
+
+    def test_detects_token_across_read_boundary_without_exposing_it(self):
+        with tempfile.TemporaryDirectory() as directory:
+            stage = Path(directory)
+            (stage / "models.json").write_bytes(b"x" * (65536 - 20) + TOKEN.encode() + b"tail")
+            with self.assertRaises(fixture.FixtureError) as raised:
+                fixture.scan_ephemeral_token(stage, TOKEN)
+            self.assertEqual(str(raised.exception), "ephemeral_token_persisted")
+            self.assertNotIn(TOKEN, str(raised.exception))
+            self.assertNotIn(directory, str(raised.exception))
+
+    def test_oversized_file_is_not_a_clean_scan(self):
+        with tempfile.TemporaryDirectory() as directory:
+            stage = Path(directory)
+            with (stage / "large.log").open("wb") as target:
+                target.truncate(2 * 1024 * 1024 + 1)
+            with self.assertRaisesRegex(fixture.FixtureError, "ephemeral_token_scan_limit"):
+                fixture.scan_ephemeral_token(stage, TOKEN)
+
+    def test_total_budget_is_enforced_across_many_small_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            stage = Path(directory)
+            for index in range(9):
+                with (stage / (str(index) + ".log")).open("wb") as target:
+                    target.truncate(2 * 1024 * 1024)
+            with self.assertRaisesRegex(fixture.FixtureError, "ephemeral_token_scan_limit"):
+                fixture.scan_ephemeral_token(stage, TOKEN)
+
+    def test_symlink_is_rejected_without_reading_target(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            stage = root / "stage"
+            stage.mkdir()
+            target = root / "private.txt"
+            target.write_text(TOKEN, encoding="utf-8")
+            try:
+                (stage / "linked.txt").symlink_to(target)
+            except OSError:
+                self.skipTest("OS does not permit test symlinks")
+            with self.assertRaisesRegex(fixture.FixtureError, "ephemeral_token_scan_link_rejected"):
+                fixture.scan_ephemeral_token(stage, TOKEN)
+
+
+if __name__ == "__main__":
+    unittest.main()
