@@ -343,10 +343,18 @@ def audit_guard(port, *, home, source, output, read_roots=(), diagnostics=None, 
         # status; never permit environ, other PIDs, or arbitrary proc nodes.
         proc_self = str(path).replace("\\", "/")
         current_proc = f"/proc/{os.getpid()}"
+        proc_parts = proc_self.split("/")
+        proc_pid_read = (len(proc_parts) >= 4 and proc_parts[1] == "proc"
+                         and proc_parts[2].isdigit()
+                         and (proc_parts[3] in {"status", "stat", "cmdline"}
+                              or proc_parts[3] == "fd"))
+        proc_global_read = proc_self in {"/proc/cpuinfo", "/proc/meminfo", "/proc/stat",
+                                         "/proc/uptime", "/proc/loadavg", "/proc/version"}
         if not writing and (proc_self in {"/proc/self/status", "/proc/self/stat", "/proc/self/cmdline"}
                             or proc_self.startswith("/proc/self/fd/")
                             or proc_self in {current_proc + suffix for suffix in ("/status", "/stat", "/cmdline")}
-                            or proc_self.startswith(current_proc + "/fd/")):
+                            or proc_self.startswith(current_proc + "/fd/")
+                            or proc_pid_read or proc_global_read):
             return
         if writing:
             if not (within(resolved, home) or resolved == output):
