@@ -140,6 +140,8 @@ def execute(openclaw_package, node, hermes_python, hermes_source, output_dir):
                 answer = actual_runner(stage, prompt, base_url, token, stage_dir)
             except Exception as exc:
                 observation.update(status="failed", failure_kind=type(exc).__name__)
+                if type(exc).__name__ == 'PeerError' and re.fullmatch(r'[A-Za-z0-9_]{1,120}', str(exc)):
+                    observation['reason'] = str(exc)
                 raise
             observation["status"] = "completed"
             return answer

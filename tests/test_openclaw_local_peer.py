@@ -112,6 +112,28 @@ class OpenClawPeerTests(unittest.TestCase):
             self.run_peer()
         self.assertEqual(self.calls, [])
 
+    def test_large_valid_pinned_package_metadata_is_admitted(self):
+        package_file = self.package / "package.json"
+        value = json.loads(package_file.read_text())
+        value["exports_fixture"] = "x" * 150_000
+        package_file.write_text(json.dumps(value), encoding="utf-8")
+        self.manifest["package"]["package_json_sha256"] = peer.sha256_file(package_file)
+        self.save_manifest()
+        result = self.run_peer()
+        self.assertEqual(result["package_version"], peer.VERSION)
+        self.assertEqual(len(self.calls), 1)
+
+    def test_package_metadata_over_256_kib_is_rejected_before_launch(self):
+        package_file = self.package / "package.json"
+        value = json.loads(package_file.read_text())
+        value["exports_fixture"] = "x" * (256 * 1024)
+        package_file.write_text(json.dumps(value), encoding="utf-8")
+        self.manifest["package"]["package_json_sha256"] = peer.sha256_file(package_file)
+        self.save_manifest()
+        with self.assertRaisesRegex(peer.PeerError, "metadata_too_large"):
+            self.run_peer()
+        self.assertEqual(self.calls, [])
+
     def test_preexisting_home_with_dotenv_never_used(self):
         home = self.root / "isolated"
         home.mkdir()

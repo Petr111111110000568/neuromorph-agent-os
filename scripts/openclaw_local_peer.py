@@ -25,6 +25,7 @@ MAX_PROMPT = 24_000
 MAX_STDOUT = 1_048_576
 MAX_STDERR = 262_144
 MAX_FINAL = 32_768
+MAX_PACKAGE_METADATA = 256 * 1024
 TIMEOUT = 300
 
 
@@ -83,7 +84,7 @@ def validate_installation(node, package_root):
                 raise PeerError("installation_pin_mismatch")
             if sha256_file(path) != expected:
                 raise PeerError("installation_pin_mismatch")
-        actual = _json_file(package_file)
+        actual = _json_file(package_file, maximum=MAX_PACKAGE_METADATA)
         if actual.get("name") != "openclaw" or actual.get("version") != VERSION:
             raise PeerError("installation_pin_mismatch")
         if actual.get("bin", {}).get("openclaw") != "openclaw.mjs":
