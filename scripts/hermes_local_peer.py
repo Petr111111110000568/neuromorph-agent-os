@@ -273,6 +273,22 @@ def audit_guard(port, *, home, source, output, read_roots=(), diagnostics=None):
     """Restricted Python I/O only; native extensions are not OS-sandboxed."""
     home, source, output = (Path(p).resolve() for p in (home, source, output))
     roots = (home, source, *(Path(p).resolve() for p in read_roots))
+    # httpx/OpenSSL and platformdirs may inspect public OS metadata while
+    # constructing a local client. Permit only fixed, non-secret files and the
+    # system CA bundle; credentials and arbitrary external files remain blocked.
+    public_system_files = {
+        Path("/etc/hosts"), Path("/etc/resolv.conf"), Path("/etc/nsswitch.conf"),
+        Path("/etc/os-release"), Path("/etc/localtime"), Path("/etc/machine-id"),
+    }
+    public_system_roots = {Path("/etc/ssl/certs")}
+    if os.name == "nt":
+        system_root = Path(os.environ.get("SystemRoot", r"C:\\Windows"))
+        public_system_files.update({
+            system_root / "System32" / "drivers" / "etc" / "hosts",
+            system_root / "System32" / "drivers" / "etc" / "services",
+        })
+    public_system_files = {p.absolute() for p in public_system_files}
+    public_system_roots = {p.absolute() for p in public_system_roots}
 
     def within(path, root):
         return path == root or root in path.parents
@@ -301,7 +317,9 @@ def audit_guard(port, *, home, source, output, read_roots=(), diagnostics=None):
         if writing:
             if not (within(resolved, home) or resolved == output):
                 raise PermissionError("external_write_blocked")
-        elif not any(within(resolved, root) for root in roots):
+        elif (not any(within(resolved, root) for root in roots)
+              and resolved not in public_system_files
+              and not any(within(resolved, root) for root in public_system_roots)):
             raise PermissionError("external_file_read_blocked")
 
     def guard(event, args):
