@@ -174,7 +174,59 @@ def sanitized_hermes_diagnostic(data_dir):
             for frame in frames if isinstance(frame, dict)
             and isinstance(frame.get("file"), str) and re.fullmatch(r"[A-Za-z0-9_.-]{1,80}", frame["file"])
             and type(frame.get("line")) is int and 0 <= frame["line"] < 100000][:6]
+        if type(value.get("sdk_result")) is dict:
+            peer = load_module(ROOT / "scripts" / "hermes_local_peer.py", "fixture_peer_diagnostic")
+            item["sdk_result"] = peer.bounded_sdk_result(value["sdk_result"])
+            errors = value.get("api_errors", [])
+            if type(errors) is list:
+                item["api_errors"] = [peer.bounded_api_error(e) for e in errors[:4] if type(e) is dict]
         result.append(item)
+    return result
+
+
+def project_gateway_diagnostic(value):
+    """Whitelist exact gateway schema and identifiers; never arbitrary names/values."""
+    from workbench.tandem import _API_FIELDS, _DIAGNOSTIC_CODES
+    keys = {"schema_version", "stage", "scope", "response_attempts", "http_response_counts",
+            "validation_code_counts", "api_field_names", "unknown_api_fields_omitted",
+            "counters_saturated", "values_recorded"}
+    if (type(value) is not dict or set(value) != keys or type(value["schema_version"]) is not int
+            or value["schema_version"] != 1 or value["stage"] not in {"plan", "critique", "synthesis"}
+            or value["scope"] != "reply_decisions_not_client_delivery"
+            or type(value["counters_saturated"]) is not bool or value["values_recorded"] is not False):
+        raise FixtureError("gateway_diagnostic_rejected")
+    for key in ("response_attempts", "unknown_api_fields_omitted"):
+        if type(value[key]) is not int or not 0 <= value[key] <= 1000:
+            raise FixtureError("gateway_diagnostic_rejected")
+    for key, allowed in (("http_response_counts", {"200", "400", "401", "403", "404", "409", "413", "503", "other"}),
+                         ("validation_code_counts", _DIAGNOSTIC_CODES)):
+        mapping = value[key]
+        if (type(mapping) is not dict or set(mapping) - allowed
+                or any(type(n) is not int or not 0 <= n <= 1000 for n in mapping.values())):
+            raise FixtureError("gateway_diagnostic_rejected")
+    names = value["api_field_names"]
+    if (type(names) is not list or len(names) > len(_API_FIELDS)
+            or any(type(name) is not str or name not in _API_FIELDS for name in names)
+            or len(set(names)) != len(names)):
+        raise FixtureError("gateway_diagnostic_rejected")
+    return json.loads(json.dumps(value))
+
+
+def sanitized_gateway_diagnostics(data_dir):
+    result = []
+    for path in sorted((data_dir / "tandem").glob("*/*/gateway-diagnostic.json"))[:3]:
+        try:
+            if path.is_symlink() or path.stat().st_size > 4096:
+                raise FixtureError("gateway_diagnostic_rejected")
+            if Path(data_dir).resolve() not in path.resolve().parents:
+                raise FixtureError("gateway_diagnostic_rejected")
+            with path.open("rb") as stream:
+                raw = stream.read(4097)
+            if len(raw) > 4096:
+                raise FixtureError("gateway_diagnostic_rejected")
+            result.append(project_gateway_diagnostic(json.loads(raw)))
+        except (OSError, ValueError, TypeError, UnicodeError):
+            result.append({"diagnostic_rejected": True})
     return result
 
 
@@ -285,6 +337,7 @@ def execute(openclaw_package, node, hermes_python, hermes_source, output_dir):
         receipt.update(fixture_completions=len(calls), harness_stages=observations,
                        elapsed_seconds=round(time.monotonic() - started, 3))
         receipt["hermes_diagnostics"] = sanitized_hermes_diagnostic(data)
+        receipt["gateway_diagnostics"] = sanitized_gateway_diagnostics(data)
         write_new(output / "fixture-receipt.json", receipt)
     return receipt
 

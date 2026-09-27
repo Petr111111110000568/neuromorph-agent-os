@@ -37,7 +37,51 @@ ADAPTER_POLICY = ["dotenv_loading_disabled", "isolated_profile", "no_tools_conte
 
 
 class PeerError(ValueError):
-    pass
+    def __init__(self, code, *, sdk_result=None, api_errors=()):
+        super().__init__(code)
+        self.sdk_result = sdk_result
+        self.api_errors = list(api_errors)[:4]
+
+
+_ERROR_CODES = frozenset({"auth", "auth_permanent", "billing", "rate_limit", "upstream_rate_limit",
+    "upstream_blocked", "overloaded", "server_error", "timeout", "ssl_cert_verification",
+    "context_overflow", "payload_too_large", "image_too_large", "image_corrupt", "model_not_found",
+    "provider_policy_blocked", "content_policy_blocked", "model_entitlement", "incomplete_response",
+    "format_error", "role_alternation", "invalid_encrypted_content", "multimodal_tool_content_unsupported",
+    "reasoning_mandatory", "thinking_signature", "long_context_tier", "oauth_long_context_beta_forbidden",
+    "llama_cpp_grammar_pattern", "unknown", "interpreter_shutdown"})
+
+
+def bounded_sdk_result(value):
+    """Closed diagnostic projection; no answer, request, message, URL or credentials."""
+    if type(value) is not dict:
+        return {"result_was_object": False}
+    result = {"result_was_object": value.get("result_was_object", True)
+              if type(value.get("result_was_object", True)) is bool else True}
+    for key in ("completed", "interrupted", "failed", "partial", "compression_deferred",
+                "compression_exhausted", "failure_retryable"):
+        if type(value.get(key)) is bool:
+            result[key] = value[key]
+    if type(value.get("api_calls")) is int and 0 <= value["api_calls"] <= 16:
+        result["api_calls"] = value["api_calls"]
+    if isinstance(value.get("failure_reason"), str) and value["failure_reason"] in _ERROR_CODES:
+        result["failure_reason"] = value["failure_reason"]
+    for key in ("status_code", "http_status"):
+        if type(value.get(key)) is int and 100 <= value[key] <= 599:
+            result[key] = value[key]
+    return result
+
+
+def bounded_api_error(value):
+    result = {}
+    if isinstance(value.get("reason"), str) and value["reason"] in _ERROR_CODES:
+        result["reason"] = value["reason"]
+    if type(value.get("status_code")) is int and 100 <= value["status_code"] <= 599:
+        result["status_code"] = value["status_code"]
+    for key in ("api_call_count", "retry_count", "max_retries"):
+        if type(value.get(key)) is int and 0 <= value[key] <= 16:
+            result[key] = value[key]
+    return result
 
 
 def require(condition, code):
@@ -302,10 +346,19 @@ def run_sdk(prompt, base_url, home, factory, *, token):
         kwargs["max_retries"] = 0
         kwargs["timeout"] = SDK_SECONDS
         agent.suppress_status_output = True
+        api_errors = []
+        original_error_hook = getattr(agent, "_invoke_api_request_error_hook", None)
+        if callable(original_error_hook):
+            def error_hook(**details):
+                if len(api_errors) < 4:
+                    api_errors.append(bounded_api_error(details))
+                return original_error_hook(**details)
+            agent._invoke_api_request_error_hook = error_hook
         result = agent.run_conversation(prompt)
-        require(type(result) is dict and result.get("completed") is True
+        if not (type(result) is dict and result.get("completed") is True
                 and not result.get("interrupted") and not result.get("partial")
-                and not result.get("failed"), "sdk_incomplete")
+                and not result.get("failed")):
+            raise PeerError("sdk_incomplete", sdk_result=bounded_sdk_result(result), api_errors=api_errors)
         require(type(result.get("api_calls")) is int and result["api_calls"] == 1,
                 "sdk_call_count_rejected")
         text = result.get("final_response")
@@ -342,6 +395,9 @@ def safe_failure(exc, stage="preflight"):
     if isinstance(exc, ModuleNotFoundError) and isinstance(exc.name, str) and re.fullmatch(
             r"[A-Za-z_][A-Za-z0-9_.]{0,119}", exc.name):
         result["missing_module"] = exc.name
+    if type(exc) is PeerError and exc.sdk_result is not None:
+        result["sdk_result"] = bounded_sdk_result(exc.sdk_result)
+        result["api_errors"] = [bounded_api_error(item) for item in exc.api_errors if type(item) is dict][:4]
     return result
 
 

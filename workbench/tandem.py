@@ -44,6 +44,38 @@ _FAILURES = {"runtime_verification", "gateway_request_rejected", "runtime_change
              "harness_failed", "harness_output_mismatch", "operator_stop", "interrupted_unknown"}
 _RESPONSE_KEYS = {"schema_version", "task_id", "stage", "harness", "model", "prompt_sha256",
                   "gateway_request_sha256", "text", "output_sha256", "status", "output_format"}
+_API_FIELDS = frozenset({"model", "messages", "stream", "stream_options", "max_tokens", "max_completion_tokens",
+    "temperature", "top_p", "presence_penalty", "frequency_penalty", "seed", "stop", "n",
+    "tools", "tool_choice", "parallel_tool_calls", "store", "user", "response_format"})
+_VALIDATION_MESSAGES = {
+    "Unsupported model": "unsupported_model", "Unsupported completion field": "unsupported_fields",
+    "Token limit exceeded": "token_limit", "Unsupported stream options": "stream_options",
+    "Only text output is allowed": "response_format", "Invalid sampling metadata": "sampling_metadata",
+    "Invalid seed metadata": "seed_metadata", "Invalid bounded user metadata": "user_metadata",
+    "Invalid stop metadata": "stop_metadata", "Invalid bounded stop metadata": "stop_metadata",
+    "Invalid bounded messages": "messages_shape", "Only text messages without tool calls are allowed": "message_schema",
+    "Only explicit text content blocks are allowed": "content_blocks", "Invalid bounded message": "message_text",
+    "Completion is not bound to the current stage": "stage_binding",
+    "Harness context exceeds fixed byte limit": "context_limit"}
+_DIAGNOSTIC_CODES = frozenset({*_VALIDATION_MESSAGES.values(), "invalid_request", "stream_flag",
+    "tools_not_empty_array", "tool_choice_not_none", "parallel_tools_not_false", "store_not_false",
+    "completion_count", "authentication", "loopback_gate", "endpoint", "body_limit", "reserved",
+    "runtime_changed", "local_inference_failed"})
+_DIAGNOSTIC_LIMIT = 1000
+
+
+class _CompletionRejected(ValueError):
+    def __init__(self, code):
+        self.code = code if code in _DIAGNOSTIC_CODES else "invalid_request"
+        super().__init__(self.code)
+
+
+def _validation_code(error):
+    # Exception text is never persisted. Only exact local constant messages can
+    # select a public code; arbitrary parser/SDK errors collapse to one code.
+    if isinstance(error, _CompletionRejected):
+        return error.code
+    return _VALIDATION_MESSAGES.get(str(error), "invalid_request")
 
 
 def _canonical(value):
@@ -169,18 +201,19 @@ def _stage_prompt(question, stage, previous):
 def _validate_completion(body, stage_prompt):
     if type(body) is not dict or body.get("model") != MODEL:
         raise ValueError("Unsupported model")
-    allowed = {"model", "messages", "stream", "stream_options", "max_tokens", "max_completion_tokens",
-               "temperature", "top_p", "presence_penalty", "frequency_penalty", "seed", "stop", "n",
-               "tools", "tool_choice", "parallel_tool_calls", "store", "user", "response_format"}
-    if set(body) - allowed:
+    if set(body) - _API_FIELDS:
         raise ValueError("Unsupported completion field")
     for name in ("max_tokens", "max_completion_tokens"):
         if name in body and (type(body[name]) is not int or not 1 <= body[name] <= MAX_TOKENS):
             raise ValueError("Token limit exceeded")
-    if (type(body.get("stream", False)) is not bool or body.get("tools", []) != []
-            or body.get("tool_choice", "none") != "none" or body.get("parallel_tool_calls", False) is not False
-            or body.get("store", False) is not False or type(body.get("n", 1)) is not int or body.get("n", 1) != 1):
-        raise ValueError("Only one no-tools completion is allowed")
+    for code, accepted in (("stream_flag", type(body.get("stream", False)) is bool),
+            ("tools_not_empty_array", body.get("tools", []) == []),
+            ("tool_choice_not_none", body.get("tool_choice", "none") == "none"),
+            ("parallel_tools_not_false", body.get("parallel_tool_calls", False) is False),
+            ("store_not_false", body.get("store", False) is False),
+            ("completion_count", type(body.get("n", 1)) is int and body.get("n", 1) == 1)):
+        if not accepted:
+            raise _CompletionRejected(code)
     if "stream_options" in body and body["stream_options"] not in ({}, {"include_usage": True}, {"include_usage": False}):
         raise ValueError("Unsupported stream options")
     if "response_format" in body and body["response_format"] != {"type": "text"}:
@@ -246,11 +279,37 @@ class _Gateway:
         self.cancelled = False
         self.stage_dir = folder / stage
         self.stage_dir.mkdir()
+        self.diagnostic = {"schema_version": 1, "stage": stage, "scope": "reply_decisions_not_client_delivery",
+            "response_attempts": 0, "http_response_counts": {}, "validation_code_counts": {},
+            "api_field_names": [], "unknown_api_fields_omitted": 0, "counters_saturated": False,
+            "values_recorded": False}
+        self.diagnostic_path = self.stage_dir / "gateway-diagnostic.json"
+        _save_state(self.diagnostic_path, self.diagnostic)
         self.stop_file = self.stage_dir / "STOP"
         self.server = _Server(("127.0.0.1", 0), self._handler())
         self.base_url = "http://127.0.0.1:" + str(self.server.server_port) + "/v1"
         self.thread = threading.Thread(target=self.server.serve_forever, kwargs={"poll_interval": 0.05},
                                        name="tandem-loopback", daemon=True)
+
+    def _diagnose(self, status, *, code=None, body=None):
+        """Bounded public metadata only; never copy unknown field names/values."""
+        def add(mapping, key, amount=1):
+            updated = mapping.get(key, 0) + amount
+            if updated > _DIAGNOSTIC_LIMIT:
+                self.diagnostic["counters_saturated"] = True
+            mapping[key] = min(updated, _DIAGNOSTIC_LIMIT)
+        add(self.diagnostic, "response_attempts")
+        status = str(status) if status in {200, 400, 401, 403, 404, 409, 413, 503} else "other"
+        add(self.diagnostic["http_response_counts"], status)
+        if code is not None:
+            add(self.diagnostic["validation_code_counts"], code if code in _DIAGNOSTIC_CODES else "invalid_request")
+        if type(body) is dict:
+            # Intersection with fixed identifiers is stricter than accepting an
+            # arbitrary regex-shaped name: credentials can themselves be keys.
+            observed = sorted(set(body) & _API_FIELDS)
+            self.diagnostic["api_field_names"] = sorted(set(self.diagnostic["api_field_names"]) | set(observed))
+            add(self.diagnostic, "unknown_api_fields_omitted", len(set(body) - _API_FIELDS))
+        _save_state(self.diagnostic_path, self.diagnostic)
 
     def _infer(self, body):
         prompt = _validate_completion(body, self.prompt)
@@ -300,7 +359,8 @@ class _Gateway:
             def log_message(self, *args):
                 pass
 
-            def _reply(self, status, body):
+            def _reply(self, status, body, *, code=None, observed_body=None):
+                gateway._diagnose(status, code=code, body=observed_body)
                 raw = _canonical(body)
                 self.send_response(status)
                 self.send_header("Content-Type", "application/json")
@@ -317,11 +377,11 @@ class _Gateway:
                         or self.headers.get_all("Host", []) != [expected_host]
                         or self.headers.get("Origin") is not None
                         or self.headers.get("Transfer-Encoding") is not None):
-                    self._reply(403, {"error": {"message": "Loopback request refused"}})
+                    self._reply(403, {"error": {"message": "Loopback request refused"}}, code="loopback_gate")
                     return False
                 values = self.headers.get_all("Authorization", [])
                 if len(values) != 1 or not hmac.compare_digest(values[0], "Bearer " + gateway.token):
-                    self._reply(401, {"error": {"message": "Authentication required"}})
+                    self._reply(401, {"error": {"message": "Authentication required"}}, code="authentication")
                     return False
                 return True
 
@@ -329,7 +389,7 @@ class _Gateway:
                 if not self._gate():
                     return
                 if self.path != "/v1/models":
-                    self._reply(404, {"error": {"message": "Unknown endpoint"}})
+                    self._reply(404, {"error": {"message": "Unknown endpoint"}}, code="endpoint")
                     return
                 self._reply(200, {"object": "list", "data": [{"id": MODEL, "object": "model",
                     "created": 0, "owned_by": "local-operator", "context_window": CONTEXT_SIZE}]})
@@ -338,39 +398,45 @@ class _Gateway:
                 if not self._gate():
                     return
                 if self.path != "/v1/chat/completions":
-                    self._reply(404, {"error": {"message": "Unknown endpoint"}})
+                    self._reply(404, {"error": {"message": "Unknown endpoint"}}, code="endpoint")
                     return
                 lengths = self.headers.get_all("Content-Length", [])
                 if (len(lengths) != 1 or not lengths[0].isdigit() or len(lengths[0]) > 6
                         or not 1 <= int(lengths[0]) <= MAX_BODY
                         or self.headers.get_content_type() != "application/json"):
-                    self._reply(413, {"error": {"message": "Bounded JSON body required"}})
+                    self._reply(413, {"error": {"message": "Bounded JSON body required"}}, code="body_limit")
                     return
+                body = None
                 try:
                     raw = self.rfile.read(int(lengths[0]))
                     if len(raw) != int(lengths[0]):
                         raise ValueError("Incomplete request")
                     body = json_load(raw)
                     _validate_completion(body, gateway.prompt)
-                except (OSError, ValueError, TypeError, UnicodeError, RecursionError):
+                except (OSError, ValueError, TypeError, UnicodeError, RecursionError) as error:
                     gateway.failure_code = "gateway_request_rejected"
-                    self._reply(400, {"error": {"message": "Unsupported bounded no-tools request"}})
+                    self._reply(400, {"error": {"message": "Unsupported bounded no-tools request"}},
+                                code=_validation_code(error), observed_body=body)
                     return
                 if gateway.used:
-                    self._reply(409, {"error": {"message": "Stage reservation already consumed"}})
+                    self._reply(409, {"error": {"message": "Stage reservation already consumed"}},
+                                code="reserved", observed_body=body)
                     return
+                gateway.failure_code = None
                 try:
                     answer = gateway._infer(body)
                 except Exception:
                     gateway.failure = True
                     gateway.failure_code = gateway.failure_code or "local_inference_failed"
-                    self._reply(503, {"error": {"message": "Local completion unavailable; do not retry this task"}})
+                    self._reply(503, {"error": {"message": "Local completion unavailable; do not retry this task"}},
+                                code=gateway.failure_code, observed_body=body)
                     return
                 common = {"id": "tandem-" + gateway.stage, "created": 0, "model": MODEL}
                 if not body.get("stream", False):
                     self._reply(200, dict(common, object="chat.completion", choices=[{"index": 0,
-                        "message": {"role": "assistant", "content": answer}, "finish_reason": "stop"}]))
+                        "message": {"role": "assistant", "content": answer}, "finish_reason": "stop"}]), observed_body=body)
                     return
+                gateway._diagnose(200, body=body)
                 self.send_response(200)
                 self.send_header("Content-Type", "text/event-stream")
                 self.send_header("Cache-Control", "no-store")

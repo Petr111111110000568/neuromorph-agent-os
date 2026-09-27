@@ -241,6 +241,28 @@ class LocalPeerTests(unittest.TestCase):
         self.assertNotIn("signed.example", json.dumps(result))
         self.assertNotIn("private/location", json.dumps(result))
 
+    def test_incomplete_diagnostics_never_include_error_text_or_message_history(self):
+        agent = FakeAgent(base_url=BASE_URL, model=peer.MODEL, provider="custom")
+        agent.result.update(completed=False, failed=True, api_calls=1, failure_reason="format_error",
+                            status_code=400, error="private " + TOKEN,
+                            messages=[{"content": TOKEN}], final_response="error " + TOKEN)
+        agent._invoke_api_request_error_hook = lambda **details: None
+        original_turn = agent.run_conversation
+        def turn(prompt):
+            agent._invoke_api_request_error_hook(reason="format_error", status_code=400,
+                api_call_count=1, retry_count=0, max_retries=1, error_message=TOKEN, api_kwargs={"key": TOKEN})
+            return original_turn(prompt)
+        agent.run_conversation = turn
+        with self.assertRaises(peer.PeerError) as raised:
+            peer.run_sdk("public", BASE_URL, Path("home"), lambda **kw: agent, token=TOKEN)
+        diagnostic = peer.safe_failure(raised.exception, "running_sdk")
+        self.assertEqual(diagnostic["sdk_result"]["failure_reason"], "format_error")
+        self.assertEqual(diagnostic["sdk_result"]["status_code"], 400)
+        self.assertEqual(diagnostic["api_errors"][0]["status_code"], 400)
+        self.assertNotIn(TOKEN, json.dumps(diagnostic))
+        self.assertNotIn("messages", diagnostic["sdk_result"])
+        self.assertNotIn("error_message", diagnostic["api_errors"][0])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,5 +1,6 @@
 """Fresh-file token scan contract; no SDK, model or network is executed."""
 import importlib.util
+import copy
 from pathlib import Path
 import tempfile
 import unittest
@@ -12,6 +13,26 @@ TOKEN = "test-token-" + "a" * 54
 
 
 class TokenScanTests(unittest.TestCase):
+    def test_gateway_diagnostic_keeps_only_fixed_schema_and_known_field_names(self):
+        source = {"schema_version": 1, "stage": "critique", "scope": "reply_decisions_not_client_delivery",
+                  "response_attempts": 1, "http_response_counts": {"400": 1},
+                  "validation_code_counts": {"unsupported_fields": 1},
+                  "api_field_names": ["model", "messages"], "unknown_api_fields_omitted": 1,
+                  "counters_saturated": False, "values_recorded": False}
+        projected = fixture.project_gateway_diagnostic(source)
+        self.assertEqual(projected, source)
+        self.assertIsNot(projected, source)
+        for field, value in (("api_field_names", [TOKEN]), ("http_response_counts", {TOKEN: 1}),
+                             ("validation_code_counts", {TOKEN: 1}), ("values_recorded", True),
+                             ("response_attempts", 1001)):
+            changed = copy.deepcopy(source)
+            changed[field] = value
+            with self.subTest(field=field), self.assertRaises(fixture.FixtureError):
+                fixture.project_gateway_diagnostic(changed)
+        changed = dict(source, raw_body=TOKEN)
+        with self.assertRaises(fixture.FixtureError):
+            fixture.project_gateway_diagnostic(changed)
+
     def test_checks_fresh_stage_only_and_reports_no_paths(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

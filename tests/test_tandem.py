@@ -357,6 +357,60 @@ class TandemTests(unittest.TestCase):
             self.run_cycle(question="x" * 3001)
         self.assertFalse(self.task_folder().exists())
 
+    def test_gateway_diagnostics_distinguish_refusals_without_recording_private_values(self):
+        statuses, observed_tokens = [], []
+        private_name = "privateCredentialFieldDoNotPublish"
+        private_value = "privateValueDoNotPublish"
+        def runner(stage, prompt, base, token, folder):
+            observed_tokens.append(token)
+            for body in (self.body(prompt, tools=None), self.body(prompt, tool_choice=None),
+                         self.body(prompt, **{private_name: private_value}),
+                         self.body(prompt, model=private_value)):
+                statuses.append(self.request(base, token, body=body)[0])
+            statuses.append(self.request(base, token, raw=b'{"model":')[0])
+            return "No model answer was served"
+        receipt = self.run_cycle(self.coordinator(runner))
+        path = self.task_folder() / "plan" / "gateway-diagnostic.json"
+        raw = path.read_text(encoding="utf-8")
+        diagnostic = json.loads(raw)
+        self.assertEqual(statuses, [400] * 5)
+        self.assertEqual(receipt["reserved_calls"], 0)
+        self.assertEqual(diagnostic["http_response_counts"], {"400": 5})
+        self.assertEqual(diagnostic["validation_code_counts"], {"tools_not_empty_array": 1,
+            "tool_choice_not_none": 1, "unsupported_fields": 1, "unsupported_model": 1, "invalid_request": 1})
+        self.assertEqual(diagnostic["unknown_api_fields_omitted"], 1)
+        self.assertEqual(diagnostic["response_attempts"], 5)
+        self.assertFalse(diagnostic["values_recorded"])
+        self.assertEqual(set(diagnostic["api_field_names"]), {"model", "messages", "max_tokens", "tools", "tool_choice"})
+        for secret in [private_name, private_value, *observed_tokens, "Как проверить"]:
+            self.assertNotIn(secret, raw)
+        self.assertLessEqual(path.stat().st_size, 4096)
+
+    def test_gateway_diagnostics_exist_without_sdk_request_and_saturate_unknown_key_count(self):
+        observations = []
+        def runner(stage, prompt, base, token, folder):
+            path = folder / "gateway-diagnostic.json"
+            observations.append(json.loads(path.read_text(encoding="utf-8")))
+            body = self.body(prompt, **{"private-key-" + str(n): "hidden" for n in range(650)})
+            for _ in range(2):
+                observations.append(self.request(base, token, body=body)[0])
+            return "No response"
+        self.run_cycle(self.coordinator(runner))
+        initial = observations[0]
+        self.assertEqual(initial["response_attempts"], 0)
+        self.assertEqual(initial["http_response_counts"], {})
+        self.assertEqual(observations[1:], [400, 400])
+        path = self.task_folder() / "plan" / "gateway-diagnostic.json"
+        raw = path.read_text(encoding="utf-8")
+        final = json.loads(raw)
+        self.assertEqual(final["unknown_api_fields_omitted"], 1000)
+        self.assertTrue(final["counters_saturated"])
+        self.assertEqual(final["http_response_counts"], {"400": 2})
+        self.assertEqual(final["api_field_names"], ["max_tokens", "messages", "model"])
+        self.assertNotIn("private-key", raw)
+        self.assertNotIn("hidden", raw)
+        self.assertLessEqual(path.stat().st_size, 4096)
+
 
 if __name__ == "__main__":
     unittest.main()

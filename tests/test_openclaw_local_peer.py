@@ -77,6 +77,8 @@ class OpenClawPeerTests(unittest.TestCase):
         cfg = peer.build_provider_config("http://127.0.0.1:8768/v1")
         self.assertEqual(cfg["models"]["mode"], "replace")
         self.assertEqual(cfg["models"]["catalogRefresh"], {"enabled": False})
+        self.assertEqual(cfg["plugins"], {"enabled": False})
+        self.assertEqual(cfg["skills"]["allowBundled"], [])
         self.assertEqual(list(cfg["models"]["providers"]), [peer.PROVIDER])
         self.assertEqual(cfg["tools"]["deny"], ["*"])
         self.assertEqual(cfg["tools"]["exec"], {"mode": "deny"})
