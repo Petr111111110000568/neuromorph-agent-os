@@ -104,6 +104,14 @@ def bounded_audit_denials(value):
         and type(item.get("count")) is int and 1 <= item["count"] <= 1000]
 
 
+def bounded_audit_path_scopes(value):
+    allowed = {"etc", "usr", "opt", "home_cache", "tmp", "proc", "dev", "other"}
+    if type(value) is not dict:
+        return {}
+    return {key: value[key] for key in sorted(value)
+            if key in allowed and type(value[key]) is int and 1 <= value[key] <= 1000}
+
+
 _ERROR_CODES = frozenset({"auth", "auth_permanent", "billing", "rate_limit", "upstream_rate_limit",
     "upstream_blocked", "overloaded", "server_error", "timeout", "ssl_cert_verification",
     "context_overflow", "payload_too_large", "image_too_large", "image_corrupt", "model_not_found",
@@ -614,6 +622,7 @@ def execute(source_root, base_url, prompt_file, output_file, home_dir, stop_file
     result["sdk_log_bytes"] = sink.count
     result["audit_denials"] = [{"event": event, "reason": reason, "count": count}
                               for (event, reason), count in sorted(audit_denials.items())]
+    result["audit_path_scopes"] = bounded_audit_path_scopes(audit_path_scopes)
     result["audit_path_scopes"] = dict(sorted(audit_path_scopes.items()))
     result["source_manifest_sha256"] = MANIFEST_SHA256
     with output.open("x", encoding="utf-8") as target:

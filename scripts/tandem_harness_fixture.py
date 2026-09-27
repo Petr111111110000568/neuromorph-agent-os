@@ -193,6 +193,7 @@ def sanitized_hermes_diagnostic(data_dir):
                 item["api_errors"] = [peer.bounded_api_error(e) for e in errors[:4] if type(e) is dict]
             item["api_exception_chains"] = peer.bounded_exception_chains(value.get("api_exception_chains"))
             item["audit_denials"] = peer.bounded_audit_denials(value.get("audit_denials"))
+            item["audit_path_scopes"] = peer.bounded_audit_path_scopes(value.get("audit_path_scopes"))
         result.append(item)
     return result
 
