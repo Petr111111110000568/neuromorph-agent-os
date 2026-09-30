@@ -13,10 +13,12 @@ import os
 from pathlib import Path
 import platform
 import re
+import sys
 
 
 HANDLER = "m02.cpu.coupled.v1"
 KIND = "m02_cpu"
+SUPPORTED_PLATFORMS = frozenset({"linux", "win32"})
 ACCEPTED_BASE_COMMIT = "898162ee6208be03c5d5cf294c3d264f10f7de1b"
 PINS = {
     "plugin_worker.py": "53afbc2fc05ae7649b31f09cd0f28ff3f4e8cb8b4fcbcacd22fb8a6e11f08250",
@@ -46,6 +48,21 @@ MODEL = {"equation": "dx_i/dt = -r*x_i + c*(mean(x)-x_i) + forcing_i", "dt": .05
          "calibrated": False, "units": "dimensionless",
          "mean_invariant": "Диффузионная связь меняет отдельные компоненты, но её сумма равна нулю: среднее не зависит от coupling."}
 _ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,95}\Z")
+
+
+class UnsupportedCPUPlatform(ValueError):
+    """Execution cannot be admitted here; durable state remains recoverable."""
+
+
+def require_supported_platform():
+    """Admission for execution, not for pure validation or reading old receipts.
+
+    The unchanged pinned worker fails at RLIMIT_AS setup on macOS 15. Do not
+    remove that protection, spend a reservation, or advertise worker capability
+    on Darwin/unknown systems. Linux and Windows are the accepted runtimes.
+    """
+    if sys.platform not in SUPPORTED_PLATFORMS:
+        raise UnsupportedCPUPlatform("m02.cpu.coupled.v1 execution unsupported on this platform; Linux or Windows required")
 
 
 def canonical(value):
@@ -199,7 +216,8 @@ def validate_result(result, payload, job, authorization):
         raise ValueError("CPU scientific hash mismatch")
     runtime = result["runtime"]
     closed(runtime, ("python", "os", "os_name", "process_limits", "service_run_id", "completed_at"), "runtime")
-    if runtime["os_name"] not in ("posix", "nt") or canonical(runtime["process_limits"]) != canonical(process_limits(runtime["os_name"])):
+    if ((runtime["os"], runtime["os_name"]) not in (("Linux", "posix"), ("Windows", "nt"))
+            or canonical(runtime["process_limits"]) != canonical(process_limits(runtime["os_name"]))):
         raise ValueError("unsupported CPU limits")
     for key, limit in (("python", 32), ("os", 128), ("service_run_id", 64), ("completed_at", 64)):
         if not isinstance(runtime[key], str) or not 0 < len(runtime[key]) <= limit or any(ord(c) < 32 for c in runtime[key]):
@@ -216,6 +234,7 @@ def run_cpu_once(dispatcher, *, root, worker_id="m02-cpu", failpoint=None):
     lease expires. A saved result is reused. Unresolved completion stays unknown;
     this routine never invents a handoff or resets Queue's attempt counter.
     """
+    require_supported_platform()
     from .service import Service, ServiceError
 
     def hit(stage):

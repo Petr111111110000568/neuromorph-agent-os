@@ -9,6 +9,7 @@ import multiprocessing
 import os
 from pathlib import Path
 import shutil
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -85,6 +86,8 @@ def _competing_tick(control, queued, identity, ready, start, output):
         queue.close()
 
 
+@unittest.skipUnless(sys.platform in cpu.SUPPORTED_PLATFORMS,
+                     "M02 CPU execution requires Linux/Windows; macOS/unknown execution is unsupported, not validated")
 class M02CPUTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
@@ -493,6 +496,252 @@ class M02CPUTests(unittest.TestCase):
         self.dispatcher.tick()
         self.assertEqual(self.dispatcher.snapshot()["budget"]["reserved_attempts"], 8)
         self.assertEqual(len(self.queue.jobs()), 4)
+
+
+class M02CPUPureContractTests(unittest.TestCase):
+    """Always active, including Darwin: no accepted CPU execution is needed."""
+
+    def test_all_parameters_closed_finite_and_bounded_on_every_platform(self):
+        self.assertEqual(cpu.parameters(PARAMETERS), PARAMETERS)
+        for key, (low, high, kind) in cpu.BOUNDS.items():
+            for valid in (low, high):
+                self.assertEqual(cpu.parameters({**PARAMETERS, key: valid})[key], valid)
+            invalids = [True, "1", None, float("nan"), float("inf"), low - 1, high + 1, 10 ** 400]
+            if kind is int:
+                invalids.append(float(low))
+            for value in invalids:
+                with self.subTest(key=key, value=value), self.assertRaises(ValueError):
+                    cpu.parameters({**PARAMETERS, key: value})
+            missing = dict(PARAMETERS)
+            del missing[key]
+            with self.assertRaises(ValueError):
+                cpu.parameters(missing)
+        with self.assertRaises(ValueError):
+            cpu.parameters({**PARAMETERS, "plugin_id": "coupled_dynamics"})
+
+    def test_hash_identity_and_closed_input_on_every_platform(self):
+        original = cpu.make_input(task())
+        self.assertEqual(cpu.validate_input(original), original)
+        for key in original:
+            missing = dict(original)
+            del missing[key]
+            with self.subTest(missing=key), self.assertRaises(ValueError):
+                cpu.validate_input(missing)
+        for update in ({"input_sha256": "0" * 64}, {"parameters": {**PARAMETERS, "seed": 99}},
+                       {"project_id": "other"}, {"handler": "simulation"}, {"base_commit": "0" * 40},
+                       {"schema_version": True}, {"revision": True}, {"parent_handoff": "unknown"},
+                       {"policy": POLICY}):
+            with self.subTest(update=update), self.assertRaises(ValueError):
+                cpu.validate_input({**original, **update})
+        r2 = cpu.make_input({**task(), "revision": 2, "handoff_id": "cpu-r2"}, parent_handoff="cpu-a-r1")
+        self.assertEqual(cpu.validate_input(r2), r2)
+        self.assertNotEqual(original["input_sha256"], r2["input_sha256"])
+
+    def test_pins_remain_readable_but_tampering_fails_on_every_platform(self):
+        self.assertEqual(cpu.verify_pins(ROOT), cpu.PINS)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for name in (*cpu.PINS, "data/builtin_pins.json"):
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / name, path)
+            self.assertEqual(cpu.verify_pins(root), cpu.PINS)
+            target = root / "plugin_worker.py"
+            target.write_bytes(target.read_bytes() + b"\n# tampered\n")
+            with self.assertRaises(ValueError):
+                cpu.verify_pins(root)
+            import hashlib
+            registry = {"files": {**cpu.PINS, "plugin_worker.py": hashlib.sha256(target.read_bytes()).hexdigest()}}
+            (root / "data/builtin_pins.json").write_text(json.dumps(registry), encoding="utf-8")
+            with self.assertRaises(ValueError):
+                cpu.verify_pins(root)
+
+
+class M02CPUPlatformAdmissionTests(unittest.TestCase):
+    """Always active refusal tests. Staged prior state uses no CPU calculation."""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.control = Path(self.temp.name) / "control.sqlite3"
+        self.queue = Queue(Path(self.temp.name) / "queue.sqlite3")
+        self.addCleanup(self.queue.close)
+        self.dispatcher = ProjectDispatcher(self.control, self.queue, cpu_root=ROOT)
+        self.addCleanup(self.dispatcher.close)
+        self.dispatcher.create_project(project())
+
+    def stage_task(self):
+        # Simulate a control record transferred from an accepted Linux host.
+        # This sets up metadata only; Service.run is never called by this class.
+        with patch.object(cpu.sys, "platform", "linux"):
+            return self.dispatcher.create_task(task(perturbation=0))
+
+    def test_platform_allowlist_is_explicit(self):
+        self.assertEqual(cpu.SUPPORTED_PLATFORMS, {"linux", "win32"})
+        for supported in ("linux", "win32"):
+            with patch.object(cpu.sys, "platform", supported):
+                cpu.require_supported_platform()
+        for unsupported in ("darwin", "freebsd14", "unknown", "linux2"):
+            with patch.object(cpu.sys, "platform", unsupported), self.assertRaisesRegex(ValueError, "execution unsupported"):
+                cpu.require_supported_platform()
+
+    def test_unsupported_task_admission_leaves_no_task_intent_job_or_reserve(self):
+        before = business(self.dispatcher, self.queue)
+        for unsupported in ("darwin", "unknown"):
+            with patch.object(cpu.sys, "platform", unsupported), self.assertRaisesRegex(ValueError, "execution unsupported"):
+                self.dispatcher.create_task(task())
+            self.assertEqual(business(self.dispatcher, self.queue), before)
+        self.assertEqual(self.dispatcher.snapshot()["tasks"], [])
+        self.assertEqual(self.dispatcher.snapshot()["intents"], [])
+        self.assertEqual(self.queue.jobs(), [])
+        self.assertEqual(self.dispatcher.snapshot()["budget"]["reserved_attempts"], 0)
+
+    def test_existing_pending_task_on_unsupported_host_cannot_reserve_or_submit(self):
+        self.stage_task()
+        before = business(self.dispatcher, self.queue)
+        with patch.object(cpu.sys, "platform", "darwin"):
+            result = self.dispatcher.tick()
+        self.assertEqual(result["status"], "waiting")
+        self.assertIn("cpu_platform_unsupported", result["reason"])
+        self.assertEqual(business(self.dispatcher, self.queue), before)
+        self.assertEqual(self.dispatcher.snapshot()["budget"]["reserved_attempts"], 0)
+        self.assertEqual(self.queue.jobs(), [])
+
+    def test_existing_reserved_intent_on_unsupported_host_cannot_submit_or_spend_more(self):
+        self.stage_task()
+        def interrupt(stage):
+            if stage == "after_intent_reserved":
+                raise RuntimeError("simulate durable reserve before enqueue")
+        self.dispatcher.failpoint = interrupt
+        with patch.object(cpu.sys, "platform", "linux"), self.assertRaisesRegex(RuntimeError, "durable reserve"):
+            self.dispatcher.tick()
+        self.dispatcher.failpoint = None
+        before = business(self.dispatcher, self.queue)
+        self.assertEqual(before["budget"]["reserved_attempts"], 2)
+        with patch.object(cpu.sys, "platform", "darwin"):
+            result = self.dispatcher.tick()
+        self.assertEqual(result["status"], "waiting")
+        self.assertIn("cpu_platform_unsupported", result["reason"])
+        self.assertEqual(business(self.dispatcher, self.queue), before)
+        self.assertEqual(self.queue.jobs(), [])
+
+    def test_unsupported_worker_does_not_register_claim_compute_or_increment_attempts(self):
+        self.stage_task()
+        with patch.object(cpu.sys, "platform", "linux"):
+            self.dispatcher.tick()
+        before = business(self.dispatcher, self.queue)
+        with patch.object(cpu.sys, "platform", "darwin"), \
+             patch.object(self.queue, "register_worker") as register, \
+             patch.object(self.queue, "claim") as claim, \
+             patch("workbench.service.Service.run") as service_run:
+            with self.assertRaisesRegex(ValueError, "execution unsupported"):
+                cpu.run_cpu_once(self.dispatcher, root=ROOT)
+            register.assert_not_called()
+            claim.assert_not_called()
+            service_run.assert_not_called()
+        self.assertEqual(business(self.dispatcher, self.queue), before)
+        self.assertEqual(self.queue.workers(), [])
+        self.assertEqual(self.queue.jobs()[0]["attempts"], 0)
+
+    def fixture_in_other_project(self):
+        self.dispatcher.create_project(project("beta"))
+        fixture = task("fixture-b", "beta")
+        fixture.pop("parameters")
+        fixture.update(handler="m02.fixture.v1", fixture_id="evidence_alpha")
+        self.dispatcher.create_task(fixture)
+
+    def test_unsupported_pending_cpu_does_not_block_other_project_fixture(self):
+        self.stage_task()
+        self.fixture_in_other_project()
+        with patch.object(cpu.sys, "platform", "darwin"):
+            result = self.dispatcher.tick()
+        self.assertEqual((result["status"], result["task_id"]), ("dispatched", "fixture-b"))
+        state = self.dispatcher.snapshot()
+        cpu_task = next(t for t in state["tasks"] if t["handler"] == cpu.HANDLER)
+        self.assertEqual(cpu_task["status"], "pending")
+        self.assertIsNone(cpu_task["queue_job_id"])
+        self.assertEqual([i["task_id"] for i in state["intents"]], ["fixture-b"])
+        self.assertEqual([(j["kind"], j["attempts"]) for j in self.queue.jobs()], [("evidence", 0)])
+        self.assertEqual(state["budget"]["reserved_attempts"], 2)
+
+    def test_unsupported_reserved_cancel_pending_cpu_does_not_block_other_project_fixture(self):
+        self.stage_task()
+        def interrupt(stage):
+            if stage == "after_intent_reserved":
+                raise RuntimeError("durable reserve")
+        self.dispatcher.failpoint = interrupt
+        with patch.object(cpu.sys, "platform", "linux"), self.assertRaisesRegex(RuntimeError, "durable reserve"):
+            self.dispatcher.tick()
+        self.dispatcher.failpoint = None
+        cpu_intent = copy.deepcopy(self.dispatcher.snapshot()["intents"][0])
+        self.fixture_in_other_project()
+        with patch.object(cpu.sys, "platform", "darwin"):
+            cancelled = self.dispatcher.cancel("cpu-a", expected_revision=1, reason="Pending cancellation on unsupported host")
+            self.assertEqual(cancelled["status"], "cancel_requested")
+            result = self.dispatcher.tick()
+        self.assertEqual((result["status"], result["task_id"]), ("dispatched", "fixture-b"))
+        state = self.dispatcher.snapshot()
+        self.assertEqual(next(i for i in state["intents"] if i["task_id"] == "cpu-a"), cpu_intent)
+        self.assertEqual(state["cancellations"][0]["status"], "pending")
+        self.assertEqual([(j["kind"], j["attempts"]) for j in self.queue.jobs()], [("evidence", 0)])
+        self.assertEqual((state["budget"]["reserved_attempts"], state["budget"]["actual_attempts"]), (4, 0))
+
+    @staticmethod
+    def result_shape_fixture(payload, job, authorization):
+        """A synthetic schema fixture, explicitly not an executed scientific result."""
+        parameters = payload["parameters"]
+        scientific = {"summary": cpu.SUMMARY, "parameters": parameters, "model": copy.deepcopy(cpu.MODEL),
+            "limitations": list(cpu.LIMITATIONS),
+            "metrics": [{"label": "Средний интеграл разности", "value": 0, "unit": "условные единицы × время"},
+                        {"label": "Остаточная разность", "value": 0, "unit": "условные единицы"},
+                        {"label": "Повторы", "value": parameters["replicates"]}],
+            "series": [{"name": name, "points": [{"x": i * .05, "y": 0} for i in range(parameters["steps"] + 1)]}
+                       for name in cpu.SERIES],
+            "table": [{"показатель": name, "p05": 0, "p50": 0, "p95": 0} for name in ("integral_delta", "final_delta")]}
+        return {"schema": "neuromorph.m02.cpu-result.v1", "input": payload,
+            "project_revision": authorization["project_revision"], "project_sha256": authorization["project_sha256"],
+            "queue_job_id": job["id"], "execution_attempt": 1, "reserved_attempts": 2,
+            "total_reserved_attempts_at_execution": 2, "scientific_payload": scientific,
+            "scientific_sha256": cpu.digest(scientific), "builtin_hashes": dict(cpu.PINS),
+            "runtime": {"python": "3.13.0", "os": "Linux", "os_name": "posix",
+                        "process_limits": cpu.process_limits("posix"), "service_run_id": "schema-fixture-not-executed",
+                        "completed_at": "2026-09-30T00:00:00Z"},
+            "model_calls": 0, "network_calls": 0, "additional_spend_usd": 0}
+
+    def test_saved_state_read_and_result_validation_do_not_require_execution_platform(self):
+        self.stage_task()
+        with patch.object(cpu.sys, "platform", "linux"):
+            self.dispatcher.tick()
+        self.queue.register_worker("fixture", [cpu.KIND])
+        job = self.queue.claim("fixture")
+        authorization = self.dispatcher.cpu_authorization(job["payload"], job)
+        result = self.result_shape_fixture(job["payload"], job, authorization)
+        self.dispatcher.cpu_save_result(job, result)
+        self.queue.finish(job["id"], "fixture", job["lease_token"], result=result)
+        restored = ProjectDispatcher(self.control, self.queue, cpu_root=ROOT)
+        try:
+            with patch.object(cpu.sys, "platform", "darwin"), patch("workbench.service.Service.run") as execute:
+                self.assertEqual(restored.cpu_saved_result(job["id"]), result)
+                self.assertEqual(len(restored.snapshot()["cpu_results"]), 1)
+                self.assertEqual(cpu.validate_result(result, job["payload"], job, authorization), result)
+                self.assertEqual(cpu.scientific_payload(result["scientific_payload"], job["payload"]["parameters"]), result["scientific_payload"])
+                # Only reconcile the saved synthetic fixture, never compute on
+                # this host: first promotion has an effect, replay preserves B.
+                self.assertEqual(restored.snapshot()["artifacts"], [])
+                self.assertEqual(restored.tick()["status"], "progressed")
+                self.assertEqual(len(restored.snapshot()["artifacts"]), 1)
+                first = business(restored, self.queue)
+                restored.tick()
+                self.assertEqual(business(restored, self.queue), first)
+                self.assertEqual((first["budget"]["reserved_attempts"], first["budget"]["actual_attempts"]), (2, 1))
+                execute.assert_not_called()
+                for os_value, os_name in (("Darwin", "posix"), ("Linux", "nt"), ("Windows", "posix"), ("Unknown", "posix")):
+                    unsupported = copy.deepcopy(result)
+                    unsupported["runtime"].update(os=os_value, os_name=os_name, process_limits=cpu.process_limits(os_name))
+                    with self.subTest(os=os_value, os_name=os_name), self.assertRaises(ValueError):
+                        cpu.validate_result(unsupported, job["payload"], job, authorization)
+        finally:
+            restored.close()
 
 
 if __name__ == "__main__":

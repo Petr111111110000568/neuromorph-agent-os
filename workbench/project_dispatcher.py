@@ -405,6 +405,7 @@ class ProjectDispatcher:
                              (int(available), project_id))
 
     def _cpu_pins(self):
+        m02_cpu.require_supported_platform()
         if self.cpu_root is None:
             raise ValueError("CPU execution requires a trusted dispatcher root")
         return m02_cpu.verify_pins(self.cpu_root)
@@ -549,7 +550,7 @@ class ProjectDispatcher:
         if changed:
             self._event("cancel_intent", task, {"reason": reason})
 
-    def _reconcile_cancellations(self):
+    def _reconcile_cancellations(self, reasons=None):
         with self._lock:
             rows = list(self._db.execute("SELECT * FROM m02_cancellations WHERE status='pending' ORDER BY handoff_id"))
         changed = False
@@ -560,7 +561,14 @@ class ProjectDispatcher:
             if intent is not None:
                 # Even an unbound reserved intent is materialized with the same key before
                 # cancelling. A concurrent enqueue can never create an untracked late job.
-                job = self._enqueue(intent)
+                try:
+                    job = self._enqueue(intent)
+                except m02_cpu.UnsupportedCPUPlatform:
+                    if reasons is not None:
+                        reasons.append("cpu_platform_unsupported")
+                    # Keep this cancellation pending for a supported host. The
+                    # other project can still make progress without new CPU work.
+                    continue
                 self.queue.cancel(job["id"])
             self._hit("after_queue_cancel")
             with self._transaction():
@@ -635,14 +643,19 @@ class ProjectDispatcher:
             self._hit("after_control_promotion")
         return True
 
-    def _reconcile(self):
-        changed = self._reconcile_cancellations()
+    def _reconcile(self, reasons=None):
+        changed = self._reconcile_cancellations(reasons)
         with self._lock:
             intents = list(self._db.execute("SELECT * FROM m02_intents ORDER BY handoff_id"))
         for intent in intents:
             if intent["status"] not in ("reserved", "enqueued"):
                 continue
-            job = self._enqueue(intent)
+            try:
+                job = self._enqueue(intent)
+            except m02_cpu.UnsupportedCPUPlatform:
+                if reasons is not None:
+                    reasons.append("cpu_platform_unsupported")
+                continue
             if job["status"] == "completed":
                 changed = self._promote(intent, job) or changed
             elif job["status"] in ("cancelled", "failed"):
@@ -659,9 +672,9 @@ class ProjectDispatcher:
 
     def tick(self):
         """Reconcile durable work, dispatch at most one eligible task, then return."""
-        progressed = self._reconcile()
-        selected = None
         reasons = []
+        progressed = self._reconcile(reasons)
+        selected = None
         with self._transaction():
             projects = list(self._db.execute("SELECT * FROM m02_projects ORDER BY project_id"))
             last = self._meta("last_project")
@@ -696,7 +709,11 @@ class ProjectDispatcher:
                     key = "m02:" + _sha([task["project_id"], task["task_id"], task["handoff_id"], task["input_sha256"]])
                     payload = _payload(json.loads(project["spec"]), spec, task["input_sha256"], task["parent_handoff"])
                     if spec["handler"] == m02_cpu.HANDLER:
-                        self._cpu_pins()
+                        try:
+                            self._cpu_pins()
+                        except m02_cpu.UnsupportedCPUPlatform:
+                            reasons.append("cpu_platform_unsupported")
+                            continue
                         # DB authority and hashes are checked before writing an
                         # intent or spending any part of the shared reserve.
                         self.cpu_authorization(payload)

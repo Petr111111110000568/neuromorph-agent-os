@@ -64,7 +64,7 @@ jobs:
         with:
           python-version: '3.13'
           check-latest: false
-      - name: Bounded offline fixtures (no weights, inference, or external requests)
+      - name: Bounded fixtures (CPU executes on Linux/Windows; macOS verifies refusal)
         shell: python
         run: |
           import os
@@ -104,17 +104,14 @@ jobs:
                       raise SystemExit("No tests collected for " + pattern)
                   suite.addTests(selected)
               print("Fixture tests:", suite.countTestCases(), "Python:", sys.version, flush=True)
+              if sys.platform == "darwin":
+                  print("M02 CPU execution is unsupported on macOS: pure validation and refusal tests remain active; real CPU execution/recovery tests are explicitly skipped.", flush=True)
               result = unittest.TextTestRunner(verbosity=2).run(suite)
               return 0 if result.wasSuccessful() else 1
 
           # M02 uses genuine spawn workers; children must not rerun the suite.
           if __name__ == "__main__":
               raise SystemExit(main())
-      - name: Diagnose pinned macOS CPU startup after fixture failure
-        if: ${{ failure() && runner.os == 'macOS' }}
-        timeout-minutes: 1
-        shell: bash
-        run: python -I -B scripts/diagnose_m02_cpu.py
       - name: Windows bootstrap syntax
         if: runner.os == 'Windows'
         shell: pwsh
