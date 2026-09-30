@@ -110,6 +110,11 @@ jobs:
           # M02 uses genuine spawn workers; children must not rerun the suite.
           if __name__ == "__main__":
               raise SystemExit(main())
+      - name: Diagnose pinned macOS CPU startup after fixture failure
+        if: ${{ failure() && runner.os == 'macOS' }}
+        timeout-minutes: 1
+        shell: bash
+        run: python -I -B scripts/diagnose_m02_cpu.py
       - name: Windows bootstrap syntax
         if: runner.os == 'Windows'
         shell: pwsh
