@@ -15,6 +15,7 @@ import sqlite3
 import threading
 
 from .network.queue import Queue
+from . import m02_cpu
 
 
 SCHEMA = "neuromorph.m02.control.v1"
@@ -117,7 +118,8 @@ def _project_spec(spec):
 
 
 def _task_spec(spec, *, initial=False):
-    _closed(spec, _TASK_FIELDS, "task")
+    cpu = isinstance(spec, dict) and spec.get("handler") == m02_cpu.HANDLER
+    _closed(spec, (_TASK_FIELDS - {"fixture_id"}) | {"parameters"} if cpu else _TASK_FIELDS, "task")
     for name in ("task_id", "project_id", "handoff_id"):
         _identity(spec[name], name)
     _text(spec["goal"], "goal")
@@ -132,9 +134,13 @@ def _task_spec(spec, *, initial=False):
         raise ValueError("invalid task revision")
     if not isinstance(spec["base_commit"], str) or not _COMMIT.fullmatch(spec["base_commit"]):
         raise ValueError("base_commit must be a full lowercase commit SHA")
-    if (spec["handler"] != HANDLER or not isinstance(spec["fixture_id"], str)
+    if cpu:
+        m02_cpu.parameters(spec["parameters"])
+        if spec["base_commit"] != m02_cpu.ACCEPTED_BASE_COMMIT:
+            raise ValueError("CPU base commit is not accepted")
+    elif (spec["handler"] != HANDLER or not isinstance(spec["fixture_id"], str)
             or spec["fixture_id"] not in FIXTURES):
-        raise ValueError("only fixed M02 fixtures are executable")
+        raise ValueError("unsupported M02 handler")
     _texts(spec["limitations"], "limitations")
     encoded = _canonical(spec)
     if len(encoded.encode("utf-8")) > 16 * 1024:
@@ -146,7 +152,12 @@ def _contract(project, task):
     return {"project": project, "task": task}
 
 
-def _payload(project, task, input_sha256):
+def _payload(project, task, input_sha256, parent_handoff=None):
+    if task["handler"] == m02_cpu.HANDLER:
+        payload = m02_cpu.make_input(task, parent_handoff)
+        if payload["input_sha256"] != input_sha256:
+            raise ValueError("CPU immutable input hash mismatch")
+        return payload
     return {
         "schema": "neuromorph.m02.fixture-job.v1", "handler": HANDLER,
         "fixture_id": task["fixture_id"],
@@ -207,10 +218,11 @@ def run_fixture_once(queue, *, worker_id="m02-fixture", failpoint=None):
 class ProjectDispatcher:
     """Two-project control experiment; callers own the separate Queue lifetime."""
 
-    def __init__(self, control_path, queue: Queue, *, failpoint=None):
+    def __init__(self, control_path, queue: Queue, *, failpoint=None, cpu_root=None):
         if str(control_path) != ":memory:":
             Path(control_path).parent.mkdir(parents=True, exist_ok=True)
         self.queue = queue
+        self.cpu_root = Path(cpu_root).resolve() if cpu_root is not None else None
         self.failpoint = failpoint
         self._lock = threading.RLock()
         self._db = sqlite3.connect(str(control_path), timeout=30, isolation_level=None,
@@ -243,6 +255,9 @@ class ProjectDispatcher:
                 result_sha256 TEXT, reserved_attempts INTEGER NOT NULL CHECK(reserved_attempts=2));
             CREATE TABLE IF NOT EXISTS m02_artifacts (
                 sha256 TEXT PRIMARY KEY, content TEXT NOT NULL);
+            CREATE TABLE IF NOT EXISTS m02_cpu_results (
+                queue_job_id TEXT PRIMARY KEY, handoff_id TEXT NOT NULL UNIQUE,
+                content TEXT NOT NULL, sha256 TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS m02_outbox (
                 event_id TEXT PRIMARY KEY, task_id TEXT NOT NULL, handoff_id TEXT NOT NULL UNIQUE,
                 revision INTEGER NOT NULL, result_sha256 TEXT NOT NULL, status TEXT NOT NULL);
@@ -340,9 +355,10 @@ class ProjectDispatcher:
             row = self._project(spec["project_id"])
             return {**spec, "revision": row["revision"], "channel_available": bool(row["channel_available"])}
 
-    def _insert_handoff(self, project, spec):
+    def _insert_handoff(self, project, spec, parent_handoff=None):
         contract = _contract(json.loads(project["spec"]), spec)
-        digest = _sha(contract)
+        digest = (m02_cpu.make_input(spec, parent_handoff)["input_sha256"]
+                  if spec["handler"] == m02_cpu.HANDLER else _sha(contract))
         if self._db.execute("SELECT 1 FROM m02_handoffs WHERE handoff_id=?",
                             (spec["handoff_id"],)).fetchone():
             raise ValueError("handoff identity is permanently bound")
@@ -353,6 +369,8 @@ class ProjectDispatcher:
 
     def create_task(self, spec):
         spec = _task_spec(spec, initial=True)
+        if spec["handler"] == m02_cpu.HANDLER:
+            self._cpu_pins()
         encoded = _canonical(spec)
         with self._transaction():
             old = self._db.execute("SELECT * FROM m02_tasks WHERE task_id=?", (spec["task_id"],)).fetchone()
@@ -386,9 +404,111 @@ class ProjectDispatcher:
             self._db.execute("UPDATE m02_projects SET channel_available=? WHERE project_id=?",
                              (int(available), project_id))
 
+    def _cpu_pins(self):
+        m02_cpu.require_supported_platform()
+        if self.cpu_root is None:
+            raise ValueError("CPU execution requires a trusted dispatcher root")
+        return m02_cpu.verify_pins(self.cpu_root)
+
+    def cpu_authorization(self, payload, job=None, *, require_current=False):
+        """Resolve authority from accepted control records, never from Queue data.
+
+        Without a job this is the pre-reservation/pre-enqueue validation. A
+        worker additionally needs the same bound job and the current handoff.
+        Promotion may inspect a historical handoff: the existing SQL CAS still
+        decides whether it is current and permitted to publish.
+        """
+        payload = m02_cpu.validate_input(payload)
+        with self._lock:
+            handoff = self._db.execute("SELECT * FROM m02_handoffs WHERE handoff_id=?",
+                                       (payload["handoff_id"],)).fetchone()
+            if handoff is None:
+                raise ValueError("CPU handoff is absent from the accepted control database")
+            contract = json.loads(handoff["contract"])
+            _closed(contract, {"project", "task"}, "CPU accepted contract")
+            project_spec = _project_spec(contract["project"])
+            spec = _task_spec(contract["task"])
+            project = self._project(payload["project_id"])
+            parent = None
+            if payload["revision"] == 2:
+                previous = self._db.execute("SELECT handoff_id FROM m02_handoffs WHERE task_id=? AND revision=1",
+                                            (payload["task_id"],)).fetchone()
+                if previous is None:
+                    raise ValueError("CPU parent handoff is absent")
+                parent = previous[0]
+            expected = m02_cpu.make_input(spec, parent)
+            if (spec["handler"] != m02_cpu.HANDLER or _canonical(expected) != _canonical(payload)
+                    or handoff["input_sha256"] != payload["input_sha256"]
+                    or any(handoff[key] != payload[key] for key in ("project_id", "task_id", "revision", "handoff_id"))
+                    or project["revision"] != handoff["project_revision"]
+                    or _canonical(project_spec) != project["spec"] or _sha(project_spec) != project["spec_sha256"]):
+                raise ValueError("CPU input differs from its accepted control identity")
+            task = self._task(payload["task_id"])
+            if require_current and (task["handoff_id"] != payload["handoff_id"]
+                    or task["revision"] != payload["revision"] or task["status"] != "dispatched"
+                    or task["input_sha256"] != payload["input_sha256"]):
+                raise ValueError("CPU handoff is no longer executable")
+            if job is not None:
+                intent = self._db.execute("SELECT * FROM m02_intents WHERE handoff_id=?",
+                                          (payload["handoff_id"],)).fetchone()
+                if intent is None or intent["queue_job_id"] != job["id"]:
+                    raise ValueError("CPU job has no bound reservation")
+                self._validate_job(intent, job)
+                if intent["reserved_attempts"] != ATTEMPTS_PER_HANDOFF or not 1 <= job["attempts"] <= ATTEMPTS_PER_HANDOFF:
+                    raise ValueError("CPU job exceeds its accepted reservation")
+            return {"project_revision": project["revision"], "project_sha256": project["spec_sha256"],
+                    "total_reserved_attempts": self._reserved()}
+
+    def cpu_saved_result(self, job_id):
+        with self._lock:
+            row = self._db.execute("SELECT * FROM m02_cpu_results WHERE queue_job_id=?", (job_id,)).fetchone()
+            if row is None:
+                return None
+            result = json.loads(row["content"])
+            if _sha(result) != row["sha256"] or result["input"]["handoff_id"] != row["handoff_id"]:
+                raise ValueError("CPU durable result integrity mismatch")
+            return result
+
+    def cpu_bind_claim(self, job):
+        """Recover exactly this job across submit ACK/control-binding loss.
+
+        A worker may claim after Queue.submit commits and before _enqueue binds
+        its ID. Resolve the existing immutable queue key, never allocate another
+        reservation or treat that known gap as a failed computation attempt.
+        """
+        self.cpu_authorization(job["payload"])
+        with self._lock:
+            intent = self._db.execute("SELECT * FROM m02_intents WHERE handoff_id=?",
+                                      (job["payload"]["handoff_id"],)).fetchone()
+            if intent is None:
+                raise ValueError("CPU job has no accepted reservation")
+        self._validate_job(intent, job)
+        existing = self.queue.by_idempotency_key(intent["queue_key"])
+        if existing is None or existing["id"] != job["id"]:
+            raise ValueError("CPU claimed job differs from its immutable queue identity")
+        if intent["queue_job_id"] is None:
+            self._enqueue(intent)
+        elif intent["queue_job_id"] != job["id"]:
+            raise ValueError("CPU reservation is already bound to another job")
+
+    def cpu_save_result(self, job, result):
+        with self._transaction():
+            authorization = self.cpu_authorization(job["payload"], job, require_current=True)
+            m02_cpu.validate_result(result, job["payload"], job, authorization)
+            previous = self.cpu_saved_result(job["id"])
+            if previous is not None:
+                m02_cpu.validate_result(previous, job["payload"], job, authorization)
+                if previous["scientific_sha256"] != result["scientific_sha256"]:
+                    raise ValueError("CPU result identity is already bound to different scientific data")
+                return previous
+            self._db.execute("INSERT INTO m02_cpu_results VALUES (?,?,?,?)", (
+                job["id"], job["payload"]["handoff_id"], _canonical(result), _sha(result)))
+            return result
+
     def _validate_job(self, intent, job):
-        if (job["kind"] != "evidence" or _canonical(job["payload"]) != intent["payload"]
-                or job["capabilities"] != ["evidence"]
+        kind = m02_cpu.KIND if json.loads(intent["payload"]).get("handler") == m02_cpu.HANDLER else "evidence"
+        if (job["kind"] != kind or _canonical(job["payload"]) != intent["payload"]
+                or job["capabilities"] != [kind]
                 or job["max_attempts"] != ATTEMPTS_PER_HANDOFF):
             raise ValueError("queue identity has a conflicting immutable contract")
 
@@ -396,8 +516,13 @@ class ProjectDispatcher:
         job = self.queue.by_idempotency_key(intent["queue_key"])
         recovered = job is not None
         if job is None:
-            job = self.queue.submit("evidence", json.loads(intent["payload"]),
-                                    capabilities=["evidence"], idempotency_key=intent["queue_key"],
+            payload = json.loads(intent["payload"])
+            kind = m02_cpu.KIND if payload.get("handler") == m02_cpu.HANDLER else "evidence"
+            if kind == m02_cpu.KIND:
+                self._cpu_pins()
+                self.cpu_authorization(payload)
+            job = self.queue.submit(kind, payload,
+                                    capabilities=[kind], idempotency_key=intent["queue_key"],
                                     max_attempts=ATTEMPTS_PER_HANDOFF)
             self._hit("after_queue_submit")
         self._validate_job(intent, job)
@@ -425,7 +550,7 @@ class ProjectDispatcher:
         if changed:
             self._event("cancel_intent", task, {"reason": reason})
 
-    def _reconcile_cancellations(self):
+    def _reconcile_cancellations(self, reasons=None):
         with self._lock:
             rows = list(self._db.execute("SELECT * FROM m02_cancellations WHERE status='pending' ORDER BY handoff_id"))
         changed = False
@@ -436,7 +561,14 @@ class ProjectDispatcher:
             if intent is not None:
                 # Even an unbound reserved intent is materialized with the same key before
                 # cancelling. A concurrent enqueue can never create an untracked late job.
-                job = self._enqueue(intent)
+                try:
+                    job = self._enqueue(intent)
+                except m02_cpu.UnsupportedCPUPlatform:
+                    if reasons is not None:
+                        reasons.append("cpu_platform_unsupported")
+                    # Keep this cancellation pending for a supported host. The
+                    # other project can still make progress without new CPU work.
+                    continue
                 self.queue.cancel(job["id"])
             self._hit("after_queue_cancel")
             with self._transaction():
@@ -455,7 +587,13 @@ class ProjectDispatcher:
 
     def _promote(self, intent, job):
         try:
-            expected = fixture_result(json.loads(intent["payload"]))
+            payload = json.loads(intent["payload"])
+            if payload.get("handler") == m02_cpu.HANDLER:
+                authorization = self.cpu_authorization(payload, job)
+                expected = self.cpu_saved_result(job["id"])
+                m02_cpu.validate_result(expected, payload, job, authorization)
+            else:
+                expected = fixture_result(payload)
             valid = _canonical(job["result"]) == _canonical(expected)
         except (ValueError, TypeError, KeyError, UnicodeError):
             valid = False
@@ -505,14 +643,19 @@ class ProjectDispatcher:
             self._hit("after_control_promotion")
         return True
 
-    def _reconcile(self):
-        changed = self._reconcile_cancellations()
+    def _reconcile(self, reasons=None):
+        changed = self._reconcile_cancellations(reasons)
         with self._lock:
             intents = list(self._db.execute("SELECT * FROM m02_intents ORDER BY handoff_id"))
         for intent in intents:
             if intent["status"] not in ("reserved", "enqueued"):
                 continue
-            job = self._enqueue(intent)
+            try:
+                job = self._enqueue(intent)
+            except m02_cpu.UnsupportedCPUPlatform:
+                if reasons is not None:
+                    reasons.append("cpu_platform_unsupported")
+                continue
             if job["status"] == "completed":
                 changed = self._promote(intent, job) or changed
             elif job["status"] in ("cancelled", "failed"):
@@ -529,9 +672,9 @@ class ProjectDispatcher:
 
     def tick(self):
         """Reconcile durable work, dispatch at most one eligible task, then return."""
-        progressed = self._reconcile()
-        selected = None
         reasons = []
+        progressed = self._reconcile(reasons)
+        selected = None
         with self._transaction():
             projects = list(self._db.execute("SELECT * FROM m02_projects ORDER BY project_id"))
             last = self._meta("last_project")
@@ -564,7 +707,16 @@ class ProjectDispatcher:
                         reasons.append("budget_exhausted")
                         continue
                     key = "m02:" + _sha([task["project_id"], task["task_id"], task["handoff_id"], task["input_sha256"]])
-                    payload = _payload(json.loads(project["spec"]), spec, task["input_sha256"])
+                    payload = _payload(json.loads(project["spec"]), spec, task["input_sha256"], task["parent_handoff"])
+                    if spec["handler"] == m02_cpu.HANDLER:
+                        try:
+                            self._cpu_pins()
+                        except m02_cpu.UnsupportedCPUPlatform:
+                            reasons.append("cpu_platform_unsupported")
+                            continue
+                        # DB authority and hashes are checked before writing an
+                        # intent or spending any part of the shared reserve.
+                        self.cpu_authorization(payload)
                     self._db.execute("""INSERT INTO m02_intents VALUES
                         (?,?,?,?,?,?,?,?,NULL,'reserved',NULL,?)""", (
                         task["handoff_id"], task["task_id"], task["project_id"], task["revision"],
@@ -592,7 +744,7 @@ class ProjectDispatcher:
                 "reason": ",".join(sorted(set(reasons))) if reasons else
                           ("reconciled" if progressed else "no_eligible_task")}
 
-    def _revise(self, task, *, handoff_id, reason, goal=None, fixture_id=None):
+    def _revise(self, task, *, handoff_id, reason, goal=None, fixture_id=None, parameters=None):
         if task["revision"] >= MAX_REVISIONS:
             raise ValueError("bounded rework limit reached")
         if task["status"] in ("accepted", "cancelled", "cancel_requested", "exhausted"):
@@ -605,8 +757,12 @@ class ProjectDispatcher:
             spec["goal"] = goal
         if fixture_id is not None:
             spec["fixture_id"] = fixture_id
+        if parameters is not None:
+            spec["parameters"] = parameters
         spec = _task_spec(spec)
-        digest = self._insert_handoff(self._project(task["project_id"]), spec)
+        if spec["handler"] == m02_cpu.HANDLER:
+            self._cpu_pins()
+        digest = self._insert_handoff(self._project(task["project_id"]), spec, task["handoff_id"])
         self._cancel_intent(task, reason)
         self._db.execute("""UPDATE m02_tasks SET spec=?,revision=?,handoff_id=?,input_sha256=?,
             status='pending',queue_job_id=NULL,current_result_sha256=NULL,parent_handoff=?,checkpoint='revised'
@@ -615,12 +771,12 @@ class ProjectDispatcher:
         self._event("revised", spec, {"parent_handoff": task["handoff_id"], "reason": reason,
                                       "input_sha256": digest})
 
-    def revise(self, task_id, *, expected_revision, handoff_id, reason, goal=None, fixture_id=None):
+    def revise(self, task_id, *, expected_revision, handoff_id, reason, goal=None, fixture_id=None, parameters=None):
         with self._transaction():
             task = self._task(task_id)
             if type(expected_revision) is not int or task["revision"] != expected_revision:
                 raise ValueError("stale task revision")
-            self._revise(task, handoff_id=handoff_id, reason=reason, goal=goal, fixture_id=fixture_id)
+            self._revise(task, handoff_id=handoff_id, reason=reason, goal=goal, fixture_id=fixture_id, parameters=parameters)
             return self._public_task(self._task(task_id))
 
     def review(self, task_id, *, expected_revision, result_sha256, decision, note):
@@ -655,7 +811,8 @@ class ProjectDispatcher:
                                  (task_id,))
             else:
                 handoff = "rework:" + _sha([task_id, task["handoff_id"], result_sha256, decision, note])
-                self._revise(task, handoff_id=handoff, reason=note, fixture_id="repair_alpha")
+                self._revise(task, handoff_id=handoff, reason=note,
+                             fixture_id=None if json.loads(task["spec"])["handler"] == m02_cpu.HANDLER else "repair_alpha")
             return self._public_task(self._task(task_id))
 
     def cancel(self, task_id, *, expected_revision, reason):
@@ -726,6 +883,8 @@ class ProjectDispatcher:
                 "schema": SCHEMA, "projects": projects, "tasks": tasks, "intents": intents,
                 "artifacts": [{"sha256": row[0], "content": json.loads(row[1])} for row in
                               self._db.execute("SELECT sha256,content FROM m02_artifacts ORDER BY sha256")],
+                "cpu_results": [{"queue_job_id": row[0], "sha256": row[1], "content": json.loads(row[2])} for row in
+                                self._db.execute("SELECT queue_job_id,sha256,content FROM m02_cpu_results ORDER BY queue_job_id")],
                 "outbox": [dict(row) for row in self._db.execute("SELECT * FROM m02_outbox ORDER BY event_id")],
                 "reviews": [dict(row) for row in self._db.execute("SELECT * FROM m02_reviews ORDER BY handoff_id")],
                 "cancellations": [dict(row) for row in self._db.execute("SELECT * FROM m02_cancellations ORDER BY handoff_id")],

@@ -21,7 +21,7 @@ import time
 import uuid
 
 
-KINDS = frozenset({"discovery", "simulation", "evidence", "directory"})
+KINDS = frozenset({"discovery", "simulation", "evidence", "directory", "m02_cpu"})
 MAX_PAYLOAD_BYTES = 64 * 1024
 MAX_RESULT_BYTES = 1024 * 1024
 MAX_ERROR_BYTES = 64 * 1024
