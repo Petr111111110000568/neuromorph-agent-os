@@ -26,7 +26,7 @@ Next question: How can we implement a context-memory provenance tracker using Py
 ## Logical council: same fixed Qwen backend, no new accounts
 
 ```json
-{"receipt": {"execution_allowed": false, "member_count": 3, "mode": "logical_roles_same_qwen", "proposal_id": null, "revision": 0, "status": "not_requested"}, "members": ["author", "reviewer", "reviser"], "pending_ids": []}
+{"receipt": {"mode": "logical_roles_same_qwen", "status": "not_requested", "revision": 0, "proposal_id": null, "member_count": 3, "execution_allowed": false}, "members": ["author", "reviewer", "reviser"], "pending_ids": []}
 ```
 
 
@@ -73,6 +73,16 @@ Next question: How can we implement a context-memory provenance tracker using Py
     "role": "reviewer",
     "run_id": "36542708092",
     "status": "provider_unavailable"
+  },
+  {
+    "attempt": 5,
+    "run_id": "37123099146",
+    "at": 1791030707,
+    "role": "reviewer",
+    "status": "invalid_python",
+    "output_sha256": null,
+    "base_commit": "898162ee6208be03c5d5cf294c3d264f10f7de1b",
+    "input_sha256": "8668a59cc45b262806e1190cb271c284056adb7e73f2c87b1565c4a8143f4ce1"
   }
 ]
 ```
