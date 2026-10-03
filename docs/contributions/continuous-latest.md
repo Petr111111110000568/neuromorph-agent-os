@@ -1,6 +1,6 @@
 # Continuous contribution ledger
 
-Attempts: 4; structured replies: 1; next role: reviewer.
+Attempts: 5; structured replies: 1; next role: reviewer.
 
 Auxiliary backend: public Qwen/Qwen3-Demo, not a native account conversation. Roles share one model. Claims are unverified. Candidate code is syntax-checked only, never executed or merged automatically.
 
@@ -26,7 +26,7 @@ Next question: How can we implement a context-memory provenance tracker using Py
 ## Logical council: same fixed Qwen backend, no new accounts
 
 ```json
-{"receipt": {"mode": "logical_roles_same_qwen", "status": "not_requested", "revision": 0, "proposal_id": null, "member_count": 3, "execution_allowed": false}, "members": ["author", "reviewer", "reviser"], "pending_ids": []}
+{"receipt": {"execution_allowed": false, "member_count": 3, "mode": "logical_roles_same_qwen", "proposal_id": null, "revision": 0, "status": "not_requested"}, "members": ["author", "reviewer", "reviser"], "pending_ids": []}
 ```
 
 
@@ -65,14 +65,14 @@ Next question: How can we implement a context-memory provenance tracker using Py
     "status": "provider_unavailable"
   },
   {
-    "attempt": 4,
-    "run_id": "36542708092",
     "at": 1790670491,
-    "role": "reviewer",
-    "status": "provider_unavailable",
-    "output_sha256": null,
+    "attempt": 4,
     "base_commit": "898162ee6208be03c5d5cf294c3d264f10f7de1b",
-    "input_sha256": "5daf9f8305d58301a4cf85aeb3db13e9011534c4feb78a47d99d71a367b100e8"
+    "input_sha256": "5daf9f8305d58301a4cf85aeb3db13e9011534c4feb78a47d99d71a367b100e8",
+    "output_sha256": null,
+    "role": "reviewer",
+    "run_id": "36542708092",
+    "status": "provider_unavailable"
   }
 ]
 ```
