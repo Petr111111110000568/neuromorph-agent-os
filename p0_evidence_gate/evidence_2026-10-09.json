@@ -1,0 +1,122 @@
+{
+  "schema": "p0-evidence-gate/1.0",
+  "date": "2026-10-09",
+  "scope": "Public evidence metadata only; no biological sequences, hardware control, fabrication or in-vivo intervention",
+  "records": [
+    {
+      "id": "P0-XENO-2026-LANCET",
+      "source_url": "https://doi.org/10.1016/S0140-6736(26)01295-X",
+      "doi": "10.1016/S0140-6736(26)01295-X",
+      "publisher_date": "2026-09-12",
+      "kind": "PRIMARY",
+      "environment": "HUMAN",
+      "observed": "One gene-edited porcine kidney supported dialysis independence for 271 days before graft failure and nephrectomy.",
+      "limitations": [
+        "Single participant with specific immunosuppression",
+        "Graft microvascular injury and thrombotic microangiopathy",
+        "Does not demonstrate de novo formation of an organ inside a donor animal"
+      ],
+      "safe_next_step": "Represent graft function decline and a hard-stop alert on recorded synthetic time series"
+    },
+    {
+      "id": "P0-ORGANOID-2025-NBE",
+      "source_url": "https://doi.org/10.1038/s41551-025-01542-1",
+      "doi": "10.1038/s41551-025-01542-1",
+      "publisher_date": "2025-10-31",
+      "kind": "PRIMARY",
+      "environment": "ANIMAL",
+      "observed": "Human kidney organoid-derived cells were detected 24 to 48 hours after porcine kidney ex vivo perfusion and autologous reimplantation.",
+      "limitations": [
+        "Short follow-up",
+        "Presence of human cells is not proof of a mature functional organ",
+        "Not demonstrated with actinomycetes or remote commands"
+      ],
+      "safe_next_step": "Build synthetic cell-persistence observation model with uncertainty intervals"
+    },
+    {
+      "id": "P0-BIOSENSOR-2025-ANTENNALIVE",
+      "source_url": "https://doi.org/10.1038/s41467-025-65416-5",
+      "doi": "10.1038/s41467-025-65416-5",
+      "publisher_date": "2025-11-25",
+      "kind": "PRIMARY",
+      "environment": "PHANTOM",
+      "observed": "Batteryless wireless readout of a bacteria-associated passive device from 25 mm inside a body tissue phantom.",
+      "limitations": [
+        "Not implanted in living mammals",
+        "Readout, not general bidirectional remote reprogramming",
+        "Device was not based on actinomycetes"
+      ],
+      "safe_next_step": "Use public readout observations as a model for packet-loss stress tests with entirely synthetic sensor values"
+    },
+    {
+      "id": "P0-ELECTRIC-2026-STREPTOMYCES",
+      "source_url": "https://doi.org/10.1016/j.procbio.2026.05.012",
+      "doi": "10.1016/j.procbio.2026.05.012",
+      "publisher_date": "2026-05-20",
+      "kind": "PRIMARY",
+      "environment": "IN_VITRO",
+      "observed": "A bioelectrochemical study reported physiological responses of Streptomyces lividans in laboratory culture.",
+      "limitations": [
+        "Not evidence of a deployable implant",
+        "Not evidence of tissue reprogramming",
+        "Not evidence of growing an organ in a donor animal"
+      ],
+      "safe_next_step": "Catalog response observables without extrapolating laboratory physiology to animal outcomes"
+    },
+    {
+      "id": "P0-ECOSENS-2026",
+      "source_url": "https://doi.org/10.1038/s41587-026-03075-7",
+      "doi": "10.1038/s41587-026-03075-7",
+      "publisher_date": "2026-04-17",
+      "kind": "PRIMARY",
+      "environment": "IN_VITRO",
+      "observed": "An electroactive microbial co-culture was used as a modular whole-cell bioelectronic sensor.",
+      "limitations": [
+        "Published sensing is not a clinical implant",
+        "No actinomycete-driven organogenesis",
+        "No remote control of mammalian tissue assembly"
+      ],
+      "safe_next_step": "Represent a read-only multichannel virtual sensor and inject dropout faults"
+    },
+    {
+      "id": "P0-GINKGO-2026-CFPS",
+      "source_url": "https://openai.com/index/gpt-5-lowers-protein-synthesis-cost/",
+      "publisher_date": "2026-02-05",
+      "kind": "PRIMARY",
+      "environment": "IN_VITRO",
+      "observed": "OpenAI and Ginkgo reported a GPT-5/robotics feedback loop for cell-free protein synthesis: more than 36,000 reaction compositions over 580 plates, 40% reduction in protein production cost.",
+      "limitations": [
+        "Cell-free protein production rather than organ growth",
+        "Does not establish an OpenAI-Red Queen-LANL joint implant program",
+        "Laboratory platform access not granted to this assistant"
+      ],
+      "safe_next_step": "Model evidence provenance and reversible simulated experiment selection only"
+    },
+    {
+      "id": "P0-ARPAH-2026-FRONT",
+      "source_url": "https://arpa-h.gov/news-and-events/front-program-selects-performer-team",
+      "publisher_date": "2026-05-22",
+      "kind": "PROGRAM",
+      "environment": "NONE",
+      "observed": "ARPA-H announced funded performers pursuing structured adult neocortex graft research; no completed human graft is substantiated here.",
+      "limitations": [
+        "Program award is not proof of success",
+        "No applicability to actinomycete-derived anthropomorphic organ construction"
+      ],
+      "safe_next_step": "Track public program milestones separately from peer-reviewed experimental outcomes"
+    },
+    {
+      "id": "P0-ARPAH-2026-PRINT",
+      "source_url": "https://arpa-h.gov/news-and-events/arpa-h-awards-teams-set-bioprint-universally-matched-organs-demand",
+      "publisher_date": "2026-01-12",
+      "kind": "PROGRAM",
+      "environment": "NONE",
+      "observed": "ARPA-H announced five selected performer teams for developing bioprinted immunologically matched human organs; these are research awards, not finished transplants.",
+      "limitations": [
+        "No reported completed bioprinted adult organ from this program in this announcement",
+        "Separate from remotely commanded actinomycetes and in-vivo organ formation"
+      ],
+      "safe_next_step": "Record milestone evidence and its validation type for each awardee without issuing fabrication commands"
+    }
+  ]
+}
