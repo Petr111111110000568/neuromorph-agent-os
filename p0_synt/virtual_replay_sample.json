@@ -1,0 +1,13 @@
+{
+  "packet_a": {
+    "schema": "p0.sint.virtual-observation.v1", "mode": "SIMULATION_ONLY",
+    "run_id": "SIM-20261009-X1", "frame": 11, "channel": "SIM_A",
+    "values": [1, 0, 0, 0, 0, 0], "uncertainty": 0.01, "quality": true
+  },
+  "packet_b": {
+    "schema": "p0.sint.virtual-observation.v1", "mode": "SIMULATION_ONLY",
+    "run_id": "SIM-20261009-X1", "frame": 11, "channel": "SIM_B",
+    "values": [1, 0, 0, 0, 0, 0], "uncertainty": 0.01, "quality": true
+  },
+  "target": [0, 0, 0, 0, 0, 1]
+}

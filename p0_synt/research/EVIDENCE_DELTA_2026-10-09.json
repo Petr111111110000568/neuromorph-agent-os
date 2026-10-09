@@ -1,0 +1,60 @@
+{
+  "project": "P0/SINT evidence delta",
+  "as_of": "2026-10-09",
+  "evidence_policy": "PRIMARY experimentally observed, PROGRAM objective only, SOFTWARE repository description only; no evidence supports an actinomycete symbiont that makes transplantable organs within an adult host",
+  "new_in_this_pass": [
+    {
+      "id": "P0-20261009-01",
+      "category": "PRIMARY_CLINICAL",
+      "title": "Porcine kidney xenotransplantation as a bridge to allotransplantation: a first-in-human study",
+      "organization": "Massachusetts General Hospital / eGenesis / multi-institution authors",
+      "published": "2026-09-12",
+      "doi": "10.1016/S0140-6736(26)01295-X",
+      "source": "https://www.sciencedirect.com/science/article/pii/S014067362601295X",
+      "verified": "One gene-edited pig kidney functioned in a human recipient and supported 271 days of dialysis independence after 2025-01-25 transplant",
+      "negative": "Progressive endothelial injury, thrombotic microangiopathy and loss of xenograft occurred; not a grown new human organ and not an actinomycete-based system",
+      "application_to_simulator": "Track injury/functional decline as a separate failure-state proxy; do not derive biological parameters from toy state",
+      "status": "PRIMARY_PEER_REVIEWED_SINGLE_CASE"
+    },
+    {
+      "id": "P0-20261009-02",
+      "category": "OFFICIAL_PROGRAM",
+      "title": "FRONT program selects performer team",
+      "organization": "ARPA-H / Sophrosyne Biosciences",
+      "published": "2026-05-22",
+      "source": "https://arpa-h.gov/news-and-events/front-program-selects-performer-team",
+      "verified": "Agency named performer for neocortical tissue repair research; five-year, three-phase plan",
+      "negative": "Selection and milestones are not evidence that a mature integrated repair graft works",
+      "application_to_simulator": "Add evidence status PROGRAM_ONLY; do not enable any physical control",
+      "status": "PROGRAM_AWARD_NOT_EXPERIMENT"
+    },
+    {
+      "id": "P0-20261009-03",
+      "category": "OFFICIAL_SOFTWARE",
+      "title": "MADSci: Modular Autonomous Discovery for Science",
+      "organization": "Argonne National Laboratory AD-SDL",
+      "source": "https://github.com/AD-SDL/MADSci",
+      "verified": "Open repository describes REST nodes, workflow, observability, logging and simulated nodes",
+      "negative": "Project itself labels framework beta; no connection to a live P0 lab or any authorization proven",
+      "application_to_simulator": "Use interface patterns conceptually; offline virtual-node adapter only",
+      "status": "SOFTWARE_PUBLIC_NOT_INSTALLED"
+    }
+  ],
+  "rechecked_prior_components": [
+    {"id":"N04", "type":"PRIMARY_PIG_PRECLINICAL", "source":"https://www.nature.com/articles/s41564-025-02057-w", "doi":"10.1038/s41564-025-02057-w", "verified":"Ingestible smartphone-linked optoelectronic capsule demonstrated pig intestinal engineered microbe sensing and predefined bio-output; no remotely updated DNA program"},
+    {"id":"N05", "type":"PRIMARY_MOUSE_PRECLINICAL", "source":"https://www.nature.com/articles/s41565-025-01929-w", "doi":"10.1038/s41565-025-01929-w", "verified":"Electromagnetic control of preengineered mammalian transgene expression in microencapsulated cells implanted in mice; not organ formation"},
+    {"id":"N07", "type":"OFFICIAL_DARPA", "source":"https://www.darpa.mil/research/programs/living-foundries", "verified":"Biomanufacturing tools; no in-host organ-growing symbiont"},
+    {"id":"P0-WANG2023", "type":"PRIMARY_EMBRYONIC_PIG", "source":"https://pubmed.ncbi.nlm.nih.gov/37683604/", "doi":"10.1016/j.stem.2023.08.003", "verified":"Humanized mesonephros precursor up to embryonic day 28; not mature functional graft and not adult host"},
+    {"id":"P0-TERRELL2021", "type":"PRIMARY_IN_VITRO", "source":"https://www.nature.com/articles/s41565-021-00878-4", "doi":"10.1038/s41565-021-00878-4", "verified":"BioLAN in vitro electronic microbe-to-microbe bidirectional link; not Streptomyces in pigs"},
+    {"id":"P0-SBOL3", "type":"PUBLIC_SOFTWARE", "source":"https://github.com/SynBioDex/pySBOL3", "verified":"SBOL 3.0.1 manipulation software available; no live-lab connection or certification claimed"},
+    {"id":"P0-SBML3", "type":"PUBLIC_STANDARD", "source":"https://sbml.org/documents/specifications/level-3/version-2/", "verified":"SBML Level 3 Version 2 Core standard, suitable for simulation models; not equipment firmware"},
+    {"id":"P0-FDA", "type":"REGULATORY", "source":"https://www.fda.gov/regulatory-information/search-fda-guidance-documents/source-animal-product-preclinical-and-clinical-issues-concerning-use-xenotransplantation-products", "verified":"FDA xenotransplantation safety guidance, not product approval"}
+  ],
+  "unverified_or_unavailable": [
+    "Any role of OpenAI, Red Queen Bio, Ginkgo Bioworks or Los Alamos as a unified authorized P0 consortium",
+    "Any actinomycete-based wireless programmed in vivo pig organ generator",
+    "Any certified cloud endpoint, laboratory identity, animal research authorization or synthetic genome production access",
+    "Any available classified DIA or DARPA technical documentation",
+    "Calibration of abstract volume/uncertainty to real tissue growth or tissue injury"
+  ]
+}

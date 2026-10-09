@@ -1,0 +1,32 @@
+{
+  "project": "P0/Nanits",
+  "artifact": "Synt Muse/Dots bootstrap",
+  "date": "2026-10-07",
+  "muse": {
+    "windows_cli": "installed_1.4.3",
+    "wsl_cli": "installed_1.4.3",
+    "skill": "validated",
+    "echo_provider": "passed",
+    "live_meta": "blocked_missing_credentials",
+    "native_workflow": "not_started"
+  },
+  "dots": {
+    "native_provision": "not_confirmed",
+    "activation": "requires_account_entitlement"
+  },
+  "simulation": {
+    "mode": "simulation_only",
+    "tests_passed": 7,
+    "tests_total": 7,
+    "smoke": "SIMULATED_AND_VERIFIED",
+    "fixed_volume_cells": 6,
+    "steps": 8
+  },
+  "local_gpu": {
+    "port": 8790,
+    "listen": true,
+    "health": "HTTP_503"
+  },
+  "controller": "single_P0_master",
+  "zero_spend": true
+}
