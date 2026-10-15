@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "project": "Blackwall / ИскИн Чёрного Заслона",
+  "target_os": "openKylin 3.0 x86_64; x86/ARM require local verification",
+  "deployment_profile": "local_first_no_paid_api",
+  "authoritative_policy": "config/resource_policy.json",
+  "single_coordinator": "neuromorph-agent-os",
+  "agent_execution_default": "disabled_until_local_validation",
+  "mcp_privileges_default": "offline-only, three permitted tools",
+  "components": [
+    {"name": "Meta-Harness/NeuroMorf", "role": "coordinator, task journal, provenance, MCP", "integration": "existing repo service and offline-only stdio MCP", "state": "source_reviewed_host_unverified"},
+    {"name": "openKylin AgentOS/KylinBot", "role": "native OS skills and multimodal surface", "integration": "verify actual packaged MCP endpoint; no guessed APIs", "state": "os_support_documented_host_unverified"},
+    {"name": "ClawTeam", "role": "optional local agent task teams, git worktrees", "integration": "separate user venv, permission skipping false, file transport", "state": "upstream_reviewed_host_unverified"},
+    {"name": "SwarmClaw", "role": "optional control UI for OpenClaw/Hermes agents", "integration": "existing installation on localhost:3456; do not duplicate coordinator", "state": "upstream_reviewed_host_unverified"},
+    {"name": "OpenClaw and OpenClaw Enterprise", "role": "gateway, skills, channels", "integration": "use provider connectors after local owner/auth verification", "state": "user_reported_host_unverified"},
+    {"name": "Hermes Agent", "role": "independent agent harness", "integration": "SwarmClaw or separately approved CLI; no host-shell trust inheritance", "state": "user_reported_host_unverified"},
+    {"name": "DeepSeek Harness and Qwen Studio", "role": "optional execution/model clients", "integration": "only confirmed CLI or MCP endpoints", "state": "user_reported_host_unverified"},
+    {"name": "Kimi K3 C-engine", "role": "local model server", "integration": "probe 127.0.0.1:8090/v1/models, no guessed model availability", "state": "historical_endpoint_host_unverified"},
+    {"name": "Ollama/llama.cpp/LM Studio", "role": "local model inference", "integration": "loopback HTTP checks, never treat weights as loaded", "state": "optional_host_unverified"},
+    {"name": "Spaces and model inventory", "role": "local asset discovery", "integration": "bounded stat-only scan of explicit directories; GGUF/SafeTensors/ONNX", "state": "implemented_in_bundle"},
+    {"name": "distributed research workers", "role": "trusted network compute", "integration": "existing Meta-Harness TLS/bearer hub, one coordinator", "state": "source_reviewed_multi_machine_unverified"},
+    {"name": "voice and messenger channels", "role": "human interaction", "integration": "configured explicitly in OpenClaw/SwarmClaw with approved scopes", "state": "not_configured"},
+    {"name": "P2P/ZeroMQ mesh", "role": "optional LAN and VPN peers", "integration": "ClawTeam optional P2P, default disabled", "state": "not_configured"}
+  ],
+  "hard_limits": {"daily_cloud_spend_usd": 0, "enable_remote_auto_discovery": false, "auto_install_code_from_spaces": false, "auto_run_third_party_code": false, "privileged_remote_actions": false, "unauthorized_network_or_device_access": false}
+}
