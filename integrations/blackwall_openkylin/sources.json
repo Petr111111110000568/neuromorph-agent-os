@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "source_type": "public_repository_catalogue",
+  "note": "GitHub repository visibility was checked through the user's connected account; the repositories are not installed, audited or authenticated on the local openKylin host by this catalogue.",
+  "repos": [
+    {"component":"meta_harness","repo":"Petr111111110000568/neuromorph-agent-os","role":"single coordinator","checked":"repository_present","deploy":"separate manual checkout"},
+    {"component":"openclaw","repo":"Petr111111110000568/openclaw","role":"optional agent gateway","checked":"repository_present","deploy":"disabled until local verification"},
+    {"component":"hermes","repo":"Petr111111110000568/hermes-agent","role":"optional agent harness","checked":"repository_present","deploy":"disabled until local verification"},
+    {"component":"kimi_k3","repo":"Petr111111110000568/kimi-k3-in-c","role":"optional local C inference source","checked":"repository_present","deploy":"disabled until model/build verification"},
+    {"component":"agno","repo":"Petr111111110000568/agno","role":"optional alternative agent framework","checked":"repository_present","deploy":"not an additional coordinator"},
+    {"component":"clawteam","repo":"HKUDS/ClawTeam","role":"optional task teams and git worktrees","checked":"public_upstream_reference","deploy":"separate pinned package and audit"},
+    {"component":"swarmclaw","repo":"swarmclawai/swarmclaw","role":"optional UI/agent control plane","checked":"public_upstream_reference","deploy":"separate verified installation"}
+  ],
+  "rules": {"no_automatic_clone":true,"no_execution_of_unverified_repos":true,"no_duplicate_coordinator":true,"no_secret_copy":true}
+}
