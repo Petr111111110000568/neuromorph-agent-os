@@ -1,0 +1,35 @@
+name: Blackwall openKylin integration checks
+on:
+  pull_request:
+    paths:
+      - 'integrations/blackwall_openkylin/**'
+      - '.github/workflows/blackwall-openkylin.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  stdlib-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Confirm Python 3.11+ and static syntax
+        run: |
+          python3 --version
+          python3 -c 'import sys; assert sys.version_info >= (3, 11)'
+          python3 -m py_compile integrations/blackwall_openkylin/blackwall.py
+          bash -n integrations/blackwall_openkylin/bootstrap-openkylin.sh
+      - name: Execute isolated read-only checks
+        run: python3 -m unittest discover -s integrations/blackwall_openkylin/tests -v
+      - name: Verify declarative component schema
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("integrations/blackwall_openkylin/components.json")
+          data = json.loads(p.read_text(encoding="utf-8"))
+          assert data["hard_limits"]["daily_cloud_spend_usd"] == 0
+          assert data["hard_limits"]["auto_run_third_party_code"] is False
+          assert len(data["components"]) >= 10
+          print(f"Verified {len(data['components'])} documented components; not a live host test")
+          PY
