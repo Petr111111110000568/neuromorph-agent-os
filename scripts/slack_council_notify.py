@@ -63,7 +63,7 @@ def make_payload(receipt):
     )}
 
 
-def deliver(report_path, webhook, transport=urllib.request.urlopen):
+def deliver(report_path, webhook, transport=None):
     if not valid_webhook(webhook):
         raise ValueError("invalid webhook")
     raw = Path(report_path).read_bytes()
@@ -77,7 +77,7 @@ def deliver(report_path, webhook, transport=urllib.request.urlopen):
         headers={"Content-Type": "application/json; charset=utf-8"},
         method="POST",
     )
-    with transport(request, timeout=5) as response:
+    with (transport or urllib.request.urlopen)(request, timeout=5) as response:
         if response.status != 200:
             raise ValueError("unexpected response status")
 
