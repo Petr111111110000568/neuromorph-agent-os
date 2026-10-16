@@ -1,0 +1,72 @@
+# TEMPLATE ONLY. Store this workflow in a separate PRIVATE repository,
+# never in the public neuromorph-agent-os repository.
+# Replace APPROVED_PUBLIC_COMMIT_SHA with the full reviewed commit containing
+# scripts/openkylin_health.py before enabling this workflow.
+name: Private openKylin read-only diagnostics
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'requests/*.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: neuromorph-private-host-health
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: [self-hosted, Linux, X64, neuromorph-openkylin]
+    timeout-minutes: 4
+    permissions:
+      contents: read
+    steps:
+      - name: Fetch private request only
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - name: Admit exactly one added read-only request
+        id: admission
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          event = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text(encoding='utf-8'))
+          added = (event.get('head_commit') or {}).get('added') or []
+          names = [p for p in added if re.fullmatch(r'requests/[a-z0-9-]{4,64}\.json', p)]
+          if len(names) != 1 or len(added) != 1:
+              raise SystemExit('refuse: require exactly one new request file per push')
+          target = Path(os.environ['GITHUB_WORKSPACE']) / names[0]
+          if target.is_symlink() or not target.is_file() or target.stat().st_size > 1024:
+              raise SystemExit('refuse: request size or file type')
+          value = json.loads(target.read_text(encoding='utf-8'))
+          request_id = names[0][len('requests/'):-len('.json')]
+          if value != {'schema_version': 1, 'request_id': request_id, 'op': 'health_snapshot'}:
+              raise SystemExit('refuse: not an allowlisted read-only request')
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as out:
+              out.write('request_id=' + request_id + '\n')
+          PY
+      - name: Checkout explicitly approved diagnostic code
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          repository: Petr111111110000568/neuromorph-agent-os
+          ref: APPROVED_PUBLIC_COMMIT_SHA
+          path: approved-code
+          persist-credentials: false
+      - name: Run bounded diagnostics, no external services invoked
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 approved-code/scripts/openkylin_health.py --output "$RUNNER_TEMP/openkylin-health.json"
+      - name: Keep private diagnostic artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: openkylin-health-${{ steps.admission.outputs.request_id }}
+          path: ${{ runner.temp }}/openkylin-health.json
+          retention-days: 3
+          if-no-files-found: error
