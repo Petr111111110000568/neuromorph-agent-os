@@ -45,6 +45,12 @@ jobs:
           env -i PATH="$PATH" LANG=C.UTF-8
           python3 -I trusted/scripts/council_health.py
           --trusted trusted --ledger ledger --output runtime/council-health
+      - name: Notify Slack of cloud council status (optional)
+        if: success()
+        continue-on-error: true
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: python3 -I trusted/scripts/slack_council_notify.py --report runtime/council-health/receipt.json
       - name: Preserve morning report
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
