@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "dataset_label": "Entirely fictional Atlas examples",
+  "tasks": [
+    {
+      "id": "DEMO-001",
+      "synthetic": true,
+      "title": "Clarify the empty state",
+      "status": "proposed",
+      "category": "interface",
+      "summary": "Example proposal: explain what to try when a filter returns no cards.",
+      "acceptance": "The fictional proposal asks for one short message and a visible reset control.",
+      "evidence": "No work has been performed for this example. A reviewer would need a before-and-after comparison."
+    },
+    {
+      "id": "DEMO-002",
+      "synthetic": true,
+      "title": "Review keyboard navigation",
+      "status": "review",
+      "category": "quality",
+      "summary": "Example review: inspect the journey from search to a task detail dialog.",
+      "acceptance": "The fictional review would check visible focus, dialog dismissal and focus restoration.",
+      "evidence": "Placeholder evidence only. This card does not certify an accessibility audit."
+    },
+    {
+      "id": "DEMO-003",
+      "synthetic": true,
+      "title": "Explain result limitations",
+      "status": "complete",
+      "category": "documentation",
+      "summary": "Example completion: a short guide distinguishes a test result from an accepted outcome.",
+      "acceptance": "The fictional guide contains separate sections for observations and remaining limitations.",
+      "evidence": "Illustrative completion status only. No real deliverable or independent acceptance is asserted."
+    },
+    {
+      "id": "DEMO-004",
+      "synthetic": true,
+      "title": "Check the example links",
+      "status": "proposed",
+      "category": "quality",
+      "summary": "Example proposal: ensure every documentation link stays inside the public package.",
+      "acceptance": "The fictional task would report missing targets and reject external resource references.",
+      "evidence": "No task execution is attached to this example. Use the package checks for actual validation."
+    },
+    {
+      "id": "DEMO-005",
+      "synthetic": true,
+      "title": "Simplify the proposal form",
+      "status": "review",
+      "category": "documentation",
+      "summary": "Example review: keep scope, acceptance and stopping conditions easy to find.",
+      "acceptance": "The fictional form should describe a bounded change without implying permission to run it.",
+      "evidence": "Synthetic review state. No maintainer decision or contributor identity is represented."
+    },
+    {
+      "id": "DEMO-006",
+      "synthetic": true,
+      "title": "Describe the sample board",
+      "status": "complete",
+      "category": "interface",
+      "summary": "Example completion: make the demonstration label prominent on a small screen.",
+      "acceptance": "The fictional change would preserve the demo label and readable controls on a narrow viewport.",
+      "evidence": "Example outcome only. A real change would need an explicit test report and human review."
+    }
+  ]
+}
