@@ -1,0 +1,187 @@
+{
+  "task": "P0-SINT-PHYS-001",
+  "status": "software_replay_only",
+  "original_paper": "https://doi.org/10.1038/s41566-026-01880-9",
+  "original_source": "https://github.com/EQ15T/optical_qrc",
+  "original_source_commit": "71b3d799c689dbf0f9c2819f2411e47749d3585e",
+  "authors_figure_3e_sha256": "28901892054fea283db318be3a09ab9ccd7555b81dd504261177637674399ca5",
+  "model": "authors' GlobalPhaseProtocol optical digital twin",
+  "task_implementation": "authors' RegressionTask(delay)",
+  "scope": "R=3, delays 1 and 2, five paired trials (subset of fig3e)",
+  "control": "identical input/noise seeds, feedback mask set to zero",
+  "noise_level": 0.05650294519888824,
+  "washout": 3,
+  "train": 70,
+  "test": 30,
+  "metric_note": "authors' corrcoeff means Pearson correlation squared",
+  "numerical_checks": "PASS",
+  "lab_hardware_executed": false,
+  "quantum_vacuum_computation_established": false,
+  "autonomous_intelligence_established": false,
+  "summary": [
+    {
+      "tau": 1,
+      "paired_trials": 5,
+      "mean_capacity_feedback": 0.3870428428139435,
+      "mean_capacity_no_feedback": 0.022880290113578127,
+      "mean_nrmse_feedback": 0.8573187805900053,
+      "mean_nrmse_no_feedback": 1.1264697679741145
+    },
+    {
+      "tau": 2,
+      "paired_trials": 5,
+      "mean_capacity_feedback": 0.07288615330089845,
+      "mean_capacity_no_feedback": 0.028604989868458365,
+      "mean_nrmse_feedback": 1.1109546649160076,
+      "mean_nrmse_no_feedback": 1.1045494806148526
+    }
+  ],
+  "trials": [
+    {
+      "tau": 1,
+      "trial": 0,
+      "input_seed": 2025,
+      "noise_seed": 0,
+      "original_feedback": {
+        "memory_capacity_pearson_r_squared": 0.4243642410104355,
+        "heldout_nrmse": 0.9021766194396761
+      },
+      "zero_feedback_ablation": {
+        "memory_capacity_pearson_r_squared": 0.007573691995838432,
+        "heldout_nrmse": 1.2580873285067744
+      }
+    },
+    {
+      "tau": 1,
+      "trial": 1,
+      "input_seed": 2026,
+      "noise_seed": 1,
+      "original_feedback": {
+        "memory_capacity_pearson_r_squared": 0.371731389555166,
+        "heldout_nrmse": 0.814027710621478
+      },
+      "zero_feedback_ablation": {
+        "memory_capacity_pearson_r_squared": 0.012026509375610051,
+        "heldout_nrmse": 1.0825237509622196
+      }
+    },
+    {
+      "tau": 1,
+      "trial": 2,
+      "input_seed": 2027,
+      "noise_seed": 2,
+      "original_feedback": {
+        "memory_capacity_pearson_r_squared": 0.3789208949311258,
+        "heldout_nrmse": 0.823396751760496
+      },
+      "zero_feedback_ablation": {
+        "memory_capacity_pearson_r_squared": 0.07235115019410726,
+        "heldout_nrmse": 1.155747220159886
+      }
+    },
+    {
+      "tau": 1,
+      "trial": 3,
+      "input_seed": 2028,
+      "noise_seed": 3,
+      "original_feedback": {
+        "memory_capacity_pearson_r_squared": 0.37284091405727365,
+        "heldout_nrmse": 0.8386273427849192
+      },
+      "zero_feedback_ablation": {
+        "memory_capacity_pearson_r_squared": 0.017772946931408448,
+        "heldout_nrmse": 1.0226937913072285
+      }
+    },
+    {
+      "tau": 1,
+      "trial": 4,
+      "input_seed": 2029,
+      "noise_seed": 4,
+      "original_feedback": {
+        "memory_capacity_pearson_r_squared": 0.38735677451571654,
+        "heldout_nrmse": 0.9083654783434568
+      },
+      "zero_feedback_ablation": {
+        "memory_capacity_pearson_r_squared": 0.004677152070926454,
+        "heldout_nrmse": 1.1132967489344638
+      }
+    },
+    {
+      "tau": 2,
+      "trial": 0,
+      "input_seed": 2025,
+      "noise_seed": 0,
+      "original_feedback": {
+        "memory_capacity_pearson_r_squared": 0.04987547859981517,
+        "heldout_nrmse": 1.1878235039463878
+      },
+      "zero_feedback_ablation": {
+        "memory_capacity_pearson_r_squared": 0.012152230743482042,
+        "heldout_nrmse": 1.203505756532292
+      }
+    },
+    {
+      "tau": 2,
+      "trial": 1,
+      "input_seed": 2026,
+      "noise_seed": 1,
+      "original_feedback": {
+        "memory_capacity_pearson_r_squared": 0.12480510032651868,
+        "heldout_nrmse": 0.9844986444559581
+      },
+      "zero_feedback_ablation": {
+        "memory_capacity_pearson_r_squared": 0.10156863001895161,
+        "heldout_nrmse": 1.0084586370533655
+      }
+    },
+    {
+      "tau": 2,
+      "trial": 2,
+      "input_seed": 2027,
+      "noise_seed": 2,
+      "original_feedback": {
+        "memory_capacity_pearson_r_squared": 0.008244038427298116,
+        "heldout_nrmse": 1.1746962069699027
+      },
+      "zero_feedback_ablation": {
+        "memory_capacity_pearson_r_squared": 0.0076458521245733515,
+        "heldout_nrmse": 1.0336786934410782
+      }
+    },
+    {
+      "tau": 2,
+      "trial": 3,
+      "input_seed": 2028,
+      "noise_seed": 3,
+      "original_feedback": {
+        "memory_capacity_pearson_r_squared": 0.1739787778718199,
+        "heldout_nrmse": 0.9864267499932238
+      },
+      "zero_feedback_ablation": {
+        "memory_capacity_pearson_r_squared": 0.02165004386472847,
+        "heldout_nrmse": 1.1012971659889463
+      }
+    },
+    {
+      "tau": 2,
+      "trial": 4,
+      "input_seed": 2029,
+      "noise_seed": 4,
+      "original_feedback": {
+        "memory_capacity_pearson_r_squared": 0.007527371279040333,
+        "heldout_nrmse": 1.2213282192145665
+      },
+      "zero_feedback_ablation": {
+        "memory_capacity_pearson_r_squared": 8.192590556350367e-06,
+        "heldout_nrmse": 1.1758071500585814
+      }
+    }
+  ],
+  "limitations": [
+    "Digital-twin numerical replay, not independent optical experiment",
+    "Paired ablation does not establish a statistical superiority claim",
+    "Predefined parameters are drawn from published figure, not fitted here",
+    "Train/test are distinct chronological segments per upstream RegressionTask"
+  ]
+}

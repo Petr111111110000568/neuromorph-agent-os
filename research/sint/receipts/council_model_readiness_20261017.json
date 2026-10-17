@@ -1,0 +1,31 @@
+{
+  "checked_utc": "2026-10-17T19:41:22.021290+00:00",
+  "kind": "blackwall_pilot_reboot_readiness_guard",
+  "unit_sha256": "88b719d93bcfe7e83a3c73436965f15a25071e0e8813129d91ad37ea2fd9726d",
+  "backup_identical": true,
+  "dropin_sha256": "097c24866c6d9aa09cfb13a721da10c6133e404088ad3504c48c175385eb2f74",
+  "model_dependency": "Wants/After blackwall-llama.service",
+  "readiness": "45 bounded curl retries to loopback 8090 /health before starting Council",
+  "services": {
+    "blackwall-llama.service": "active",
+    "blackwall-pilot.timer": "active",
+    "blackwall-swarm-v1.5.service": "active",
+    "blackwall-vision.service": "active",
+    "kylin-agent-runtime-gateway.service": "active"
+  },
+  "health_http": {
+    "8090": 200,
+    "8091": 200,
+    "8642": 200,
+    "8765": 200,
+    "8766": 200
+  },
+  "daemon_reload": "performed",
+  "reset_failed": "performed",
+  "new_council_run_after_change": "not yet observed",
+  "unit_rerun": "not attempted; 24h run cap 26/24",
+  "rollback": "Delete only the added 10-llama-readiness.conf drop-in; systemctl --user daemon-reload; original base unit unchanged",
+  "external_changes": false,
+  "host_label": "authorized_openkylin_computer",
+  "verified_scope": "Unit configuration loaded, ports healthy, next Council cycle not yet executed; local original receipt not uploaded"
+}

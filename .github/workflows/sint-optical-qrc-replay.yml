@@ -1,0 +1,68 @@
+name: SINT P0 optical reservoir published-model replay
+
+on:
+  push:
+    branches:
+      - research/sint-optical-qrc-20261017
+    paths:
+      - .github/workflows/sint-optical-qrc-replay.yml
+      - research/sint/optical_qrc_memory_replay.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sint-optical-qrc-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  reproducible-optical-memory:
+    if: github.repository == 'Petr111111110000568/neuromorph-agent-os' && github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Checkout public research harness with no retained Git credentials
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - name: Fetch original scientific implementation at verified SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --filter=blob:none https://github.com/EQ15T/optical_qrc.git upstream/optical_qrc
+          git -C upstream/optical_qrc checkout --detach 71b3d799c689dbf0f9c2819f2411e47749d3585e
+          test "$(git -C upstream/optical_qrc rev-parse HEAD)" = "71b3d799c689dbf0f9c2819f2411e47749d3585e"
+      - name: Install isolated dependencies for authors' global-phase memory task
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv .venv
+          .venv/bin/python -m pip install --disable-pip-version-check --no-input \
+            numpy==1.26.4 scipy==1.14.1 scikit-learn==1.5.2 \
+            matplotlib==3.10.1 pandas==2.2.3 tqdm==4.67.1
+          .venv/bin/python -m pip freeze > upstream/optical_qrc_environment.txt
+      - name: Evaluate authors' optical QRC vs no-feedback ablation on held-out data
+        shell: bash
+        env:
+          MPLBACKEND: Agg
+          PYTHONPATH: ${{ github.workspace }}/upstream/optical_qrc
+        run: |
+          set -euo pipefail
+          .venv/bin/python -m py_compile research/sint/optical_qrc_memory_replay.py
+          .venv/bin/python research/sint/optical_qrc_memory_replay.py \
+            --upstream upstream/optical_qrc \
+            --output results/sint/optical_qrc_memory_heldout.json
+          sha256sum results/sint/optical_qrc_memory_heldout.json \
+            > results/sint/optical_qrc_memory_heldout.sha256
+      - name: Preserve measurements even if the numerical experiment fails
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: sint-optical-qrc-${{ github.run_id }}
+          path: |
+            results/sint/optical_qrc_memory_heldout.json
+            results/sint/optical_qrc_memory_heldout.sha256
+            upstream/optical_qrc_environment.txt
+          retention-days: 14
+          if-no-files-found: warn
