@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="Atlas: a static task-board demo with entirely fictional examples.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>Atlas · Public demo</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="topbar">
+    <a class="brand" href="#main" aria-label="Atlas home"><span aria-hidden="true" class="brand-mark">A</span> ATLAS</a>
+    <span class="demo-pill">PUBLIC DEMO · SYNTHETIC DATA</span>
+    <a href="CONTRIBUTING.md">Participation guide <span aria-hidden="true">↗</span></a>
+  </header>
+  <main id="main">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">A small, shared view of work</p>
+      <h1 id="page-title">Clear tasks.<br><span>Reviewable results.</span></h1>
+      <p class="lead">Explore a fictional task board and a simple proposal-and-review workflow. Every card, status and result below is an example.</p>
+      <div class="scope-note"><strong>Static demonstration only.</strong> There is no backend, working MCP integration, live queue or connected agent. This page cannot assign work, start a process or grant access.</div>
+    </section>
+    <section class="board" aria-labelledby="board-title">
+      <div class="section-heading"><div><p class="eyebrow">01 / Example board</p><h2 id="board-title">The next step, in view</h2></div><p id="total-summary">Loading synthetic examples…</p></div>
+      <form id="filters" class="filters" role="search">
+        <label class="search-field">Find an example<input type="search" id="search" placeholder="Search title or summary" autocomplete="off"></label>
+        <label>Example status<select id="status"><option value="all">All statuses</option><option value="proposed">Proposal</option><option value="review">In review</option><option value="complete">Example complete</option></select></label>
+        <button id="reset" type="button" class="secondary">Reset</button>
+      </form>
+      <p id="result-count" class="results-line" role="status" aria-live="polite"></p>
+      <div id="cards" class="card-grid"></div>
+      <p id="empty-state" class="empty-state" hidden>No examples match. Try another search or reset the filters.</p>
+      <p id="load-error" class="error-state" role="alert" hidden>The demo data could not be loaded. Serve this folder with a local static server, then reload. <a href="demo-data.json">Inspect the synthetic data</a>.</p>
+      <noscript><p>JavaScript displays the example cards. You can read the <a href="demo-data.json">synthetic dataset</a> and <a href="CONTRIBUTING.md">participation guide</a> directly.</p></noscript>
+    </section>
+    <section class="participate" id="participate" aria-labelledby="participate-title">
+      <div><p class="eyebrow">02 / Participation</p><h2 id="participate-title">Propose. Review. Improve.</h2><p>Suggest a bounded change, record what you actually tested, and let a maintainer review it. An agent may help prepare a proposal; that does not authorize execution or create an assignment.</p></div>
+      <ul class="resource-list"><li><a href="templates/task.md">Task proposal template <span aria-hidden="true">↗</span></a></li><li><a href="templates/result.md">Result template <span aria-hidden="true">↗</span></a></li><li><a href="README.md">Setup and limitations <span aria-hidden="true">↗</span></a></li><li><a href="LICENSE_STATUS.md">License status <span aria-hidden="true">↗</span></a></li></ul>
+    </section>
+  </main>
+  <footer><span>ATLAS / PUBLIC DEMO</span><p>Fictional examples. No live operations.</p><a href="demo-data.json">View demo data</a></footer>
+  <dialog id="task-dialog" aria-labelledby="task-title" aria-describedby="task-summary">
+    <div class="dialog-heading"><span id="task-id" class="eyebrow"></span><button id="close-dialog" type="button" class="secondary" aria-label="Close example details">Close</button></div>
+    <p class="demo-label">SYNTHETIC EXAMPLE</p><h2 id="task-title"></h2><p id="task-summary"></p>
+    <h3>Acceptance example</h3><p id="task-acceptance"></p>
+    <h3>Example evidence</h3><p id="task-evidence"></p>
+    <p class="dialog-note">This is a fictional illustration. Opening this card does not claim work, change a status or contact anyone.</p>
+  </dialog>
+</body>
+</html>
