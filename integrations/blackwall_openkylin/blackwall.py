@@ -92,14 +92,25 @@ def looks_like_model(path: Path) -> bool:
     return suffix == ".bin" and bool(re.search(r"model|pytorch|weights", path.name, re.I))
 
 def scan_models(roots: list[Path], max_files: int = 5000, max_depth: int = 5,
-                max_matches: int = 250) -> dict:
-    """Stat only. Never follow symlinks, access files, or traverse whole filesystem."""
+                max_matches: int = 250, *, max_dirs: int = 1000) -> dict:
+    """Stat only; cap directories yielded by os.walk across all roots.
+
+    Reaching max_dirs conservatively marks the scan truncated, even when
+    the last permitted directory happens to be the last one in the tree.
+    This is not a bound on individual directory width or filesystem latency.
+    """
+    if type(max_dirs) is not int or max_dirs < 0:
+        raise ValueError("max_dirs must be a non-negative integer")
     seen = set()
     found = []
     examined = 0
+    visited_dirs = 0
     skipped = []
     truncated = False
     for root in roots:
+        if visited_dirs >= max_dirs:
+            truncated = True
+            break
         root = Path(root).expanduser()
         if not root.is_dir() or root.is_symlink():
             skipped.append(str(root))
@@ -109,6 +120,7 @@ def scan_models(roots: list[Path], max_files: int = 5000, max_depth: int = 5,
             continue
         seen.add(canonical)
         for here, dirs, files in os.walk(root, topdown=True, followlinks=False):
+            visited_dirs += 1
             here_path = Path(here)
             depth = len(here_path.relative_to(root).parts)
             dirs[:] = [d for d in sorted(dirs) if depth < max_depth and
@@ -128,11 +140,15 @@ def scan_models(roots: list[Path], max_files: int = 5000, max_depth: int = 5,
                     continue
                 found.append({"path": str(candidate), "format": candidate.suffix.lower().lstrip("."),
                               "bytes": stat.st_size, "state": "file_detected_not_validated"})
-            if truncated:
+            # Stop before advancing the generator: the next yield would
+            # already have enumerated one more directory.
+            if truncated or visited_dirs >= max_dirs:
+                truncated = True
                 break
         if truncated:
             break
     return {"items": found, "examined": examined, "truncated": truncated,
+            "visited_dirs": visited_dirs,
             "skipped_roots": skipped, "models_loaded": False}
 
 def probe_local_services(timeout=0.75) -> dict:
@@ -301,3 +317,4 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
