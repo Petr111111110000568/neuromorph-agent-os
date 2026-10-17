@@ -1,0 +1,73 @@
+{
+  "task": "P0-SINT-PHYS-001",
+  "verified_at_utc": "2026-10-17T19:38:13.354756+00:00",
+  "upstream_commit": "71b3d799c689dbf0f9c2819f2411e47749d3585e",
+  "source_paper": "https://doi.org/10.1038/s41566-026-01880-9",
+  "original_figure_sha256": "28901892054fea283db318be3a09ab9ccd7555b81dd504261177637674399ca5",
+  "acceptance_sha256": "28c0d2460b4d1436702ac6abbc7de58b1f0199cf707a54a1217f8dd31eed5c76",
+  "repeat_sha256": "28c0d2460b4d1436702ac6abbc7de58b1f0199cf707a54a1217f8dd31eed5c76",
+  "byte_identical": true,
+  "machine": "SwarmAgents-pc",
+  "python": "3.12.2",
+  "dependencies": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "matplotlib": "3.11.2",
+    "tqdm": "4.70.1"
+  },
+  "external_pandas": "2.3.3",
+  "external_pandas_deps_isolated": true,
+  "method": "authors original GlobalPhaseProtocol and RegressionTask; 5 paired trials for delays 1 and 2; feedback vs zero-feedback; SciPy paired Wilcoxon and seeded 20k paired bootstrap",
+  "limits": "Digital simulation only, 5 pairs per delay. P-values exploratory uncorrected; no device or vacuum intelligence measured.",
+  "results": [
+    {
+      "tau": 1,
+      "n_pairs": 5,
+      "feedback_capacity_gain_mean": 0.3641625527003654,
+      "capacity_improved_count": 5,
+      "capacity_gains_each": [
+        0.4167905490145971,
+        0.35970488017955593,
+        0.30656974473701853,
+        0.3550679671258652,
+        0.3826796224447901
+      ],
+      "feedback_nrmse_improvement_mean": 0.26915098738410925,
+      "error_improved_count": 5,
+      "bootstrap_capacity_gain_mean_95pct": [
+        0.3314913647563422,
+        0.3947463881590814
+      ],
+      "bootstrap_error_improvement_mean_95pct": [
+        0.20929829571347486,
+        0.3290036790547436
+      ],
+      "one_sided_wilcoxon_capacity_p_uncorrected": 0.03125
+    },
+    {
+      "tau": 2,
+      "n_pairs": 5,
+      "feedback_capacity_gain_mean": 0.044281163432440075,
+      "capacity_improved_count": 5,
+      "capacity_gains_each": [
+        0.03772324785633313,
+        0.023236470307567064,
+        0.0005981863027247642,
+        0.15232873400709143,
+        0.007519178688483983
+      ],
+      "feedback_nrmse_improvement_mean": -0.006405184301155109,
+      "error_improved_count": 3,
+      "bootstrap_capacity_gain_mean_95pct": [
+        0.007894240057996913,
+        0.10044572571321828
+      ],
+      "bootstrap_error_improvement_mean_95pct": [
+        -0.08371964690512086,
+        0.06369283009081314
+      ],
+      "one_sided_wilcoxon_capacity_p_uncorrected": 0.03125
+    }
+  ]
+}
