@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   probe:
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && github.event.repository.private == true
     runs-on: [self-hosted, Linux, X64, neuromorph-openkylin]
     timeout-minutes: 4
     permissions:
@@ -28,25 +28,65 @@ jobs:
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
+          fetch-depth: 2
       - name: Admit exactly one added read-only request
         id: admission
         shell: bash
         run: |
           set -euo pipefail
-          python3 - <<'PY'
-          import json, os, re
+          python3 -I - <<'PY'
+          import json, os, re, subprocess
           from pathlib import Path
           event = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text(encoding='utf-8'))
-          added = (event.get('head_commit') or {}).get('added') or []
-          names = [p for p in added if re.fullmatch(r'requests/[a-z0-9-]{4,64}\.json', p)]
-          if len(names) != 1 or len(added) != 1:
-              raise SystemExit('refuse: require exactly one new request file per push')
-          target = Path(os.environ['GITHUB_WORKSPACE']) / names[0]
-          if target.is_symlink() or not target.is_file() or target.stat().st_size > 1024:
-              raise SystemExit('refuse: request size or file type')
-          value = json.loads(target.read_text(encoding='utf-8'))
-          request_id = names[0][len('requests/'):-len('.json')]
-          if value != {'schema_version': 1, 'request_id': request_id, 'op': 'health_snapshot'}:
+          if (event.get('ref') != 'refs/heads/main'
+                  or os.environ.get('GITHUB_REF') != event['ref']
+                  or os.environ.get('GITHUB_EVENT_NAME') != 'push'
+                  or (event.get('repository') or {}).get('private') is not True
+                  or any(event.get(flag) is not False for flag in ('forced', 'created', 'deleted'))):
+              raise SystemExit('refuse: require an ordinary push to private main')
+          before, after = event.get('before'), event.get('after')
+          if any(not isinstance(sha, str) or not re.fullmatch(r'[0-9a-f]{40}', sha)
+                 or sha == '0' * 40 for sha in (before, after)):
+              raise SystemExit('refuse: missing or invalid push endpoints')
+          if os.environ.get('GITHUB_SHA') != after:
+              raise SystemExit('refuse: event does not match this run')
+          git_env = {'PATH': os.defpath, 'LANG': 'C', 'GIT_CONFIG_NOSYSTEM': '1',
+                     'GIT_CONFIG_GLOBAL': os.devnull, 'GIT_OPTIONAL_LOCKS': '0'}
+          def git(*args):
+              return subprocess.run(
+                  ['git', '--no-replace-objects', *args], cwd=os.environ['GITHUB_WORKSPACE'],
+                  env=git_env, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
+                  stderr=subprocess.DEVNULL, check=True, timeout=10).stdout
+          if git('rev-parse', 'HEAD').decode().strip() != after:
+              raise SystemExit('refuse: checkout does not match event')
+          if git('rev-list', '--parents', '-n', '1', after).decode().split() != [after, before]:
+              raise SystemExit('refuse: require exactly one non-merge commit')
+          # Actions omits commit.added/modified/removed: verify the actual push diff.
+          changed = git('diff', '--no-ext-diff', '--no-textconv', '--no-renames',
+                        '--name-status', '-z', before, after).split(b'\0')
+          if len(changed) != 3 or changed[0] != b'A' or changed[2] != b'':
+              raise SystemExit('refuse: require exactly one added request and no other change')
+          name = changed[1].decode('utf-8')
+          if not re.fullmatch(r'requests/[a-z0-9-]{4,64}\.json', name):
+              raise SystemExit('refuse: request path')
+          entry = git('ls-tree', '-z', after, '--', name).split(b'\t', 1)
+          metadata = entry[0].split()
+          if len(entry) != 2 or metadata[:2] != [b'100644', b'blob'] or entry[1] != changed[1] + b'\0':
+              raise SystemExit('refuse: request must be a non-executable regular file')
+          blob = metadata[2].decode('ascii')
+          if int(git('cat-file', '-s', blob)) > 1024:
+              raise SystemExit('refuse: request size')
+          def unique_keys(pairs):
+              value = {}
+              for key, item in pairs:
+                  if key in value:
+                      raise ValueError('duplicate JSON key')
+                  value[key] = item
+              return value
+          value = json.loads(git('cat-file', 'blob', blob), object_pairs_hook=unique_keys)
+          request_id = name[len('requests/'):-len('.json')]
+          if (not isinstance(value, dict) or type(value.get('schema_version')) is not int
+                  or value != {'schema_version': 1, 'request_id': request_id, 'op': 'health_snapshot'}):
               raise SystemExit('refuse: not an allowlisted read-only request')
           with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as out:
               out.write('request_id=' + request_id + '\n')
